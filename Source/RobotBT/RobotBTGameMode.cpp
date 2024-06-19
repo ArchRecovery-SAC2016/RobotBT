@@ -23,6 +23,8 @@ ARobotBTGameMode::ARobotBTGameMode()
 	{
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
+
+    LoadRoomsFromFile();
 }
 
 
@@ -30,39 +32,43 @@ void ARobotBTGameMode::BeginPlay() {
     Super::BeginPlay();
 }
 
-void ARobotBTGameMode::LoadStartWidget() {
+void ARobotBTGameMode::ChangeRoom(const FRoomPreparationStruct& RoomConfiguration) {
+	for (int i = 0; i < Rooms.Num(); i++) {
+		if (Rooms[i].Name == RoomConfiguration.Name) {
+			Rooms[i].bIsClean = RoomConfiguration.bIsClean;
+			Rooms[i].bDoorOpen = RoomConfiguration.bDoorOpen;
+			Rooms[i].bIsPrepared = RoomConfiguration.bIsPrepared;
 
+            UE_LOG(LogTemp, Display, TEXT("Room %s isClean: %d, DoorOpen: %d, IsPrepared: %d"), *Rooms[i].Name, Rooms[i].bIsClean, Rooms[i].bDoorOpen, Rooms[i].bIsPrepared);
+		}
+	}
 }
 
-
-TArray<FRoomPreparationStruct> ARobotBTGameMode::LoadWorldKnoledgeWidget() {
-    FRoomPreparationStruct RoomA = FRoomPreparationStruct(TEXT("RoomA"), TEXT("c3"),
+void ARobotBTGameMode::LoadRoomsFromFile() {
+    FRoomPreparationStruct RoomA = FRoomPreparationStruct(TEXT("RoomA"), TEXT("C3"),
         false,
         false,
         false);
 
-    FRoomPreparationStruct RoomB = FRoomPreparationStruct(TEXT("RoomB"), TEXT("c6"),
+    FRoomPreparationStruct RoomB = FRoomPreparationStruct(TEXT("RoomB"), TEXT("C6"),
         false,
         false,
         true);
 
-    FRoomPreparationStruct RoomC = FRoomPreparationStruct(TEXT("RoomC"), TEXT("c8"),
+    FRoomPreparationStruct RoomC = FRoomPreparationStruct(TEXT("RoomC"), TEXT("C8"),
         true,
         true,
         true);
 
-    FRoomPreparationStruct SanitizationRoom = FRoomPreparationStruct(TEXT("SanitizationRoom"), TEXT("c10"),
+    FRoomPreparationStruct SanitizationRoom = FRoomPreparationStruct(TEXT("SanitizationRoom"), TEXT("C10"),
         true,
         true,
         true);
 
-    TArray<FRoomPreparationStruct> NewRooms;
-    NewRooms.Add(RoomA);
-    NewRooms.Add(RoomB);
-    NewRooms.Add(RoomC);
-    NewRooms.Add(SanitizationRoom);
-
-    return NewRooms;
-
+   
+    Rooms.Add(RoomA);
+    Rooms.Add(RoomB);
+    Rooms.Add(RoomC);
+    Rooms.Add(SanitizationRoom);
 }
 

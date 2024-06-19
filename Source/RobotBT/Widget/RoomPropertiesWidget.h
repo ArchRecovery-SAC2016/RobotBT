@@ -13,14 +13,41 @@ class ROBOTBT_API URoomPropertiesWidget : public UUserWidget {
 	GENERATED_BODY()
 
 public:
+	void NativeConstruct();
+
 	UFUNCTION()
-	void InitialLoad(FRoomPreparationStruct Room);
+	void Initiate(const FRoomPreparationStruct& RoomPreparation);
+
+	UFUNCTION()
+	void ChangeWorldKnowledge();
+
+	UFUNCTION()
+	void SetIsClear(bool NewValue);
+
+	UFUNCTION()
+	void SetIsPrepared(bool NewValue);
+
+	UFUNCTION()
+	void SetDoorOpen(bool NewValue);
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* RoomName;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* RoomLocation;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UCheckBox* IsClear_Check;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UCheckBox* IsPrepared_Check;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UCheckBox* DoorOpen_Check;
+
+	/** The button of this item. Trow an event when clicked. The EquipmentWidget receives this event and open the panel */
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UButton* ApplyButton;
 
 
 };

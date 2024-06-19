@@ -16,13 +16,21 @@ public:
 	ARobotBTGameMode();
 	virtual void BeginPlay() override;
 
-	/** Load the start widget. */
-	UFUNCTION(BlueprintCallable)
-	void LoadStartWidget();
+	UFUNCTION()
+	TArray<FRoomPreparationStruct> GetRooms() const { return Rooms;}
+
+	UFUNCTION()
+	void ChangeRoom(const FRoomPreparationStruct& RoomConfiguration);
+
+
+private:
+	/** The start widget. */
+	// Saves all the rooms in the world
+	TArray<FRoomPreparationStruct> Rooms;
 
 	/** Load the start widget. */
-	UFUNCTION(BlueprintCallable)
-	TArray<FRoomPreparationStruct> LoadWorldKnoledgeWidget();
+	UFUNCTION()
+	void LoadRoomsFromFile();
 };
 
 

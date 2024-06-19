@@ -22,13 +22,20 @@ public:
 	TArray<FRoomPreparationStruct> Rooms;
 
 	UFUNCTION()
-	void SetRooms(TArray<FRoomPreparationStruct> NewRooms);
-
-	UFUNCTION()
 	virtual void SynchronizeProperties() override;
 
 	UFUNCTION()
 	void InitialLoad();
 
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class URoomPropertiesWidget* RoomA;
 
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class URoomPropertiesWidget* RoomB;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class URoomPropertiesWidget* RoomC;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class URoomPropertiesWidget* RoomD;
 };

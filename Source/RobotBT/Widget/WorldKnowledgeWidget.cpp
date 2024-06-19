@@ -2,19 +2,12 @@
 
 #include "WorldKnowledgeWidget.h"
 
+#include "RoomPropertiesWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/RobotBTGameMode.h"
 
 void UWorldKnowledgeWidget::NativeConstruct() {
 	Super::NativeConstruct();
-}
-
-void UWorldKnowledgeWidget::SetRooms(TArray<FRoomPreparationStruct> NewRooms) {
-	Rooms = NewRooms;
-}
-
-void UWorldKnowledgeWidget::SynchronizeProperties() {
-	Super::SynchronizeProperties();
 
 	InitialLoad();
 
@@ -22,6 +15,10 @@ void UWorldKnowledgeWidget::SynchronizeProperties() {
 		UE_LOG(LogTemp, Error, TEXT("[UWorldKnowledgeWidget::SynchronizeProperties] Rooms is empty"));
 		return;
 	}
+}
+
+void UWorldKnowledgeWidget::SynchronizeProperties() {
+	Super::SynchronizeProperties();
 }
 
 void UWorldKnowledgeWidget::InitialLoad() {
@@ -32,7 +29,21 @@ void UWorldKnowledgeWidget::InitialLoad() {
 		return;
 	}
 
-	Rooms = GameMode->LoadWorldKnoledgeWidget();
+	Rooms = GameMode->GetRooms();
 
+	if (Rooms.IsValidIndex(0) && RoomA != nullptr) {
+		RoomA->Initiate(Rooms[0]);
+	}
 
+	if (Rooms.IsValidIndex(1) && RoomB != nullptr) {
+		RoomB->Initiate(Rooms[1]);
+	}
+
+	if (Rooms.IsValidIndex(2) && RoomC != nullptr) {
+		RoomC->Initiate(Rooms[2]);
+	}
+
+	if (Rooms.IsValidIndex(3) && RoomD != nullptr) {
+		RoomD->Initiate(Rooms[3]);
+	}
 }

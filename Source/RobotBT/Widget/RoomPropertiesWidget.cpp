@@ -1,13 +1,49 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RoomPropertiesWidget.h"
+#include "Components/Button.h"
+#include "Components/CheckBox.h"
+#include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
+#include "RobotBT/RobotBTGameMode.h"
 
+void URoomPropertiesWidget::NativeConstruct() {
+	Super::NativeConstruct();
 
+	if (ApplyButton != nullptr) {
+		ApplyButton->OnClicked.AddDynamic(this, &URoomPropertiesWidget::ChangeWorldKnowledge);
+	}
 
-void URoomPropertiesWidget::InitialLoad(FRoomPreparationStruct Room) {
-	// Set the name of the room
-	// Set the location of the room
-	// Set the cleanliness of the room
-	// Set the preparedness of the room
-	// Set the door status of the room
+}
+
+void URoomPropertiesWidget::Initiate(const FRoomPreparationStruct& RoomPreparation) {
+	RoomName->SetText(FText::FromString(RoomPreparation.Name));
+	RoomLocation->SetText(FText::FromString(RoomPreparation.Location));
+	SetIsClear(RoomPreparation.bIsClean);
+	SetIsPrepared(RoomPreparation.bIsPrepared);
+	SetDoorOpen(RoomPreparation.bDoorOpen);
+}
+	
+void URoomPropertiesWidget::ChangeWorldKnowledge() {
+	ARobotBTGameMode* GameMode = Cast<ARobotBTGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (GameMode != nullptr) {
+		FRoomPreparationStruct RoomPreparation;
+		RoomPreparation.Name = RoomName->GetText().ToString();
+		RoomPreparation.Location = RoomLocation->GetText().ToString();
+		RoomPreparation.bIsClean = IsClear_Check->IsChecked();
+		RoomPreparation.bIsPrepared = IsPrepared_Check->IsChecked();
+		RoomPreparation.bDoorOpen = DoorOpen_Check->IsChecked();
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("[URoomPropertiesWidget::ChangeWorldKnowledge] GameMode is null"));
+	}
+}
+
+void URoomPropertiesWidget::SetIsClear(bool NewValue) {
+	IsClear_Check->SetCheckedState(NewValue ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
+}
+
+void URoomPropertiesWidget::SetIsPrepared(bool NewValue) {
+	IsPrepared_Check->SetCheckedState(NewValue ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
+}
+
+void URoomPropertiesWidget::SetDoorOpen(bool NewValue) {
+	DoorOpen_Check->SetCheckedState(NewValue ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
 }
