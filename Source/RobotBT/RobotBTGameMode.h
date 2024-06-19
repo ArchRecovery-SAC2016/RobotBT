@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Struct/RoomPreparationStruct.h"
 #include "RobotBTGameMode.generated.h"
 
 UCLASS(minimalapi)
@@ -13,6 +14,15 @@ class ARobotBTGameMode : public AGameModeBase
 
 public:
 	ARobotBTGameMode();
+	virtual void BeginPlay() override;
+
+	/** Load the start widget. */
+	UFUNCTION(BlueprintCallable)
+	void LoadStartWidget();
+
+	/** Load the start widget. */
+	UFUNCTION(BlueprintCallable)
+	TArray<FRoomPreparationStruct> LoadWorldKnoledgeWidget();
 };
 
 

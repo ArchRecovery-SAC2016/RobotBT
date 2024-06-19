@@ -16,6 +16,8 @@ class ARobotController : public AAIController
 public:
 	ARobotController();
 
+	virtual void BeginPlay() override;
+
 	// Save the rooms that are prepared
 	TArray<ADoorSensor*> Is_Prepared;
 

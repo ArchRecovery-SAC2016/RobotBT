@@ -39,6 +39,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* SetDestinationTouchAction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = MyComponent)
+	TSubclassOf<class UWorldKnowledgeWidget> WorldKnowledgeWBP;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = MyComponent)
+	class UWorldKnowledgeWidget* WorldKnowledgeWidget;
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -54,6 +60,8 @@ protected:
 	void OnSetDestinationReleased();
 	void OnTouchTriggered();
 	void OnTouchReleased();
+
+
 
 private:
 	FVector CachedDestination;

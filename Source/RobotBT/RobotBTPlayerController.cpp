@@ -9,6 +9,8 @@
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Blueprint/UserWidget.h"
+#include "Widget/WorldKnowledgeWidget.h"
 
 ARobotBTPlayerController::ARobotBTPlayerController()
 {
@@ -16,6 +18,7 @@ ARobotBTPlayerController::ARobotBTPlayerController()
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
+
 }
 
 void ARobotBTPlayerController::BeginPlay()
@@ -28,6 +31,15 @@ void ARobotBTPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
+
+	WorldKnowledgeWidget = Cast<UWorldKnowledgeWidget>(CreateWidget(this, WorldKnowledgeWBP));
+
+	if (WorldKnowledgeWidget == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] WorldKnowledgeWidgetInst is null. You need to set WorldKnowledgeWBP at RobotController"));
+		return;
+	}
+
+	WorldKnowledgeWidget->AddToViewport();
 }
 
 void ARobotBTPlayerController::SetupInputComponent()
