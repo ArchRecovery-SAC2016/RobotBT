@@ -9,7 +9,9 @@
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Actors/DoorSensor.h"
 #include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 #include "Widget/WorldKnowledgeWidget.h"
 
 ARobotBTPlayerController::ARobotBTPlayerController()
@@ -40,6 +42,7 @@ void ARobotBTPlayerController::BeginPlay()
 	}
 
 	WorldKnowledgeWidget->AddToViewport();
+
 }
 
 void ARobotBTPlayerController::SetupInputComponent()

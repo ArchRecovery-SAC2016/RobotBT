@@ -5,7 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "DoorSensor.generated.h"
 
-class AFurniturePlace;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorStateChange, FString, Name);
 
 UCLASS()
 class ROBOTBT_API ADoorSensor : public AActor {
@@ -19,8 +20,8 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
-	int32 RoomId = 0;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
+	FString Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
 	bool Opened = true;
@@ -33,7 +34,7 @@ public:
 
 	// saves the furnitures of this room
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
-	TArray<AFurniturePlace*> FurnituresPlace;
+	TArray<class AFurniturePlace*> FurnituresPlace;
 
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
 	TArray<ARoomTrash*> RoomTrash;
@@ -59,8 +60,13 @@ public:
 	UFUNCTION()
 	bool CheckIsRooomClean();
 
+	UPROPERTY()
+	FOnDoorStateChange OnDoorChange;
+
 private:
 	void ChangeColor(bool NewValue);
+
+
 
 	
 };

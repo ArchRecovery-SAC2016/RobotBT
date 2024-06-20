@@ -4,7 +4,8 @@
 #include "GameFramework/Actor.h"
 #include "RoomTrash.generated.h"
 
-class AFurniturePlace;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChange, bool, NewState);
 
 UCLASS()
 class ROBOTBT_API ARoomTrash : public AActor {
@@ -27,6 +28,8 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
 	bool IsTrashClean = false; 
 
+	UPROPERTY(BlueprintAssignable, Category = "MyComponentsDispatcher")
+	FOnStateChange OnStateChange;
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,

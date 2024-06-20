@@ -1,11 +1,12 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Struct/RoomPreparationStruct.h"
+#include "Actors/DoorSensor.h"
+#include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
+
 
 UCLASS(minimalapi)
 class ARobotBTGameMode : public AGameModeBase
@@ -19,19 +20,27 @@ public:
 	UFUNCTION()
 	TArray<FRoomPreparationStruct> GetRooms() const { return Rooms;}
 
-	UFUNCTION()
-	void ChangeRoom(const FRoomPreparationStruct& RoomConfiguration);
+	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void CheckDoors();
 
 private:
 	/** The start widget. */
 	// Saves all the rooms in the world
 	TArray<FRoomPreparationStruct> Rooms;
 
-	/** Load the start widget. */
+	/* Saves all doors in the map	*/
+	UPROPERTY()
+	TArray<ADoorSensor*> DoorSensors;
+
 	UFUNCTION()
-	void LoadRoomsFromFile();
+	UWorldKnowledgeWidget * GetWorldKnowledgeWidget() const;
+
+	UPROPERTY()
+	UWorldKnowledgeWidget* WorldKnowledgeWidget;
 };
+
 
 
 

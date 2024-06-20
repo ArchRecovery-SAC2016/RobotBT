@@ -4,6 +4,9 @@
 #include "GameFramework/Actor.h"
 #include "FurniturePlace.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnFurnitureStateChange, bool, NewState);
+
 UCLASS()
 class ROBOTBT_API AFurniturePlace : public AActor {
 	GENERATED_BODY()
@@ -34,6 +37,9 @@ public:
 
 	UPROPERTY()
 	bool FurnitureInPlace = false;
+
+	UPROPERTY(BlueprintAssignable, Category = "MyComponentsDispatcher")
+	FOnFurnitureStateChange OnFurnitureStateChange;
 
 private:
 	UFUNCTION()

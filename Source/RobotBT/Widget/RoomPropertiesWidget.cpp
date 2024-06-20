@@ -36,6 +36,12 @@ void URoomPropertiesWidget::ChangeWorldKnowledge() {
 	}
 }
 
+void URoomPropertiesWidget::ChangeProperties(bool bIsClean, bool bIsPrepared, bool bDoorOpen)	{
+	SetIsClear(bIsClean);
+	SetIsPrepared(bIsPrepared);
+	SetDoorOpen(bDoorOpen);
+}
+
 void URoomPropertiesWidget::SetIsClear(bool NewValue) {
 	IsClear_Check->SetCheckedState(NewValue ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
 }

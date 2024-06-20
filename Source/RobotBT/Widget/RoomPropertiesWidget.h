@@ -21,6 +21,8 @@ public:
 	UFUNCTION()
 	void ChangeWorldKnowledge();
 
+	void ChangeProperties(bool bIsClean, bool bIsPrepared, bool bDoorOpen);
+
 	UFUNCTION()
 	void SetIsClear(bool NewValue);
 

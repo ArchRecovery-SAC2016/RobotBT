@@ -42,8 +42,6 @@ void ARobotBTGameMode::BeginPlay() {
         	DoorSensors.Add(Sensor);
 		}
     }
-
-	CheckDoors();
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {

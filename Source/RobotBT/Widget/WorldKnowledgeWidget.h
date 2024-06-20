@@ -38,4 +38,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class URoomPropertiesWidget* RoomD;
+
+	void ChangeRoomProperties(FString Name, bool bIsClean, bool bIsPrepared, bool bDoorOpen);
+
+	URoomPropertiesWidget* GetRoomByName(FString Name);
 };

@@ -50,7 +50,9 @@ void AFurniturePlace::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AAc
 	ChangeColor(false);
 }
 
-void AFurniturePlace::ChangeColor(bool NewValue){
+void AFurniturePlace::ChangeColor(bool NewValue) {
+	OnFurnitureStateChange.Broadcast(NewValue);
+
 	FurnitureInPlace = NewValue;
 
 	if (BaseMesh == nullptr) {

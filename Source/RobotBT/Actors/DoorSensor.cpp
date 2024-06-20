@@ -16,6 +16,7 @@ ADoorSensor::ADoorSensor() {
 
 void ADoorSensor::BeginPlay() {
 	Super::BeginPlay();
+
 }
 
 void ADoorSensor::Tick(float DeltaTime) {
@@ -28,6 +29,8 @@ bool ADoorSensor::IsPrepared() {
 	if (CheckIsRooomClean() && CheckFornitureIsArranged()) {
 		ChangeColor(true);
 		return true;
+	} else {
+		ChangeColor(false);
 	}
 
 	return false;

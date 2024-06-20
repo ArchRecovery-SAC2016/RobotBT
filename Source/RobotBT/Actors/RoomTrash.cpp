@@ -32,6 +32,7 @@ void ARoomTrash::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 
 	// marca que coletou o lixo e desaparece com o mesh
 	if (Robot != nullptr) {
+		OnStateChange.Broadcast(true);
 		IsTrashClean = true;
 		BaseMesh->SetVisibility(false);
 		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
