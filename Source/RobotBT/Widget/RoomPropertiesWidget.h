@@ -15,13 +15,11 @@ class ROBOTBT_API URoomPropertiesWidget : public UUserWidget {
 public:
 	void NativeConstruct();
 
-	UFUNCTION()
-	void Initiate(const FRoomPreparationStruct& RoomPreparation);
+	UFUNCTION(BlueprintCallable)
+	void SetRoomName(FString NewValue);
 
-	UFUNCTION()
-	void ChangeWorldKnowledge();
-
-	void ChangeProperties(bool bIsClean, bool bIsPrepared, bool bDoorOpen);
+	UFUNCTION(BlueprintCallable)
+	void SetLocation(FString NewValue);
 
 	UFUNCTION()
 	void SetIsClear(bool NewValue);
@@ -31,6 +29,8 @@ public:
 
 	UFUNCTION()
 	void SetDoorOpen(bool NewValue);
+
+	void ChangeProperties(bool bIsClean, bool bIsPrepared, bool bDoorOpen);
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* RoomName;
@@ -46,10 +46,5 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UCheckBox* DoorOpen_Check;
-
-	/** The button of this item. Trow an event when clicked. The EquipmentWidget receives this event and open the panel */
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UButton* ApplyButton;
-
 
 };

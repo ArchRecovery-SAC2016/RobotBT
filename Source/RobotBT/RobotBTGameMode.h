@@ -17,9 +17,6 @@ public:
 	ARobotBTGameMode();
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	TArray<FRoomPreparationStruct> GetRooms() const { return Rooms;}
-
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
@@ -35,10 +32,12 @@ private:
 	TArray<ADoorSensor*> DoorSensors;
 
 	UFUNCTION()
-	UWorldKnowledgeWidget * GetWorldKnowledgeWidget() const;
+	UWorldKnowledgeWidget * GetWorldKnowledgeWidget();
 
 	UPROPERTY()
-	UWorldKnowledgeWidget* WorldKnowledgeWidget;
+	UWorldKnowledgeWidget* WorldKnowledgeWidgetInst;
+
+
 };
 
 

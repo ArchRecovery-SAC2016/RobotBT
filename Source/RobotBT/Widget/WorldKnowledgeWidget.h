@@ -24,9 +24,6 @@ public:
 	UFUNCTION()
 	virtual void SynchronizeProperties() override;
 
-	UFUNCTION()
-	void InitialLoad();
-
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class URoomPropertiesWidget* RoomA;
 

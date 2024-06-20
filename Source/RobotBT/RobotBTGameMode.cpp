@@ -42,8 +42,6 @@ void ARobotBTGameMode::BeginPlay() {
         	DoorSensors.Add(Sensor);
 		}
     }
-
-	CheckDoors();
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
@@ -60,16 +58,15 @@ void ARobotBTGameMode::CheckDoors() {
 	}
 }
 
-UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() const {
+UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 	// if already created, return it
-	if (WorldKnowledgeWidget != nullptr) return  WorldKnowledgeWidget;
+	if (WorldKnowledgeWidgetInst != nullptr) return WorldKnowledgeWidgetInst;
 
 	ARobotBTPlayerController* MyPlayerControllerInstance = Cast<ARobotBTPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (MyPlayerControllerInstance != nullptr) {
-		return  WorldKnowledgeWidget;
+		WorldKnowledgeWidgetInst = MyPlayerControllerInstance->WorldKnowledgeWidget;
 	}
 
-	// if not find, return nullptr
-	return nullptr;
+	return WorldKnowledgeWidgetInst;
 }
 
