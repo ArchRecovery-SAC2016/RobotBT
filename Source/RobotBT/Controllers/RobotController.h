@@ -4,13 +4,13 @@
 #include "AIController.h"
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
+#include "RobotBT/Actors/Robot.h"
 #include "RobotController.generated.h"
 
 class ADoorSensor;
 
 UCLASS()
-class ARobotController : public AAIController
-{
+class ARobotController : public AAIController {
 	GENERATED_BODY()
 
 public:
@@ -18,11 +18,15 @@ public:
 
 	virtual void BeginPlay() override;
 
-	// Save the rooms that are prepared
-	TArray<ADoorSensor*> Is_Prepared;
+	bool MoveToActorLocation(AActor* MoveToLocation);
 
-	void GoToNextDoor();
+	bool ProcessAction();
 
+	UPROPERTY()
+	ARobot* ControlledPawn;
+
+private:
+	bool ActionFinished = false;
 };
 
 

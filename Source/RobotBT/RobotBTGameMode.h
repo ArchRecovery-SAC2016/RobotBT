@@ -22,10 +22,10 @@ public:
 	UFUNCTION()
 	void CheckDoors();
 
+	UFUNCTION()
+	TArray<ADoorSensor*>GetDoors() { return DoorSensors; }
+
 private:
-	/** The start widget. */
-	// Saves all the rooms in the world
-	TArray<FRoomPreparationStruct> Rooms;
 
 	/* Saves all doors in the map	*/
 	UPROPERTY()

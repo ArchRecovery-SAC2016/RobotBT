@@ -31,6 +31,13 @@ TArray<ADoorSensor*> ARobot::GetRoomsToBePrepared() {
 	return PreparedRooms;
 }
 
+ADoorSensor* ARobot::GetNextRoom() {
+
+	return nullptr;
+}
+
+bool ARobot::ProcessAction() { return true; }
+
 ADoorSensor* ARobot::GetNextRoomToBePrepared() {
 	TArray<ADoorSensor*> PreparedRooms = GetRoomsToBePrepared();
 
@@ -40,4 +47,3 @@ ADoorSensor* ARobot::GetNextRoomToBePrepared() {
 
 	return nullptr;
 }
-

@@ -25,5 +25,14 @@ public:
 	TArray<ADoorSensor*> GetRoomsToBePrepared();
 
 	UFUNCTION(BlueprintCallable)
+	virtual ADoorSensor* GetNextRoom();
+
+	/* The child will know how to process the action */
+	UFUNCTION()
+	virtual bool ProcessAction();
+
+	UFUNCTION(BlueprintCallable)
 	ADoorSensor* GetNextRoomToBePrepared();
+
+
 };

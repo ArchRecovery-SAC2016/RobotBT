@@ -51,12 +51,9 @@ void AFurniture::Tick(float DeltaTime) {
 void AFurniture::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
-	ARobot* Robot = Cast<ARobot>(OtherActor);
-
 	// marca que coletou o lixo e desaparece com o mesh
-	if (Robot != nullptr) {
+	if (OtherActor->ActorHasTag("Organizer")) {
 		ShouldMove = true;
-
 	}
 }
 
