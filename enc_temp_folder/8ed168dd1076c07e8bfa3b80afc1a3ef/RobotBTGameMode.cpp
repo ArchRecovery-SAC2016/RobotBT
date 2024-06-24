@@ -68,8 +68,8 @@ void ARobotBTGameMode::BeginPlay() {
 		}
 	}
 
-	GetNextTask();
 
+	
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
@@ -180,14 +180,6 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 
 	const FTask& CurrentTask = CurrentTaskIterator->Value();
 
-	// if is empty, so is the first time of this task, so we fill the decomposition queue
-	if (DecompositionQueue.IsEmpty())	{
-		for (auto it = CurrentTask.Decomposition.CreateConstIterator(); it; ++it) {
-			DecompositionQueue.Add(it.Value());
-		}
-		
-	}
-
 	if (CurrentDecompositionIndex < DecompositionQueue.Num()) {
 		const FTaskDecomposition& CurrentDecomposition = DecompositionQueue[CurrentDecompositionIndex];
 
@@ -201,11 +193,6 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		}
 
 	}else {
-		// reset the decomposition array
-		DecompositionQueue.Empty();
-
-		// reset the decomposition index
-		CurrentDecompositionIndex = 0;
 
 		// If gets here, all decomposition was executed
 		return true;

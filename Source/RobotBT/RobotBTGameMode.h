@@ -74,18 +74,20 @@ private:
 
 	EActionsEnum ActiveAction = EActionsEnum::NONE;
 
-	UFUNCTION()
-	void FindNewAction();
-
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
-	TMap<FString, FTask>::TConstIterator* CurrentTask;
+	TMap<FString, FTask>::TConstIterator* CurrentTaskIterator;
 
 	TMap<FString, FTask>::TConstIterator* GetNextTask();
 
+	bool ExecuteCurrentTask();
 
+	// saves the current task decomposition
+	TArray<FTaskDecomposition> DecompositionQueue;
 
+	// saves the current index, so we can control the decomposition
+	int32 CurrentDecompositionIndex;
 };
 
 
