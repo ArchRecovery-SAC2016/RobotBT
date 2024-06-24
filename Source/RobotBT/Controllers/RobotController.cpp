@@ -16,15 +16,29 @@ void ARobotController::BeginPlay() {
 
 bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 	if (ControlledPawn == nullptr) return false;
-	
 
 	float Distance = (ControlledPawn->GetActorLocation() - MoveToLocation->GetActorLocation()).Size();
 
-	if (Distance < 100) {
+	if (Distance < 10) {
 		return true;
 	}
 
 	MoveToActor(MoveToLocation, 10, true, true, false, DefaultNavigationFilterClass, true);
+
+	return false;
+
+}
+
+bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector) {
+	if (ControlledPawn == nullptr) return false;
+
+	float Distance = (ControlledPawn->GetActorLocation() - NewPositionVector).Size();
+
+	if (Distance < 10) {
+		return true;
+	}
+
+	MoveToLocation(NewPositionVector, 10, true, true);
 
 	return false;
 

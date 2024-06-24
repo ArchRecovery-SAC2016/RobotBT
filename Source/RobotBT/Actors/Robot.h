@@ -13,6 +13,11 @@ class ROBOTBT_API ARobot : public ACharacter {
 protected:
 	virtual void BeginPlay() override;
 
+	void GoInsideRoom(const FVector& RoomLocation);
+
+	// Controls if is inside room
+	bool IsNotInsideRoom = true;
+
 public:	
 	ARobot();
 
@@ -22,5 +27,6 @@ public:
 	UFUNCTION()
 	virtual bool ProcessAction();
 
+	
 
 };

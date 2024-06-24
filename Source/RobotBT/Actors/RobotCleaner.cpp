@@ -26,6 +26,12 @@ bool ARobotCleaner::ProcessAction() {
 
 
 bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
+
+	// first is to move inside the room
+	if (IsNotInsideRoom == false) {
+		GoInsideRoom(RoomSelected->RoomLocation);
+	}
+
 	if (RobotController == nullptr) return false;
 
 	if (RoomSelected == nullptr) {
@@ -52,6 +58,7 @@ bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 
 	return AllClean;
 }
+
 
 
 /*

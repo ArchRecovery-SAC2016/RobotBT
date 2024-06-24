@@ -200,7 +200,7 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 			}
 		}
 
-	}else {
+	} else {
 		// reset the decomposition array
 		DecompositionQueue.Empty();
 

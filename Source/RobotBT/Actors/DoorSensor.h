@@ -45,6 +45,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
 	FLinearColor GreenColor;
 
+	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	FVector RoomLocation;
+
 	UFUNCTION()
 	FVector3d GetNextClearPosition();
 
