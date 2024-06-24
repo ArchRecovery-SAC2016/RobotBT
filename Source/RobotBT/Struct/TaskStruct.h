@@ -4,36 +4,95 @@
 #include "TaskStruct.generated.h"
 
 USTRUCT(BlueprintType)
-struct FTaskStruct {
+struct FTaskArgument {
     GENERATED_BODY()
 
-public:
-    FString id;
+    UPROPERTY(BlueprintReadOnly)
+    FString Key;
 
-    FString name;
+    UPROPERTY(BlueprintReadOnly)
+    FString Value;
+};
 
-    FString arguments;
+USTRUCT(BlueprintType)
+struct FTaskPrecondition {
+    GENERATED_BODY()
 
-    FString arguments_values;
+    UPROPERTY(BlueprintReadOnly)
+    FString Predicate;
 
-    FString locations;
+    UPROPERTY(BlueprintReadOnly)
+    FString Vars;
 
-    FString robots_num;
+    UPROPERTY(BlueprintReadOnly)
+    FString VarTypes;
+};
 
-    FString preconditions;
+USTRUCT(BlueprintType)
+struct FTaskEffect {
+    GENERATED_BODY()
 
-    FString effects;
+    UPROPERTY(BlueprintReadOnly)
+    FString Predicate;
 
-    FString triggering_events;
+    UPROPERTY(BlueprintReadOnly)
+    FString Vars;
 
-    FTaskDecompositionStruct decomposition;
+    UPROPERTY(BlueprintReadOnly)
+    FString VarTypes;
+};
 
-    bool group;
+USTRUCT(BlueprintType)
+struct FTaskDecomposition {
+    GENERATED_BODY()
 
-    bool divisible;
+    UPROPERTY(BlueprintReadOnly)
+    FString Name;
 
-    // Constructor
+    UPROPERTY(BlueprintReadOnly)
+    FString Arguments;
+};
 
-    FTaskStruct() {}
+USTRUCT(BlueprintType)
+struct FTask {
+    GENERATED_BODY()
 
+    UPROPERTY(BlueprintReadOnly)
+    FString Id;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString Name;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FTaskArgument> Arguments;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FTaskArgument> ArgumentsValues;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString Locations;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString RobotsNumFixed;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString RobotsNum;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FTaskPrecondition> Preconditions;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FTaskEffect> Effects;
+
+    UPROPERTY(BlueprintReadOnly)
+    TArray<FString> TriggeringEvents;
+
+    UPROPERTY(BlueprintReadOnly)
+    TMap<FString, FTaskDecomposition> Decomposition;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString Group;
+
+    UPROPERTY(BlueprintReadOnly)
+    FString Divisible;
 };

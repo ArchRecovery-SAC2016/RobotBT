@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RobotBT/Enum/ActionsEnum.h"
 #include "TaskDecompositionStruct.generated.h"
 
 USTRUCT(BlueprintType)
@@ -9,7 +10,8 @@ struct FTaskDecompositionStruct {
 
 public:
     EActionsEnum ActionsEnum;
-    FString Arguments;
+
+	FString Arguments;
 
     // Constructor
     FTaskDecompositionStruct() {}

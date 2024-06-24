@@ -7,6 +7,7 @@
 #include "Actors/RobotCleaner.h"
 #include "Actors/RobotOrganizer.h"
 #include "Enum/ActionsEnum.h"
+#include "Struct/TaskStruct.h"
 #include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
 
@@ -49,6 +50,9 @@ public:
 	UFUNCTION()
 	bool CheckEffects();
 
+	UFUNCTION()
+	void LoadTasks();
+
 private:
 
 	/* Saves all doors in the map	*/
@@ -72,6 +76,11 @@ private:
 
 	UFUNCTION()
 	void FindNewAction();
+
+	UPROPERTY()
+	TMap<FString, FTask> Tasks;
+
+
 
 };
 

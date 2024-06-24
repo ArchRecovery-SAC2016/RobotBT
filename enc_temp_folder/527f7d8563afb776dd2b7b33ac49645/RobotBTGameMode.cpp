@@ -159,13 +159,4 @@ bool ARobotBTGameMode::CheckEffects() {
 
 void ARobotBTGameMode::LoadTasks() {
 	Tasks = UMyJsonReader::ReadJsonFile();
-
-	for (const auto& TaskPair : Tasks) {
-		const FString& TaskKey = TaskPair.Key;
-		const FTask& Task = TaskPair.Value;
-
-		UE_LOG(LogTemp, Warning, TEXT("Task Key: %s"), *TaskKey);
-		UE_LOG(LogTemp, Warning, TEXT("Task ID: %s"), *Task.Id);
-		UE_LOG(LogTemp, Warning, TEXT("Task Name: %s"), *Task.Name);
-	}
 }
