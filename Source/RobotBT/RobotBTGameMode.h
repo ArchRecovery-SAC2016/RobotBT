@@ -80,6 +80,10 @@ private:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
+	TMap<FString, FTask>::TConstIterator* CurrentTask;
+
+	TMap<FString, FTask>::TConstIterator* GetNextTask();
+
 
 
 };

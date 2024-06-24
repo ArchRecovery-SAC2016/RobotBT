@@ -33,6 +33,7 @@ ARobotBTGameMode::ARobotBTGameMode()
 void ARobotBTGameMode::BeginPlay() {
     Super::BeginPlay();
 
+	// load all tasks from file
 	LoadTasks();
 
 	// Load all Doors Sensors, so we can watch it
@@ -66,7 +67,6 @@ void ARobotBTGameMode::BeginPlay() {
 			OrganizersTeam.Add(Organizer);
 		}
 	}
-
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
@@ -106,19 +106,13 @@ bool ARobotBTGameMode::Cleaning_Tick() {
 	}
 
 
-	if (CleanerRobot->CleanRoom(RoomSelected))
-	{
+	if (CleanerRobot->CleanRoom(RoomSelected)) {
 		RoomSelected = nullptr;
 
 		return true;
 	}
 
 	return false;
-
-}
-
-void ARobotBTGameMode::FindNewAction() {
-	
 
 }
 
@@ -159,13 +153,21 @@ bool ARobotBTGameMode::CheckEffects() {
 
 void ARobotBTGameMode::LoadTasks() {
 	Tasks = UMyJsonReader::ReadJsonFile();
+}
 
-	for (const auto& TaskPair : Tasks) {
-		const FString& TaskKey = TaskPair.Key;
-		const FTask& Task = TaskPair.Value;
-
-		UE_LOG(LogTemp, Warning, TEXT("Task Key: %s"), *TaskKey);
-		UE_LOG(LogTemp, Warning, TEXT("Task ID: %s"), *Task.Id);
-		UE_LOG(LogTemp, Warning, TEXT("Task Name: %s"), *Task.Name);
+TMap<FString, FTask>::TConstIterator* ARobotBTGameMode::GetNextTask() {
+	// if the first time
+	if (CurrentTask == nullptr) {
+		CurrentTask = new TMap<FString, FTask>::TConstIterator(Tasks.CreateConstIterator());
+		return CurrentTask;
 	}
+
+	if (CurrentTask && Tasks.Num() > 0) {
+		++CurrentTask;
+		if (CurrentTask) {
+			return CurrentTask;
+		}
+	}
+
+	return nullptr;
 }
