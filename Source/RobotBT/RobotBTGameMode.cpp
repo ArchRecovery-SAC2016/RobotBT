@@ -42,15 +42,42 @@ void ARobotBTGameMode::BeginPlay() {
         	DoorSensors.Add(Sensor);
 		}
     }
+
+	// Load cleaning robot
+	TArray<AActor*> FoundRobots;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotCleaner::StaticClass(), FoundRobots);
+	for (AActor* Actor : FoundRobots) {
+		ARobotCleaner* Cleaner = Cast<ARobotCleaner>(Actor);
+		if (Cleaner != nullptr) {
+			CleanerRobot = Cleaner;
+		}
+	}
+
+
+	// Load organization robot
+	TArray<AActor*> FoundOrganizer;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotOrganizer::StaticClass(), FoundOrganizer);
+	for (AActor* Actor : FoundOrganizer) {
+		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
+		if (Organizer != nullptr) {
+			OrganizersTeam.Add(Organizer);
+		}
+	}
+
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-   CheckDoors();
+   UpdateWorldKnowledgeWidget();
+
+	if (ActiveAction == EActionsEnum::CLEAN_ROOM) {
+		Cleaning_Tick();
+		
+	}
 }
 
-void ARobotBTGameMode::CheckDoors() {
+void ARobotBTGameMode::UpdateWorldKnowledgeWidget() {
 	for (ADoorSensor* Sensor: DoorSensors) {
 		if (GetWorldKnowledgeWidget() == nullptr) break;
 
@@ -70,3 +97,59 @@ UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 	return WorldKnowledgeWidgetInst;
 }
 
+bool ARobotBTGameMode::Cleaning_Tick() {
+	if (RoomSelected == nullptr) {
+		RoomSelected = GetNextRoomToBePrepared();
+	}
+
+
+	if (CleanerRobot->CleanRoom(RoomSelected))
+	{
+		RoomSelected = nullptr;
+
+		return true;
+	}
+
+	return false;
+
+}
+
+void ARobotBTGameMode::FindNewAction() {
+	
+
+}
+
+TArray<ADoorSensor*> ARobotBTGameMode::GetRoomsToBePrepared() {
+	TArray<ADoorSensor*> PreparedRooms;
+
+	for (ADoorSensor* Door : DoorSensors) {
+		if (Door->IsPrepared() == false) {
+			PreparedRooms.Add(Door);
+		}
+	}
+
+	return PreparedRooms;
+}
+
+ADoorSensor* ARobotBTGameMode::GetNextRoom() {
+
+	return nullptr;
+}
+
+ADoorSensor* ARobotBTGameMode::GetNextRoomToBePrepared() {
+	TArray<ADoorSensor*> PreparedRooms = GetRoomsToBePrepared();
+
+	if (PreparedRooms.Num() > 0) {
+		return PreparedRooms[0];
+	}
+
+	return nullptr;
+}
+
+bool ARobotBTGameMode::CheckPreconditions() {
+		return false;
+}
+
+bool ARobotBTGameMode::CheckEffects() {
+		return false;
+}

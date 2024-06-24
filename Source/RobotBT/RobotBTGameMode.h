@@ -4,6 +4,9 @@
 #include "GameFramework/GameModeBase.h"
 #include "Struct/RoomPreparationStruct.h"
 #include "Actors/DoorSensor.h"
+#include "Actors/RobotCleaner.h"
+#include "Actors/RobotOrganizer.h"
+#include "Enum/ActionsEnum.h"
 #include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
 
@@ -19,11 +22,32 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	// saves all organizers robots instance
+	TArray<ARobotOrganizer*> OrganizersTeam;
+
+	// saves the robot cleaner
+	ARobotCleaner* CleanerRobot;
+
 	UFUNCTION()
-	void CheckDoors();
+	void UpdateWorldKnowledgeWidget();
 
 	UFUNCTION()
 	TArray<ADoorSensor*>GetDoors() { return DoorSensors; }
+
+	UFUNCTION()
+	TArray<ADoorSensor*> GetRoomsToBePrepared();
+
+	UFUNCTION()
+	ADoorSensor* GetNextRoom();
+
+	UFUNCTION()
+	ADoorSensor* GetNextRoomToBePrepared();
+
+	UFUNCTION()
+	bool CheckPreconditions();
+
+	UFUNCTION()
+	bool CheckEffects();
 
 private:
 
@@ -37,6 +61,17 @@ private:
 	UPROPERTY()
 	UWorldKnowledgeWidget* WorldKnowledgeWidgetInst;
 
+	/* Saves the instance of the Room Selected to be clean */
+	UPROPERTY()
+	ADoorSensor* RoomSelected;
+
+	UFUNCTION()
+	bool Cleaning_Tick();
+
+	EActionsEnum ActiveAction = EActionsEnum::NONE;
+
+	UFUNCTION()
+	void FindNewAction();
 
 };
 

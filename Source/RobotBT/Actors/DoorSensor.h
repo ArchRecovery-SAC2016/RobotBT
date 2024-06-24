@@ -63,6 +63,11 @@ public:
 	UPROPERTY()
 	FOnDoorStateChange OnDoorChange;
 
+	UPROPERTY()
+	bool is_sanitized = false;
+
+	bool is_prepared = false;
+
 private:
 	void ChangeColor(bool NewValue);
 

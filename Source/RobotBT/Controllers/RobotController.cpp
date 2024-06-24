@@ -30,6 +30,16 @@ bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 
 }
 
+void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
+	if (ControlledPawn == nullptr) return;
+
+	// e direction the enemy should move in
+	const FVector PlayerDirection = ActorSelected->GetActorLocation() - ControlledPawn->GetActorLocation();
+	const FRotator NewRotation = PlayerDirection.Rotation();
+	//  Refresh the rotation to face the player
+	ControlledPawn->SetActorRotation(NewRotation);
+}
+
 bool ARobotController::ProcessAction() {
 	// do something to change the action Finish event, like some animation
 	if (ControlledPawn == nullptr) return false;

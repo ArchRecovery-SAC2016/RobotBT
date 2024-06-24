@@ -5,7 +5,17 @@
 ARobotCleaner::ARobotCleaner() {
 	PrimaryActorTick.bCanEverTick = true;
 
-	Tags.Add(FName("Cleaner"));
+	Tags.Add(FName("CleanerRobot"));
+}
+
+void ARobotCleaner::BeginPlay() {
+	Super::BeginPlay();
+
+	RobotController = Cast<ARobotController>(GetController());
+	if (RobotController == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
+	}
+
 }
 
 bool ARobotCleaner::ProcessAction() {
@@ -13,6 +23,38 @@ bool ARobotCleaner::ProcessAction() {
 	return true;
 }
 
+
+
+bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
+	if (RobotController == nullptr) return false;
+
+	if (RoomSelected == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::CleanRoom] RoomSelected is nullptr"));
+		return false;
+	}
+
+	bool AllClean = true;
+
+	for (auto &RoomTrash : RoomSelected->RoomTrash) {
+		
+		if (RoomTrash->IsTrashClean == false) {
+			RobotController->RotateToFaceActor(RoomTrash);
+
+			bool AtLocation  = RobotController->MoveToActorLocation(RoomTrash);
+			if (AtLocation) {
+				ProcessAction();
+			} else {
+				AllClean = false;
+			}
+			
+		}
+	}
+
+	return AllClean;
+}
+
+
+/*
 ADoorSensor* ARobotCleaner::GetNextRoom() {
 	ARobotBTGameMode* GameMode = Cast<ARobotBTGameMode>(GetWorld()->GetAuthGameMode());
 
@@ -29,5 +71,5 @@ ADoorSensor* ARobotCleaner::GetNextRoom() {
 
 	return nullptr;
 }
-
+*/
 

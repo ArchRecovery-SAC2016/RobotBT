@@ -20,6 +20,9 @@ public:
 
 	bool MoveToActorLocation(AActor* MoveToLocation);
 
+	UFUNCTION()
+	void RotateToFaceActor(const AActor* ActorSelected);
+
 	bool ProcessAction();
 
 	UPROPERTY()
@@ -27,6 +30,8 @@ public:
 
 private:
 	bool ActionFinished = false;
+
+
 };
 
 
