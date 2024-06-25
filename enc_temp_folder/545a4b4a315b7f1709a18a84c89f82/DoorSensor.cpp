@@ -111,7 +111,7 @@ void ADoorSensor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
 	// if already open, we don't need to open it again
-	if (Opened == true) return;
+	if (Opened) return;
 
 	// marca que coletou o lixo e desaparece com o mesh
 	if (OtherActor->ActorHasTag("CleanerRobot")) {

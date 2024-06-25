@@ -37,9 +37,12 @@ void ARobotCleaner::StartCleaningRoom(ADoorSensor* _RoomSelected) {
 	this->RoomSelected = _RoomSelected;
 }
 
+
+
 void ARobotCleaner::StarOpeningDoor(ADoorSensor* _RoomSelected) {
 	IsOpeningDoor = true;
 	this->RoomSelected = _RoomSelected;
+	this->RoomSelected->OnDoorOpen.AddDynamic(this, &ARobotCleaner::DoorOpenCompleted);
 }
 
 bool ARobotCleaner::CleanRoom() {
@@ -76,8 +79,14 @@ bool ARobotCleaner::CleanRoom() {
 		return false;
 	}
 
-	OnDoorOpened.Broadcast(true);
+	OnRoomCleaned.Broadcast(true);
+	IsCleaning = false;
 	return AllClean;
+}
+
+void ARobotCleaner::DoorOpenCompleted(bool bNewState) {
+	IsOpeningDoor = false;
+	OnDoorOpened.Broadcast(true);
 }
 
 bool ARobotCleaner::OpenRoom() {
@@ -86,7 +95,6 @@ bool ARobotCleaner::OpenRoom() {
 		return false;
 	}
 
-	OnDoorOpened.Broadcast(false);
 	return true;
 }
 

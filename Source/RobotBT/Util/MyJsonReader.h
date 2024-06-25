@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Struct/TaskStruct.h"
 #include "MyJsonReader.generated.h"
 
@@ -19,4 +20,5 @@ public:
 
 	static TMap<FString, FTask> ReadTasks(const TSharedPtr<FJsonObject>& TasksObject);
 
+	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
 };

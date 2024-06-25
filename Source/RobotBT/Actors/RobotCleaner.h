@@ -32,6 +32,9 @@ public:
 
 	void StartCleaningRoom(ADoorSensor* RoomSelected);
 
+	UFUNCTION()
+	void DoorOpenCompleted(bool bNewState);
+
 	void StarOpeningDoor(ADoorSensor* RoomSelected);
 
 	FOnRoomCleaned OnRoomCleaned;

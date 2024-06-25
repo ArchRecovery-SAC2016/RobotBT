@@ -6,13 +6,14 @@
 #include "DoorSensor.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorStateChange, FString, Name);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorOpenChange, bool, NewState);
 
 UCLASS()
 class ROBOTBT_API ADoorSensor : public AActor {
 	GENERATED_BODY()
 
 protected:
+	
 	virtual void BeginPlay() override;
 
 public:	
@@ -29,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
 	UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "MyComponent")
 	class UBoxComponent* Collision;
 
 	// saves the furnitures of this room
@@ -69,7 +70,7 @@ public:
 	bool CheckIsRooomClean();
 
 	UPROPERTY()
-	FOnDoorStateChange OnDoorChange;
+	FOnDoorOpenChange OnDoorOpen;
 
 	UPROPERTY()
 	bool is_sanitized = false;
@@ -79,7 +80,11 @@ public:
 private:
 	void ChangeColor(bool NewValue);
 
+	// this event is called when the robot wants to open the door.
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-
+	UFUNCTION()
+	void ControlDoorOpen();
 	
 };
