@@ -51,7 +51,7 @@ void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	const FVector PlayerDirection = ActorSelected->GetActorLocation() - ControlledPawn->GetActorLocation();
 	const FRotator NewRotation = PlayerDirection.Rotation();
 	//  Refresh the rotation to face the player
-	ControlledPawn->SetActorRotation(FRotator(NewRotation.Pitch, NewRotation.Yaw, 0.0f));
+	ControlledPawn->SetActorRotation(NewRotation);
 }
 
 bool ARobotController::ProcessAction() {

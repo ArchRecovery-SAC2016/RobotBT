@@ -15,8 +15,13 @@ protected:
 
 	void GoInsideRoom(const FVector& RoomLocation);
 
-	// Controls if is inside room
-	bool IsNotInsideRoom = true;
+	void GoOutsideRoom(const FVector& RoomLocation);
+
+	// Controls if the Go Inside Room finished
+	bool bGoInsideRoom = false;
+
+	// Controls if is the Go Outside Room finished
+	bool bGoOutsideRoom = false;
 
 public:	
 	ARobot();

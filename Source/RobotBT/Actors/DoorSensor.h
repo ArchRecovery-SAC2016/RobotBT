@@ -45,8 +45,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
 	FLinearColor GreenColor;
 
+	// Used to move the robot to the inside of the room. Before the robot starts to clean the room, it will move to this location	
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
-	FVector RoomLocation;
+	FVector InsideRoomLocation;
+
+	// Used to move the robot to the outside of the room. After all actions finish, the robot will move to this location
+	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	FVector OutsideRoomLocation;
 
 	UFUNCTION()
 	FVector3d GetNextClearPosition();

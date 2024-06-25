@@ -25,9 +25,16 @@ void ARobot::GoInsideRoom(const FVector& RoomLocation) {
 		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
 	}
 
-	bool MoveCompleted = RobotController->MoveToNewLocation(RoomLocation);
+	bGoInsideRoom = RobotController->MoveToNewLocation(RoomLocation);
+}
 
-	IsNotInsideRoom = !MoveCompleted;
+void ARobot::GoOutsideRoom(const FVector& RoomLocation) {
+	ARobotController* RobotController = Cast<ARobotController>(GetController());
+	if (RobotController == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
+	}
+
+	bGoOutsideRoom = RobotController->MoveToNewLocation(RoomLocation);
 
 }
 

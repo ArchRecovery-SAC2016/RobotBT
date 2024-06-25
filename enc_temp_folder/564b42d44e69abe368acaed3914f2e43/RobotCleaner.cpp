@@ -56,7 +56,7 @@ bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 		}
 	}
 
-	if (AllClean == true && bGoOutsideRoom == false) {
+	if (bGoOutsideRoom == false) {
 		GoOutsideRoom(RoomSelected->OutsideRoomLocation);
 		return false;
 	}
