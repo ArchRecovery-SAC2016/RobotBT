@@ -84,6 +84,8 @@ private:
 
 	// saves the current index, so we can control the decomposition
 	int32 CurrentDecompositionIndex;
+
+	static void ShowLogMessage(const FString& Message);
 };
 
 

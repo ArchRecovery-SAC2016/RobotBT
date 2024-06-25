@@ -173,13 +173,6 @@ FTask* ARobotBTGameMode::GetNextTask() {
 		 CurrentTaskIndex = 0;
 	 }
 
-	if (Task != nullptr) {
-		FString TaskMessage = FString::Printf(TEXT("Next Task: %s!"), *Task->Name);
-		ShowLogMessage(TaskMessage);
-	} else {
-		ShowLogMessage(TEXT("No task found!"));
-	}
-
 	 return Task;
 	
 }
@@ -208,15 +201,21 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
 		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
+			ShowLogMessage(TEXT("Executing Cleaning Room Task!"));
 			if (Cleaning_Tick()) {  // will return true if the cleaning tick is completed
 				CurrentDecompositionIndex++;
 			} 
 		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
+			ShowLogMessage(TEXT("Executing Open Door Task!"));
+
+			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] Open Door is not implemented!"));
 			return false;
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
+			ShowLogMessage(TEXT("Executing SanitizeRobot Task!"));
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] SanitizeRobot is not implemented!"));
 			return false;
 		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
+			ShowLogMessage(TEXT("Executing MoveFurniture Task!"));
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
 			return false;
 		}
