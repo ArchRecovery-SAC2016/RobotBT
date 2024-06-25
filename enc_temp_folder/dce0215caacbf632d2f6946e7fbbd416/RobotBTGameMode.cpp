@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
-#include "Util/UtilMethods.h"
 
 ARobotBTGameMode::ARobotBTGameMode()
 {
@@ -105,7 +104,7 @@ UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 }
 
 bool ARobotBTGameMode::Cleaning_Task() {
-	UUtilMethods::UUtilMethods::ShowLogMessage(TEXT("Starting Cleaning Task"), EMessageColorEnum::INFO);
+	ShowLogMessage(TEXT("Starting Cleaning Task"), EMessageColorEnum::INFO);
 
 	if (RoomSelected == nullptr) {
 		RoomSelected = GetNextRoomToBePrepared();
@@ -122,7 +121,7 @@ bool ARobotBTGameMode::Cleaning_Task() {
 }
 
 bool ARobotBTGameMode::OpenDoor_Task() {
-	UUtilMethods::ShowLogMessage(TEXT("Starting Open Door Task"), EMessageColorEnum::INFO);
+	ShowLogMessage(TEXT("Starting Open Door Task"), EMessageColorEnum::INFO);
 
 	if (RoomSelected == nullptr) {
 		RoomSelected = GetNextRoomToBePrepared();
@@ -169,7 +168,7 @@ FTask* ARobotBTGameMode::GetNextTask() {
 
 		if (Task != nullptr) {
 			FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id, *Task->Name);
-			UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
+			ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 
 			if (CheckPreCondition(Task)) {
 				CurrentTaskIndex++;
@@ -179,12 +178,12 @@ FTask* ARobotBTGameMode::GetNextTask() {
 				CurrentTaskIndex++;
 			}
 		} else {
-			UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+			ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
 			ExperimentIsOver = true;
 		}
 	}
 
-	 UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+	 ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
 	 return nullptr;
 }
 
@@ -212,9 +211,13 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
 		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
-			Cleaning_Task();
+			if (Cleaning_Task()) {  // when the task end, will broadcast the event OnRoomCleaned
+				CurrentDecompositionIndex++;
+			} 
 		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
-			OpenDoor_Task();
+			if (OpenDoor_Task()) {  // when the task end, will broadcast the event OnDoorOpen
+				CurrentDecompositionIndex++;
+			}
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] SanitizeRobot is not implemented!"));
 			return false;
@@ -236,6 +239,26 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 	}
 
 	return false;
+}
+
+void ARobotBTGameMode::ShowLogMessage(const FString& Message, EMessageColorEnum Type) {
+	FColor Color = FColor::Emerald;
+
+	if (Type == EMessageColorEnum::ERROR) {
+		Color = FColor::Red;
+	} else if (Type == EMessageColorEnum::WARNING) {
+		Color = FColor::Yellow;
+	} else if (Type == EMessageColorEnum::INFO) {
+		Color = FColor::Green;
+	} else if (Type == EMessageColorEnum::SUCCESS) {
+		Color = FColor::Blue;
+	}
+
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, Color, Message);
+	}
+
+	UE_LOG(LogTemp, Display, TEXT("[ARobotBTGameMode::ShowLogMessage] %s"), *Message);
 }
 
 bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
@@ -261,7 +284,7 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 
 			if (Door == nullptr) {
 				FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door not found:: %s!"), *CurrentPrecondition.Vars);
-				UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+				ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 				return false;
 			}
 
@@ -269,13 +292,13 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 				if (Negation) { // if is a negation, line not RoomA.door_open, we need to check if the door is closed
 					if (Door->Opened == true) {
 						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is already open: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 						return false;
 					}
 				} else {
 					if(Door->Opened == false) {
 						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is not open: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 						return false;
 					}
 				}
@@ -283,25 +306,25 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 				if (Negation) {
 					if (Door->CheckIsRooomClean() == true) {
 						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room already is clear: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 						return false;
 					}
 				} else {
 					if (Door->CheckIsRooomClean() == false) {
 						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room not is clear: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 						return false;
 					}
 				}
 			} else if (Condition == TEXT("is_clean")) {
 				if (Door->Opened) {
 					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is not open: %s!"), *CurrentPrecondition.Predicate);
-					UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+					ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 					return false;
 				}
 			}
 		} else {
-			UUtilMethods::ShowLogMessage(TEXT("Precondition Not Found, returning true"), EMessageColorEnum::ERROR);
+			ShowLogMessage(TEXT("Precondition Not Found, returning true"), EMessageColorEnum::ERROR);
 			return true;
 		}
 	}
@@ -327,12 +350,11 @@ ADoorSensor* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
 
 void ARobotBTGameMode::OnRoomCleaned(bool bNewState) {
 	if (bNewState ) {
-		UUtilMethods::ShowLogMessage(TEXT("Room Cleaned!"), EMessageColorEnum::SUCCESS);
+		ShowLogMessage(TEXT("Room Cleaned!"), EMessageColorEnum::SUCCESS);
 	} else {
-		UUtilMethods::ShowLogMessage(TEXT("Room not Cleaned!"), EMessageColorEnum::ERROR);
+		ShowLogMessage(TEXT("Room not Cleaned!"), EMessageColorEnum::ERROR);
 	}
 
-	CurrentDecompositionIndex++;
 	// Continue executing tasks 
 	ExecuteCurrentTask();
 
@@ -340,13 +362,12 @@ void ARobotBTGameMode::OnRoomCleaned(bool bNewState) {
 
 void ARobotBTGameMode::OnDoorOpened(bool bNewState) {
 	if (bNewState) {
-		UUtilMethods::ShowLogMessage(TEXT("Door Opened!"), EMessageColorEnum::SUCCESS);
+		ShowLogMessage(TEXT("Door Opened!"), EMessageColorEnum::SUCCESS);
 	}
 	else {
-		UUtilMethods::ShowLogMessage(TEXT("Couldn't open Door"), EMessageColorEnum::ERROR);
+		ShowLogMessage(TEXT("Couldn't open Door"), EMessageColorEnum::ERROR);
 	}
 
-	CurrentDecompositionIndex++;
 	// Continue executing tasks 
 	ExecuteCurrentTask();
 

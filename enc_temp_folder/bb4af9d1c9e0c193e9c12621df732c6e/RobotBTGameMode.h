@@ -88,6 +88,8 @@ private:
 	// saves the current index, so we can control the decomposition
 	int32 CurrentDecompositionIndex;
 
+	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
+
 	// All task have preconditions. This method check if the preconditions are satisfied
 	bool CheckPreCondition(FTask* NewTask);
 

@@ -79,17 +79,8 @@ bool ARobotCleaner::CleanRoom() {
 		return false;
 	}
 
-	// all finished when we have no trash and we are outside the room
-	if (AllClean == true && bGoOutsideRoom == true) {
-		// we are done	
-		// we need to notify the game mode that the room is clean
-		IsCleaning = false;
-		OnRoomCleaned.Broadcast(true);
-		RoomSelected->is_sanitized = true;
-		return true;
-	}
-	
-	
+	OnRoomCleaned.Broadcast(true);
+	IsCleaning = false;
 	return AllClean;
 }
 
