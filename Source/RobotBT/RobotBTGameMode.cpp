@@ -34,7 +34,7 @@ void ARobotBTGameMode::BeginPlay() {
     Super::BeginPlay();
 
 	// load all tasks from file
-	LoadTasks();
+	LoadTasksFromFile();
 
 	// Load all Doors Sensors, so we can watch it
     TArray<AActor*> FoundSensors;
@@ -54,6 +54,8 @@ void ARobotBTGameMode::BeginPlay() {
 		ARobotCleaner* Cleaner = Cast<ARobotCleaner>(Actor);
 		if (Cleaner != nullptr) {
 			CleanerRobot = Cleaner;
+			Cleaner->OnRoomCleaned.AddDynamic(this, &ARobotBTGameMode::OnRoomCleaned);
+			Cleaner->OnDoorOpened.AddDynamic(this, &ARobotBTGameMode::OnDoorOpened);
 		}
 	}
 
@@ -69,22 +71,16 @@ void ARobotBTGameMode::BeginPlay() {
 
 	CurrentTask = GetNextTask();
 
+	ExecuteCurrentTask();
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-	if (ExperimentIsOver || IsWaiting) return;
+	UpdateWorldKnowledgeWidget();
 
+	if (ExperimentIsOver) return;
 
-    UpdateWorldKnowledgeWidget();
-
-	bool TaskEnd = ExecuteCurrentTask();
-
-	if (TaskEnd) {
-		CurrentTask = GetNextTask();
-
-	}
 }
 
 void ARobotBTGameMode::UpdateWorldKnowledgeWidget() {
@@ -107,30 +103,34 @@ UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 	return WorldKnowledgeWidgetInst;
 }
 
-bool ARobotBTGameMode::Cleaning_Tick() {
+bool ARobotBTGameMode::Cleaning_Task() {
+	ShowLogMessage(TEXT("Starting Cleaning Task"), EMessageColorEnum::INFO);
+
 	if (RoomSelected == nullptr) {
 		RoomSelected = GetNextRoomToBePrepared();
 	}
 
-	if (CleanerRobot->CleanRoom(RoomSelected)) {
-		RoomSelected = nullptr;
-
-		return true;
+	if (RoomSelected) {
+		CleanerRobot->StartCleaningRoom(RoomSelected);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotBTGameMode::Cleaning_Tick] RoomSelected is nullptr"));
 	}
 
 	return false;
 
 }
 
-bool ARobotBTGameMode::OpenDoor_Tick() {
+bool ARobotBTGameMode::OpenDoor_Task() {
+	ShowLogMessage(TEXT("Starting Open Door Task"), EMessageColorEnum::INFO);
+
 	if (RoomSelected == nullptr) {
 		RoomSelected = GetNextRoomToBePrepared();
 	}
 
-	if (CleanerRobot->CleanRoom(RoomSelected)) {
-		RoomSelected = nullptr;
-
-		return true;
+	if (RoomSelected) {
+		CleanerRobot->StarOpeningDoor(RoomSelected);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotBTGameMode::Cleaning_Tick] RoomSelected is nullptr"));
 	}
 
 	return false;
@@ -149,67 +149,42 @@ ADoorSensor* ARobotBTGameMode::GetNextRoomToBePrepared() {
 	return nullptr;
 }
 
-bool ARobotBTGameMode::CheckPreconditions() {
-		return false;
-}
-
-bool ARobotBTGameMode::CheckEffects() {
-		return false;
-}
-
-void ARobotBTGameMode::LoadTasks() {
+void ARobotBTGameMode::LoadTasksFromFile() {
 	Tasks = UMyJsonReader::ReadJsonFile();
 }
 
 FTask* ARobotBTGameMode::GetNextTask() {
 	 // Check if the tasks map is not empty
-	 if (Tasks.Num() == 0) {
+	 if (Tasks.Num() == 0 || ExperimentIsOver) {
 		 return nullptr;
-	 }
-
-	 // If it's the first time or CurrentTaskIndex is out of bounds, reset the index
-	 if (CurrentTaskIndex < 0 || CurrentTaskIndex >= Tasks.Num()) {
-		 CurrentTaskIndex = 0;
 	 }
 
 	 // Retrieve all keys of the map
 	 TArray<FString> Keys;
 	 Tasks.GetKeys(Keys);
 
-	 // Get the task by the current index
-	 FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
+	 while (CurrentTaskIndex < Tasks.Num()) {
+		FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
 
-	 // Increment the index for the next call
-	 CurrentTaskIndex++;
+		if (Task != nullptr) {
+			FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id, *Task->Name);
+			ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 
-	 // If CurrentTaskIndex goes out of bounds, reset it
-	 if (CurrentTaskIndex >= Tasks.Num()) {
-		 CurrentTaskIndex = 0;
-	 }
-
-	if (Task != nullptr) {
-		FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id , *Task->Name);
-		ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
-
-		if (!CheckPreCondition(Task)) {
-			ShowLogMessage(TEXT("Waiting..."), EMessageColorEnum::INFO);
-			IsWaiting = true;
-			// Wait a little and Try to get a new task
-			FTimerHandle TimerHandle;
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ARobotBTGameMode::GetNextTaskAfterDelay, 5.0f, false);
-			return nullptr;
+			if (CheckPreCondition(Task)) {
+				CurrentTaskIndex++;
+				return Task;
+			} else {
+				// if fails, we try another
+				CurrentTaskIndex++;
+			}
+		} else {
+			ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+			ExperimentIsOver = true;
 		}
-
-	} else {
-		ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
-		ExperimentIsOver = true;
 	}
 
-	 return Task;
-}
-
-void ARobotBTGameMode::GetNextTaskAfterDelay() {
-	GetNextTask();
+	 ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+	 return nullptr;
 }
 
 bool ARobotBTGameMode::ExecuteCurrentTask() {
@@ -236,11 +211,11 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
 		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
-			if (Cleaning_Tick()) {  // will return true if the cleaning tick is completed
+			if (Cleaning_Task()) {  // when the task end, will broadcast the event OnRoomCleaned
 				CurrentDecompositionIndex++;
 			} 
 		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
-			if (OpenDoor_Tick()) {  // will return when the door is open
+			if (OpenDoor_Task()) {  // when the task end, will broadcast the event OnDoorOpen
 				CurrentDecompositionIndex++;
 			}
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
@@ -258,7 +233,8 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		// reset the decomposition index
 		CurrentDecompositionIndex = 0;
 
-		// If gets here, all decomposition was executed
+		// If gets here, all decomposition was executed, and we can got to the next task
+		GetNextTask();
 		return true;
 	}
 
@@ -286,7 +262,7 @@ void ARobotBTGameMode::ShowLogMessage(const FString& Message, EMessageColorEnum 
 }
 
 bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
-	bool ReturnValue = false;
+	bool ReturnValue = true;
 
 	if (NewTask == nullptr){
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
@@ -370,4 +346,29 @@ ADoorSensor* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
 	}
 
 	return nullptr;
+}
+
+void ARobotBTGameMode::OnRoomCleaned(bool bNewState) {
+	if (bNewState ) {
+		ShowLogMessage(TEXT("Room Cleaned!"), EMessageColorEnum::SUCCESS);
+	} else {
+		ShowLogMessage(TEXT("Room not Cleaned!"), EMessageColorEnum::ERROR);
+	}
+
+	// Continue executing tasks 
+	ExecuteCurrentTask();
+
+}
+
+void ARobotBTGameMode::OnDoorOpened(bool bNewState) {
+	if (bNewState) {
+		ShowLogMessage(TEXT("Door Opened!"), EMessageColorEnum::SUCCESS);
+	}
+	else {
+		ShowLogMessage(TEXT("Couldn't open Door"), EMessageColorEnum::ERROR);
+	}
+
+	// Continue executing tasks 
+	ExecuteCurrentTask();
+
 }

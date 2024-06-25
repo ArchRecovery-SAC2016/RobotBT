@@ -16,13 +16,34 @@ void ARobotCleaner::BeginPlay() {
 
 }
 
+void ARobotCleaner::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
+
+	if (IsCleaning) {
+		CleanRoom();
+	} else if (IsOpeningDoor) {
+		OpenRoom();
+	}
+
+}
+
 bool ARobotCleaner::ProcessAction() {
 
 	return true;
 }
 
-bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
-	// first is to move inside the room
+void ARobotCleaner::StartCleaningRoom(ADoorSensor* _RoomSelected) {
+	IsCleaning = true;
+	this->RoomSelected = _RoomSelected;
+}
+
+void ARobotCleaner::StarOpeningDoor(ADoorSensor* _RoomSelected) {
+	IsOpeningDoor = true;
+	this->RoomSelected = _RoomSelected;
+}
+
+bool ARobotCleaner::CleanRoom() {
+	// first we need to move inside the room
 	if (bGoInsideRoom == false) {
 		GoInsideRoom(RoomSelected->InsideRoomLocation);
 		return false;
@@ -55,16 +76,17 @@ bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 		return false;
 	}
 
-	// if gets here, all the trash is clean. So we need to go to the door
+	OnDoorOpened.Broadcast(true);
 	return AllClean;
 }
 
-bool ARobotCleaner::OpenRoom(ADoorSensor* RoomSelected) {
+bool ARobotCleaner::OpenRoom() {
 	if (bGoInsideRoom == false) {
 		GoInsideRoom(RoomSelected->InsideRoomLocation);
 		return false;
 	}
 
+	OnDoorOpened.Broadcast(false);
 	return true;
 }
 

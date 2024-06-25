@@ -20,6 +20,8 @@ class ARobotBTGameMode : public AGameModeBase
 
 public:
 	ARobotBTGameMode();
+
+	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
@@ -39,14 +41,9 @@ public:
 	UFUNCTION()
 	ADoorSensor* GetNextRoomToBePrepared();
 
+	// Load tasks from file
 	UFUNCTION()
-	bool CheckPreconditions();
-
-	UFUNCTION()
-	bool CheckEffects();
-
-	UFUNCTION()
-	void LoadTasks();
+	void LoadTasksFromFile();
 
 private:
 
@@ -66,13 +63,11 @@ private:
 
 	// execute the taks to clear the room
 	UFUNCTION()
-	bool Cleaning_Tick();
+	bool Cleaning_Task();
 
 	// execute the taks to open the door
 	UFUNCTION()
-	bool OpenDoor_Tick();
-
-	EActionsEnum ActiveAction = EActionsEnum::NONE;
+	bool OpenDoor_Task();
 
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
@@ -83,10 +78,6 @@ private:
 
 	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
-
-	// Used when the task failed and we need to get the next one
-	UFUNCTION()
-	void GetNextTaskAfterDelay();
 
 	// After the task is choosed, this method will execute it in the tick function
 	bool ExecuteCurrentTask();
@@ -99,6 +90,7 @@ private:
 
 	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
 
+	// All task have preconditions. This method check if the preconditions are satisfied
 	bool CheckPreCondition(FTask* NewTask);
 
 	bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
@@ -107,8 +99,13 @@ private:
 
 	bool ExperimentIsOver = false;
 
-	// is a control variable, used to wait a little before continue the tick event
-	bool IsWaiting = false;
+	// is a bind function. Called when a task of the robot is finished
+	UFUNCTION()
+	void OnRoomCleaned(bool bNewState);
+
+	// is a bind function. Called when a task of the robot is finished
+	UFUNCTION()
+	void OnDoorOpened(bool bNewState);
 };
 
 
