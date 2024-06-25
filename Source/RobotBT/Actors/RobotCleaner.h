@@ -15,6 +15,7 @@ public:
 	ARobotCleaner();
 	void BeginPlay();
 
+
 	UPROPERTY()
 	bool IsCleaning = false;
 	
@@ -23,6 +24,9 @@ public:
 
 	// Called by the Event tick from the Game Mode. Will clean the room selected. Return true if the room is clean and false if it is not
 	bool CleanRoom(ADoorSensor* RoomSelected);
+
+	// Called by the Event tick from the Game Mode. Will open the room selected. Return true if the room is open and false if it is not
+	bool OpenRoom(ADoorSensor* DoorSensor);
 
 
 private:

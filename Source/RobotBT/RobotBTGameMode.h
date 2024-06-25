@@ -64,8 +64,13 @@ private:
 	UPROPERTY()
 	ADoorSensor* RoomSelected;
 
+	// execute the taks to clear the room
 	UFUNCTION()
 	bool Cleaning_Tick();
+
+	// execute the taks to open the door
+	UFUNCTION()
+	bool OpenDoor_Tick();
 
 	EActionsEnum ActiveAction = EActionsEnum::NONE;
 
@@ -76,8 +81,14 @@ private:
 
 	FTask* CurrentTask;
 
+	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
 
+	// Used when the task failed and we need to get the next one
+	UFUNCTION()
+	void GetNextTaskAfterDelay();
+
+	// After the task is choosed, this method will execute it in the tick function
 	bool ExecuteCurrentTask();
 
 	// saves the current task decomposition
@@ -95,6 +106,9 @@ private:
 	ADoorSensor* GetDoorByName(const FString& DoorName);
 
 	bool ExperimentIsOver = false;
+
+	// is a control variable, used to wait a little before continue the tick event
+	bool IsWaiting = false;
 };
 
 

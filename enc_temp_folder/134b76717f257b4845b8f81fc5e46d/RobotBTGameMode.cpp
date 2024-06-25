@@ -327,18 +327,10 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 					}
 				}
 			} else if (Condition == TEXT("is_clean")) {
-				if (Negation) {
-					if (Door->CheckIsRooomClean() == true) {
-						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room already is clear: %s!"), *CurrentPrecondition.Predicate);
-						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
-						return false;
-					}
-				} else {
-					if (Door->CheckIsRooomClean() == false) {
-						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room not is clear: %s!"), *CurrentPrecondition.Predicate);
-						ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
-						return false;
-					}
+				if (!Door->CheckIsRooomClean()) {
+					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room already is clear: %s!"), *CurrentPrecondition.Predicate);
+					ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+					return false;
 				}
 			} else if (Condition == TEXT("is_clean")) {
 				if (Door->Opened) {

@@ -1,7 +1,5 @@
 #include "RobotCleaner.h"
 
-#include "RobotBT/RobotBTGameMode.h"
-
 ARobotCleaner::ARobotCleaner() {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -22,8 +20,6 @@ bool ARobotCleaner::ProcessAction() {
 
 	return true;
 }
-
-
 
 bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 	// first is to move inside the room
@@ -63,6 +59,14 @@ bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 	return AllClean;
 }
 
+bool ARobotCleaner::OpenRoom(ADoorSensor* RoomSelected) {
+	if (bGoInsideRoom == false) {
+		GoInsideRoom(RoomSelected->InsideRoomLocation);
+		return false;
+	}
+
+	return true;
+}
 
 
 /*
