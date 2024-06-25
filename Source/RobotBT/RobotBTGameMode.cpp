@@ -74,6 +74,8 @@ void ARobotBTGameMode::BeginPlay() {
 void ARobotBTGameMode::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
+	if (ExperimentIsOver) return;
+
     UpdateWorldKnowledgeWidget();
 	bool TaskEnd = ExecuteCurrentTask();
 
@@ -175,9 +177,17 @@ FTask* ARobotBTGameMode::GetNextTask() {
 
 	if (Task != nullptr) {
 		FString TaskMessage = FString::Printf(TEXT("Next Task: %s!"), *Task->Name);
-		ShowLogMessage(TaskMessage);
+		ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
+
+		if (!CheckPreCondition(Task)) {
+			// Try to get a new task
+			CurrentTaskIndex++;
+			GetNextTask();
+		}
+
 	} else {
-		ShowLogMessage(TEXT("No task found!"));
+		ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+		ExperimentIsOver = true;
 	}
 
 	 return Task;
@@ -231,8 +241,83 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 	return false;
 }
 
-void ARobotBTGameMode::ShowLogMessage(const FString& Message) {
+void ARobotBTGameMode::ShowLogMessage(const FString& Message, EMessageColorEnum Type) {
+	FColor Color = FColor::Emerald;
+
+	if (Type == EMessageColorEnum::ERROR) {
+		Color = FColor::Red;
+	} else if (Type == EMessageColorEnum::WARNING) {
+		Color = FColor::Yellow;
+	} else if (Type == EMessageColorEnum::INFO) {
+		Color = FColor::Green;
+	} else if (Type == EMessageColorEnum::SUCCESS) {
+		Color = FColor::Blue;
+	}
+
 	if (GEngine) {
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, Message);
 	}
+}
+
+bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
+	bool ReturnValue = false;
+
+	if (NewTask == nullptr){
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
+		return ReturnValue;
+	}
+
+	for (int32 i=0; i < NewTask->Preconditions.Num(); i++) {
+		FTaskPrecondition CurrentPrecondition = NewTask->Preconditions[i];
+		FString ObjectName, Condition;
+
+		if (!ParsePredicate(CurrentPrecondition.Predicate, ObjectName, Condition)) {
+			UE_LOG(LogTemp, Error, TEXT("Failed to parse predicate: %s"), *CurrentPrecondition.Predicate);
+			return false;
+		}
+
+		if (CurrentPrecondition.VarTypes == TEXT("room")) {
+			auto Door = GetDoorByName(CurrentPrecondition.Vars);
+			if (Door == nullptr) {
+				FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door not found:: %s!"), *CurrentPrecondition.Vars);
+				ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+				return false;
+			}
+
+			if (Condition == TEXT("door_open")) {
+				if(!Door->Opened) {
+					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is not open: %s!"), *CurrentPrecondition.Predicate);
+					ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+					return false;
+				}
+			} else if (Condition == TEXT("is_clean")) {
+				if (!Door->CheckIsRooomClean()) {
+					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room already is clear: %s!"), *CurrentPrecondition.Predicate);
+					ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+					return false;
+				}
+			}
+		} else {
+			ShowLogMessage(TEXT("Precondition Not Found, returning true"), EMessageColorEnum::ERROR);
+			return true;
+		}
+	}
+
+
+	return ReturnValue;
+}
+
+
+bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
+	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
+}
+
+ADoorSensor* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
+	for (auto Door : DoorSensors) {
+		if (Door->Name == DoorName) {
+			return Door;
+		}
+	}
+
+	return nullptr;
 }

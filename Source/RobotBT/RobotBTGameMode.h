@@ -7,6 +7,7 @@
 #include "Actors/RobotCleaner.h"
 #include "Actors/RobotOrganizer.h"
 #include "Enum/ActionsEnum.h"
+#include "Enum/MessageColorEnum.h"
 #include "Struct/TaskStruct.h"
 #include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
@@ -85,8 +86,17 @@ private:
 	// saves the current index, so we can control the decomposition
 	int32 CurrentDecompositionIndex;
 
-	static void ShowLogMessage(const FString& Message);
+	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
+
+	bool CheckPreCondition(FTask* NewTask);
+
+	bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
+
+	ADoorSensor* GetDoorByName(const FString& DoorName);
+
+	bool ExperimentIsOver = false;
 };
+
 
 
 
