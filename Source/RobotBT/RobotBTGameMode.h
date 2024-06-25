@@ -36,12 +36,6 @@ public:
 	TArray<ADoorSensor*>GetDoors() { return DoorSensors; }
 
 	UFUNCTION()
-	TArray<ADoorSensor*> GetRoomsToBePrepared();
-
-	UFUNCTION()
-	ADoorSensor* GetNextRoom();
-
-	UFUNCTION()
 	ADoorSensor* GetNextRoomToBePrepared();
 
 	UFUNCTION()
@@ -77,9 +71,11 @@ private:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
-	TMap<FString, FTask>::TConstIterator* CurrentTaskIterator;
+	int32 CurrentTaskIndex;
 
-	TMap<FString, FTask>::TConstIterator* GetNextTask();
+	FTask* CurrentTask;
+
+	FTask* GetNextTask();
 
 	bool ExecuteCurrentTask();
 

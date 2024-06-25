@@ -57,7 +57,6 @@ void ARobotBTGameMode::BeginPlay() {
 		}
 	}
 
-
 	// Load organization robot
 	TArray<AActor*> FoundOrganizer;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotOrganizer::StaticClass(), FoundOrganizer);
@@ -68,18 +67,18 @@ void ARobotBTGameMode::BeginPlay() {
 		}
 	}
 
-	GetNextTask();
+	CurrentTask = GetNextTask();
 
 }
 
 void ARobotBTGameMode::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-   UpdateWorldKnowledgeWidget();
+    UpdateWorldKnowledgeWidget();
 	bool TaskEnd = ExecuteCurrentTask();
 
 	if (TaskEnd) {
-		GetNextTask();
+		CurrentTask = GetNextTask();
 	}
 }
 
@@ -118,28 +117,13 @@ bool ARobotBTGameMode::Cleaning_Tick() {
 
 }
 
-TArray<ADoorSensor*> ARobotBTGameMode::GetRoomsToBePrepared() {
-	TArray<ADoorSensor*> PreparedRooms;
-
-	for (ADoorSensor* Door : DoorSensors) {
-		if (Door->IsPrepared() == false) {
-			PreparedRooms.Add(Door);
-		}
-	}
-
-	return PreparedRooms;
-}
-
-ADoorSensor* ARobotBTGameMode::GetNextRoom() {
-
-	return nullptr;
-}
-
 ADoorSensor* ARobotBTGameMode::GetNextRoomToBePrepared() {
-	TArray<ADoorSensor*> PreparedRooms = GetRoomsToBePrepared();
-
-	if (PreparedRooms.Num() > 0) {
-		return PreparedRooms[0];
+	if (CurrentTask == nullptr) return nullptr;
+	
+	for (auto Door :  DoorSensors) {
+		if (Door->Name == CurrentTask->Locations) {
+			return Door;
+		}
 	}
 
 	return nullptr;
@@ -157,35 +141,58 @@ void ARobotBTGameMode::LoadTasks() {
 	Tasks = UMyJsonReader::ReadJsonFile();
 }
 
-TMap<FString, FTask>::TConstIterator* ARobotBTGameMode::GetNextTask() {
-	// if the first time
-	if (CurrentTaskIterator == nullptr) {
-		CurrentTaskIterator = new TMap<FString, FTask>::TConstIterator(Tasks.CreateConstIterator());
-		return CurrentTaskIterator;
-	}
+FTask* ARobotBTGameMode::GetNextTask() {
+	// reset the decomposition array
+	DecompositionQueue.Empty();
 
-	if (CurrentTaskIterator && Tasks.Num() > 0) {
-		++CurrentTaskIterator;
-		if (CurrentTaskIterator) {
-			return CurrentTaskIterator;
-		}
-	}
+	// reset the decomposition index
+	 CurrentDecompositionIndex = 0;
 
+	 // Check if the tasks map is not empty
+	 if (Tasks.Num() == 0) {
+		 return nullptr;
+	 }
 
-	return nullptr;
+	 // If it's the first time or CurrentTaskIndex is out of bounds, reset the index
+	 if (CurrentTaskIndex < 0 || CurrentTaskIndex >= Tasks.Num()) {
+		 CurrentTaskIndex = 0;
+	 }
+
+	 // Retrieve all keys of the map
+	 TArray<FString> Keys;
+	 Tasks.GetKeys(Keys);
+
+	 // Get the task by the current index
+	 FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
+
+	 // Increment the index for the next call
+	 CurrentTaskIndex++;
+
+	 // If CurrentTaskIndex goes out of bounds, reset it
+	 if (CurrentTaskIndex >= Tasks.Num()) {
+		 CurrentTaskIndex = 0;
+	 }
+
+	 return Task;
+	
 }
 
 bool ARobotBTGameMode::ExecuteCurrentTask() {
-	if (CurrentTaskIterator == nullptr) return false;
+	if (CurrentTask == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
+		return false;
+	}
 
-	const FTask& CurrentTask = CurrentTaskIterator->Value();
+	if (CurrentTask->Decomposition.Num() == 0) {
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTask.Decomposition is empty!"));
+		return false;
+	}
 
 	// if is empty, so is the first time of this task, so we fill the decomposition queue
 	if (DecompositionQueue.IsEmpty())	{
-		for (auto it = CurrentTask.Decomposition.CreateConstIterator(); it; ++it) {
+		for (auto it = CurrentTask->Decomposition.CreateConstIterator(); it; ++it) {
 			DecompositionQueue.Add(it.Value());
 		}
-		
 	}
 
 	if (CurrentDecompositionIndex < DecompositionQueue.Num()) {
@@ -194,18 +201,23 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
 		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
-			
+		
 			if (Cleaning_Tick()) {  // will return true if the cleaning tick is completed
 				CurrentDecompositionIndex++;
-			}
+			} 
+		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
+			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] Open Door is not implemented!"));
+			return false;
+		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
+			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] SanitizeRobot is not implemented!"));
+			return false;
+		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
+			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
+			return false;
 		}
 
 	} else {
-		// reset the decomposition array
-		DecompositionQueue.Empty();
 
-		// reset the decomposition index
-		CurrentDecompositionIndex = 0;
 
 		// If gets here, all decomposition was executed
 		return true;
