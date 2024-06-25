@@ -44,8 +44,6 @@ bool ARobotCleaner::CleanRoom(ADoorSensor* RoomSelected) {
 	for (auto &RoomTrash : RoomSelected->RoomTrash) {
 		
 		if (RoomTrash->IsTrashClean == false) {
-			RobotController->RotateToFaceActor(RoomTrash);
-
 			bool AtLocation  = RobotController->MoveToActorLocation(RoomTrash);
 			if (AtLocation) {
 				ProcessAction();
