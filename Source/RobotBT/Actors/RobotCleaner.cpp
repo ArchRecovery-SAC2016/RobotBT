@@ -23,107 +23,98 @@ void ARobotCleaner::Tick(float DeltaSeconds) {
 		CleanRoom();
 	} else if (IsOpeningDoor) {
 		OpenRoom();
+	} else if (IsSanitizing) {
+		SanitizeRoom();
 	}
-
-}
-
-bool ARobotCleaner::ProcessAction() {
-
-	return true;
 }
 
 void ARobotCleaner::StartCleaningRoom(ADoorSensor* _RoomSelected) {
+	if (_RoomSelected == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::StartCleaningRoom] RoomSelected is nullptr"));
+		return;
+	}
+
 	IsCleaning = true;
 	this->RoomSelected = _RoomSelected;
 }
 
+void ARobotCleaner::StartSanitize(ADoorSensor* _RoomSelected) {
+	if (_RoomSelected == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::StartCleaningRoom] RoomSelected is nullptr"));
+		return;
+	}
 
+	IsSanitizing = true;
+	this->RoomSelected = _RoomSelected;
+}
 
-void ARobotCleaner::StarOpeningDoor(ADoorSensor* _RoomSelected) {
+void ARobotCleaner::StartOpeningDoor(ADoorSensor* _RoomSelected) {
+	if (_RoomSelected == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::StartCleaningRoom] RoomSelected is nullptr"));
+		return;
+	}
+
 	IsOpeningDoor = true;
 	this->RoomSelected = _RoomSelected;
 	this->RoomSelected->OnDoorOpen.AddDynamic(this, &ARobotCleaner::DoorOpenCompleted);
 }
 
-bool ARobotCleaner::CleanRoom() {
+void ARobotCleaner::CleanRoom() {
 	// first we need to move inside the room
 	if (bGoInsideRoom == false) {
 		GoInsideRoom(RoomSelected->InsideRoomLocation);
-		return false;
-	}
-	
-	if (RobotController == nullptr) return false;
-
-	if (RoomSelected == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::CleanRoom] RoomSelected is nullptr"));
-		return false;
 	}
 
+	// if get here, we are inside the room,and now we need to clean the trash
 	bool AllClean = true;
-
 	for (auto &RoomTrash : RoomSelected->RoomTrash) {
-		
 		if (RoomTrash->IsTrashClean == false) {
 			bool AtLocation  = RobotController->MoveToActorLocation(RoomTrash);
-			if (AtLocation) {
-				ProcessAction();
-			} else {
+			if (AtLocation == false) {
 				AllClean = false;
 			}
-			
 		}
 	}
 
+	// if everything is clean, we need to go outside the room
 	if (AllClean == true && bGoOutsideRoom == false) {
 		GoOutsideRoom(RoomSelected->OutsideRoomLocation);
-		return false;
 	}
 
-	// all finished when we have no trash and we are outside the room
+	// if all clean and we are outside room, we finished here and notifi the success
 	if (AllClean == true && bGoOutsideRoom == true) {
-		// we are done	
-		// we need to notify the game mode that the room is clean
 		IsCleaning = false;
 		OnRoomCleaned.Broadcast(true);
 		RoomSelected->is_sanitized = true;
-		return true;
 	}
-	
-	
-	return AllClean;
+}
+
+void  ARobotCleaner::SanitizeRoom() {
+	if (bGoInsideRoom == false) {
+		GoInsideRoom(RoomSelected->InsideRoomLocation);
+	}
+
+	// if is already inside, go outside
+	if (bGoInsideRoom == true && bGoOutsideRoom == false) {
+		GoOutsideRoom(RoomSelected->OutsideRoomLocation);
+	}
+
+	// if is already outside and inside, we are done
+	if (bGoInsideRoom && bGoOutsideRoom) {
+		IsSanitizing = false;
+		OnRobotSanitized.Broadcast(true);
+	}
+}
+
+void ARobotCleaner::OpenRoom() {
+	// just try to get inside. When we touch the door, the door will open and the event DoorOpenCompleted will broadcast the success of this action
+	if (bGoInsideRoom == false) {
+		GoInsideRoom(RoomSelected->InsideRoomLocation);
+	}
 }
 
 void ARobotCleaner::DoorOpenCompleted(bool bNewState) {
 	IsOpeningDoor = false;
 	OnDoorOpened.Broadcast(true);
 }
-
-bool ARobotCleaner::OpenRoom() {
-	if (bGoInsideRoom == false) {
-		GoInsideRoom(RoomSelected->InsideRoomLocation);
-		return false;
-	}
-
-	return true;
-}
-
-
-/*
-ADoorSensor* ARobotCleaner::GetNextRoom() {
-	ARobotBTGameMode* GameMode = Cast<ARobotBTGameMode>(GetWorld()->GetAuthGameMode());
-
-	if (GameMode == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GetNextRoom] Failed to recover the GameMode"));
-		return nullptr;
-	}
-
-	for (ADoorSensor* Door : GameMode->GetDoors()) {
-		if (Door->CheckIsRooomClean() == false) {
-			return Door;
-		}
-	}
-
-	return nullptr;
-}
-*/
 

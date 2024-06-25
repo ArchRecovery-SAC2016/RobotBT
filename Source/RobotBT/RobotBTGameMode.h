@@ -39,7 +39,7 @@ public:
 	TArray<ADoorSensor*>GetDoors() { return DoorSensors; }
 
 	UFUNCTION()
-	ADoorSensor* GetNextRoomToBePrepared();
+	ADoorSensor* GetTaskRoom();
 
 	// Load tasks from file
 	UFUNCTION()
@@ -57,18 +57,6 @@ private:
 	UPROPERTY()
 	UWorldKnowledgeWidget* WorldKnowledgeWidgetInst;
 
-	/* Saves the instance of the Room Selected to be clean */
-	UPROPERTY()
-	ADoorSensor* RoomSelected;
-
-	// execute the taks to clear the room
-	UFUNCTION()
-	bool Cleaning_Task();
-
-	// execute the taks to open the door
-	UFUNCTION()
-	bool OpenDoor_Task();
-
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
@@ -79,6 +67,7 @@ private:
 	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
 
+	
 	// After the task is choosed, this method will execute it in the tick function
 	bool ExecuteCurrentTask();
 

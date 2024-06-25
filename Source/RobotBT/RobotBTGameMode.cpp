@@ -104,41 +104,7 @@ UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 	return WorldKnowledgeWidgetInst;
 }
 
-bool ARobotBTGameMode::Cleaning_Task() {
-	UUtilMethods::UUtilMethods::ShowLogMessage(TEXT("Starting Cleaning Task"), EMessageColorEnum::INFO);
-
-	if (RoomSelected == nullptr) {
-		RoomSelected = GetNextRoomToBePrepared();
-	}
-
-	if (RoomSelected) {
-		CleanerRobot->StartCleaningRoom(RoomSelected);
-	} else {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotBTGameMode::Cleaning_Tick] RoomSelected is nullptr"));
-	}
-
-	return false;
-
-}
-
-bool ARobotBTGameMode::OpenDoor_Task() {
-	UUtilMethods::ShowLogMessage(TEXT("Starting Open Door Task"), EMessageColorEnum::INFO);
-
-	if (RoomSelected == nullptr) {
-		RoomSelected = GetNextRoomToBePrepared();
-	}
-
-	if (RoomSelected) {
-		CleanerRobot->StarOpeningDoor(RoomSelected);
-	} else {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotBTGameMode::Cleaning_Tick] RoomSelected is nullptr"));
-	}
-
-	return false;
-
-}
-
-ADoorSensor* ARobotBTGameMode::GetNextRoomToBePrepared() {
+ADoorSensor* ARobotBTGameMode::GetTaskRoom() {
 	if (CurrentTask == nullptr) return nullptr;
 	
 	for (auto Door :  DoorSensors) {
@@ -212,11 +178,11 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
 		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
-			Cleaning_Task();
+			if (CleanerRobot) CleanerRobot->StartCleaningRoom(GetTaskRoom());
 		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
-			OpenDoor_Task();
+			if (CleanerRobot) CleanerRobot->StartOpeningDoor(GetTaskRoom());
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
-			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] SanitizeRobot is not implemented!"));
+			if (CleanerRobot) CleanerRobot->StartSanitize(GetTaskRoom());
 			return false;
 		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
