@@ -24,6 +24,10 @@ public:
 	
 	void Tick(float DeltaSeconds) override;
 
+	// Save if the bot is sanitized
+	UPROPERTY()
+	bool IsRobotSanitized = false;
+
 	UPROPERTY()
 	bool IsCleaning = false;
 

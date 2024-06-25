@@ -21,7 +21,7 @@ class ARobotBTGameMode : public AGameModeBase
 public:
 	ARobotBTGameMode();
 
-	
+
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
@@ -67,9 +67,8 @@ private:
 	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
 
-	
 	// After the task is choosed, this method will execute it in the tick function
-	bool ExecuteCurrentTask();
+	void ExecuteCurrentTask();
 
 	// saves the current task decomposition
 	TArray<FTaskDecomposition> DecompositionQueue;
@@ -93,6 +92,12 @@ private:
 	// is a bind function. Called when a task of the robot is finished
 	UFUNCTION()
 	void OnDoorOpened(bool bNewState);
+
+	// is a bind function. Called when a task of the robot sanitized is finished
+	UFUNCTION()
+	void OnRobotSanitized(bool bNewState);
+
+	
 };
 
 

@@ -84,8 +84,9 @@ void ARobotCleaner::CleanRoom() {
 	// if all clean and we are outside room, we finished here and notifi the success
 	if (AllClean == true && bGoOutsideRoom == true) {
 		IsCleaning = false;
+
+		IsRobotSanitized = false;
 		OnRoomCleaned.Broadcast(true);
-		RoomSelected->is_sanitized = true;
 	}
 }
 
@@ -111,10 +112,12 @@ void ARobotCleaner::OpenRoom() {
 	if (bGoInsideRoom == false) {
 		GoInsideRoom(RoomSelected->InsideRoomLocation);
 	}
+
 }
 
 void ARobotCleaner::DoorOpenCompleted(bool bNewState) {
 	IsOpeningDoor = false;
+
 	OnDoorOpened.Broadcast(true);
 }
 

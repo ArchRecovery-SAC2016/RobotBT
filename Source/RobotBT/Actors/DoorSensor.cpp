@@ -79,8 +79,6 @@ void ADoorSensor::ChangeColor(bool NewValue) {
 	}
 }
 
-
-
 bool ADoorSensor::CheckFornitureIsArranged() {
 	bool AllFurnitureRearranged = true;
 

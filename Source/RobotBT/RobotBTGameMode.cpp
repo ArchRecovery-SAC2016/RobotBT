@@ -2,7 +2,6 @@
 
 #include "RobotBTGameMode.h"
 #include "RobotBTPlayerController.h"
-#include "RobotBTCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
@@ -57,6 +56,7 @@ void ARobotBTGameMode::BeginPlay() {
 			CleanerRobot = Cleaner;
 			Cleaner->OnRoomCleaned.AddDynamic(this, &ARobotBTGameMode::OnRoomCleaned);
 			Cleaner->OnDoorOpened.AddDynamic(this, &ARobotBTGameMode::OnDoorOpened);
+			Cleaner->OnRobotSanitized.AddDynamic(this, &ARobotBTGameMode::OnRobotSanitized);
 		}
 	}
 
@@ -154,15 +154,13 @@ FTask* ARobotBTGameMode::GetNextTask() {
 	 return nullptr;
 }
 
-bool ARobotBTGameMode::ExecuteCurrentTask() {
+void ARobotBTGameMode::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
-		return false;
 	}
 
 	if (CurrentTask->Decomposition.Num() == 0) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTask.Decomposition is empty!"));
-		return false;
 	}
 
 	// if is empty, so is the first time of this task, so we fill the decomposition queue
@@ -183,10 +181,8 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 			if (CleanerRobot) CleanerRobot->StartOpeningDoor(GetTaskRoom());
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
 			if (CleanerRobot) CleanerRobot->StartSanitize(GetTaskRoom());
-			return false;
 		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
-			return false;
 		}
 
 	} else {
@@ -197,11 +193,11 @@ bool ARobotBTGameMode::ExecuteCurrentTask() {
 		CurrentDecompositionIndex = 0;
 
 		// If gets here, all decomposition was executed, and we can got to the next task
-		GetNextTask();
-		return true;
-	}
+		CurrentTask = GetNextTask();
 
-	return false;
+		// and try to execut it 
+		ExecuteCurrentTask();
+	}
 }
 
 bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
@@ -214,8 +210,10 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 
 	for (int32 i=0; i < NewTask->Preconditions.Num(); i++) {
 		FTaskPrecondition CurrentPrecondition = NewTask->Preconditions[i];
-		FString ObjectName, Condition;
 
+		// in the example: "predicate": "RoomA.door_open",
+		FString ObjectName; // Will be RoomA
+		FString Condition; // Will be door_open
 		if (!ParsePredicate(CurrentPrecondition.Predicate, ObjectName, Condition)) {
 			UE_LOG(LogTemp, Error, TEXT("Failed to parse predicate: %s"), *CurrentPrecondition.Predicate);
 			return false;
@@ -259,13 +257,27 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 						return false;
 					}
 				}
-			} else if (Condition == TEXT("is_clean")) {
+			} else if (Condition == TEXT("sanitize-robot")) {
 				if (Door->Opened) {
 					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is not open: %s!"), *CurrentPrecondition.Predicate);
 					UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 					return false;
 				}
 			}
+		} else if (CurrentPrecondition.VarTypes == TEXT("robot")) {
+			if (CurrentPrecondition.Predicate == TEXT("not ?r.is_sanitized")) {
+				if (CleanerRobot->IsRobotSanitized) {
+					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Robot is already sanitized: %s!"), *CurrentPrecondition.Predicate);
+					UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+					return false;
+				} else {
+					return true;
+				}
+			}
+			
+			UUtilMethods::ShowLogMessage(TEXT("Precondition of type robot Not Found, returning true"), EMessageColorEnum::ERROR);
+			return true;
+
 		} else {
 			UUtilMethods::ShowLogMessage(TEXT("Precondition Not Found, returning true"), EMessageColorEnum::ERROR);
 			return true;
@@ -310,6 +322,20 @@ void ARobotBTGameMode::OnDoorOpened(bool bNewState) {
 	}
 	else {
 		UUtilMethods::ShowLogMessage(TEXT("Couldn't open Door"), EMessageColorEnum::ERROR);
+	}
+
+	CurrentDecompositionIndex++;
+	// Continue executing tasks 
+	ExecuteCurrentTask();
+
+}
+
+void ARobotBTGameMode::OnRobotSanitized(bool bNewState) {
+	if (bNewState) {
+		UUtilMethods::ShowLogMessage(TEXT("Robot Sanitized!"), EMessageColorEnum::SUCCESS);
+	}
+	else {
+		UUtilMethods::ShowLogMessage(TEXT("Robot couldn'Sanitized"), EMessageColorEnum::ERROR);
 	}
 
 	CurrentDecompositionIndex++;

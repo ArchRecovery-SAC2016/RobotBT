@@ -14,9 +14,9 @@ URoomPropertiesWidget* UWorldKnowledgeWidget::GetRoomByName(FString Name) {
 	if (Name == "RoomA") return RoomA;
 	if (Name == "RoomB") return RoomB;
 	if (Name == "RoomC") return RoomC;
-	if (Name == "RoomD") return RoomD;
+	if (Name == "SanitizationRoom") return RoomD;
 
-	UE_LOG(LogTemp, Error, TEXT("[URoomPropertiesWidget* UWorldKnowledgeWidget] Invalid Room Name. Must be RoomA, RoomB, RoomC, RoomD"));
+	UE_LOG(LogTemp, Error, TEXT("[URoomPropertiesWidget* UWorldKnowledgeWidget] Invalid Room Name. Must be RoomA, RoomB, RoomC, SanitizationRoom"));
 
 	return nullptr;
 }
