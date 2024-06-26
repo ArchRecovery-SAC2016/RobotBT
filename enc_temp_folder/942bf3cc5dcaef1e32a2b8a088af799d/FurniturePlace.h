@@ -27,7 +27,7 @@ public:
 	class UBoxComponent* Collision;
 
 	// the furniture that belogns to this place. Is setted on the map
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
 	AFurniture* AcceptedFurniture;
 
 	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")

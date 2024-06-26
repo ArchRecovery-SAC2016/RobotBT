@@ -67,6 +67,8 @@ private:
 	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
 
+	void StartFunitureTask(ADoorSensor* Room);
+
 	// After the task is choosed, this method will execute it in the tick function
 	void ExecuteCurrentTask();
 

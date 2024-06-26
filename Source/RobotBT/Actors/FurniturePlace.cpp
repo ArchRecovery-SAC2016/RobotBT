@@ -22,8 +22,8 @@ void AFurniturePlace::BeginPlay() {
 		Collision->OnComponentEndOverlap.AddDynamic(this, &AFurniturePlace::OnOverlapEnd);
 	}
 
-	if (AcceptedFurnitureID == 0) {
-		UE_LOG(LogTemp, Error, TEXT("No correct ID furniture set for %s"), *GetName());
+	if (AcceptedFurniture == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("No correct furniture set for %s"), *GetName());
 	}
 
 	// tem que comecar desabilitado. Pq se nao, o overlap acontece antes do tempo
@@ -40,7 +40,7 @@ void AFurniturePlace::BeginPlay() {
 void AFurniturePlace::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AFurniture* Furniture = Cast<AFurniture>(OtherActor);
 	
-	if (Furniture != nullptr && Furniture->ID == AcceptedFurnitureID) {
+	if (Furniture != nullptr && Furniture == AcceptedFurniture) {
 		ChangeColor(true);
 	}
 }

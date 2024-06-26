@@ -24,38 +24,38 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
 	FString Name;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
 	bool Opened = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
 	UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Room")
 	class UBoxComponent* Collision;
 
-	// saves the furnitures of this room
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	// saves the furnitures position of this room
+	UPROPERTY(EditInstanceOnly, Category = "Room")
 	TArray<class AFurniturePlace*> FurnituresPlace;
 
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	UPROPERTY(EditInstanceOnly, Category = "Room")
 	TArray<ARoomTrash*> RoomTrash;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly, Category = "Room")
 	FLinearColor RedColor;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly, Category = "Room")
 	FLinearColor GreenColor;
 
 	// Used to move the robot to the front of the room. Before the robot starts to clean the room, it will move to this location	
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	UPROPERTY(EditInstanceOnly, Category = "Room")
 	FVector FrontRoomLocation;
 
 	// Used to move the robot to the center of the room. Used by sanitization robot to move to the center of the room
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	UPROPERTY(EditInstanceOnly, Category = "Room")
 	FVector CenterRoomLocation;
 
 	// Used to move the robot to the outside of the room. After all actions finish, the robot will move to this location
-	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
+	UPROPERTY(EditInstanceOnly, Category = "Room")
 	FVector OutsideRoomLocation;
 
 	UFUNCTION()

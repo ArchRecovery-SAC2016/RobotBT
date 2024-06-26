@@ -2,6 +2,8 @@
 
 #include "RobotBTGameMode.h"
 #include "RobotBTPlayerController.h"
+#include "Actors/Furniture.h"
+#include "Actors/FurniturePlace.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
@@ -154,6 +156,12 @@ FTask* ARobotBTGameMode::GetNextTask() {
 	 return nullptr;
 }
 
+void ARobotBTGameMode::StartFunitureTask(ADoorSensor* Room) {
+	if (Room == nullptr) return;
+
+	
+}
+
 void ARobotBTGameMode::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
@@ -182,6 +190,8 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
 			if (CleanerRobot) CleanerRobot->StartSanitize(GetTaskRoom());
 		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
+			StartFunitureTask(GetTaskRoom());
+
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
 		}
 
