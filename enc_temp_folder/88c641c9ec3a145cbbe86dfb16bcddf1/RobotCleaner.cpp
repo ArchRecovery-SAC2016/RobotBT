@@ -112,7 +112,7 @@ void  ARobotCleaner::SanitizeRoom() {
 
 	// if is already outside and inside, we are done
 	if (bOutsideRoom) {
-		IsSanitizing = false;
+		IsSanitizing = true;
 
 		bFrontOfRoom = false;
 		bCenterOfRoom = false;
