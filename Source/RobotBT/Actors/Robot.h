@@ -5,6 +5,8 @@
 #include "GameFramework/Character.h"
 #include "Robot.generated.h"
 
+class ARobotController;
+
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
 	GENERATED_BODY()
@@ -12,6 +14,9 @@ class ROBOTBT_API ARobot : public ACharacter {
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY()
+	ADoorSensor* RoomSelected;
 
 	void GoFrontOfRoom(const FVector& RoomLocation);
 
@@ -28,6 +33,11 @@ protected:
 	// Controls if Go to outside Room finished
 	bool bOutsideRoom = false;
 
+	UPROPERTY()
+	ARobotController* RobotController;
+
+	ARobotController* GetRobotController();
+
 public:	
 	ARobot();
 
@@ -37,6 +47,8 @@ public:
 	UFUNCTION()
 	virtual bool ProcessAction();
 
+
+	
 	
 
 };

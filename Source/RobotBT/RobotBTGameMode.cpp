@@ -68,6 +68,7 @@ void ARobotBTGameMode::BeginPlay() {
 	for (AActor* Actor : FoundOrganizer) {
 		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
 		if (Organizer != nullptr) {
+			Organizer->OnFurnitureMoveEnded.AddDynamic(this, &ARobotBTGameMode::OnFurnitureMoveEnded);
 			OrganizersTeam.Add(Organizer);
 		}
 	}
@@ -156,19 +157,46 @@ FTask* ARobotBTGameMode::GetNextTask() {
 	 return nullptr;
 }
 
-void ARobotBTGameMode::StartFunitureTask(ADoorSensor* Room) {
+void ARobotBTGameMode::StartMoveFunitureTask(ADoorSensor* Room) {
 	if (Room == nullptr) return;
 
-	
+	TArray<AFurniturePlace*> FurnitureToMove;
+	for (auto Furniture: Room->FurnituresPlace) {
+		if (Furniture->FurnitureInPlace == false) {
+			FurnitureToMove.Add(Furniture);
+		}
+	}
+
+	int32 NumOrganizers = OrganizersTeam.Num();
+	int32 FurnitureIndex = 0;
+
+	// Distribuir os móveis entre os organizadores
+	for (auto Furniture : FurnitureToMove) {
+		// Escolher um organizador usando o índice do móvel em relação ao número de organizadores
+		int32 OrganizerIndex = FurnitureIndex % NumOrganizers;
+		auto Organizer = OrganizersTeam[OrganizerIndex];
+
+		// Adicionar a tarefa de mover o móvel para o organizador
+		Organizer->AddMoveTask(Furniture);
+
+		// Incrementar o índice do móvel
+		FurnitureIndex++;
+	}
+
+	for (auto Organizer : OrganizersTeam) {
+		Organizer->StartMoveFurniture(Room);
+	}
 }
 
 void ARobotBTGameMode::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
+		return;
 	}
 
 	if (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTask.Decomposition is empty!"));
+		return;
 	}
 
 	// if is empty, so is the first time of this task, so we fill the decomposition queue
@@ -190,7 +218,8 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
 			if (CleanerRobot) CleanerRobot->StartSanitize(GetTaskRoom());
 		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
-			StartFunitureTask(GetTaskRoom());
+			// this is a complex operation, so we created a method for it
+			StartMoveFunitureTask(GetTaskRoom());
 
 			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
 		}
@@ -334,8 +363,7 @@ void ARobotBTGameMode::OnRoomCleaned(bool bNewState) {
 void ARobotBTGameMode::OnDoorOpened(bool bNewState) {
 	if (bNewState) {
 		UUtilMethods::ShowLogMessage(TEXT("Door Opened!"), EMessageColorEnum::SUCCESS);
-	}
-	else {
+	} else {
 		UUtilMethods::ShowLogMessage(TEXT("Couldn't open Door"), EMessageColorEnum::ERROR);
 	}
 
@@ -348,13 +376,36 @@ void ARobotBTGameMode::OnDoorOpened(bool bNewState) {
 void ARobotBTGameMode::OnRobotSanitized(bool bNewState) {
 	if (bNewState) {
 		UUtilMethods::ShowLogMessage(TEXT("Robot Sanitized!"), EMessageColorEnum::SUCCESS);
-	}
-	else {
+	} else {
 		UUtilMethods::ShowLogMessage(TEXT("Robot couldn'Sanitized"), EMessageColorEnum::ERROR);
 	}
 
 	CurrentDecompositionIndex++;
 	// Continue executing tasks 
 	ExecuteCurrentTask();
-
 }
+
+void ARobotBTGameMode::OnFurnitureMoveEnded(bool bNewState) {
+	if (bNewState) {
+		UUtilMethods::ShowLogMessage(TEXT("Robot Sanitized!"), EMessageColorEnum::SUCCESS);
+	}
+	else {
+		UUtilMethods::ShowLogMessage(TEXT("Robot couldn'Sanitized"), EMessageColorEnum::ERROR);
+	}
+
+	bool AllFinished = true;
+	for (auto Organizer : OrganizersTeam) {
+		if (Organizer->IsRobotMovingFurniture()) {
+			AllFinished = false;
+			break;
+		}
+	}
+
+	// if all finished, we continue executing tasks 
+	if (AllFinished) {
+		CurrentDecompositionIndex++;
+	
+		ExecuteCurrentTask();
+	}
+}
+

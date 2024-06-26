@@ -13,7 +13,6 @@ void ARobotCleaner::BeginPlay() {
 	if (RobotController == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
 	}
-
 }
 
 void ARobotCleaner::Tick(float DeltaSeconds) {
@@ -69,7 +68,7 @@ void ARobotCleaner::CleanRoom() {
 	bool AllClean = true;
 	for (auto &RoomTrash : RoomSelected->RoomTrash) {
 		if (RoomTrash->IsTrashClean == false) {
-			bool AtLocation  = RobotController->MoveToActorLocation(RoomTrash);
+			bool AtLocation  = GetRobotController()->MoveToActorLocation(RoomTrash);
 			if (AtLocation == false) {
 				AllClean = false;
 			}

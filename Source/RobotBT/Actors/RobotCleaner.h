@@ -21,7 +21,6 @@ public:
 
 	void BeginPlay();
 
-	
 	void Tick(float DeltaSeconds) override;
 
 	// Save if the bot is sanitized
@@ -39,13 +38,13 @@ public:
 	void DoorOpenCompleted(bool bNewState);
 
 	// Called by the Game Mode to start the cleaning room action. Will set the 
-	void StartOpeningDoor(ADoorSensor* RoomSelected);
+	void StartOpeningDoor(ADoorSensor* Room);
 
 	UFUNCTION()
-	void StartCleaningRoom(ADoorSensor* RoomSelected);
+	void StartCleaningRoom(ADoorSensor* Room);
 
 	UFUNCTION()
-	void StartSanitize(ADoorSensor* RoomSelected);
+	void StartSanitize(ADoorSensor* Room);
 
 	FOnRoomCleaned OnRoomCleaned;
 
@@ -54,12 +53,6 @@ public:
 	FOnSanitized OnRobotSanitized;
 
 private:
-
-	ARobotController* RobotController;
-
-	UPROPERTY()
-	ADoorSensor* RoomSelected;
-
 	// Called by the Event tick. Will clean the room selected. Return true if the room is clean and false if it is not
 	void CleanRoom();
 
