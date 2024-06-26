@@ -61,8 +61,8 @@ void ARobotCleaner::StartOpeningDoor(ADoorSensor* _RoomSelected) {
 
 void ARobotCleaner::CleanRoom() {
 	// first we need to move inside the room
-	if (bGoInsideRoom == false) {
-		GoInsideRoom(RoomSelected->InsideRoomLocation);
+	if (bFrontOfRoom == false) {
+		GoFrontOfRoom(RoomSelected->FrontRoomLocation);
 	}
 
 	// if get here, we are inside the room,and now we need to clean the trash
@@ -77,40 +77,56 @@ void ARobotCleaner::CleanRoom() {
 	}
 
 	// if everything is clean, we need to go outside the room
-	if (AllClean == true && bGoOutsideRoom == false) {
-		GoOutsideRoom(RoomSelected->OutsideRoomLocation);
+	if (AllClean == true && bOutsideRoom == false) {
+		GoOutsideOfRoom(RoomSelected->OutsideRoomLocation);
 	}
 
 	// if all clean and we are outside room, we finished here and notifi the success
-	if (AllClean == true && bGoOutsideRoom == true) {
+	if (AllClean == true && bOutsideRoom == true) {
 		IsCleaning = false;
-
 		IsRobotSanitized = false;
+
+		// reset the variables
+		bFrontOfRoom = false;
+		bCenterOfRoom = false;
+		bOutsideRoom = false;
+
 		OnRoomCleaned.Broadcast(true);
+
 	}
 }
 
 void  ARobotCleaner::SanitizeRoom() {
-	if (bGoInsideRoom == false) {
-		GoInsideRoom(RoomSelected->InsideRoomLocation);
+	if (bFrontOfRoom == false) {
+		GoFrontOfRoom(RoomSelected->FrontRoomLocation);
 	}
 
-	// if is already inside, go outside
-	if (bGoInsideRoom == true && bGoOutsideRoom == false) {
-		GoOutsideRoom(RoomSelected->OutsideRoomLocation);
+	// if is already in front, and not in the center, go to the center
+	if (bFrontOfRoom == true && bCenterOfRoom == false) {
+		GoCenterOfRoom(RoomSelected->CenterRoomLocation);
+	}
+
+	// if is already in front, and not in the center, got to the center
+	if (bFrontOfRoom == true && bCenterOfRoom == true && bOutsideRoom == false) {
+		GoOutsideOfRoom(RoomSelected->OutsideRoomLocation);
 	}
 
 	// if is already outside and inside, we are done
-	if (bGoInsideRoom && bGoOutsideRoom) {
-		IsSanitizing = false;
+	if (bOutsideRoom) {
+		IsSanitizing = true;
+
+		bFrontOfRoom = false;
+		bCenterOfRoom = false;
+		bOutsideRoom = false;
+
 		OnRobotSanitized.Broadcast(true);
 	}
 }
 
 void ARobotCleaner::OpenRoom() {
 	// just try to get inside. When we touch the door, the door will open and the event DoorOpenCompleted will broadcast the success of this action
-	if (bGoInsideRoom == false) {
-		GoInsideRoom(RoomSelected->InsideRoomLocation);
+	if (bFrontOfRoom == false) {
+		GoFrontOfRoom(RoomSelected->FrontRoomLocation);
 	}
 
 }

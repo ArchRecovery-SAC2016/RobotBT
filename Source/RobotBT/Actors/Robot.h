@@ -13,15 +13,20 @@ class ROBOTBT_API ARobot : public ACharacter {
 protected:
 	virtual void BeginPlay() override;
 
-	void GoInsideRoom(const FVector& RoomLocation);
+	void GoFrontOfRoom(const FVector& RoomLocation);
 
-	void GoOutsideRoom(const FVector& RoomLocation);
+	void GoCenterOfRoom(const FVector& RoomLocation);
 
-	// Controls if the Go Inside Room finished
-	bool bGoInsideRoom = false;
+	void GoOutsideOfRoom(const FVector& RoomLocation);
 
-	// Controls if is the Go Outside Room finished
-	bool bGoOutsideRoom = false;
+	// Controls if Go to the front of the finished
+	bool bFrontOfRoom = false;
+
+	// Controls if Go to the center of the room finished
+	bool bCenterOfRoom = false;
+
+	// Controls if Go to outside Room finished
+	bool bOutsideRoom = false;
 
 public:	
 	ARobot();

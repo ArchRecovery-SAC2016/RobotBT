@@ -159,7 +159,7 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
 	}
 
-	if (CurrentTask->Decomposition.Num() == 0) {
+	if (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTask.Decomposition is empty!"));
 	}
 
@@ -194,6 +194,11 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 
 		// If gets here, all decomposition was executed, and we can got to the next task
 		CurrentTask = GetNextTask();
+
+		if (CurrentTask == nullptr){
+			UUtilMethods::ShowLogMessage(TEXT("No more task, Experiment is over"), EMessageColorEnum::SUCCESS);
+			return;
+		}
 
 		// and try to execut it 
 		ExecuteCurrentTask();

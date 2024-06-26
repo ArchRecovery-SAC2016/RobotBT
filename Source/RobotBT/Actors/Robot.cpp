@@ -19,22 +19,32 @@ void ARobot::BeginPlay() {
 	GetCharacterMovement()->MaxWalkSpeed = 200;
 }
 
-void ARobot::GoInsideRoom(const FVector& RoomLocation) {
+void ARobot::GoFrontOfRoom(const FVector& RoomLocation) {
 	ARobotController *RobotController = Cast<ARobotController>(GetController());
 	if (RobotController == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GoFrontOfRoom] RobotController is nullptr"));
 	}
 
-	bGoInsideRoom = RobotController->MoveToNewLocation(RoomLocation);
+	bFrontOfRoom = RobotController->MoveToNewLocation(RoomLocation);
 }
 
-void ARobot::GoOutsideRoom(const FVector& RoomLocation) {
+void ARobot::GoCenterOfRoom(const FVector& RoomLocation) {
 	ARobotController* RobotController = Cast<ARobotController>(GetController());
 	if (RobotController == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::BeginPlay] RobotController is nullptr"));
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GoCenterOfRoom] RobotController is nullptr"));
 	}
 
-	bGoOutsideRoom = RobotController->MoveToNewLocation(RoomLocation);
+	bCenterOfRoom = RobotController->MoveToNewLocation(RoomLocation);
+
+}
+
+void ARobot::GoOutsideOfRoom(const FVector& RoomLocation) {
+	ARobotController* RobotController = Cast<ARobotController>(GetController());
+	if (RobotController == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GoOutsideOfRoom] RobotController is nullptr"));
+	}
+
+	bOutsideRoom = RobotController->MoveToNewLocation(RoomLocation);
 
 }
 
