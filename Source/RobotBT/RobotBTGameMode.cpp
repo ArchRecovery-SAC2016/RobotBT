@@ -137,8 +137,8 @@ FTask* ARobotBTGameMode::GetNextTask() {
 		FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
 
 		if (Task != nullptr) {
-			FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id, *Task->Name);
-			UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
+			// FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id, *Task->Name);
+			// UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 
 			if (CheckPreCondition(Task)) {
 				CurrentTaskIndex++;
@@ -170,16 +170,16 @@ void ARobotBTGameMode::StartMoveFunitureTask(ADoorSensor* Room) {
 	int32 NumOrganizers = OrganizersTeam.Num();
 	int32 FurnitureIndex = 0;
 
-	// Distribuir os móveis entre os organizadores
+	// Distribuir os mï¿½veis entre os organizadores
 	for (auto Furniture : FurnitureToMove) {
-		// Escolher um organizador usando o índice do móvel em relação ao número de organizadores
+		// Escolher um organizador usando o ï¿½ndice do mï¿½vel em relaï¿½ï¿½o ao nï¿½mero de organizadores
 		int32 OrganizerIndex = FurnitureIndex % NumOrganizers;
 		auto Organizer = OrganizersTeam[OrganizerIndex];
 
-		// Adicionar a tarefa de mover o móvel para o organizador
+		// Adicionar a tarefa de mover o mï¿½vel para o organizador
 		Organizer->AddMoveTask(Furniture);
 
-		// Incrementar o índice do móvel
+		// Incrementar o ï¿½ndice do mï¿½vel
 		FurnitureIndex++;
 	}
 
@@ -268,8 +268,8 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 			bool Negation = ObjectName.StartsWith(TEXT("not ")); // some predicates starts with not, so we need to check it
 
 			if (Door == nullptr) {
-				FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door not found:: %s!"), *CurrentPrecondition.Vars);
-				UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
+				// FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door not found:: %s!"), *CurrentPrecondition.Vars);
+				// UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
 				return false;
 			}
 

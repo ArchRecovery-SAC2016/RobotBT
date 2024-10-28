@@ -90,14 +90,14 @@ private:
 
 	ASplinePath* GetPathByIndentifier(FString Identifier);
 
-	float MovementSpeed = 100.f;   // Velocidade do robô (ajuste conforme necessário)
-	float CurrentDistance = 0;
 	float Speed = 50;
+
 	bool ShowStartMoveMessage = true;
-	float NextPosition;
 
 	void OnReachedEnd();
 
-	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float& DistanceAlongSpline, float DeltaTime);
+	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime);
+
+	float DistanceAlongSpline; // Declare a variável de membro
 
 };

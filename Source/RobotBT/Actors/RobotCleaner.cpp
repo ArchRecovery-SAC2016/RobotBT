@@ -1,6 +1,7 @@
 #include "RobotCleaner.h"
 
 #include "Components/SplineComponent.h"
+#include "RobotBT/Util/UtilMethods.h"
 
 ARobotCleaner::ARobotCleaner() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -23,29 +24,71 @@ void ARobotCleaner::BeginPlay() {
 	}
 }
 
-
 void ARobotCleaner::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (CurrentSplinePath != nullptr && CurrentSplinePath->Spline) {
 		if (ShowStartMoveMessage) {
-			FString Message = FString::Printf(TEXT("Se movendo de %d até %d, do Path %s"), MovePlan[CurrentMovePlanIndex].StartKey, MovePlan[CurrentMovePlanIndex].EndKey, *CurrentSplinePath->Identifier);
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, Message);
+			FString Message = FString::Printf(TEXT("Se movendo de %d até %d, do Path %s"),
+				MovePlan[CurrentMovePlanIndex].StartKey,
+				MovePlan[CurrentMovePlanIndex].EndKey,
+				*CurrentSplinePath->Identifier);
+			UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 			ShowStartMoveMessage = false;
 		}
 
-		static float DistanceAlongSpline = 0.0f;
+		// Incrementa a distância ao longo do spline
+		DistanceAlongSpline += Speed * DeltaTime; // Use a variável de membro
 
-		bool bReachedEnd =  MoveAlongSpline(CurrentSplinePath->Spline, MovePlan[CurrentMovePlanIndex].StartKey, MovePlan[CurrentMovePlanIndex].EndKey, DeltaTime, DistanceAlongSpline);
+		// Verifique se chegou ao final do spline
+		bool bReachedEnd = MoveAlongSpline(CurrentSplinePath->Spline,
+			MovePlan[CurrentMovePlanIndex].StartKey,
+			MovePlan[CurrentMovePlanIndex].EndKey,
+			DeltaTime);
 
 		if (bReachedEnd) {
 			ShowStartMoveMessage = true;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Chegou no destino"));
 			ExecuteCurrentMovePlan();
+
+			// Reinicializa a distância para o próximo movimento
+			DistanceAlongSpline = 0.0f; // Reseta para o próximo movimento
 		}
-	} else {
+	}
+	else {
 		ExecuteCurrentMovePlan();
 	}
+}
+
+bool ARobotCleaner::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime) {
+	if (!SplineComponent) {
+		return false; // Verificação de segurança caso o spline seja inválido
+	}
+
+	// Calcula as distâncias de início e fim ao longo do spline
+	float StartDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(StartIndex);
+	float EndDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(EndIndex);
+
+	// Garante que a distância inicial seja menor que a final
+	if (EndDistance < StartDistance) {
+		Swap(StartDistance, EndDistance);
+	}
+
+	// Verifica se chegou ao final
+	if (DistanceAlongSpline >= EndDistance) {
+		DistanceAlongSpline = EndDistance;
+		return true; // Retorna true ao atingir o ponto final
+	}
+
+	// Atualiza a posição e rotação do ator ao longo do spline
+	FVector NewLocation = SplineComponent->GetLocationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
+	FRotator NewRotation = SplineComponent->GetRotationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
+
+	// Move o próprio ator
+	SetActorLocation(NewLocation);
+	SetActorRotation(NewRotation);
+
+	return false; // Não chegou ao final ainda
 }
 
 void ARobotCleaner::StartCleaningRoom(ADoorSensor* _RoomSelected) {
@@ -177,41 +220,6 @@ void ARobotCleaner::OnReachedEnd() {
 		CurrentSplinePath = nullptr;
 		UE_LOG(LogTemp, Log, TEXT("Movimento completo!"));
 	}
-}
-
-bool ARobotCleaner::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float& DistanceAlongSpline, float DeltaTime) {
-	if (!SplineComponent) {
-		return false; // Verificação de segurança caso o spline seja inválido
-	}
-
-	// Calcula as distâncias de início e fim ao longo do spline
-	float StartDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(StartIndex);
-	float EndDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(EndIndex);
-
-	// Garante que a distância inicial seja menor que a final
-	if (EndDistance < StartDistance) {
-		Swap(StartDistance, EndDistance);
-	}
-
-	// Incrementa a posição ao longo do spline
-	DistanceAlongSpline += Speed * DeltaTime;
-
-	// Verifica se chegou ao final
-	if (DistanceAlongSpline >= EndDistance) {
-		DistanceAlongSpline = EndDistance;
-		return true; // Retorna true ao atingir o ponto final
-	}
-
-	// Atualiza a posição e rotação do ator ao longo do spline
-	FVector NewLocation = SplineComponent->GetLocationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
-	FRotator NewRotation = SplineComponent->GetRotationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
-
-	// Assumindo que você está chamando esse método em uma instância de AActor
-	 // Move o próprio ator
-	SetActorLocation(NewLocation);
-	SetActorRotation(NewRotation);
-
-	return false; // Não chegou ao final ainda
 }
 
 void ARobotCleaner::OpenRoom() {
