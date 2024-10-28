@@ -49,6 +49,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 		if (bReachedEnd) {
 			ShowStartMoveMessage = true;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Chegou no destino"));
+			CurrentMovePlanIndex++;
 			ExecuteCurrentMovePlan();
 
 			// Reinicializa a distância para o próximo movimento

@@ -90,7 +90,7 @@ private:
 
 	ASplinePath* GetPathByIndentifier(FString Identifier);
 
-	float Speed = 50;
+	float Speed = 500;
 
 	bool ShowStartMoveMessage = true;
 
