@@ -2,7 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "Robot.h"
+#include "SplinePath.h"
 #include "RobotBT/Controllers/RobotController.h"
+#include "RobotBT/Struct/MovePlanStruct.h"
 #include "RobotCleaner.generated.h"
 
 
@@ -34,6 +36,14 @@ public:
 
 	bool IsSanitizing = false;
 
+	UPROPERTY()
+	float BatteryLevel = 100;
+
+	UPROPERTY()
+	float BatteryDischargeRate = 10;
+
+	
+
 	UFUNCTION()
 	void DoorOpenCompleted(bool bNewState);
 
@@ -52,6 +62,19 @@ public:
 
 	FOnSanitized OnRobotSanitized;
 
+	UPROPERTY(EditInstanceOnly)
+	TArray<FMovePlanStruct> MovePlan;
+
+	UPROPERTY(EditInstanceOnly)
+	TArray<ASplinePath*> SplinePath;
+
+	UPROPERTY()
+	ASplinePath* CurrentSplinePath;
+
+
+	bool ExecuteCurrentMovePlan();
+
+
 private:
 	// Called by the Event tick. Will clean the room selected. Return true if the room is clean and false if it is not
 	void CleanRoom();
@@ -62,6 +85,19 @@ private:
 	// Called by Event tick. Will go to the room selected and sanitize the robot
 	void SanitizeRoom();
 
+	UPROPERTY()
+	int32 CurrentMovePlanIndex = 0;
 
+	ASplinePath* GetPathByIndentifier(FString Identifier);
+
+	float MovementSpeed = 100.f;   // Velocidade do robô (ajuste conforme necessário)
+	float CurrentDistance = 0;
+	float Speed = 50;
+	bool ShowStartMoveMessage = true;
+	float NextPosition;
+
+	void OnReachedEnd();
+
+	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float& DistanceAlongSpline, float DeltaTime);
 
 };
