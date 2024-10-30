@@ -1,7 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Furniture.h"
+#include "DoorSensor.h"
+#include "FurniturePlace.h"
 #include "Robot.h"
 #include "RobotOrganizer.generated.h"
 
@@ -20,7 +21,7 @@ public:
 	UPROPERTY()
 	bool IsOrganizing = false;
 
-	virtual bool ProcessAction() override;
+	virtual void ProcessAction() override;
 
 	// Called by the Game Mode to save witch Furnitues must be moved. It will increment the FurnitureToMove array
 	void AddMoveTask(AFurniturePlace* Furniture);

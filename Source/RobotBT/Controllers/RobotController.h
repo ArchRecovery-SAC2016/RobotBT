@@ -5,6 +5,7 @@
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
 #include "RobotBT/Actors/Robot.h"
+#include "Components/SplineComponent.h"
 #include "RobotController.generated.h"
 
 class ADoorSensor;
@@ -18,20 +19,28 @@ public:
 
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
 	bool MoveToActorLocation(AActor* MoveToLocation);
 
+	UFUNCTION()
 	bool MoveToNewLocation(const FVector& Vector);
 
 	UFUNCTION()
 	void RotateToFaceActor(const AActor* ActorSelected);
 
-	bool ProcessAction();
+	UFUNCTION()
+	void ProcessAction();
+
+	UFUNCTION()
+	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime);
 
 	UPROPERTY()
 	ARobot* ControlledPawn;
 
 private:
 	bool ActionFinished = false;
+
+	float DistanceAlongSpline; // Declare a variável de membro
 
 
 };

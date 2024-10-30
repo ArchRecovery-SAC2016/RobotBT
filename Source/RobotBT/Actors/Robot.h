@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DoorSensor.h"
+#include "SplinePath.h"
 #include "GameFramework/Character.h"
+#include "RobotBT/Struct/MovePlanStruct.h"
 #include "Robot.generated.h"
 
 class ARobotController;
@@ -16,39 +17,58 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY()
-	ADoorSensor* RoomSelected;
-
-	void GoFrontOfRoom(const FVector& RoomLocation);
-
-	void GoCenterOfRoom(const FVector& RoomLocation);
-
-	void GoOutsideOfRoom(const FVector& RoomLocation);
-
-	// Controls if Go to the front of the finished
-	bool bFrontOfRoom = false;
-
-	// Controls if Go to the center of the room finished
-	bool bCenterOfRoom = false;
-
-	// Controls if Go to outside Room finished
-	bool bOutsideRoom = false;
-
-	UPROPERTY()
-	ARobotController* RobotController;
+	ARobotController* RobotController = nullptr;
 
 	ARobotController* GetRobotController();
+
 
 public:	
 	ARobot();
 
 	virtual void Tick(float DeltaTime) override;
 
-	/* The child will know how to process the action */
+	UPROPERTY()
+	int32 CurrentMovePlanIndex = 0;
+
+	// The move plan that the robot will execute
+	UPROPERTY(EditInstanceOnly)
+	TArray<FMovePlanStruct> MovePlan;
+
+	// the initial battery level of the robot
+	UPROPERTY(EditInstanceOnly)
+	float BatteryLevel = 100;
+
+	// the initial batery discharge rate of the robot
+	UPROPERTY(EditInstanceOnly)
+	float BatteryDischargeRate = 10;
+
+	// robot speed, affects the speed of the robot
+	UPROPERTY(EditInstanceOnly)
+	float Speed = 200;
+
+	// saves the spline path responsible to the robot movement
+	UPROPERTY(EditInstanceOnly)
+	TArray<ASplinePath*> SplinePath;
+
+	// get the spline path by the identifier
 	UFUNCTION()
-	virtual bool ProcessAction();
+	ASplinePath* GetPathByIndentifier(FString Identifier);
 
+	// start executing a new 
+	UFUNCTION()
+	bool ExecuteNextMovePlan();
 
-	
-	
+	// called when the current move plan finished
+	UFUNCTION()
+	void OnCurrentMovePlanFinished();
+
+	// process the action like cleaning a room, or organizing. This consumes battery. Each class that inherits from this class should implement this method
+	UFUNCTION()
+	virtual void ProcessAction();
+
+private:
+	// saves a instance of the current spline path
+	UPROPERTY()
+	ASplinePath* CurrentSplinePath = nullptr;
 
 };

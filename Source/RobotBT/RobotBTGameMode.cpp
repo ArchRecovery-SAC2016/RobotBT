@@ -58,7 +58,7 @@ void ARobotBTGameMode::BeginPlay() {
 			CleanerRobot = Cleaner;
 			Cleaner->OnRoomCleaned.AddDynamic(this, &ARobotBTGameMode::OnRoomCleaned);
 			Cleaner->OnDoorOpened.AddDynamic(this, &ARobotBTGameMode::OnDoorOpened);
-			Cleaner->OnRobotSanitized.AddDynamic(this, &ARobotBTGameMode::OnRobotSanitized);
+			// Cleaner->OnRobotSanitized.AddDynamic(this, &ARobotBTGameMode::OnRobotSanitized);
 		}
 	}
 
@@ -211,19 +211,6 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 
 		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 
-		if (CurrentDecomposition.Name == TEXT ("clean-room")) {
-			if (CleanerRobot) CleanerRobot->StartCleaningRoom(GetTaskRoom());
-		} else if (CurrentDecomposition.Name == TEXT ("open-door")) {
-			if (CleanerRobot) CleanerRobot->StartOpeningDoor(GetTaskRoom());
-		} else if (CurrentDecomposition.Name == TEXT ("sanitize-robot")) {
-			if (CleanerRobot) CleanerRobot->StartSanitize(GetTaskRoom());
-		} else if (CurrentDecomposition.Name == TEXT("move-furniture")) {
-			// this is a complex operation, so we created a method for it
-			StartMoveFunitureTask(GetTaskRoom());
-
-			UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] MoveFurniture is not implemented!"));
-		}
-
 	} else {
 		// reset the decomposition array
 		DecompositionQueue.Empty();
@@ -310,6 +297,7 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 			}
 		} else if (CurrentPrecondition.VarTypes == TEXT("robot")) {
 			if (CurrentPrecondition.Predicate == TEXT("not ?r.is_sanitized")) {
+				/*
 				if (CleanerRobot->IsRobotSanitized) {
 					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Robot is already sanitized: %s!"), *CurrentPrecondition.Predicate);
 					UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
@@ -317,6 +305,7 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 				} else {
 					return true;
 				}
+				*/
 			}
 			
 			UUtilMethods::ShowLogMessage(TEXT("Precondition of type robot Not Found, returning true"), EMessageColorEnum::ERROR);
