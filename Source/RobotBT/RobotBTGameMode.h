@@ -2,12 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "Struct/RoomPreparationStruct.h"
-#include "Actors/DoorSensor.h"
 #include "Actors/RobotCleaner.h"
 #include "Actors/RobotOrganizer.h"
-#include "Enum/ActionsEnum.h"
-#include "Enum/MessageColorEnum.h"
+#include "Struct/MovePlanStruct.h"
 #include "Struct/TaskStruct.h"
 #include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
@@ -27,19 +24,25 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// saves all organizers robots instance
+	UPROPERTY()
 	TArray<ARobotOrganizer*> OrganizersTeam;
 
 	// saves the robot cleaner
+	UPROPERTY()
 	ARobotCleaner* CleanerRobot;
+
+	// The move plan that the robot will execute
+	UPROPERTY(EditInstanceOnly)
+	TArray<FMovePlanStruct> MovePlan;
 
 	UFUNCTION()
 	void UpdateWorldKnowledgeWidget();
 
 	UFUNCTION()
-	TArray<ADoorSensor*>GetDoors() { return DoorSensors; }
+	TArray<ARoom*>GetRooms() { return Rooms; }
 
 	UFUNCTION()
-	ADoorSensor* GetTaskRoom();
+	ARoom* GetTaskRoom();
 
 	// Load tasks from file
 	UFUNCTION()
@@ -49,7 +52,7 @@ private:
 
 	/* Saves all doors in the map	*/
 	UPROPERTY()
-	TArray<ADoorSensor*> DoorSensors;
+	TArray<ARoom*> Rooms;
 
 	UFUNCTION()
 	UWorldKnowledgeWidget * GetWorldKnowledgeWidget();
@@ -67,8 +70,6 @@ private:
 	// Get the next task to be executed and check if it is possible to execute it
 	FTask* GetNextTask();
 
-	void StartMoveFunitureTask(ADoorSensor* Room);
-
 	// After the task is choosed, this method will execute it in the tick function
 	void ExecuteCurrentTask();
 
@@ -83,7 +84,7 @@ private:
 
 	bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
-	ADoorSensor* GetDoorByName(const FString& DoorName);
+	ARoom* GetDoorByName(const FString& DoorName);
 
 	bool ExperimentIsOver = false;
 

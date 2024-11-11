@@ -1,25 +1,27 @@
 
-#include "DoorSensor.h"
+#include "Room.h"
 
 #include "FurniturePlace.h"
 #include "Components/BoxComponent.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Util/UtilMethods.h"
 
-ADoorSensor::ADoorSensor() {
+ARoom::ARoom() {
 	PrimaryActorTick.bCanEverTick = true;
 
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	BaseMesh->SetupAttachment(RootComponent);
+	BaseLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("Base Location"));
+	BaseLocation->SetupAttachment(RootComponent);
 
-	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision"));
-	Collision->SetupAttachment(BaseMesh);
+	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
+	DoorMesh->SetupAttachment(BaseLocation);
+
+	DoorCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Door DoorCollision"));
+	DoorCollision->SetupAttachment(DoorMesh);
 }
 
-void ADoorSensor::BeginPlay() {
-
-	if (Collision) {
-		Collision->OnComponentBeginOverlap.AddDynamic(this, &ADoorSensor::OnOverlapBegin);
+void ARoom::BeginPlay() {
+	if (DoorCollision) {
+		DoorCollision->OnComponentBeginOverlap.AddDynamic(this, &ARoom::OnOverlapBegin);
 	}
 
 	Super::BeginPlay();
@@ -27,24 +29,23 @@ void ADoorSensor::BeginPlay() {
 	ControlDoorOpen();
 }
 
-void ADoorSensor::Tick(float DeltaTime) {
+void ARoom::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	IsPrepared();
 }
 
-bool ADoorSensor::IsPrepared() {
+bool ARoom::IsPrepared() {
 	if (CheckIsRooomClean() && CheckFornitureIsArranged()) {
 		ChangeColor(true);
 		return true;
-	} else {
-		ChangeColor(false);
 	}
 
+	ChangeColor(false);
 	return false;
 }
 
-FVector3d ADoorSensor::GetNextClearPosition() {
+FVector3d ARoom::GetNextClearPosition() {
 	FVector3d NextPosition = FVector3d(0, 0, 0);
 	for (ARoomTrash* Trash : RoomTrash) {
 		if (Trash->IsTrashClean == false) {
@@ -55,7 +56,7 @@ FVector3d ADoorSensor::GetNextClearPosition() {
 	return NextPosition;
 }
 
-FVector3d ADoorSensor::GetNextForniturePosition() {
+FVector3d ARoom::GetNextForniturePosition() {
 	FVector3d NextPosition = FVector3d(0, 0, 0);
 	for (AFurniturePlace* FurniturePlace : FurnituresPlace) {
 		if (FurniturePlace->FurnitureInPlace == false) {
@@ -66,20 +67,20 @@ FVector3d ADoorSensor::GetNextForniturePosition() {
 	return NextPosition;
 }
 
-void ADoorSensor::ChangeColor(bool NewValue) {
-	if (BaseMesh == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("No BaseMesh set for %s"), *GetName());
+void ARoom::ChangeColor(bool NewValue) {
+	if (DoorMesh == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("No DoorMesh set for %s"), *GetName());
 		return;
 	}
 
 	if (NewValue) {
-		BaseMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(GreenColor));
+		DoorMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(GreenColor));
 	} else {
-		BaseMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(RedColor));
+		DoorMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(RedColor));
 	}
 }
 
-bool ADoorSensor::CheckFornitureIsArranged() {
+bool ARoom::CheckFornitureIsArranged() {
 	bool AllFurnitureRearranged = true;
 
 	for (AFurniturePlace* FurniturePlace : FurnituresPlace) {
@@ -92,7 +93,15 @@ bool ADoorSensor::CheckFornitureIsArranged() {
 	return AllFurnitureRearranged;
 }
 
-bool ADoorSensor::CheckIsRooomClean() {
+FVector ARoom::GetDoorEntrance() {
+	if (Path == nullptr) {
+		return FVector(0,0,0);
+	}
+
+	return Path->GetLocationByKey(0);
+}
+
+bool ARoom::CheckIsRooomClean() {
 	bool AllTrashRemoved = true;
 
 	for (ARoomTrash* Trash : RoomTrash) {
@@ -105,7 +114,7 @@ bool ADoorSensor::CheckIsRooomClean() {
 	return AllTrashRemoved;
 }
 
-void ADoorSensor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
 	// if already open, we don't need to open it again
@@ -121,14 +130,14 @@ void ADoorSensor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
-void ADoorSensor::ControlDoorOpen() {
+void ARoom::ControlDoorOpen() {
 	if (Opened) {
-		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		FVector Location = BaseMesh->GetComponentLocation();
-		BaseMesh->SetWorldLocation(FVector(Location.X, Location.Y, -199)); // -199 will be near the floor
+		DoorCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		FVector Location = DoorMesh->GetComponentLocation();
+		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, -199)); // -199 will be near the floor
 	}else {
-		Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		FVector Location = BaseMesh->GetComponentLocation();
-		BaseMesh->SetWorldLocation(FVector(Location.X, Location.Y, 0));
+		DoorCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		FVector Location = DoorMesh->GetComponentLocation();
+		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, 0));
 	}
 }

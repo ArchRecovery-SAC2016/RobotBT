@@ -2,14 +2,16 @@
 
 #include "CoreMinimal.h"
 #include "RoomTrash.h"
+#include "SplinePath.h"
+#include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
-#include "DoorSensor.generated.h"
+#include "Room.generated.h"
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorOpenChange, bool, NewState);
 
 UCLASS()
-class ROBOTBT_API ADoorSensor : public AActor {
+class ROBOTBT_API ARoom : public AActor {
 	GENERATED_BODY()
 
 protected:
@@ -17,21 +19,27 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	ADoorSensor();
-
-	virtual void Tick(float DeltaTime) override;
+	ARoom();
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
 	FString Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
-	bool Opened = true;
+	UArrowComponent* BaseLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
-	UStaticMeshComponent* BaseMesh;
+	UStaticMeshComponent* DoorMesh;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Room")
-	class UBoxComponent* Collision;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Room")
+	class UBoxComponent* DoorCollision;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
+	ASplinePath* Path;
+
+	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
+	bool Opened = true;
 
 	// saves the furnitures position of this room
 	UPROPERTY(EditInstanceOnly, Category = "Room")
@@ -71,7 +79,11 @@ public:
 	bool CheckFornitureIsArranged();
 
 	UFUNCTION()
+	FVector GetDoorEntrance();
+
+	UFUNCTION()
 	bool CheckIsRooomClean();
+
 
 	UPROPERTY()
 	FOnDoorOpenChange OnDoorOpen;

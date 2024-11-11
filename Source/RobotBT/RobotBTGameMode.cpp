@@ -2,8 +2,7 @@
 
 #include "RobotBTGameMode.h"
 #include "RobotBTPlayerController.h"
-#include "Actors/Furniture.h"
-#include "Actors/FurniturePlace.h"
+#include "Actors/Room.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
@@ -39,13 +38,13 @@ void ARobotBTGameMode::BeginPlay() {
 	LoadTasksFromFile();
 
 	// Load all Doors Sensors, so we can watch it
-    TArray<AActor*> FoundSensors;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADoorSensor::StaticClass(), FoundSensors);
+    TArray<AActor*> RoomsOnMap;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoom::StaticClass(), RoomsOnMap);
 
-    for (AActor* Actor : FoundSensors) {
-        ADoorSensor* Sensor = Cast<ADoorSensor>(Actor);
+    for (AActor* Actor : RoomsOnMap) {
+        ARoom* Sensor = Cast<ARoom>(Actor);
         if (Sensor != nullptr) {
-        	DoorSensors.Add(Sensor);
+        	Rooms.Add(Sensor);
 		}
     }
 
@@ -88,7 +87,7 @@ void ARobotBTGameMode::Tick(float DeltaTime) {
 }
 
 void ARobotBTGameMode::UpdateWorldKnowledgeWidget() {
-	for (ADoorSensor* Sensor: DoorSensors) {
+	for (ARoom* Sensor: Rooms) {
 		if (GetWorldKnowledgeWidget() == nullptr) break;
 
 		GetWorldKnowledgeWidget()->ChangeRoomProperties(Sensor->Name, Sensor->CheckIsRooomClean(), Sensor->CheckFornitureIsArranged(), Sensor->Opened);
@@ -107,10 +106,10 @@ UWorldKnowledgeWidget* ARobotBTGameMode::GetWorldKnowledgeWidget() {
 	return WorldKnowledgeWidgetInst;
 }
 
-ADoorSensor* ARobotBTGameMode::GetTaskRoom() {
+ARoom* ARobotBTGameMode::GetTaskRoom() {
 	if (CurrentTask == nullptr) return nullptr;
 	
-	for (auto Door :  DoorSensors) {
+	for (auto Door :  Rooms) {
 		if (Door->Name == CurrentTask->Locations) {
 			return Door;
 		}
@@ -157,36 +156,6 @@ FTask* ARobotBTGameMode::GetNextTask() {
 	 return nullptr;
 }
 
-void ARobotBTGameMode::StartMoveFunitureTask(ADoorSensor* Room) {
-	if (Room == nullptr) return;
-
-	TArray<AFurniturePlace*> FurnitureToMove;
-	for (auto Furniture: Room->FurnituresPlace) {
-		if (Furniture->FurnitureInPlace == false) {
-			FurnitureToMove.Add(Furniture);
-		}
-	}
-
-	int32 NumOrganizers = OrganizersTeam.Num();
-	int32 FurnitureIndex = 0;
-
-	// Distribuir os m�veis entre os organizadores
-	for (auto Furniture : FurnitureToMove) {
-		// Escolher um organizador usando o �ndice do m�vel em rela��o ao n�mero de organizadores
-		int32 OrganizerIndex = FurnitureIndex % NumOrganizers;
-		auto Organizer = OrganizersTeam[OrganizerIndex];
-
-		// Adicionar a tarefa de mover o m�vel para o organizador
-		Organizer->AddMoveTask(Furniture);
-
-		// Incrementar o �ndice do m�vel
-		FurnitureIndex++;
-	}
-
-	for (auto Organizer : OrganizersTeam) {
-		Organizer->StartMoveFurniture(Room);
-	}
-}
 
 void ARobotBTGameMode::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr) {
@@ -326,8 +295,8 @@ bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObje
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-ADoorSensor* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
-	for (auto Door : DoorSensors) {
+ARoom* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
+	for (auto Door : Rooms) {
 		if (Door->Name == DoorName) {
 			return Door;
 		}
