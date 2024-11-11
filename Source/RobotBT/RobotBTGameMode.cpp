@@ -42,33 +42,33 @@ void ARobotBTGameMode::BeginPlay() {
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoom::StaticClass(), RoomsOnMap);
 
     for (AActor* Actor : RoomsOnMap) {
-        ARoom* Sensor = Cast<ARoom>(Actor);
-        if (Sensor != nullptr) {
-        	Rooms.Add(Sensor);
+        ARoom* Room = Cast<ARoom>(Actor);
+        if (Room != nullptr) {
+        	Rooms.Add(Room);
 		}
     }
 
 	// Load cleaning robot
 	TArray<AActor*> FoundRobots;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotCleaner::StaticClass(), FoundRobots);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobot::StaticClass(), FoundRobots);
 	for (AActor* Actor : FoundRobots) {
-		ARobotCleaner* Cleaner = Cast<ARobotCleaner>(Actor);
-		if (Cleaner != nullptr) {
-			CleanerRobot = Cleaner;
-			Cleaner->OnRoomCleaned.AddDynamic(this, &ARobotBTGameMode::OnRoomCleaned);
-			Cleaner->OnDoorOpened.AddDynamic(this, &ARobotBTGameMode::OnDoorOpened);
-			// Cleaner->OnRobotSanitized.AddDynamic(this, &ARobotBTGameMode::OnRobotSanitized);
+		if (Actor->ActorHasTag("Cleaner")) {
+			ARobot* Cleaner = Cast<ARobot>(Actor);
+			if (Cleaner != nullptr) {
+				CleanerRobot = Cleaner;
+			}
 		}
 	}
 
 	// Load organization robot
 	TArray<AActor*> FoundOrganizer;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotOrganizer::StaticClass(), FoundOrganizer);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobot::StaticClass(), FoundOrganizer);
 	for (AActor* Actor : FoundOrganizer) {
-		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
-		if (Organizer != nullptr) {
-			Organizer->OnFurnitureMoveEnded.AddDynamic(this, &ARobotBTGameMode::OnFurnitureMoveEnded);
-			OrganizersTeam.Add(Organizer);
+		if (Actor->ActorHasTag("Organizer")) {
+			ARobot* Organizer = Cast<ARobot>(Actor);
+			if (Organizer != nullptr) {
+				OrganizersTeam.Add(Organizer);
+			}
 		}
 	}
 
@@ -89,8 +89,7 @@ void ARobotBTGameMode::Tick(float DeltaTime) {
 void ARobotBTGameMode::UpdateWorldKnowledgeWidget() {
 	for (ARoom* Sensor: Rooms) {
 		if (GetWorldKnowledgeWidget() == nullptr) break;
-
-		GetWorldKnowledgeWidget()->ChangeRoomProperties(Sensor->Name, Sensor->CheckIsRooomClean(), Sensor->CheckFornitureIsArranged(), Sensor->Opened);
+		
 	}
 }
 
@@ -220,7 +219,7 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 		}
 
 		if (CurrentPrecondition.VarTypes == TEXT("room")) {
-			auto Door = GetDoorByName(CurrentPrecondition.Vars);
+			auto Door = GetRoomByName(CurrentPrecondition.Vars);
 			bool Negation = ObjectName.StartsWith(TEXT("not ")); // some predicates starts with not, so we need to check it
 
 			if (Door == nullptr) {
@@ -244,19 +243,7 @@ bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
 					}
 				}
 			} else if (Condition == TEXT("is_clean")) {
-				if (Negation) {
-					if (Door->CheckIsRooomClean() == true) {
-						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room already is clear: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
-						return false;
-					}
-				} else {
-					if (Door->CheckIsRooomClean() == false) {
-						FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Room not is clear: %s!"), *CurrentPrecondition.Predicate);
-						UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::ERROR);
-						return false;
-					}
-				}
+				
 			} else if (Condition == TEXT("sanitize-robot")) {
 				if (Door->Opened) {
 					FString TaskMessage = FString::Printf(TEXT("PreCondition Failed: Door is not open: %s!"), *CurrentPrecondition.Predicate);
@@ -295,7 +282,7 @@ bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObje
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-ARoom* ARobotBTGameMode::GetDoorByName(const FString& DoorName) {
+ARoom* ARobotBTGameMode::GetRoomByName(const FString& DoorName) {
 	for (auto Door : Rooms) {
 		if (Door->Name == DoorName) {
 			return Door;
@@ -341,29 +328,5 @@ void ARobotBTGameMode::OnRobotSanitized(bool bNewState) {
 	CurrentDecompositionIndex++;
 	// Continue executing tasks 
 	ExecuteCurrentTask();
-}
-
-void ARobotBTGameMode::OnFurnitureMoveEnded(bool bNewState) {
-	if (bNewState) {
-		UUtilMethods::ShowLogMessage(TEXT("Robot Sanitized!"), EMessageColorEnum::SUCCESS);
-	}
-	else {
-		UUtilMethods::ShowLogMessage(TEXT("Robot couldn'Sanitized"), EMessageColorEnum::ERROR);
-	}
-
-	bool AllFinished = true;
-	for (auto Organizer : OrganizersTeam) {
-		if (Organizer->IsRobotMovingFurniture()) {
-			AllFinished = false;
-			break;
-		}
-	}
-
-	// if all finished, we continue executing tasks 
-	if (AllFinished) {
-		CurrentDecompositionIndex++;
-	
-		ExecuteCurrentTask();
-	}
 }
 

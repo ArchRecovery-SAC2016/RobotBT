@@ -7,7 +7,6 @@
 #include "GameFramework/Actor.h"
 #include "Room.generated.h"
 
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorOpenChange, bool, NewState);
 
 UCLASS()
@@ -36,17 +35,8 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
 	ASplinePath* Path;
 
-	virtual void Tick(float DeltaTime) override;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
-	bool Opened = true;
-
-	// saves the furnitures position of this room
-	UPROPERTY(EditInstanceOnly, Category = "Room")
-	TArray<class AFurniturePlace*> FurnituresPlace;
-
-	UPROPERTY(EditInstanceOnly, Category = "Room")
-	TArray<ARoomTrash*> RoomTrash;
+	bool DoorOpened = true;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
 	FLinearColor RedColor;
@@ -54,47 +44,31 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
 	FLinearColor GreenColor;
 
-	// Used to move the robot to the front of the room. Before the robot starts to clean the room, it will move to this location	
-	UPROPERTY(EditInstanceOnly, Category = "Room")
-	FVector FrontRoomLocation;
+	UPROPERTY()
+	FOnDoorOpenChange OnDoorOpen;
 
-	// Used to move the robot to the center of the room. Used by sanitization robot to move to the center of the room
-	UPROPERTY(EditInstanceOnly, Category = "Room")
-	FVector CenterRoomLocation;
+	UPROPERTY()
+	bool ActionsFinished = false;
 
-	// Used to move the robot to the outside of the room. After all actions finish, the robot will move to this location
-	UPROPERTY(EditInstanceOnly, Category = "Room")
-	FVector OutsideRoomLocation;
-
-	UFUNCTION()
-	FVector3d GetNextClearPosition();
-
-	UFUNCTION()
-	FVector3d GetNextForniturePosition();
-
-	UFUNCTION(BlueprintCallable)
-	bool IsPrepared();
-
-	UFUNCTION()
-	bool CheckFornitureIsArranged();
+	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	FVector GetDoorEntrance();
 
 	UFUNCTION()
-	bool CheckIsRooomClean();
+	bool GetActionsFinished();
 
-
-	UPROPERTY()
-	FOnDoorOpenChange OnDoorOpen;
+	UFUNCTION()
+	void OpenDoor(bool NewValue);
+	
 private:
 	void ChangeColor(bool NewValue);
 
-	// this event is called when the robot wants to open the door.
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	UFUNCTION()
 	void ControlDoorOpen();
+
+
+
+
 	
 };

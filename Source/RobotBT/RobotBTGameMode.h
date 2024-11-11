@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Actors/Robot.h"
+#include "Actors/Room.h"
 #include "GameFramework/GameModeBase.h"
-#include "Actors/RobotCleaner.h"
-#include "Actors/RobotOrganizer.h"
 #include "Struct/MovePlanStruct.h"
 #include "Struct/TaskStruct.h"
 #include "Widget/WorldKnowledgeWidget.h"
@@ -25,11 +25,11 @@ public:
 
 	// saves all organizers robots instance
 	UPROPERTY()
-	TArray<ARobotOrganizer*> OrganizersTeam;
+	TArray<ARobot*> OrganizersTeam;
 
 	// saves the robot cleaner
 	UPROPERTY()
-	ARobotCleaner* CleanerRobot;
+	ARobot* CleanerRobot;
 
 	// The move plan that the robot will execute
 	UPROPERTY(EditInstanceOnly)
@@ -84,7 +84,7 @@ private:
 
 	bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
-	ARoom* GetDoorByName(const FString& DoorName);
+	ARoom* GetRoomByName(const FString& DoorName);
 
 	bool ExperimentIsOver = false;
 
@@ -100,9 +100,6 @@ private:
 	UFUNCTION()
 	void OnRobotSanitized(bool bNewState);
 
-	// is a bind function. Called when a task of the robot move is finished. But for this be completed, all robot must be in the correct position
-	UFUNCTION()
-	void OnFurnitureMoveEnded(bool bNewState);
 };
 
 
