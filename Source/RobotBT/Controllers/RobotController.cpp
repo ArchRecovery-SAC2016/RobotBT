@@ -49,19 +49,35 @@ void ARobotController::ProcessAction() {
 	
 }
 
-bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector) {
+bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float DeltaTime) {
 	if (ControlledPawn == nullptr) return false;
 
-	float Distance = (ControlledPawn->GetActorLocation() - NewPositionVector).Size();
+	FVector CurrentLocation = ControlledPawn->GetActorLocation();
+	FVector Direction = (NewPositionVector - CurrentLocation).GetSafeNormal();
+	float Distance = FVector::Dist(CurrentLocation, NewPositionVector);
 
-	if (Distance < 100) {
-		return true;
+	// Verificar se já estamos próximos o suficiente do destino
+	if (Distance < 100.0f) {
+		return true;  // Alcançou o destino
 	}
 
-	MoveToLocation(NewPositionVector, 1, true, true);
+	// Calcular a distância a se mover neste frame
+	float MoveDistance = ControlledPawn->Speed * DeltaTime;
 
-	return false;
+	// Verificar se a distância a ser percorrida neste frame é maior que a distância restante
+	if (MoveDistance >= Distance) {
+		// Mover diretamente para a localização final
+		ControlledPawn->SetActorLocation(NewPositionVector);
+		return true;  // Alcançou o destino
+	}
+	else {
+		// Mover parcialmente na direção do destino
+		FVector NewLocation = CurrentLocation + Direction * MoveDistance;
+		ControlledPawn->SetActorLocation(NewLocation);
+		return false;  // Ainda não alcançou o destino
+	}
 }
+
 
 bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime) {
 	if (SplineComponent == nullptr) {

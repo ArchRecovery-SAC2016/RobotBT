@@ -9,6 +9,8 @@ ARobot::ARobot() {
 void ARobot::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+	if (BatteryLevel <= 0) return;
+
 	if (IsMoving) ConsumeBattery(BatteryDischargeRate * DeltaTime);
 }
 
@@ -35,8 +37,29 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 	BatteryLevel -= DischargeAmount;
 
 	if (BatteryLevel <= 0) {
-		OnBatteryOver.Broadcast(true);
+		OnBatteryEnd.Broadcast();
 	}
+}
+
+bool ARobot::MoveToRoomLocation(float DeltaTime) {
+	IsMoving = true;
+	FVector Location = CurrentRoomInstace->Path->GetLocationByKey(0);
+	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(Location, DeltaTime);
+	if (IsAtRoomLocation) {
+		IsMoving = false;
+	}
+
+	return IsAtRoomLocation;
+}
+
+bool ARobot::MoveAlongPath(float DeltaTime) {
+	IsMoving = true;
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(CurrentRoomInstace->Path->Spline, 0, CurrentRoomInstace->Path->Spline->GetNumberOfSplinePoints(), DeltaTime);
+	if (IsFinishedMovingAlongPath) {
+		IsMoving = false;
+	}
+
+	return IsFinishedMovingAlongPath;
 }
 
 ARobotController* ARobot::GetRobotController() {

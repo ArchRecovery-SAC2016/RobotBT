@@ -1,13 +1,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SplinePath.h"
+#include "Room.h"
 #include "GameFramework/Character.h"
 #include "Robot.generated.h"
 
 class ARobotController;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBatteryOver, bool, NewState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBatteryEnd);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskFinished);
 
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
@@ -28,12 +29,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString Name;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString ActionName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FString SquadName = "None";
 
 	// the initial battery level of the robot
@@ -44,6 +39,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	float BatteryDischargeRate = 10;
 
+	// a action can consume different battery discharge rate
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	TArray<float> ActionBatteryDischargeRate;
 
@@ -55,24 +51,41 @@ public:
 	UFUNCTION()
 	virtual void ProcessAction();
 
-	// set the new spline path
-	UFUNCTION()
-	void SetSplinePath(ASplinePath* NewSplinePath) { CurrentSplinePath = NewSplinePath; }
-
 	// indicate if the robot is moving
 	UPROPERTY()
 	bool IsMoving = false;
 
 	// event that is called when the battery is over
-	FOnBatteryOver OnBatteryOver;
+	UPROPERTY()
+	FOnBatteryEnd OnBatteryEnd;
 
-private:
+	// event that is called when the task is finished
+	UPROPERTY()
+	FOnTaskFinished OnTaskFinished;
+
+protected:
 	// saves a instance of the current spline path
 	UPROPERTY()
-	ASplinePath* CurrentSplinePath = nullptr;
+	ARoom* CurrentRoomInstace;
+
+	// indicate if the robot finished the action of move to a specific door
+	UPROPERTY()
+	bool IsAtRoomLocation = false;
+
+	// indicate if the robot move all path
+	UPROPERTY()
+	bool IsFinishedMovingAlongPath = false;
 
 	UFUNCTION()
+	virtual bool MoveToRoomLocation(float DeltaTime);
+
+	UFUNCTION()
+	virtual bool MoveAlongPath(float DeltaTime);
+
+private:
+	UFUNCTION()
 	void ConsumeBattery(float DeltaTime);
+
 
 
 };
