@@ -57,12 +57,23 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 	float Distance = FVector::Dist(CurrentLocation, NewPositionVector);
 
 	// Verificar se já estamos próximos o suficiente do destino
-	if (Distance < 100.0f) {
+	if (Distance < 50.0f) {
 		return true;  // Alcançou o destino
 	}
 
 	// Calcular a distância a se mover neste frame
 	float MoveDistance = ControlledPawn->Speed * DeltaTime;
+
+	// Calcula a rotação necessária para apontar para a localização
+	FRotator TargetRotation = Direction.Rotation();
+	TargetRotation.Pitch = 0.0f; // Remove a inclinação no eixo X
+	TargetRotation.Roll = 0.0f;  // Remove a rotação no eixo Y
+
+	// Atualiza a rotação do robô gradualmente
+	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, 5);
+
+	ControlledPawn->SetActorRotation(NewRotation);
 
 	// Verificar se a distância a ser percorrida neste frame é maior que a distância restante
 	if (MoveDistance >= Distance) {

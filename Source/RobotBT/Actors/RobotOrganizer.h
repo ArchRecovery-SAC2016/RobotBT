@@ -26,5 +26,8 @@ public:
 	UFUNCTION()
 	void StartOrganizeTask(ARoom* Room);
 
+	UFUNCTION()
+	void TaskFinished(FString TaskMessage);
+
 
 };

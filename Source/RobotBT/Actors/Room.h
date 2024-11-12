@@ -60,6 +60,7 @@ public:
 
 	UFUNCTION()
 	void OpenDoor(bool NewValue);
+
 	
 private:
 	void ChangeColor(bool NewValue);

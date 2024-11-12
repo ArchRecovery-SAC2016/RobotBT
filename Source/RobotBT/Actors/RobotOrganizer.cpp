@@ -7,6 +7,10 @@ ARobotOrganizer::ARobotOrganizer() {
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ARobotOrganizer::BeginPlay() {
+	Super::BeginPlay();
+}
+
 void ARobotOrganizer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
@@ -19,9 +23,7 @@ void ARobotOrganizer::Tick(float DeltaTime) {
 			if (IsFinishedMovingAlongPath == false) {
 				MoveAlongPath(DeltaTime);
 			} else {
-				IsOrganazing = false;
-				OnTaskFinished.Broadcast();
-				UUtilMethods::ShowLogMessage(TEXT("Task move-furniture Finished"), EMessageColorEnum::INFO);
+				TaskFinished("Task move-furniture Finished");
 			}
 		}
 	}
@@ -36,7 +38,13 @@ void ARobotOrganizer::StartOrganizeTask(ARoom* Room) {
 	IsOrganazing = true;
 }
 
-void ARobotOrganizer::BeginPlay() {
-	Super::BeginPlay();
 
+
+void ARobotOrganizer::TaskFinished(FString TaskMessage) {
+	IsOrganazing = false;
+	IsAtRoomLocation = false;
+	IsFinishedMovingAlongPath = false;
+	OnTaskFinished.Broadcast();
+	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
+

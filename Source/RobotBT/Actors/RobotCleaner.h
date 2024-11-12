@@ -38,5 +38,7 @@ public:
 	UFUNCTION()
 	void StartCleaninTask(ARoom* Room);
 
+	UFUNCTION()
+	void TaskFinished(FString TaskMessage);
 
 };
