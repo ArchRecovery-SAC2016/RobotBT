@@ -23,7 +23,8 @@ public:
 	UPROPERTY()
 	bool IsOrganazing = false;
 
-
+	UFUNCTION()
+	void StartOrganizeTask(ARoom* Room);
 
 
 };

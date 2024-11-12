@@ -99,11 +99,14 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 
 	// restart the decomposition index
 	CurrentDecompositionIndex = 0;
+	DecompositionQueue.Empty();
 
 	// if is empty, so is the first time of this task, so we fill the decomposition queue
 	for (auto it = CurrentTask->Decomposition.CreateConstIterator(); it; ++it) {
 		DecompositionQueue.Add(it.Value());
 	}
+
+	ExecuteCurrentDecomposition();
 }
 
 void ARobotBTGameMode::ExecuteCurrentDecomposition() {
@@ -124,7 +127,7 @@ bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObje
 void ARobotBTGameMode::CurrentTaskFinished() {
 	if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num()) {
 		CurrentDecompositionIndex++;
-		ExecuteCurrentTask();
+		ExecuteCurrentDecomposition();
 	}
 	else {
 		CurrentTask = GetNextTask();

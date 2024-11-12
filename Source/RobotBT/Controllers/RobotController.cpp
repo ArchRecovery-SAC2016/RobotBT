@@ -93,19 +93,28 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 		Swap(StartDistance, EndDistance);
 	}
 
-	// Verifica se chegou ao final
-	if (DistanceAlongSpline >= EndDistance) {
-		DistanceAlongSpline = EndDistance;
-		return true; // Retorna true ao atingir o ponto final
+	// Inicializa DistanceAlongSpline na primeira chamada
+	if (FMath::IsNearlyZero(DistanceAlongSpline)) {
+		DistanceAlongSpline = StartDistance;
 	}
 
 	// Atualiza a distância ao longo do spline
-	DistanceAlongSpline += ControlledPawn->Speed * DeltaTime; // Incrementa a distância
-	if (DistanceAlongSpline > EndDistance) {
-		DistanceAlongSpline = EndDistance; // Limita a distância
+	DistanceAlongSpline += ControlledPawn->Speed * DeltaTime;
+
+	// Verifica se ultrapassou o ponto final
+	if (DistanceAlongSpline >= EndDistance) {
+		DistanceAlongSpline = EndDistance;
+		FVector FinalLocation = SplineComponent->GetLocationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
+		FRotator FinalRotation = SplineComponent->GetRotationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
+
+		// Move o ator para a posição final
+		ControlledPawn->SetActorLocation(FinalLocation);
+		ControlledPawn->SetActorRotation(FinalRotation);
+
+		return true; // Movimento concluído
 	}
 
-	// Atualiza a posição e rotação do ator ao longo do spline
+	// Calcula a nova posição e rotação ao longo do spline
 	FVector NewLocation = SplineComponent->GetLocationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
 	FRotator NewRotation = SplineComponent->GetRotationAtDistanceAlongSpline(DistanceAlongSpline, ESplineCoordinateSpace::World);
 
@@ -113,5 +122,5 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 	ControlledPawn->SetActorLocation(NewLocation);
 	ControlledPawn->SetActorRotation(NewRotation);
 
-	return false; // Não chegou ao final ainda
+	return false; // Ainda em movimento
 }

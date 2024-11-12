@@ -54,7 +54,7 @@ bool ARobot::MoveToRoomLocation(float DeltaTime) {
 
 bool ARobot::MoveAlongPath(float DeltaTime) {
 	IsMoving = true;
-	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(CurrentRoomInstace->Path->Spline, 0, CurrentRoomInstace->Path->Spline->GetNumberOfSplinePoints(), DeltaTime);
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(CurrentRoomInstace->Path->Spline, 0, CurrentRoomInstace->Path->Spline->GetNumberOfSplinePoints() -1, DeltaTime);
 	if (IsFinishedMovingAlongPath) {
 		IsMoving = false;
 	}
