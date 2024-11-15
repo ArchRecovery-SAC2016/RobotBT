@@ -3,8 +3,8 @@
 #include "Actors/Room.h"
 #include "CoreMinimal.h"
 #include "RobotBTGameMode.h"
-#include "Actors/RobotCleaner.h"
-#include "Actors/RobotOrganizer.h"
+#include "Actors/RoomPreparation/RobotCleaner.h"
+#include "Actors/RoomPreparation/RobotOrganizer.h"
 #include "Struct/MovePlanStruct.h"
 #include "RoomPreparationExperiment.generated.h"
 

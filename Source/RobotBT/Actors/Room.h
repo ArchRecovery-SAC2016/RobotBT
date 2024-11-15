@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RoomTrash.h"
 #include "SplinePath.h"
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
@@ -47,28 +46,16 @@ public:
 	UPROPERTY()
 	FOnDoorOpenChange OnDoorOpen;
 
-	UPROPERTY()
-	bool ActionsFinished = false;
-
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	FVector GetDoorEntrance(int32 PathIndex);
 
 	UFUNCTION()
-	bool GetActionsFinished();
-
-	UFUNCTION()
 	void OpenDoor(bool NewValue);
 
+	void ChangeColorToOK(bool NewValue);
 private:
-	void ChangeColor(bool NewValue);
-
 	UFUNCTION()
 	void ControlDoorOpen();
-
-
-
-
-	
 };

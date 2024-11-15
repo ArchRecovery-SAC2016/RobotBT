@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "RoomPreparationExperiment.h"
 #include "Actors/Room.h"
 #include "Enum/MessageColorEnum.h"
@@ -14,7 +12,6 @@ ARoomPreparationExperiment::ARoomPreparationExperiment() {
 
 void ARoomPreparationExperiment::BeginPlay() {
     Super::BeginPlay();
-
 
 	// Load all Doors Sensors, so we can watch it
     TArray<AActor*> RoomsOnMap;

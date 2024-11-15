@@ -31,6 +31,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FString SquadName = "None";
 
+	// Witch path will take when enter in a room
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
+	int32 PathIndex = 0;
+
 	// the initial battery level of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	float BatteryLevel = 100;
@@ -78,6 +82,7 @@ protected:
 
 	UFUNCTION()
 	virtual bool MoveToRoomLocation(float DeltaTime);
+	ASplinePath* GetRoomPath();
 
 	UFUNCTION()
 	virtual bool MoveAlongPath(float DeltaTime);

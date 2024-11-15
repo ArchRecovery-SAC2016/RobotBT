@@ -42,8 +42,14 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 }
 
 bool ARobot::MoveToRoomLocation(float DeltaTime) {
+	ASplinePath* Path = GetRoomPath();
+	if (Path == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::MoveToRoomLocation] Path is nullptr"));
+		return false;
+	}
+
 	IsMoving = true;
-	FVector Location = CurrentRoomInstace->Path->GetLocationByKey(0);
+	FVector Location = Path->GetLocationByKey(0);
 	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(Location, DeltaTime);
 	if (IsAtRoomLocation) {
 		IsMoving = false;
@@ -52,9 +58,30 @@ bool ARobot::MoveToRoomLocation(float DeltaTime) {
 	return IsAtRoomLocation;
 }
 
+ASplinePath* ARobot::GetRoomPath() {
+	if (CurrentRoomInstace == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GetRoomPath] CurrentRoomInstace is nullptr"));
+		return nullptr;
+	}
+
+	if (CurrentRoomInstace->Path.Num() < PathIndex) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::GetRoomPath] CurrentRoomInstace->Path don't have the path"));
+		return nullptr;
+	}
+
+	return  CurrentRoomInstace->Path[PathIndex];
+}
+
 bool ARobot::MoveAlongPath(float DeltaTime) {
+	ASplinePath* Path = GetRoomPath();
+	if (Path == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotCleaner::MoveToRoomLocation] Path is nullptr"));
+		return false;
+	}
+
+
 	IsMoving = true;
-	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(CurrentRoomInstace->Path->Spline, 0, CurrentRoomInstace->Path->Spline->GetNumberOfSplinePoints() -1, DeltaTime);
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(Path->Spline, 0, Path->Spline->GetNumberOfSplinePoints() -1, DeltaTime);
 	if (IsFinishedMovingAlongPath) {
 		IsMoving = false;
 	}

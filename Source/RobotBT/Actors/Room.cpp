@@ -24,17 +24,6 @@ void ARoom::BeginPlay() {
 void ARoom::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	GetActionsFinished();
-}
-
-bool ARoom::GetActionsFinished() {
-	if (ActionsFinished) {
-		ChangeColor(true);
-		return true;
-	}
-
-	ChangeColor(false);
-	return false;
 }
 
 void ARoom::OpenDoor(bool NewValue) {
@@ -42,7 +31,7 @@ void ARoom::OpenDoor(bool NewValue) {
 	ControlDoorOpen();
 }
 
-void ARoom::ChangeColor(bool NewValue) {
+void ARoom::ChangeColorToOK(bool NewValue) {
 	if (DoorMesh == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("No DoorMesh set for %s"), *GetName());
 		return;
