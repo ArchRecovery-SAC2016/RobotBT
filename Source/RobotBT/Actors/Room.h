@@ -33,7 +33,7 @@ public:
 	class UBoxComponent* DoorCollision;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
-	ASplinePath* Path;
+	TArray<ASplinePath*> Path;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
 	bool DoorOpened = true;
@@ -53,7 +53,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	FVector GetDoorEntrance();
+	FVector GetDoorEntrance(int32 PathIndex);
 
 	UFUNCTION()
 	bool GetActionsFinished();
@@ -61,7 +61,6 @@ public:
 	UFUNCTION()
 	void OpenDoor(bool NewValue);
 
-	
 private:
 	void ChangeColor(bool NewValue);
 

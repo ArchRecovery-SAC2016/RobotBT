@@ -55,13 +55,15 @@ void ARoom::ChangeColor(bool NewValue) {
 	}
 }
 
-FVector ARoom::GetDoorEntrance() {
-	if (Path == nullptr) {
+FVector ARoom::GetDoorEntrance(int32 PathIndex) {
+	ASplinePath* NewPath = PathIndex < Path.Num() ? Path[PathIndex] : nullptr;
+
+	if (NewPath == nullptr) {
 		UUtilMethods::ShowLogMessage(TEXT("FAILED TO GET ROOM ENTRANCE"), EMessageColorEnum::ERROR);
 		return FVector(0,0,0);
 	}
 
-	return Path->GetLocationByKey(0);
+	return NewPath->GetLocationByKey(0);
 }
 
 void ARoom::ControlDoorOpen() {
