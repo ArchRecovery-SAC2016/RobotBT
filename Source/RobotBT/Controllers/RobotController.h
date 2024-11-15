@@ -42,7 +42,9 @@ private:
 
 	float DistanceAlongSpline; // Declare a variável de membro
 
+	float CurrentDistance = 0.0f;  // Armazena a distância atual percorrida
 
+	int32 CurrentPathIndex = -1;  // Armazena o índice atual na spline
 };
 
 

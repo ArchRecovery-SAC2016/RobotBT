@@ -47,7 +47,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 			if (IsFinishedMovingAlongPath == false) {
 				MoveAlongPath(DeltaTime);
 			} else {
-				TaskFinished("Task  clean-room Finished");
+				TaskFinished("Task clean-room Finished");
 			}
 		}
 	}
