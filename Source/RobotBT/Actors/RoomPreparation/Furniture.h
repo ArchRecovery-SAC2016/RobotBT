@@ -21,30 +21,30 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	/** Root component */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Furniture")
 	UArrowComponent* BaseLocation;
 
 	/** Furniture mesh */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Furniture")
 	UStaticMeshComponent* FurnitureMesh;
 
 	/** Where the Furniture need to move */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Furniture")
 	UStaticMeshComponent* CorrectLocationMesh;
 
 	/** Collision that will trigger the movement */
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
+	UPROPERTY(EditDefaultsOnly, Category = "Furniture")
 	class UBoxComponent* Collision;
 
 	/** Collision that will trigger the movement */
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
-	bool InPlance = false;
+	UPROPERTY(EditDefaultsOnly, Category = "Furniture")
+	bool InPlace = false;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
-	FLinearColor RedColor;
+	UPROPERTY(EditDefaultsOnly, Category = "Furniture")
+	FLinearColor RedColor = FLinearColor::Red;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
-	FLinearColor GreenColor;
+	UPROPERTY(EditDefaultsOnly, Category = "Furniture")
+	FLinearColor GreenColor = FLinearColor::Green;
 
 private:
 	UFUNCTION()

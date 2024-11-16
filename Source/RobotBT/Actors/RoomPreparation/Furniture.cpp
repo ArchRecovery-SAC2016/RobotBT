@@ -24,7 +24,7 @@ void AFurniture::BeginPlay() {
         Collision->OnComponentBeginOverlap.AddDynamic(this, &AFurniture::OnOverlapBegin);
     }
 
-	if (InPlance) {
+	if (InPlace) {
 		FinishPlacement();
 	}
 }
@@ -50,13 +50,14 @@ void AFurniture::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 void AFurniture::FinishPlacement() {
 	FurnitureMesh->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
 	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	InPlace = true;
 	ChangeColor();
 	ShouldMove = false;
 }
 
 
 void AFurniture::ChangeColor() {
-	if (InPlance) {
+	if (InPlace) {
 		FurnitureMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(GreenColor));
 	} else {
 		FurnitureMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(RedColor));

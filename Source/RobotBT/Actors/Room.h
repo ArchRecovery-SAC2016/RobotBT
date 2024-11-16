@@ -35,10 +35,10 @@ public:
 	bool DoorOpened = true;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
-	FLinearColor RedColor;
+	FLinearColor RedColor = FLinearColor::Red;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
-	FLinearColor GreenColor;
+	FLinearColor GreenColor = FLinearColor::Green;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
 	class USplineComponent* MainPath;

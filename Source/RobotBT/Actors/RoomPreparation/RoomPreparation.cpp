@@ -22,6 +22,8 @@ void ARoomPreparation::Tick(float DeltaTime) {
 
 	if (IsRoomPrepared()) {
 		ChangeColorToOK(true);
+	} else {
+		ChangeColorToOK(false);
 	}
 }
 
@@ -31,7 +33,7 @@ bool ARoomPreparation::IsRoomPrepared() {
 	}
 
 	for (AFurniture* Furniture : Furnitures) {
-		if (!Furniture->InPlance) return false;
+		if (!Furniture->InPlace) return false;
 	}
 
 	return true;
