@@ -52,19 +52,28 @@ void ARobotController::ProcessAction() {
 bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float DeltaTime) {
 	if (ControlledPawn == nullptr) return false;
 
+	// Obtem a localização atual do ator
 	FVector CurrentLocation = ControlledPawn->GetActorLocation();
-	FVector Direction = (NewPositionVector - CurrentLocation).GetSafeNormal();
-	float Distance = FVector::Dist(CurrentLocation, NewPositionVector);
 
-	// Verificar se já estamos próximos o suficiente do destino
-	if (Distance < 50.0f) {
-		return true;  // Alcançou o destino
+	// Preserva a coordenada Z do robô para ignorar mudanças no eixo Z
+	FVector AdjustedTargetLocation = NewPositionVector;
+	AdjustedTargetLocation.Z = CurrentLocation.Z;
+
+	// Calcula a direção no plano X-Y
+	FVector Direction = (AdjustedTargetLocation - CurrentLocation).GetSafeNormal2D();
+
+	// Calcula a distância no plano X-Y
+	float Distance2D = FVector::Dist2D(CurrentLocation, AdjustedTargetLocation);
+
+	// Verificar se já estamos próximos o suficiente no plano X-Y
+	if (Distance2D < 50.0f) {
+		return true; // Alcançou o destino
 	}
 
 	// Calcular a distância a se mover neste frame
 	float MoveDistance = ControlledPawn->Speed * DeltaTime;
 
-	// Calcula a rotação necessária para apontar para a localização
+	// Calcula a rotação necessária para apontar para a localização (ignora Z)
 	FRotator TargetRotation = Direction.Rotation();
 	TargetRotation.Pitch = 0.0f; // Remove a inclinação no eixo X
 	TargetRotation.Roll = 0.0f;  // Remove a rotação no eixo Y
@@ -76,18 +85,20 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 	ControlledPawn->SetActorRotation(NewRotation);
 
 	// Verificar se a distância a ser percorrida neste frame é maior que a distância restante
-	if (MoveDistance >= Distance) {
-		// Mover diretamente para a localização final
-		ControlledPawn->SetActorLocation(NewPositionVector);
-		return true;  // Alcançou o destino
+	if (MoveDistance >= Distance2D) {
+		// Mover diretamente para a localização final (mantendo Z)
+		ControlledPawn->SetActorLocation(AdjustedTargetLocation);
+		return true; // Alcançou o destino
 	}
 	else {
-		// Mover parcialmente na direção do destino
+		// Mover parcialmente na direção do destino (mantendo Z)
 		FVector NewLocation = CurrentLocation + Direction * MoveDistance;
+		NewLocation.Z = CurrentLocation.Z; // Mantém a coordenada Z atual
 		ControlledPawn->SetActorLocation(NewLocation);
-		return false;  // Ainda não alcançou o destino
+		return false; // Ainda não alcançou o destino
 	}
 }
+
 
 bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime) {
 	if (SplineComponent == nullptr || ControlledPawn == nullptr) {
@@ -100,9 +111,18 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 		CurrentDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(CurrentPathIndex);
 	}
 
-	// Verifica se já chegou ao final
+	// Obtém a posição atual do ator para preservar a coordenada Z
+	FVector CurrentLocation = ControlledPawn->GetActorLocation();
+
+	// Verifica se já chegou ao final (ignorando Z)
 	float EndDistance = SplineComponent->GetDistanceAlongSplineAtSplinePoint(EndIndex);
-	if (CurrentDistance >= EndDistance) {
+	FVector EndLocation = SplineComponent->GetLocationAtDistanceAlongSpline(EndDistance, ESplineCoordinateSpace::World);
+	EndLocation.Z = CurrentLocation.Z; // Ignora Z na validação
+
+	FVector CurrentTargetLocation = SplineComponent->GetLocationAtDistanceAlongSpline(CurrentDistance, ESplineCoordinateSpace::World);
+	CurrentTargetLocation.Z = CurrentLocation.Z; // Ignora Z na validação
+
+	if (FVector::Dist2D(CurrentLocation, EndLocation) < KINDA_SMALL_NUMBER) {
 		CurrentPathIndex = -1;  // Reset para a próxima chamada
 		CurrentDistance = 0.0f; // Garante que a distância também seja resetada
 		return true;            // Movimento concluído
@@ -112,9 +132,12 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 	float TargetDistance = FMath::Min(ControlledPawn->Speed * DeltaTime, EndDistance - CurrentDistance);
 	CurrentDistance += TargetDistance;
 
-	// Obtém a nova posição e rotação
+	// Obtém a nova posição (mantendo a Z atual) e rotação (ignorando Z)
 	FVector NewLocation = SplineComponent->GetLocationAtDistanceAlongSpline(CurrentDistance, ESplineCoordinateSpace::World);
+	NewLocation.Z = CurrentLocation.Z; // Mantém a coordenada Z atual
+
 	FRotator NewRotation = SplineComponent->GetRotationAtDistanceAlongSpline(CurrentDistance, ESplineCoordinateSpace::World);
+	NewRotation.Pitch = 0.0f; // Opcional: força o Pitch a zero para evitar rotação em Z
 
 	// Move o ator
 	ControlledPawn->SetActorLocation(NewLocation);
@@ -128,5 +151,6 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 
 	return false; // Ainda em movimento
 }
+
 
 
