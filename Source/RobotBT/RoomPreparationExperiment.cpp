@@ -86,11 +86,9 @@ void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 		FString RobotName = "CleanerRobot";
 		ExecuteClean(RobotName, RoomLocation);
 	} else if (CurrentDecomposition.Name == "open-door") {
-
 		FString RobotName = "CleanerRobot";
 		ExecuteOpenDoor(RobotName, RoomLocation);
 	} else if (CurrentDecomposition.Name == "move-furniture") {
-		
 		FString RobotName = "CleanerRobot";
 		ExecuteMoveFurniture(RobotName, RoomLocation);
 	}

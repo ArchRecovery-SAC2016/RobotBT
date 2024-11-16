@@ -29,7 +29,7 @@ void ARobotOrganizer::Tick(float DeltaTime) {
 	}
 }
 
-void ARobotOrganizer::StartOrganizeTask(ARoom* Room) {
+void ARobotOrganizer::StartOrganizeTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 	SetRoom(Room);
 	IsAtRoomLocation = false;
