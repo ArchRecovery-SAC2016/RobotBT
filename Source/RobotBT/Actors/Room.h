@@ -31,9 +31,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Room")
 	class UBoxComponent* DoorCollision;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
-	TArray<ASplinePath*> Path;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
 	bool DoorOpened = true;
 
@@ -43,19 +40,28 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
 	FLinearColor GreenColor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	class USplineComponent* MainPath;
+
 	UPROPERTY()
 	FOnDoorOpenChange OnDoorOpen;
 
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	FVector GetDoorEntrance(int32 PathIndex);
+	virtual FVector GetDoorEntrance();
 
 	UFUNCTION()
 	void OpenDoor(bool NewValue);
 
+	UFUNCTION()
 	void ChangeColorToOK(bool NewValue);
+
+	UFUNCTION()
+	virtual USplineComponent* GetRoomPath();
 private:
 	UFUNCTION()
 	void ControlDoorOpen();
+
+
 };

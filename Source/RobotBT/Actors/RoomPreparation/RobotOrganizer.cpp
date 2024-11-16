@@ -31,14 +31,10 @@ void ARobotOrganizer::Tick(float DeltaTime) {
 
 void ARobotOrganizer::StartOrganizeTask(ARoom* Room) {
 	if (Room == nullptr) return;
-
-	CurrentRoomInstace = Room;
+	SetRoom(Room);
 	IsAtRoomLocation = false;
-
 	IsOrganazing = true;
 }
-
-
 
 void ARobotOrganizer::TaskFinished(FString TaskMessage) {
 	IsOrganazing = false;
@@ -48,3 +44,24 @@ void ARobotOrganizer::TaskFinished(FString TaskMessage) {
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 
+USplineComponent* ARobotOrganizer::GetRoomPath() {
+	ARoomPreparation* PreparationRoom = Cast<ARoomPreparation>(GetRoom());
+	if (PreparationRoom == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobotOrganizer::GetRoomPath] Failed to get Room Path"));
+		return nullptr;
+	}
+
+	return PreparationRoom->GetOrganizePath(PathIndex);
+}
+
+ARoom* ARobotOrganizer::GetRoom() {
+	return RoomPreparation;
+}
+
+void ARobotOrganizer::SetRoom(ARoom* NewRoomInstance) {
+	if (ARoomPreparation* PrepRoom = Cast<ARoomPreparation>(NewRoomInstance)) {
+		RoomPreparation = PrepRoom;
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("SetRoom failed: RoomInstance is not an ARoomPreparation."));
+	}
+}

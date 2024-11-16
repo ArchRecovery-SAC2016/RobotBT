@@ -15,10 +15,10 @@ void ARoomPreparationExperiment::BeginPlay() {
 
 	// Load all Doors Sensors, so we can watch it
     TArray<AActor*> RoomsOnMap;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoom::StaticClass(), RoomsOnMap);
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);
 
     for (AActor* Actor : RoomsOnMap) {
-        ARoom* Room = Cast<ARoom>(Actor);
+        ARoomPreparation* Room = Cast<ARoomPreparation>(Actor);
         if (Room != nullptr) {
         	Rooms.Add(Room);
 		}
@@ -74,7 +74,7 @@ void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 	const FTaskDecomposition& CurrentDecomposition = DecompositionQueue[CurrentDecompositionIndex];
 	FString RoomName = CurrentTask->Locations;
 
-	ARoom* RoomLocation = GetRoomByName(RoomName);
+	ARoomPreparation* RoomLocation = GetRoomByName(RoomName);
 	if (RoomLocation == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("Room not found!"));
 		return;
@@ -99,22 +99,22 @@ void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 	UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 }
 
-ARoom* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
-	for (auto Door : Rooms) {
-		if (Door->Name == DoorName) {
-			return Door;
+ARoomPreparation* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
+	for (auto Room : Rooms) {
+		if (Room->Name == DoorName) {
+			return Room;
 		}
 	}
 
 	return nullptr;
 }
 
-void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoom* Room) {
+void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
 	UUtilMethods::ShowLogMessage(TEXT("Initiating task clean-room "), EMessageColorEnum::INFO);
 	CleanerRobot->StartCleaninTask(Room);
 }
 
-void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoom* Room) {
+void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
 	UUtilMethods::ShowLogMessage(TEXT("Initiating task move-furniture"), EMessageColorEnum::INFO);
 
 	for (ARobotOrganizer* organizer: OrganizersTeam) {
@@ -122,12 +122,12 @@ void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoom* 
 	}
 }
 
-void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoom* Room) {
+void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
 	UUtilMethods::ShowLogMessage(TEXT("Initiating task open-door"), EMessageColorEnum::INFO);
 	CleanerRobot->StartOpenDoorTask(Room);
 }
 
-void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoom* Room) {
+void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
 	UUtilMethods::ShowLogMessage(TEXT("Initiating task sanitize-robot "), EMessageColorEnum::INFO);
 	CleanerRobot->StartSanitizationTask(Room);
 }

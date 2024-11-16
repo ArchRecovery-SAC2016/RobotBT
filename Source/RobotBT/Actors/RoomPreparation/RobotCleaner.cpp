@@ -1,5 +1,6 @@
 #include "RobotCleaner.h"
 
+#include "RoomPreparation.h"
 #include "RobotBT/Controllers/RobotController.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Util/UtilMethods.h"
@@ -33,7 +34,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 		if (IsAtRoomLocation == false) {
 			MoveToRoomLocation(DeltaTime);
 		} else {
-			CurrentRoomInstace->OpenDoor(true);
+			GetRoom()->OpenDoor(true);
 			TaskFinished("Task open-door Finished");
 		}
 	}
@@ -52,31 +53,31 @@ void ARobotCleaner::Tick(float DeltaTime) {
 	}
 }
 
-void ARobotCleaner::StartSanitizationTask(ARoom* Room) {
+void ARobotCleaner::StartSanitizationTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 
 	IsSanitizing = true;
 
 	// primeira coisa que faco eh preparar o robo para a tarefa
-	CurrentRoomInstace = Room;
+	SetRoom(Room);
 	IsAtRoomLocation = false;
 }
 
-void ARobotCleaner::StartOpenDoorTask(ARoom* Room) {
+void ARobotCleaner::StartOpenDoorTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 
 	IsOpeningDoor = true;
 
-	CurrentRoomInstace = Room;
+	SetRoom(Room);
 	IsAtRoomLocation = false;
 }
 
-void ARobotCleaner::StartCleaninTask(ARoom* Room) {
+void ARobotCleaner::StartCleaninTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 
 	IsCleaning = true;
 
-	CurrentRoomInstace = Room;
+	SetRoom(Room);
 	IsAtRoomLocation = false; // TODO: create a method to check if the robot is at the location, because if the robot is already at the location, it will not move
 }
 

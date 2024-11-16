@@ -2,9 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "../Robot.h"
-#include "../Room.h"
 #include "RobotCleaner.generated.h"
 
+class ARoomPreparation;
 class ARobotController;
 
 
@@ -30,13 +30,13 @@ public:
 	bool IsCleaning = false;
 
 	UFUNCTION()
-	void StartSanitizationTask(ARoom* Room);
+	void StartSanitizationTask(ARoomPreparation* Room);
 
 	UFUNCTION()
-	void StartOpenDoorTask(ARoom* Room);
+	void StartOpenDoorTask(ARoomPreparation* Room);
 
 	UFUNCTION()
-	void StartCleaninTask(ARoom* Room);
+	void StartCleaninTask(ARoomPreparation* Room);
 
 	UFUNCTION()
 	void TaskFinished(FString TaskMessage);

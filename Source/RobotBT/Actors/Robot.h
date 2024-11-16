@@ -31,10 +31,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FString SquadName = "None";
 
-	// Witch path will take when enter in a room
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	int32 PathIndex = 0;
-
 	// the initial battery level of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	float BatteryLevel = 100;
@@ -67,11 +63,16 @@ public:
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
 
-protected:
-	// saves a instance of the current spline path
-	UPROPERTY()
-	ARoom* CurrentRoomInstace;
+	UFUNCTION()
+	virtual ARoom* GetRoom();
 
+	UFUNCTION()
+	virtual void SetRoom(ARoom* NewRoomInstance) { RoomInstace = NewRoomInstance; }
+
+	UFUNCTION()
+	virtual USplineComponent* GetRoomPath();
+
+protected:
 	// indicate if the robot finished the action of move to a specific door
 	UPROPERTY()
 	bool IsAtRoomLocation = false;
@@ -82,7 +83,6 @@ protected:
 
 	UFUNCTION()
 	virtual bool MoveToRoomLocation(float DeltaTime);
-	ASplinePath* GetRoomPath();
 
 	UFUNCTION()
 	virtual bool MoveAlongPath(float DeltaTime);
@@ -90,6 +90,10 @@ protected:
 private:
 	UFUNCTION()
 	void ConsumeBattery(float DeltaTime);
+
+	// saves a instance of the current spline path
+	UPROPERTY()
+	ARoom* RoomInstace;
 
 
 

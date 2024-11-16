@@ -1,5 +1,6 @@
 #include "Room.h"
 #include "Components/BoxComponent.h"
+#include "Components/SplineComponent.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARoom::ARoom() {
@@ -13,6 +14,9 @@ ARoom::ARoom() {
 
 	DoorCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Door DoorCollision"));
 	DoorCollision->SetupAttachment(DoorMesh);
+
+	MainPath = CreateDefaultSubobject<USplineComponent>(TEXT("Main Path"));
+	MainPath->SetupAttachment(RootComponent);
 }
 
 void ARoom::BeginPlay() {
@@ -23,7 +27,6 @@ void ARoom::BeginPlay() {
 
 void ARoom::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
 }
 
 void ARoom::OpenDoor(bool NewValue) {
@@ -44,15 +47,18 @@ void ARoom::ChangeColorToOK(bool NewValue) {
 	}
 }
 
-FVector ARoom::GetDoorEntrance(int32 PathIndex) {
-	ASplinePath* NewPath = PathIndex < Path.Num() ? Path[PathIndex] : nullptr;
+USplineComponent* ARoom::GetRoomPath() {
+	if (MainPath == nullptr) UUtilMethods::ShowLogMessage(TEXT("FAILED TO GET ROOM PATH	"), EMessageColorEnum::ERROR);
 
-	if (NewPath == nullptr) {
-		UUtilMethods::ShowLogMessage(TEXT("FAILED TO GET ROOM ENTRANCE"), EMessageColorEnum::ERROR);
+	return MainPath;
+}
+
+FVector ARoom::GetDoorEntrance() {
+	if (GetRoomPath() == nullptr) {
 		return FVector(0,0,0);
 	}
 
-	return NewPath->GetLocationByKey(0);
+	return GetRoomPath()->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::World);
 }
 
 void ARoom::ControlDoorOpen() {

@@ -28,31 +28,27 @@ public:
 	UPROPERTY()
 	ARobotCleaner* CleanerRobot;
 
-	// The move plan that the robot will execute
-	UPROPERTY(EditInstanceOnly)
-	TArray<FMovePlanStruct> MovePlan;
-
 	UFUNCTION()
-	TArray<ARoom*>GetRooms() { return Rooms; }
+	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
 private:
 	/* Saves all doors in the map	*/
 	UPROPERTY()
-	TArray<ARoom*> Rooms;
+	TArray<ARoomPreparation*> Rooms;
 
 	virtual void ExecuteCurrentDecomposition() override;
 
-	ARoom* GetRoomByName(FString DoorName);
+	ARoomPreparation* GetRoomByName(FString DoorName);
 
 	bool ExperimentIsOver = false;
 
-	void ExecuteClean(FString RobotName, ARoom* RoomLocation);
+	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
 
-	void ExecuteMoveFurniture(FString RobotName, ARoom* RoomLocation);
+	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
 
-	void ExecuteOpenDoor(FString RobotName, ARoom* RoomLocation);
+	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
 
-	void ExecuteSanitizeRobot(FString RobotName, ARoom* RoomLocation);
+	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
 };
 

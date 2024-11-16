@@ -26,7 +26,15 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Room")
 	TArray<AFurniture*> Furnitures;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	class USplineComponent* OrganizePath1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
+	class USplineComponent* OrganizePath2;
+
 	/* Return if the run is prepared */
 	bool IsRoomPrepared();
+
+	USplineComponent* GetOrganizePath(int32 index);
 		
 };
