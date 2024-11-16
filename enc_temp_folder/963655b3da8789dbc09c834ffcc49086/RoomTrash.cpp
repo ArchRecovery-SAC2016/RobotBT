@@ -29,7 +29,7 @@ void ARoomTrash::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
 	// marca que coletou o lixo e desaparece com o mesh
-	if (OtherActor->ActorHasTag("Cleaner")) {
+	if (OtherActor->ActorHasTag("CleanerRobot")) {
 		OnStateChange.Broadcast(true);
 		IsTrashClean = true;
 		BaseMesh->SetVisibility(false);

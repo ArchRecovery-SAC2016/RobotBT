@@ -48,7 +48,7 @@ void AFurniture::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 }
 
 void AFurniture::FinishPlacement() {
-	FurnitureMesh->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
+	BaseLocation->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
 	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	ChangeColor();
 	ShouldMove = false;

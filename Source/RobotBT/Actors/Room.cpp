@@ -16,7 +16,7 @@ ARoom::ARoom() {
 	DoorCollision->SetupAttachment(DoorMesh);
 
 	MainPath = CreateDefaultSubobject<USplineComponent>(TEXT("Main Path"));
-	MainPath->SetupAttachment(RootComponent);
+	MainPath->SetupAttachment(BaseLocation);
 }
 
 void ARoom::BeginPlay() {

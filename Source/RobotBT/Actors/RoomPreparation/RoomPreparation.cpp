@@ -6,10 +6,10 @@ ARoomPreparation::ARoomPreparation() {
 	PrimaryActorTick.bCanEverTick = true;
 	
 	OrganizePath1 = CreateDefaultSubobject<USplineComponent>(TEXT("Organize Path 1"));
-	OrganizePath1->SetupAttachment(RootComponent);
+	OrganizePath1->SetupAttachment(BaseLocation);
 
 	OrganizePath2 = CreateDefaultSubobject<USplineComponent>(TEXT("Organize Path 2"));
-	OrganizePath2->SetupAttachment(RootComponent);
+	OrganizePath2->SetupAttachment(BaseLocation);
 }
 
 void ARoomPreparation::BeginPlay() {

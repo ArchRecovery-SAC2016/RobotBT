@@ -66,7 +66,7 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 	float Distance2D = FVector::Dist2D(CurrentLocation, AdjustedTargetLocation);
 
 	// Verificar se já estamos próximos o suficiente no plano X-Y
-	if (Distance2D < 10.0f) {
+	if (Distance2D < 50.0f) {
 		return true; // Alcançou o destino
 	}
 
@@ -80,7 +80,7 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 
 	// Atualiza a rotação do robô gradualmente
 	FRotator CurrentRotation = ControlledPawn->GetActorRotation();
-	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, 10);
+	FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, 5);
 
 	ControlledPawn->SetActorRotation(NewRotation);
 
