@@ -36,5 +36,8 @@ public:
 	bool IsRoomPrepared();
 
 	USplineComponent* GetOrganizePath(int32 index);
+
+	// Initiate this room configuration. 
+	void Initiate(bool DoorOpen, bool WithTrash, bool FurnitureInPlace);
 		
 };

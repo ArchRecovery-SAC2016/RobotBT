@@ -46,16 +46,17 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Furniture")
 	FLinearColor GreenColor = FLinearColor::Green;
 
+	/* What happens when in place (change color and disable collision) */
+	UFUNCTION()
+	void SetInPlace(bool NewValue);
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	// used in tick
 	bool ShouldMove = false;
-
-	/* What happens when in place (change color and disable collision) */
-	UFUNCTION()
-	void FinishPlacement();
 
 	UFUNCTION()
 	void ChangeColor();

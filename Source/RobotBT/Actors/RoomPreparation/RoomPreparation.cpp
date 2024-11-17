@@ -53,3 +53,22 @@ USplineComponent* ARoomPreparation::GetOrganizePath(int32 index) {
 
 	return OrganizePath2;
 }
+
+void ARoomPreparation::Initiate(bool DoorOpen, bool WithTrash, bool FurnitureInPlace) {
+	for (ARoomTrash* Trash : Trashes) {
+		if (WithTrash) {
+			Trash->SetIsTrashClean(false);
+		} else {
+			Trash->SetIsTrashClean(true);
+		}
+	}
+
+	for (AFurniture* Furniture : Furnitures) {
+		if (FurnitureInPlace) {
+			Furniture->SetInPlace(true);
+			
+		}
+	}
+	
+	OpenDoor(DoorOpen);
+}

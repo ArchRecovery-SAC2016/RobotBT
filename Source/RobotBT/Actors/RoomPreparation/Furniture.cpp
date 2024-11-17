@@ -23,10 +23,6 @@ void AFurniture::BeginPlay() {
     if (Collision) {
         Collision->OnComponentBeginOverlap.AddDynamic(this, &AFurniture::OnOverlapBegin);
     }
-
-	if (InPlace) {
-		FinishPlacement();
-	}
 }
 
 void AFurniture::Tick(float DeltaTime) {
@@ -47,14 +43,18 @@ void AFurniture::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	}
 }
 
-void AFurniture::FinishPlacement() {
-	FurnitureMesh->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
-	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	InPlace = true;
-	ChangeColor();
-	ShouldMove = false;
+void AFurniture::SetInPlace(bool NewValue) {
+	if (NewValue == true) {
+		FurnitureMesh->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
+		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		InPlace = true;
+		ChangeColor();
+		ShouldMove = false;
+	} else {
+		// nao preciso fazer nada pq os moveis jah estao posicionados de forma incorreta e com a colisao habilidade
+		InPlace = false;
+	}
 }
-
 
 void AFurniture::ChangeColor() {
 	if (InPlace) {
@@ -88,7 +88,7 @@ void AFurniture::MoveToCorrectLocation(float DeltaTime) {
 		FMath::Abs(SmoothedRotation.Pitch - TargetRotation.Pitch) <= RotationTolerance &&
 		FMath::Abs(SmoothedRotation.Yaw - TargetRotation.Yaw) <= RotationTolerance &&
 		FMath::Abs(SmoothedRotation.Roll - TargetRotation.Roll) <= RotationTolerance) {
-		FinishPlacement(); // Call FinishPlacement when target is reached
+		SetInPlace(true); // Call to finish the placment
 	}
 }
 

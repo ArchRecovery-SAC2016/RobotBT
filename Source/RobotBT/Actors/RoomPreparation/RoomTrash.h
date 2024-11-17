@@ -24,7 +24,10 @@ public:
 	class UBoxComponent* Collision;
 
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
-	bool IsTrashClean = false; 
+	bool IsTrashClean = false;
+
+	UFUNCTION()
+	void SetIsTrashClean(bool NewValue);
 
 private:
 	UFUNCTION()
