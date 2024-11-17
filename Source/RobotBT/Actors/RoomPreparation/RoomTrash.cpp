@@ -1,15 +1,14 @@
 #include "RoomTrash.h"
-#include "../Robot.h"
 #include "Components/BoxComponent.h"
 
 ARoomTrash::ARoomTrash() {
 	PrimaryActorTick.bCanEverTick = true;
 
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	BaseMesh->SetupAttachment(RootComponent);
+	TrashMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	TrashMesh->SetupAttachment(RootComponent);
 
 	Collision = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision"));
-	Collision->SetupAttachment(BaseMesh);
+	Collision->SetupAttachment(TrashMesh);
 }
 
 void ARoomTrash::BeginPlay() {
@@ -30,9 +29,8 @@ void ARoomTrash::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 
 	// marca que coletou o lixo e desaparece com o mesh
 	if (OtherActor->ActorHasTag("Cleaner")) {
-		OnStateChange.Broadcast(true);
 		IsTrashClean = true;
-		BaseMesh->SetVisibility(false);
+		TrashMesh->SetVisibility(false);
 		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }

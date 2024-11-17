@@ -5,8 +5,6 @@
 #include "RoomTrash.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChange, bool, NewState);
-
 UCLASS()
 class ROBOTBT_API ARoomTrash : public AActor {
 	GENERATED_BODY()
@@ -20,7 +18,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyComponent")
-	UStaticMeshComponent* BaseMesh;
+	UStaticMeshComponent* TrashMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = "MyComponent")
 	class UBoxComponent* Collision;
@@ -28,8 +26,6 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "MyComponent")
 	bool IsTrashClean = false; 
 
-	UPROPERTY(BlueprintAssignable, Category = "MyComponentsDispatcher")
-	FOnStateChange OnStateChange;
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
