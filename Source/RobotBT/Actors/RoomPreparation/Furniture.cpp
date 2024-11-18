@@ -46,6 +46,7 @@ void AFurniture::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 void AFurniture::SetInPlace(bool NewValue) {
 	if (NewValue == true) {
 		FurnitureMesh->SetWorldLocationAndRotation(CorrectLocationMesh->GetComponentLocation(), CorrectLocationMesh->GetComponentRotation());
+		CorrectLocationMesh->SetVisibility(false);
 		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		InPlace = true;
 		ChangeColor();

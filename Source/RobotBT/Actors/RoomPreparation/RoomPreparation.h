@@ -39,5 +39,9 @@ public:
 
 	// Initiate this room configuration. 
 	void Initiate(bool DoorOpen, bool WithTrash, bool FurnitureInPlace);
+
+	bool IsTrashClean();
+
+	bool IsFurnitureOrganized();
 		
 };

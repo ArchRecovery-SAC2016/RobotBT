@@ -1,9 +1,21 @@
 #include "WorldKnowledgeWidget.h"
 #include "RoomPropertiesWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "RobotBT/Actors/RoomPreparation/RoomPreparation.h"
 
 void UWorldKnowledgeWidget::NativeConstruct() {
 	Super::NativeConstruct();
 
+	// Load all Doors Sensors, so we can watch it
+	TArray<AActor*> RoomsOnMap;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);
+
+	for (AActor* Actor : RoomsOnMap) {
+		ARoomPreparation* Room = Cast<ARoomPreparation>(Actor);
+		URoomPropertiesWidget* RoomWidget = GetRoomByName(Room->Name);
+		if (Room != nullptr) RoomWidget->SetRoomInstance(Room);
+		else UE_LOG(LogTemp, Error, TEXT("[UWorldKnowledgeWidget::NativeConstruct] Room is null"));
+	}
 }
 
 void UWorldKnowledgeWidget::SynchronizeProperties() {

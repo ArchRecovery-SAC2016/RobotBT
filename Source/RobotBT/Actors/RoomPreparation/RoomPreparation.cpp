@@ -28,13 +28,8 @@ void ARoomPreparation::Tick(float DeltaTime) {
 }
 
 bool ARoomPreparation::IsRoomPrepared() {
-	for (ARoomTrash* Trash : Trashes) {
-		if (!Trash->IsTrashClean) return false;
-	}
-
-	for (AFurniture* Furniture : Furnitures) {
-		if (!Furniture->InPlace) return false;
-	}
+	if (!IsTrashClean()) return false;
+	if (!IsFurnitureOrganized()) return false;
 
 	return true;
 }
@@ -71,4 +66,20 @@ void ARoomPreparation::Initiate(bool DoorOpen, bool WithTrash, bool FurnitureInP
 	}
 	
 	OpenDoor(DoorOpen);
+}
+
+bool ARoomPreparation::IsTrashClean()	{
+	for (ARoomTrash* Trash : Trashes) {
+		if (!Trash->IsTrashClean) return false;
+	}
+
+	return true;
+}
+
+bool ARoomPreparation::IsFurnitureOrganized() {
+	for (AFurniture* Furniture : Furnitures) {
+		if (!Furniture->InPlace) return false;
+	}
+
+	return true;
 }

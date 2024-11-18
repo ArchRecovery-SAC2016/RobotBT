@@ -8,6 +8,19 @@ void URoomPropertiesWidget::NativeConstruct() {
 
 }
 
+void URoomPropertiesWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
+	if (Room == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[URoomPropertiesWidget::NativeTick] Room is null"));
+		return;
+	}
+
+	SetDoorOpen(Room->DoorOpened);
+	SetIsClear(Room->IsTrashClean());
+	SetIsPrepared(Room->IsFurnitureOrganized());
+}
+
 void URoomPropertiesWidget::ChangeProperties(bool bIsClean, bool bIsPrepared, bool bDoorOpen)	{
 	SetIsClear(bIsClean);
 	SetIsPrepared(bIsPrepared);

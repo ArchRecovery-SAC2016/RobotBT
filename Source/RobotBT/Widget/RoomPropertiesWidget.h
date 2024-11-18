@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "RobotBT/Struct/RoomPreparationStruct.h"
+#include "RobotBT/Actors/RoomPreparation/RoomPreparation.h"
 #include "RoomPropertiesWidget.generated.h"
 
 /**
@@ -14,6 +14,8 @@ class ROBOTBT_API URoomPropertiesWidget : public UUserWidget {
 
 public:
 	void NativeConstruct();
+
+	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
 	void SetRoomName(FString NewValue);
@@ -46,5 +48,11 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UCheckBox* DoorOpen_Check;
+
+	void SetRoomInstance(ARoomPreparation* RoomInstance) { Room = RoomInstance; }
+
+private:
+	UPROPERTY()
+	ARoomPreparation* Room;
 
 };
