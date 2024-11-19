@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Room.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "Robot.generated.h"
 
@@ -27,6 +28,13 @@ public:
 	ARobot();
 
 	virtual void Tick(float DeltaTime) override;
+
+	// the widget that will be used to show the robot information
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class URobotWidget> RobotWidgetWBP;
+
+	UPROPERTY(EditDefaultsOnly)
+	UWidgetComponent* WidgetComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FString SquadName = "None";
@@ -72,6 +80,12 @@ public:
 	UFUNCTION()
 	virtual USplineComponent* GetRoomPath();
 
+	UFUNCTION()
+	void UpdateRobotWidget();
+
+	UPROPERTY(EditAnywhere)
+	bool ShowWidget = true;
+
 protected:
 	// indicate if the robot finished the action of move to a specific door
 	UPROPERTY()
@@ -87,6 +101,9 @@ protected:
 	UFUNCTION()
 	virtual bool MoveAlongPath(float DeltaTime);
 
+	UFUNCTION()
+	void UpdateCurrentActionText(FString NewAction);
+
 private:
 	UFUNCTION()
 	void ConsumeBattery(float DeltaTime);
@@ -94,6 +111,13 @@ private:
 	// saves a instance of the current spline path
 	UPROPERTY()
 	ARoom* RoomInstace;
+
+	// saves a instance of the Robot Widget
+	UPROPERTY()
+	URobotWidget* RobotWidget = nullptr;
+
+	UPROPERTY()
+	FText CurrentAction;
 
 
 

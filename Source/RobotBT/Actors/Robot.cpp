@@ -1,9 +1,13 @@
 #include "Robot.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "RobotBT/Controllers/RobotController.h"
+#include "RobotBT/Widget/RobotWidget.h"
 
 ARobot::ARobot() {
 	PrimaryActorTick.bCanEverTick = true;
+
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget Component"));
+	WidgetComponent->SetupAttachment(RootComponent);
 }
 
 void ARobot::Tick(float DeltaTime) {
@@ -12,12 +16,22 @@ void ARobot::Tick(float DeltaTime) {
 	if (BatteryLevel <= 0) return;
 
 	if (IsMoving) ConsumeBattery(BatteryDischargeRate * DeltaTime);
+
+	UpdateRobotWidget();
 }
 
 void ARobot::BeginPlay() {
 	Super::BeginPlay();
 
 	GetCharacterMovement()->MaxWalkSpeed = Speed;
+
+	if (WidgetComponent != nullptr && RobotWidgetWBP != nullptr) {
+		WidgetComponent->SetWidgetClass(RobotWidgetWBP);
+		UUserWidget* UserWidget = WidgetComponent->GetUserWidgetObject();
+		if (UserWidget) {
+			RobotWidget = Cast<URobotWidget>(UserWidget);
+		}
+	}
 }
 
 void ARobot::ProcessAction() {
@@ -64,10 +78,24 @@ bool ARobot::MoveAlongPath(float DeltaTime) {
 	return IsFinishedMovingAlongPath;
 }
 
+void ARobot::UpdateCurrentActionText(FString NewAction) {
+	CurrentAction = FText::FromString(NewAction);
+}
+
 USplineComponent* ARobot::GetRoomPath() {
 	if (GetRoom() == nullptr) return nullptr;
 
 	return GetRoom()->GetRoomPath();
+}
+
+void ARobot::UpdateRobotWidget() {
+	if (ShowWidget == false) return;
+	if (RobotWidget == nullptr) return;
+
+
+
+	RobotWidget->SetBattery(BatteryLevel);
+	RobotWidget->SetAction(CurrentAction);
 }
 
 ARoom* ARobot::GetRoom() {

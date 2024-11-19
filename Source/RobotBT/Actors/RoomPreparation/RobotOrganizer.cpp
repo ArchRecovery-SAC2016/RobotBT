@@ -17,13 +17,15 @@ void ARobotOrganizer::Tick(float DeltaTime) {
 	if (IsOrganazing) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
+			UpdateCurrentActionText("move-to-location");
 			MoveToRoomLocation(DeltaTime);
-		}
-		else {
+		} else {
 			if (IsFinishedMovingAlongPath == false) {
+				UpdateCurrentActionText("move-furniture");
 				MoveAlongPath(DeltaTime);
 			} else {
 				TaskFinished("Task move-furniture Finished");
+				UpdateCurrentActionText("idle");
 			}
 		}
 	}

@@ -19,12 +19,15 @@ void ARobotCleaner::Tick(float DeltaTime) {
 	if (IsSanitizing) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
+			UpdateCurrentActionText("move-to-location");
 			MoveToRoomLocation(DeltaTime);
 		} else {
 			if (IsFinishedMovingAlongPath == false) {
+				UpdateCurrentActionText("sanitize-robot");
 				MoveAlongPath(DeltaTime);
 			} else {
 				TaskFinished("Task sanitize-robot Finished");
+				UpdateCurrentActionText("idle");
 			}
 		}
 	}
@@ -32,8 +35,10 @@ void ARobotCleaner::Tick(float DeltaTime) {
 	if (IsOpeningDoor) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
+			UpdateCurrentActionText("move-to-location");
 			MoveToRoomLocation(DeltaTime);
 		} else {
+			UpdateCurrentActionText("open-door");
 			GetRoom()->OpenDoor(true);
 			TaskFinished("Task open-door Finished");
 		}
@@ -42,12 +47,15 @@ void ARobotCleaner::Tick(float DeltaTime) {
 	if (IsCleaning) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
+			UpdateCurrentActionText("move-to-location");
 			MoveToRoomLocation(DeltaTime);
 		} else {
 			if (IsFinishedMovingAlongPath == false) {
+				UpdateCurrentActionText("clean-room ");
 				MoveAlongPath(DeltaTime);
 			} else {
 				TaskFinished("Task clean-room Finished");
+				UpdateCurrentActionText("idle");
 			}
 		}
 	}
