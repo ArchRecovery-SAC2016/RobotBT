@@ -13,6 +13,11 @@ ARoomPreparationExperiment::ARoomPreparationExperiment() {
 void ARoomPreparationExperiment::BeginPlay() {
     Super::BeginPlay();
 
+	// altera vecolidade pra ficar 10x mais rapido
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(10.0f);
+	}
+
 	// Load all Doors Sensors, so we can watch it
     TArray<AActor*> RoomsOnMap;
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);

@@ -37,7 +37,7 @@ public:
 	UWidgetComponent* WidgetComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString SquadName = "None";
+	FString Name = "None";
 
 	// the initial battery level of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
@@ -49,7 +49,7 @@ public:
 
 	// a action can consume different battery discharge rate
 	UPROPERTY(EditAnywhere, Category = "Robot")
-	TArray<float> ActionBatteryDischargeRate;
+	float ActionBatteryDischargeRate;
 
 	// robot speed, affects the speed of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")

@@ -26,16 +26,8 @@ void ARobot::BeginPlay() {
 }
 
 void ARobot::ProcessAction() {
-	if (ActionBatteryDischargeRate.Num() > 0) {
-		// Pega um índice aleatório do array
-		int32 RandomIndex = FMath::RandRange(0, ActionBatteryDischargeRate.Num() - 1);
-
-		// Pega o valor de descarregamento de bateria aleatório
-		float DischargeAmount = ActionBatteryDischargeRate[RandomIndex];
-
-		// Chama o método ConsumeBattery com o valor aleatório
-		ConsumeBattery(DischargeAmount);
-	}
+	// Chama o método ConsumeBattery com o valor aleatório
+	ConsumeBattery(ActionBatteryDischargeRate);
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
