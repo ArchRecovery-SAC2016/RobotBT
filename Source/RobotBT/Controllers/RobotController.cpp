@@ -41,11 +41,11 @@ void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	ControlledPawn->SetActorRotation(FRotator(NewRotation.Pitch, NewRotation.Yaw, 0.0f));
 }
 
-void ARobotController::ProcessAction() {
+void ARobotController::ProcessAction(FSkill Skill) {
 	// do something to change the action Finish event, like some animation
 	if (ControlledPawn == nullptr) return;
 
-	return ControlledPawn->ProcessAction();
+	return ControlledPawn->ProcessAction(Skill);
 	
 }
 
@@ -71,7 +71,7 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 	}
 
 	// Calcular a distância a se mover neste frame
-	float MoveDistance = ControlledPawn->Speed * DeltaTime;
+	float MoveDistance = ControlledPawn->RobotProperties.Speed * DeltaTime;
 
 	// Calcula a rotação necessária para apontar para a localização (ignora Z)
 	FRotator TargetRotation = Direction.Rotation();
@@ -129,7 +129,7 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 	}
 
 	// Calcula a distância a ser percorrida neste frame
-	float TargetDistance = FMath::Min(ControlledPawn->Speed * DeltaTime, EndDistance - CurrentDistance);
+	float TargetDistance = FMath::Min(ControlledPawn->RobotProperties.Speed * DeltaTime, EndDistance - CurrentDistance);
 	CurrentDistance += TargetDistance;
 
 	// Obtém a nova posição (mantendo a Z atual) e rotação (ignorando Z)

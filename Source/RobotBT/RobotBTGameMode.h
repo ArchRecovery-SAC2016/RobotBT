@@ -1,23 +1,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Actors/Robot.h"
-#include "Actors/Room.h"
 #include "GameFramework/GameModeBase.h"
-#include "Struct/MovePlanStruct.h"
 #include "Struct/TaskStruct.h"
-#include "Widget/WorldKnowledgeWidget.h"
 #include "RobotBTGameMode.generated.h"
 
-
 UCLASS(minimalapi)
-class ARobotBTGameMode : public AGameModeBase
-{
+class ARobotBTGameMode : public AGameModeBase {
 	GENERATED_BODY()
 
 public:
 	ARobotBTGameMode();
-
 
 	virtual void BeginPlay() override;
 
@@ -59,11 +52,6 @@ protected:
 	virtual bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
 	bool ExperimentIsOver = false;
-
-
-
-
-	
 };
 
 

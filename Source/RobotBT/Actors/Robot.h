@@ -4,11 +4,13 @@
 #include "Room.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
+#include "RobotBT/Struct/RobotProperties.h"
 #include "Robot.generated.h"
 
 class ARobotController;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBatteryEnd);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBatteryEnd, FRobotProperties, RobotProperties);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskFinished);
 
 UCLASS()
@@ -30,34 +32,17 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// the widget that will be used to show the robot information
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Robot")
 	TSubclassOf<class URobotWidget> RobotWidgetWBP;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Robot")
 	UWidgetComponent* WidgetComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString Name = "None";
-
-	// the initial battery level of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
-	float BatteryLevel = 1;
+	FRobotProperties RobotProperties;
 
-	// the initial batery discharge rate of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
-	float BatteryDischargeRate = 0.01;
-
-	// a action can consume different battery discharge rate
-	UPROPERTY(EditAnywhere, Category = "Robot")
-	float ActionBatteryDischargeRate;
-
-	// robot speed, affects the speed of the robot
-	UPROPERTY(EditAnywhere, Category = "Robot")
-	float Speed = 200;
-
-	// process the action like cleaning a room, or organizing. This consumes battery. Each class that inherits from this class should implement this method
-	UFUNCTION()
-	virtual void ProcessAction();
+	bool ShowWidget = true;
 
 	// indicate if the robot is moving
 	UPROPERTY()
@@ -67,7 +52,6 @@ public:
 	UPROPERTY()
 	FOnBatteryEnd OnBatteryEnd;
 
-	// event that is called when the task is finished
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
 
@@ -77,15 +61,19 @@ public:
 	UFUNCTION()
 	virtual void SetRoom(ARoom* NewRoomInstance) { RoomInstace = NewRoomInstance; }
 
+	// this is the world knowledge of this robot. It will be used to make decisions
 	UFUNCTION()
 	virtual USplineComponent* GetRoomPath();
 
 	UFUNCTION()
 	void UpdateRobotWidget();
+
+	UFUNCTION()
 	URobotWidget* GetRobotWidget();
 
-	UPROPERTY(EditAnywhere)
-	bool ShowWidget = true;
+	// process the action like cleaning a room, or organizing. This consumes battery. Each class that inherits from this class should implement this method
+	UFUNCTION()
+	virtual void ProcessAction(FSkill Skill);
 
 protected:
 	// indicate if the robot finished the action of move to a specific door

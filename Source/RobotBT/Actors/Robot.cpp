@@ -13,32 +13,29 @@ ARobot::ARobot() {
 void ARobot::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (BatteryLevel <= 0) return;
-	if (IsMoving) ConsumeBattery(BatteryDischargeRate * DeltaTime);
+	if (IsMoving) ConsumeBattery(RobotProperties.Battery.DischargeRate * DeltaTime);
 }
 
 void ARobot::BeginPlay() {
 	Super::BeginPlay();
 
-	GetCharacterMovement()->MaxWalkSpeed = Speed;
+	GetCharacterMovement()->MaxWalkSpeed = RobotProperties.Speed;
 	UpdateRobotWidget();
 
 }
 
-void ARobot::ProcessAction() {
+void ARobot::ProcessAction(FSkill Skill) {
 	// Chama o método ConsumeBattery com o valor aleatório
-	ConsumeBattery(ActionBatteryDischargeRate);
+	ConsumeBattery(Skill.BatteryConsumeDischargeRate);
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
-	if (BatteryLevel <= 0) {
-		BatteryLevel = 0;
-		OnBatteryEnd.Broadcast();
+	if (RobotProperties.Battery.Charge <= RobotProperties.Battery.MinimumUsefulLevel) {
+		OnBatteryEnd.Broadcast(RobotProperties);
 		return;
 	}
 
-	BatteryLevel -= DischargeAmount ;
-	UE_LOG(LogTemp, Error, TEXT("[ARobot::ConsumeBattery] Battery Changed: %f"), BatteryLevel);
+	RobotProperties.Battery.Charge -= DischargeAmount ;
 	UpdateRobotWidget();
 }
 
@@ -79,10 +76,9 @@ void ARobot::UpdateRobotWidget() {
 	if (ShowWidget == false) return;
 	if (GetRobotWidget() == nullptr) return;
 
-	GetRobotWidget()->SetBattery(BatteryLevel);
+	GetRobotWidget()->SetBattery(RobotProperties.Battery.Charge);
 	GetRobotWidget()->SetAction(CurrentAction);
 }
-
 
 URobotWidget* ARobot::GetRobotWidget() {
 	if (RobotWidget != nullptr) return RobotWidget;

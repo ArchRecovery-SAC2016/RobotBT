@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Actors/Room.h"
 #include "CoreMinimal.h"
 #include "RobotBTGameMode.h"
 #include "Actors/RoomPreparation/RobotCleaner.h"
 #include "Actors/RoomPreparation/RobotOrganizer.h"
-#include "Struct/MovePlanStruct.h"
 #include "RoomPreparationExperiment.generated.h"
 
 UCLASS(minimalapi)
