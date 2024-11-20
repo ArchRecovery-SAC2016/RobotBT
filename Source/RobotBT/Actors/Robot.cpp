@@ -21,6 +21,7 @@ void ARobot::BeginPlay() {
 	Super::BeginPlay();
 
 	GetCharacterMovement()->MaxWalkSpeed = Speed;
+	UpdateRobotWidget();
 
 }
 
@@ -44,7 +45,7 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 		return;
 	}
 
-	BatteryLevel -= DischargeAmount;
+	BatteryLevel -= DischargeAmount ;
 	UE_LOG(LogTemp, Error, TEXT("[ARobot::ConsumeBattery] Battery Changed: %f"), BatteryLevel);
 	UpdateRobotWidget();
 }
