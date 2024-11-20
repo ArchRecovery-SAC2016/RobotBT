@@ -45,7 +45,7 @@ public:
 
 	// the initial batery discharge rate of the robot
 	UPROPERTY(EditAnywhere, Category = "Robot")
-	float BatteryDischargeRate = 5;
+	float BatteryDischargeRate = 10;
 
 	// a action can consume different battery discharge rate
 	UPROPERTY(EditAnywhere, Category = "Robot")

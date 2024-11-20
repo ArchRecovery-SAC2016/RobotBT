@@ -14,7 +14,10 @@ void ARobot::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (BatteryLevel <= 0) return;
+
 	if (IsMoving) ConsumeBattery(BatteryDischargeRate * DeltaTime);
+
+	UpdateRobotWidget();
 }
 
 void ARobot::BeginPlay() {
@@ -38,15 +41,11 @@ void ARobot::ProcessAction() {
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
-	if (BatteryLevel <= 0) {
-		BatteryLevel = 0;
-		OnBatteryEnd.Broadcast();
-		return;
-	}
-
 	BatteryLevel -= DischargeAmount;
-	UE_LOG(LogTemp, Error, TEXT("[ARobot::ConsumeBattery] Battery Changed: %f"), BatteryLevel);
-	UpdateRobotWidget();
+
+	if (BatteryLevel <= 0) {
+		OnBatteryEnd.Broadcast();
+	}
 }
 
 bool ARobot::MoveToRoomLocation(float DeltaTime) {
