@@ -41,14 +41,6 @@ void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	ControlledPawn->SetActorRotation(FRotator(NewRotation.Pitch, NewRotation.Yaw, 0.0f));
 }
 
-void ARobotController::ProcessAction(FSkill Skill) {
-	// do something to change the action Finish event, like some animation
-	if (ControlledPawn == nullptr) return;
-
-	return ControlledPawn->ProcessAction(Skill);
-	
-}
-
 bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float DeltaTime) {
 	if (ControlledPawn == nullptr) return false;
 

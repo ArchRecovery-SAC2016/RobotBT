@@ -29,6 +29,9 @@ public:
 	UPROPERTY()
 	bool IsCleaning = false;
 
+	virtual void ExecuteTask(FString SkillName, ARoom* Room) override;
+
+private:
 	UFUNCTION()
 	void StartSanitizationTask(ARoomPreparation* Room);
 
@@ -40,5 +43,6 @@ public:
 
 	UFUNCTION()
 	void TaskFinished(FString TaskMessage);
+
 
 };

@@ -23,9 +23,6 @@ public:
 	int32 PathIndex = 1;
 
 	UFUNCTION()
-	void StartOrganizeTask(ARoomPreparation* Room);
-
-	UFUNCTION()
 	void TaskFinished(FString TaskMessage);
 
 	// override the GetRoomPath, because we don't want to pick the main path of the room
@@ -37,6 +34,8 @@ public:
 	// we need this to garantee that the NewRoomInstance is the type of ARoomPreparation
 	virtual void SetRoom(ARoom* NewRoomInstance) override;
 
+	virtual void ExecuteTask(FString SkillName, ARoom* Room) override;
+
 private:
 	// we need this because the room organize use 2 paths 
 	UPROPERTY()
@@ -44,6 +43,9 @@ private:
 
 	UPROPERTY()
 	bool IsOrganazing = false;
+
+	UFUNCTION()
+	void StartOrganizeTask(ARoomPreparation* Room);
 
 };
 

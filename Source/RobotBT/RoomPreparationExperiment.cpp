@@ -114,24 +114,20 @@ ARoomPreparation* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
 }
 
 void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
-	UUtilMethods::ShowLogMessage(TEXT("Initiating task clean-room "), EMessageColorEnum::INFO);
-	CleanerRobot->StartCleaninTask(Room);
+	CleanerRobot->ExecuteTask("clean-room", Room);
 }
 
 void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
-	UUtilMethods::ShowLogMessage(TEXT("Initiating task move-furniture"), EMessageColorEnum::INFO);
-
 	for (ARobotOrganizer* organizer: OrganizersTeam) {
-		organizer->StartOrganizeTask(Room);
-	}
+		CleanerRobot->ExecuteTask("move-furniture", Room);
+	};
+	
 }
 
 void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
-	UUtilMethods::ShowLogMessage(TEXT("Initiating task open-door"), EMessageColorEnum::INFO);
-	CleanerRobot->StartOpenDoorTask(Room);
+	CleanerRobot->ExecuteTask("open-door", Room);
 }
 
 void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
-	UUtilMethods::ShowLogMessage(TEXT("Initiating task sanitize-robot "), EMessageColorEnum::INFO);
-	CleanerRobot->StartSanitizationTask(Room);
+	CleanerRobot->ExecuteTask("sanitize-robot", Room);
 }

@@ -67,3 +67,11 @@ void ARobotOrganizer::SetRoom(ARoom* NewRoomInstance) {
 		UE_LOG(LogTemp, Warning, TEXT("SetRoom failed: RoomInstance is not an ARoomPreparation."));
 	}
 }
+
+void ARobotOrganizer::ExecuteTask(FString SkillName, ARoom* Room) {
+	Super::ExecuteTask(SkillName, Room);
+
+	if (SkillName == "move-furniture") {
+		StartOrganizeTask(Cast<ARoomPreparation>(Room));
+	}
+}

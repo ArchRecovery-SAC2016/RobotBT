@@ -1,5 +1,6 @@
 #include "RobotCleaner.h"
 
+#include "RobotOrganizer.h"
 #include "RoomPreparation.h"
 #include "RobotBT/Controllers/RobotController.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
@@ -97,6 +98,26 @@ void ARobotCleaner::TaskFinished(FString TaskMessage) {
 	IsFinishedMovingAlongPath = false;
 	OnTaskFinished.Broadcast(RobotProperties);
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
+}
+
+void ARobotCleaner::ExecuteTask(FString SkillName, ARoom* Room) {
+	Super::ExecuteTask(SkillName, Room);
+
+	ARoomPreparation* RoomInstance = Cast<ARoomPreparation>(Room);
+	if (RoomInstance == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("Room not found!"));
+		return;
+	}
+
+	if (SkillName == "clean-room") {
+		StartCleaninTask(Cast<ARoomPreparation>(Room));
+	}
+	else if (SkillName == "open-door") {
+		StartOpenDoorTask(Cast<ARoomPreparation>(Room));
+	}
+	else if (SkillName == "sanitize-robot") {
+		StartSanitizationTask(Cast<ARoomPreparation>(Room));
+	}
 }
 
 

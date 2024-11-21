@@ -72,10 +72,7 @@ public:
 	UFUNCTION()
 	URobotWidget* GetRobotWidget();
 
-	// process the action like cleaning a room, or organizing. This consumes battery. Each class that inherits from this class should implement this method
-	virtual void ProcessAction(FSkill Skill);
-
-	virtual void ProcessAction(FString SkillName);
+	virtual void ExecuteTask(FString SkillName, ARoom* Room);
 
 protected:
 	// indicate if the robot finished the action of move to a specific door
@@ -109,4 +106,5 @@ private:
 
 	UPROPERTY()
 	FText CurrentAction;
+
 };

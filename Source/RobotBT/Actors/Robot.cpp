@@ -25,20 +25,35 @@ void ARobot::BeginPlay() {
 	UpdateRobotWidget();
 }
 
-void ARobot::ProcessAction(FSkill Skill) {
-	// Chama o método ConsumeBattery com o valor aleatório
-	ConsumeBattery(Skill.BatteryConsumeDischargeRate);
-}
 
-void ARobot::ProcessAction(FString SkillName) {
+void ARobot::ExecuteTask(FString SkillName, ARoom* Room) {
+	FSkill SkillSelected;
+
+	bool SkillFound = false;
 	for (FSkill Skill : RobotProperties.Skills) {
 		if (Skill.Name == SkillName) {
-			ProcessAction(Skill);
-			return;
+			SkillFound = true;
+			SkillSelected = Skill;
+			break;
 		}
 	}
 
-	OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+	if (SkillFound == false) {
+		OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+		return;
+	}
+
+	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillSelected.Name);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
+
+	// primeiro testo se a skill vai falhar:
+	float RandomValue = FMath::FRand();
+	if (RandomValue < SkillSelected.ChanceToFail) {
+		OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+	}
+
+	// Chama o método ConsumeBattery com o definido na skill
+	ConsumeBattery(SkillSelected.BatteryConsumeDischargeRate);
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {

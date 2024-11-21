@@ -30,7 +30,7 @@ struct FSkill {
 
 	// What is the chance to fail when performe this action
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
-	float ChanceToFail = 1.0f;
+	float ChanceToFail = 0.1f;
 
 	// Nível mínimo útil da bateria
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
