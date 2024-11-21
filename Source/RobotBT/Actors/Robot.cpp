@@ -1,6 +1,8 @@
 #include "Robot.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/SplineComponent.h"
 #include "RobotBT/Controllers/RobotController.h"
+#include "RobotBT/Util/UtilMethods.h"
 #include "RobotBT/Widget/RobotWidget.h"
 
 ARobot::ARobot() {
@@ -21,7 +23,6 @@ void ARobot::BeginPlay() {
 
 	GetCharacterMovement()->MaxWalkSpeed = RobotProperties.Speed;
 	UpdateRobotWidget();
-
 }
 
 void ARobot::ProcessAction(FSkill Skill) {
@@ -29,9 +30,20 @@ void ARobot::ProcessAction(FSkill Skill) {
 	ConsumeBattery(Skill.BatteryConsumeDischargeRate);
 }
 
+void ARobot::ProcessAction(FString SkillName) {
+	for (FSkill Skill : RobotProperties.Skills) {
+		if (Skill.Name == SkillName) {
+			ProcessAction(Skill);
+			return;
+		}
+	}
+
+	OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+}
+
 void ARobot::ConsumeBattery(float DischargeAmount) {
 	if (RobotProperties.Battery.Charge <= RobotProperties.Battery.MinimumUsefulLevel) {
-		OnBatteryEnd.Broadcast(RobotProperties);
+		OnTaskFailed.Broadcast(EFailureReasonEnum::LowBattery, RobotProperties);
 		return;
 	}
 

@@ -5,7 +5,6 @@
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
 #include "RobotBT/Actors/Robot.h"
-#include "Components/SplineComponent.h"
 #include "RobotController.generated.h"
 
 class ADoorSensor;

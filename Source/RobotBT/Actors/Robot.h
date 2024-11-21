@@ -5,13 +5,15 @@
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "RobotBT/Struct/RobotProperties.h"
+#include "RobotBT/Enum/FailureReasonEnum.h"
 #include "Robot.generated.h"
+
 
 class ARobotController;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTaskFailed, EFailureReasonEnum, ReasonEnum, FRobotProperties, RobotProperties);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskFinished, FRobotProperties, RobotProperties);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBatteryEnd, FRobotProperties, RobotProperties);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskFinished);
 
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
@@ -48,12 +50,11 @@ public:
 	UPROPERTY()
 	bool IsMoving = false;
 
-	// event that is called when the battery is over
-	UPROPERTY()
-	FOnBatteryEnd OnBatteryEnd;
-
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
+
+	UPROPERTY()
+	FOnTaskFailed OnTaskFailed;
 
 	UFUNCTION()
 	virtual ARoom* GetRoom();
@@ -72,8 +73,9 @@ public:
 	URobotWidget* GetRobotWidget();
 
 	// process the action like cleaning a room, or organizing. This consumes battery. Each class that inherits from this class should implement this method
-	UFUNCTION()
 	virtual void ProcessAction(FSkill Skill);
+
+	virtual void ProcessAction(FString SkillName);
 
 protected:
 	// indicate if the robot finished the action of move to a specific door
@@ -107,7 +109,4 @@ private:
 
 	UPROPERTY()
 	FText CurrentAction;
-
-
-
 };

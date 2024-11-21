@@ -37,6 +37,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 		if (Cleaner != nullptr) {
 			CleanerRobot = Cleaner;
 			CleanerRobot->OnTaskFinished.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFinished);
+			CleanerRobot->OnTaskFailed.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFailed);
 		}
 	}
 

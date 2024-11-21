@@ -1,7 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Enum/FailureReasonEnum.h"
 #include "GameFramework/GameModeBase.h"
+#include "Struct/RobotProperties.h"
 #include "Struct/TaskStruct.h"
 #include "RobotBTGameMode.generated.h"
 
@@ -21,7 +23,10 @@ public:
 	virtual void LoadTasksFromFile();
 
 	UFUNCTION()
-	void CurrentTaskFinished();
+	void CurrentTaskFinished(FRobotProperties RobotProperties);
+
+	UFUNCTION()
+	void CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties);
 
 protected:
 	UPROPERTY()

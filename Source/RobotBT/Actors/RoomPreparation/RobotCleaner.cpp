@@ -95,7 +95,7 @@ void ARobotCleaner::TaskFinished(FString TaskMessage) {
 	IsCleaning = false;
 	IsOpeningDoor = false;
 	IsFinishedMovingAlongPath = false;
-	OnTaskFinished.Broadcast();
+	OnTaskFinished.Broadcast(RobotProperties);
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 

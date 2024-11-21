@@ -2,6 +2,8 @@
 
 #include "RobotBTGameMode.h"
 #include "RobotBTPlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "Struct/RobotProperties.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"
@@ -43,8 +45,6 @@ void ARobotBTGameMode::BeginPlay() {
 void ARobotBTGameMode::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-
-	if (ExperimentIsOver) return;
 }
 
 void ARobotBTGameMode::LoadTasksFromFile() {
@@ -124,7 +124,7 @@ bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObje
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-void ARobotBTGameMode::CurrentTaskFinished() {
+void ARobotBTGameMode::CurrentTaskFinished(FRobotProperties RobotProperties) {
 	if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num()) {
 		CurrentDecompositionIndex++;
 		ExecuteCurrentDecomposition();
@@ -134,4 +134,11 @@ void ARobotBTGameMode::CurrentTaskFinished() {
 		ExecuteCurrentTask();
 		
 	}
+}
+
+void ARobotBTGameMode::CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
+	UUtilMethods::PrintFailureMessage(FailureReason, RobotProperties);
+	ExperimentIsOver = true;
+
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
