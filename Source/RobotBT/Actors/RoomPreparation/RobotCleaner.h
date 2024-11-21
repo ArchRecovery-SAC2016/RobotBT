@@ -29,7 +29,7 @@ public:
 	UPROPERTY()
 	bool IsCleaning = false;
 
-	virtual void ExecuteTask(FString SkillName, ARoom* Room) override;
+	virtual void ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) override;
 
 private:
 	UFUNCTION()

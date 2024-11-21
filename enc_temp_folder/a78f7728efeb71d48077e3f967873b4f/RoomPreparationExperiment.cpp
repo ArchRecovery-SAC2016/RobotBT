@@ -45,10 +45,12 @@ void ARoomPreparationExperiment::BeginPlay() {
 	TArray<AActor*> FoundOrganizer;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobotOrganizer::StaticClass(), FoundOrganizer);
 	for (AActor* Actor : FoundOrganizer) {
-		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
-		if (Organizer != nullptr) {
-			Organizer->OnTaskFinished.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFinished);
-			OrganizersTeam.Add(Organizer);
+		if (Actor->ActorHasTag("Organizer")) {
+			ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
+			if (Organizer != nullptr) {
+				Organizer->OnTaskFinished.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFinished);
+				OrganizersTeam.Add(Organizer);
+			}
 		}
 	}
 
@@ -127,5 +129,5 @@ void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPrepara
 }
 
 void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
-	CleanerRobot->ExecuteTask(ESkillEnum::sa, Room);
+	CleanerRobot->ExecuteTask(ESkillEnum::SANITIZE_ROBOT, Room);
 }

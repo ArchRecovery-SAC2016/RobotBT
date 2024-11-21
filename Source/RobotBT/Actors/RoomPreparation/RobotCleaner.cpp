@@ -100,8 +100,8 @@ void ARobotCleaner::TaskFinished(FString TaskMessage) {
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 
-void ARobotCleaner::ExecuteTask(FString SkillName, ARoom* Room) {
-	Super::ExecuteTask(SkillName, Room);
+void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
+	Super::ExecuteTask(SkillEnum, Room);
 
 	ARoomPreparation* RoomInstance = Cast<ARoomPreparation>(Room);
 	if (RoomInstance == nullptr) {
@@ -109,14 +109,14 @@ void ARobotCleaner::ExecuteTask(FString SkillName, ARoom* Room) {
 		return;
 	}
 
-	if (SkillName == "clean-room") {
+	if (SkillEnum == ESkillEnum::CLEAN_ROOM) {
 		StartCleaninTask(Cast<ARoomPreparation>(Room));
-	}
-	else if (SkillName == "open-door") {
+	} else if (SkillEnum == ESkillEnum::OPEN_DOOR) {
 		StartOpenDoorTask(Cast<ARoomPreparation>(Room));
-	}
-	else if (SkillName == "sanitize-robot") {
+	} else if (SkillEnum == ESkillEnum::SANITIZE_ROBOT) {
 		StartSanitizationTask(Cast<ARoomPreparation>(Room));
+	} else {
+		UUtilMethods::PrintFailureMessage(EFailureReasonEnum::UnknownReason, RobotProperties);
 	}
 }
 

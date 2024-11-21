@@ -68,10 +68,10 @@ void ARobotOrganizer::SetRoom(ARoom* NewRoomInstance) {
 	}
 }
 
-void ARobotOrganizer::ExecuteTask(FString SkillName, ARoom* Room) {
-	Super::ExecuteTask(SkillName, Room);
+void ARobotOrganizer::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
+	Super::ExecuteTask(SkillEnum, Room);
 
-	if (SkillName == "move-furniture") {
+	if (SkillEnum == ESkillEnum::MOVE_FURNITURE) {
 		StartOrganizeTask(Cast<ARoomPreparation>(Room));
 	}
 }

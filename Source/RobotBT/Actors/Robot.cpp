@@ -26,12 +26,12 @@ void ARobot::BeginPlay() {
 }
 
 
-void ARobot::ExecuteTask(FString SkillName, ARoom* Room) {
+void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	FSkill SkillSelected;
 
 	bool SkillFound = false;
 	for (FSkill Skill : RobotProperties.Skills) {
-		if (Skill.Name == SkillName) {
+		if (Skill.SkillEnum == SkillEnum) {
 			SkillFound = true;
 			SkillSelected = Skill;
 			break;
@@ -43,7 +43,9 @@ void ARobot::ExecuteTask(FString SkillName, ARoom* Room) {
 		return;
 	}
 
-	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillSelected.Name);
+	
+	FString SkillName = UEnum::GetValueAsString(SkillEnum);
+	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillName);
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 
 	// primeiro testo se a skill vai falhar:

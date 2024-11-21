@@ -72,7 +72,7 @@ public:
 	UFUNCTION()
 	URobotWidget* GetRobotWidget();
 
-	virtual void ExecuteTask(FString SkillName, ARoom* Room);
+	virtual void ExecuteTask(ESkillEnum SkillType, ARoom* Room);
 
 protected:
 	// indicate if the robot finished the action of move to a specific door

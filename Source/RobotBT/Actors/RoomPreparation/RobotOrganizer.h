@@ -34,7 +34,7 @@ public:
 	// we need this to garantee that the NewRoomInstance is the type of ARoomPreparation
 	virtual void SetRoom(ARoom* NewRoomInstance) override;
 
-	virtual void ExecuteTask(FString SkillName, ARoom* Room) override;
+	virtual void ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) override;
 
 private:
 	// we need this because the room organize use 2 paths 

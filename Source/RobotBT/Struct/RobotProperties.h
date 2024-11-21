@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RobotBT/Enum/SkillEnum.h"
 #include "RobotProperties.generated.h"
 
 USTRUCT(BlueprintType)
@@ -13,7 +14,7 @@ struct FBattery {
 
 	// Minmum Userful Level. Below this will fail
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Battery")
-	float MinimumUsefulLevel = 0.05f;
+	float MinimumUsefulLevel = 0.0f;
 
 	// Discharge Rate. It will scale with the speed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Battery")
@@ -24,23 +25,18 @@ USTRUCT(BlueprintType)
 struct FSkill {
 	GENERATED_BODY()
 
-	// Capacidade total da bateria
+	// The skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
-	FString Name = "SkillName";
+	ESkillEnum SkillEnum = ESkillEnum::NONE;
 
 	// What is the chance to fail when performe this action
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
 	float ChanceToFail = 0.1f;
 
-	// Nível mínimo útil da bateria
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
-	FString Goal = "Goal";
-
 	// How much battery will consume when performe this skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
 	float BatteryConsumeDischargeRate = 0.1f;
 };
-
 
 USTRUCT(BlueprintType)
 struct FRobotProperties {

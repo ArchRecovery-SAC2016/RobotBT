@@ -1,4 +1,3 @@
-/** This is a list of all types that exits in the game*/
 #pragma once
 
 #include "CoreMinimal.h"
@@ -10,4 +9,16 @@ enum class EFailureReasonEnum: uint8 {
     SkillFailure      UMETA(DisplayName = "Skill Failure"),
     ObstacleDetected  UMETA(DisplayName = "Obstacle Detected"),
     UnknownReason     UMETA(DisplayName = "Unknown Reason")
+};
+
+class EFailureReasonEnumHelper {
+public:
+    static FString GetDisplayName(EFailureReasonEnum Reason) {
+        const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EFailureReasonEnum"), true);
+        if (!EnumPtr) {
+            return FString("Invalid Enum");
+        }
+
+        return EnumPtr->GetDisplayNameTextByValue(static_cast<int64>(Reason)).ToString();
+    }
 };
