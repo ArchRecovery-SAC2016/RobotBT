@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "RobotBTGameMode.h"
+#include "BaseExperiment.h"
 #include "RobotBTPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Struct/RobotProperties.h"
@@ -8,7 +8,7 @@
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"
 
-ARobotBTGameMode::ARobotBTGameMode()
+ABaseExperiment::ABaseExperiment()
 {
 	// use our custom PlayerController class
 	PlayerControllerClass = ARobotBTPlayerController::StaticClass();
@@ -31,7 +31,7 @@ ARobotBTGameMode::ARobotBTGameMode()
 }
 
 
-void ARobotBTGameMode::BeginPlay() {
+void ABaseExperiment::BeginPlay() {
     Super::BeginPlay();
 
 	// load all tasks from file
@@ -42,16 +42,16 @@ void ARobotBTGameMode::BeginPlay() {
 	ExecuteCurrentTask();
 }
 
-void ARobotBTGameMode::Tick(float DeltaTime) {
+void ABaseExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
 }
 
-void ARobotBTGameMode::LoadTasksFromFile() {
+void ABaseExperiment::LoadTasksFromFile() {
 	Tasks = UMyJsonReader::ReadJsonFile();
 }
 
-FTask* ARobotBTGameMode::GetNextTask() {
+FTask* ABaseExperiment::GetNextTask() {
 	 // Check if the tasks map is not empty
 	 if (Tasks.Num() == 0 || ExperimentIsOver) {
 		 return nullptr;
@@ -86,7 +86,7 @@ FTask* ARobotBTGameMode::GetNextTask() {
 }
 
 
-void ARobotBTGameMode::ExecuteCurrentTask() {
+void ABaseExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
 		return;
@@ -109,22 +109,22 @@ void ARobotBTGameMode::ExecuteCurrentTask() {
 	ExecuteCurrentDecomposition();
 }
 
-void ARobotBTGameMode::ExecuteCurrentDecomposition() {
+void ABaseExperiment::ExecuteCurrentDecomposition() {
 	// the implementation of this method is in the child class
 
 }
 
-bool ARobotBTGameMode::CheckPreCondition(FTask* NewTask) {
+bool ABaseExperiment::CheckPreCondition(FTask* NewTask) {
 	// quem implementa isso eh o filho
 	return true;
 }
 
 
-bool ARobotBTGameMode::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
+bool ABaseExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-void ARobotBTGameMode::CurrentTaskFinished(FRobotProperties RobotProperties) {
+void ABaseExperiment::CurrentTaskFinished(FRobotProperties RobotProperties) {
 	if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num()) {
 		CurrentDecompositionIndex++;
 		ExecuteCurrentDecomposition();
@@ -136,7 +136,7 @@ void ARobotBTGameMode::CurrentTaskFinished(FRobotProperties RobotProperties) {
 	}
 }
 
-void ARobotBTGameMode::CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
+void ABaseExperiment::CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
 	UUtilMethods::PrintFailureMessage(FailureReason, RobotProperties);
 	ExperimentIsOver = true;
 

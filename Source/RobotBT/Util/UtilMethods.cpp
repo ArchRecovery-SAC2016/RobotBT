@@ -7,19 +7,25 @@ void UUtilMethods::ShowLogMessage(const FString& Message, EMessageColorEnum Type
 
     if (Type == EMessageColorEnum::ERROR) {
         Color = FColor::Red;
-    } else if (Type == EMessageColorEnum::WARNING) {
+        UE_LOG(LogTemp, Error, TEXT("[UtilMethods::ShowLogMessage] %s"), *Message);
+    }
+    else if (Type == EMessageColorEnum::WARNING) {
         Color = FColor::Yellow;
-    } else if (Type == EMessageColorEnum::INFO) {
+        UE_LOG(LogTemp, Warning, TEXT("[UtilMethods::ShowLogMessage] %s"), *Message);
+    }
+    else if (Type == EMessageColorEnum::INFO) {
         Color = FColor::Green;
-    } else if (Type == EMessageColorEnum::SUCCESS) {
+        UE_LOG(LogTemp, Display, TEXT("[UtilMethods::ShowLogMessage] %s"), *Message);
+    }
+    else if (Type == EMessageColorEnum::SUCCESS) {
         Color = FColor::Blue;
+        UE_LOG(LogTemp, Display, TEXT("[UtilMethods::ShowLogMessage] %s"), *Message);
     }
 
     if (GEngine) {
         GEngine->AddOnScreenDebugMessage(-1, 5.f, Color, Message);
     }
-
-    UE_LOG(LogTemp, Display, TEXT("[UtilMethods::ShowLogMessage] %s"), *Message);
+    
 }
 
 void UUtilMethods::PrintFailureMessage(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
@@ -31,6 +37,7 @@ void UUtilMethods::PrintFailureMessage(EFailureReasonEnum FailureReason, FRobotP
 
 	FString Message = FString::Printf(TEXT("Robot %s failed due to: %s"), *RobotProperties.Name, *Reason);
 	ShowLogMessage(Message, EMessageColorEnum::ERROR);
+
 }
 
 

@@ -1,7 +1,7 @@
 #include "RoomPropertiesWidget.h"
 #include "Components/CheckBox.h"
 #include "Components/TextBlock.h"
-#include "RobotBT/RobotBTGameMode.h"
+#include "RobotBT/BaseExperiment.h"
 
 void URoomPropertiesWidget::NativeConstruct() {
 	Super::NativeConstruct();

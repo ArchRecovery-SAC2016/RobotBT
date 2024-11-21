@@ -1,13 +1,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RobotBTGameMode.h"
+#include "BaseExperiment.h"
 #include "Actors/RoomPreparation/RobotCleaner.h"
 #include "Actors/RoomPreparation/RobotOrganizer.h"
 #include "RoomPreparationExperiment.generated.h"
 
 UCLASS(minimalapi)
-class ARoomPreparationExperiment : public ARobotBTGameMode
+class ARoomPreparationExperiment : public ABaseExperiment
 {
 	GENERATED_BODY()
 

@@ -1,6 +1,5 @@
 #include "RoomPreparationExperiment.h"
 #include "Actors/Room.h"
-#include "Enum/MessageColorEnum.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/UtilMethods.h"
@@ -36,8 +35,8 @@ void ARoomPreparationExperiment::BeginPlay() {
 		ARobotCleaner* Cleaner = Cast<ARobotCleaner>(Actor);
 		if (Cleaner != nullptr) {
 			CleanerRobot = Cleaner;
-			CleanerRobot->OnTaskFinished.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFinished);
-			CleanerRobot->OnTaskFailed.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFailed);
+			CleanerRobot->OnTaskFinished.AddDynamic(this, &ABaseExperiment::CurrentTaskFinished);
+			CleanerRobot->OnTaskFailed.AddDynamic(this, &ABaseExperiment::CurrentTaskFailed);
 		}
 	}
 
@@ -47,7 +46,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 	for (AActor* Actor : FoundOrganizer) {
 		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
 		if (Organizer != nullptr) {
-			Organizer->OnTaskFinished.AddDynamic(this, &ARobotBTGameMode::CurrentTaskFinished);
+			Organizer->OnTaskFinished.AddDynamic(this, &ABaseExperiment::CurrentTaskFinished);
 			OrganizersTeam.Add(Organizer);
 		}
 	}
@@ -117,8 +116,8 @@ void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoomPreparatio
 }
 
 void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
-	for (ARobotOrganizer* organizer: OrganizersTeam) {
-		CleanerRobot->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
+	for (ARobotOrganizer* Organizer: OrganizersTeam) {
+		Organizer->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }
 
@@ -127,5 +126,5 @@ void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPrepara
 }
 
 void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
-	CleanerRobot->ExecuteTask(ESkillEnum::sa, Room);
+	CleanerRobot->ExecuteTask(ESkillEnum::SANITIZE_ROBOT, Room);
 }

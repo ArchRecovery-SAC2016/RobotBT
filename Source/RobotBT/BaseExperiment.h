@@ -5,14 +5,14 @@
 #include "GameFramework/GameModeBase.h"
 #include "Struct/RobotProperties.h"
 #include "Struct/TaskStruct.h"
-#include "RobotBTGameMode.generated.h"
+#include "BaseExperiment.generated.h"
 
 UCLASS(minimalapi)
-class ARobotBTGameMode : public AGameModeBase {
+class ABaseExperiment : public AGameModeBase {
 	GENERATED_BODY()
 
 public:
-	ARobotBTGameMode();
+	ABaseExperiment();
 
 	virtual void BeginPlay() override;
 
