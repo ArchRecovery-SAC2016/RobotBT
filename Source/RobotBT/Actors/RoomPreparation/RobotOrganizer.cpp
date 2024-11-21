@@ -75,3 +75,26 @@ void ARobotOrganizer::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 		StartOrganizeTask(Cast<ARoomPreparation>(Room));
 	}
 }
+
+void ARobotOrganizer::GenerateRandomProperties() {
+	Super::GenerateRandomProperties();
+
+	TArray<FSkill> MoveSkill{
+	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.05f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.1f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.15f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.2f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.3f, 0.01f },
+
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.03f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.05f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.07f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.09f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.12f }
+	};
+	int32 MoveSkillIndex = FMath::RandRange(0, MoveSkill.Num() - 1);
+	RobotProperties.Skills.Add(MoveSkill[MoveSkillIndex]);
+}

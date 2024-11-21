@@ -95,6 +95,35 @@ void ARobot::UpdateCurrentActionText(FString NewAction) {
 	CurrentAction = FText::FromString(NewAction);
 }
 
+void ARobot::GenerateRandomProperties() {
+	RobotProperties.Skills.Empty();
+
+	TArray<float> Speed{ 80, 100, 110, 120, 150 };
+	int32 SpeedIndex = FMath::RandRange(0, Speed.Num() - 1);
+	RobotProperties.Speed = Speed[SpeedIndex];
+
+	TArray<FString> Colors{ "Red", "Blue", "Green", "Yellow", "Black" };
+	int32 ColorIndex = FMath::RandRange(0, Colors.Num() - 1);
+	RobotProperties.Color = Colors[ColorIndex];
+
+	TArray<FBattery> Batteries{
+	{ 1.0f, 0.0f, 0.01f },
+	{ 0.9f, 0.0f, 0.01f },
+	{ 0.8f, 0.0f, 0.01f },
+	{ 0.7f, 0.0f, 0.01f },
+	{ 0.6f, 0.0f, 0.01f },
+	{ 1.0f, 0.0f, 0.02f },
+	{ 1.0f, 0.0f, 0.03f },
+	{ 1.0f, 0.0f, 0.04f },
+	{ 1.0f, 0.0f, 0.05f },
+	{ 1.0f, 0.0f, 0.06f }
+	};
+	int32 BatteryIndex = FMath::RandRange(0, Batteries.Num() - 1);
+	RobotProperties.Battery = Batteries[BatteryIndex];
+
+
+}
+
 USplineComponent* ARobot::GetRoomPath() {
 	if (GetRoom() == nullptr) return nullptr;
 

@@ -44,5 +44,8 @@ private:
 	UFUNCTION()
 	void TaskFinished(FString TaskMessage);
 
+	// Will generate randrom properties for the robot
+	virtual void GenerateRandomProperties() override;
+	
 
 };

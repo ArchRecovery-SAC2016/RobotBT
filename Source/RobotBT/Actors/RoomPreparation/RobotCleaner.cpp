@@ -2,7 +2,6 @@
 
 #include "RobotOrganizer.h"
 #include "RoomPreparation.h"
-#include "RobotBT/Controllers/RobotController.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Util/UtilMethods.h"
 
@@ -100,6 +99,8 @@ void ARobotCleaner::TaskFinished(FString TaskMessage) {
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 
+
+
 void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::ExecuteTask(SkillEnum, Room);
 
@@ -118,6 +119,67 @@ void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	} else {
 		UUtilMethods::PrintFailureMessage(EFailureReasonEnum::UnknownReason, RobotProperties);
 	}
+}
+
+void ARobotCleaner::GenerateRandomProperties() {
+	Super::GenerateRandomProperties();
+
+	TArray<FSkill> CleanSkill {
+	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.05f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.1f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.15f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.2f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.3f, 0.01f },
+
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.03f },
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.05f },
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.07f },
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.09f },
+	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.12f }
+	};
+	int32 ClearSkillIndex = FMath::RandRange(0, CleanSkill.Num() - 1);
+	RobotProperties.Skills.Add(CleanSkill[ClearSkillIndex]);
+
+	TArray<FSkill> SanitizeSkill{
+	{ ESkillEnum::NONE, 0.01f, 0.1f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.05f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.1f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.15f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.2f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.3f, 0.01f },
+
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.03f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.05f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.07f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.09f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.12f }
+	};
+	int32 SanitizeSkillIndex = FMath::RandRange(0, SanitizeSkill.Num() - 1);
+	RobotProperties.Skills.Add(SanitizeSkill[SanitizeSkillIndex]);
+
+	TArray<FSkill> OpenDoorSkill {
+	{ ESkillEnum::NONE, 0.01f, 0.1f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.05f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.1f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.15f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.2f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.3f, 0.01f },
+
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.03f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.05f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.07f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.09f },
+	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.12f }
+	};
+	int32 OpenDoorIndex = FMath::RandRange(0, OpenDoorSkill.Num() - 1);
+	RobotProperties.Skills.Add(OpenDoorSkill[OpenDoorIndex]);
 }
 
 

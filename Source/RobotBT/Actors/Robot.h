@@ -92,6 +92,10 @@ protected:
 	UFUNCTION()
 	void UpdateCurrentActionText(FString NewAction);
 
+	// Generate Random properties comuns to both robots
+	UFUNCTION()
+	virtual void GenerateRandomProperties();
+
 private:
 	UFUNCTION()
 	void ConsumeBattery(float DeltaTime);
