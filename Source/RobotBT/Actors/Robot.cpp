@@ -27,6 +27,12 @@ void ARobot::BeginPlay() {
 
 
 void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
+	FTaskResult NewTaskResult; // need to create a new
+	NewTaskResult.Location = Room->Name;
+	NewTaskResult.InitialRobotsProperties = RobotProperties;
+
+	TaskResult = NewTaskResult;
+
 	FSkill SkillSelected;
 
 	bool SkillFound = false;
@@ -39,11 +45,10 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	}
 
 	if (SkillFound == false) {
-		OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+		TaskFailed(EFailureReasonEnum::SkillNotFound);
 		return;
 	}
 
-	
 	FString SkillName = UEnum::GetValueAsString(SkillEnum);
 	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillName);
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
@@ -51,7 +56,7 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	// primeiro testo se a skill vai falhar:
 	float RandomValue = FMath::FRand();
 	if (RandomValue < SkillSelected.ChanceToFail) {
-		OnTaskFailed.Broadcast(EFailureReasonEnum::SkillFailure, RobotProperties);
+		TaskFailed(EFailureReasonEnum::SkillFailure);
 	}
 
 	// Chama o método ConsumeBattery com o definido na skill
@@ -60,7 +65,7 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
 	if (RobotProperties.Battery.Charge <= RobotProperties.Battery.MinimumUsefulLevel) {
-		OnTaskFailed.Broadcast(EFailureReasonEnum::LowBattery, RobotProperties);
+		TaskFailed(EFailureReasonEnum::LowBattery);
 		return;
 	}
 
@@ -122,6 +127,19 @@ void ARobot::GenerateRandomProperties() {
 	RobotProperties.Battery = Batteries[BatteryIndex];
 
 
+}
+
+void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {
+	TaskResult.SuccessResult = false;
+	TaskResult.FailureReasonEnum = FailureReason;
+	TaskResult.EndRobotsProperties = RobotProperties;
+	OnTaskFinished.Broadcast(TaskResult);
+}
+
+void ARobot::TaskFinishedWithSuccess() {
+	TaskResult.SuccessResult = true;
+	TaskResult.EndRobotsProperties = RobotProperties;
+	OnTaskFinished.Broadcast(TaskResult);
 }
 
 USplineComponent* ARobot::GetRoomPath() {

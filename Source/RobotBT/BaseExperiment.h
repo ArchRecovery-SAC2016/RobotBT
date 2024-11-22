@@ -1,9 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Enum/FailureReasonEnum.h"
 #include "GameFramework/GameModeBase.h"
-#include "Struct/RobotProperties.h"
+#include "Struct/ExperimentResult.h"
 #include "Struct/TaskStruct.h"
 #include "BaseExperiment.generated.h"
 
@@ -23,11 +22,10 @@ public:
 	virtual void LoadTasksFromFile();
 
 	UFUNCTION()
-	void CurrentTaskFinished(FRobotProperties RobotProperties);
+	void CurrentTaskFinished(FTaskResult TaskResult);
 
-	UFUNCTION()
-	void CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties);
-
+	FExperimentResult Experiment;
+	
 protected:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
@@ -57,6 +55,7 @@ protected:
 	virtual bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
 	bool ExperimentIsOver = false;
+
 };
 
 

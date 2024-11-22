@@ -42,7 +42,7 @@ void ARobotOrganizer::TaskFinished(FString TaskMessage) {
 	IsOrganazing = false;
 	IsAtRoomLocation = false;
 	IsFinishedMovingAlongPath = false;
-	OnTaskFinished.Broadcast(RobotProperties);
+	TaskFinishedWithSuccess();
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 

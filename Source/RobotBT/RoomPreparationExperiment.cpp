@@ -36,7 +36,6 @@ void ARoomPreparationExperiment::BeginPlay() {
 		if (Cleaner != nullptr) {
 			CleanerRobot = Cleaner;
 			CleanerRobot->OnTaskFinished.AddDynamic(this, &ABaseExperiment::CurrentTaskFinished);
-			CleanerRobot->OnTaskFailed.AddDynamic(this, &ABaseExperiment::CurrentTaskFailed);
 		}
 	}
 
@@ -96,7 +95,6 @@ void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 		FString RobotName = "CleanerRobot";
 		ExecuteMoveFurniture(RobotName, RoomLocation);
 	}
-
 	
 	UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 }

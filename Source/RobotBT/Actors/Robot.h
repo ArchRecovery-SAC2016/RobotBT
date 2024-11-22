@@ -5,15 +5,13 @@
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "RobotBT/Struct/RobotProperties.h"
-#include "RobotBT/Enum/FailureReasonEnum.h"
+#include "RobotBT/Struct/ExperimentResult.h"
 #include "Robot.generated.h"
 
 
 class ARobotController;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTaskFailed, EFailureReasonEnum, ReasonEnum, FRobotProperties, RobotProperties);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskFinished, FRobotProperties, RobotProperties);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskFinished, FTaskResult, TaskResult);
 
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
@@ -53,9 +51,6 @@ public:
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
 
-	UPROPERTY()
-	FOnTaskFailed OnTaskFailed;
-
 	UFUNCTION()
 	virtual ARoom* GetRoom();
 
@@ -73,6 +68,9 @@ public:
 	URobotWidget* GetRobotWidget();
 
 	virtual void ExecuteTask(ESkillEnum SkillType, ARoom* Room);
+
+	// The result of task execution
+	FTaskResult TaskResult;
 
 protected:
 	// indicate if the robot finished the action of move to a specific door
@@ -95,6 +93,12 @@ protected:
 	// Generate Random properties comuns to both robots
 	UFUNCTION()
 	virtual void GenerateRandomProperties();
+
+	UFUNCTION()
+	virtual  void TaskFailed(EFailureReasonEnum FailureReason);
+
+	UFUNCTION()
+	virtual void TaskFinishedWithSuccess();
 
 private:
 	UFUNCTION()

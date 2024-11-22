@@ -7,6 +7,10 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "HAL/PlatformFilemanager.h"
+#include "Util/MyCSVReader.h"
 
 ABaseExperiment::ABaseExperiment()
 {
@@ -26,8 +30,9 @@ ABaseExperiment::ABaseExperiment()
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
 
-
 	PrimaryActorTick.bCanEverTick = true;
+
+	Experiment.ExperimentTime = 0.0f;
 }
 
 
@@ -40,11 +45,20 @@ void ABaseExperiment::BeginPlay() {
 	CurrentTask = GetNextTask();
 
 	ExecuteCurrentTask();
+
+	UMyCSVReader::CreateCSVFile(false);
+
+	Experiment.ExperimentId = 1;
+	Experiment.Approach = "Baseline";
+	Experiment.ExperimentTime = 0;
+	
+	
 }
 
 void ABaseExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
+	Experiment.ExperimentTime += DeltaTime;
 }
 
 void ABaseExperiment::LoadTasksFromFile() {
@@ -65,9 +79,6 @@ FTask* ABaseExperiment::GetNextTask() {
 		FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
 
 		if (Task != nullptr) {
-			// FString TaskMessage = FString::Printf(TEXT("Starting New Task: %s. With Name: %s "), *Task->Id, *Task->Name);
-			// UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
-
 			if (CheckPreCondition(Task)) {
 				CurrentTaskIndex++;
 				return Task;
@@ -77,6 +88,7 @@ FTask* ABaseExperiment::GetNextTask() {
 			}
 		} else {
 			UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+
 			ExperimentIsOver = true;
 		}
 	}
@@ -124,21 +136,25 @@ bool ABaseExperiment::ParsePredicate(const FString& Predicate, FString& OutObjec
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-void ABaseExperiment::CurrentTaskFinished(FRobotProperties RobotProperties) {
-	if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num()) {
-		CurrentDecompositionIndex++;
-		ExecuteCurrentDecomposition();
-	}
-	else {
-		CurrentTask = GetNextTask();
-		ExecuteCurrentTask();
-		
-	}
-}
+void ABaseExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
+	Experiment.TaskResults.Add(TaskResult);
 
-void ABaseExperiment::CurrentTaskFailed(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
-	UUtilMethods::PrintFailureMessage(FailureReason, RobotProperties);
-	ExperimentIsOver = true;
+	// if the task was successful, we can go to the next decomposition
+	if (TaskResult.SuccessResult) {
+		if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num()) {
+			CurrentDecompositionIndex++;
+			ExecuteCurrentDecomposition();
+		}
+		else {
+			CurrentTask = GetNextTask();
+			ExecuteCurrentTask();
+			
+		}
+	} else {
+		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.EndRobotsProperties);
+		ExperimentIsOver = true;
 
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+	}
 }

@@ -4,9 +4,11 @@
 
 UENUM(BlueprintType)
 enum class EFailureReasonEnum: uint8 {
+    None              UMETA(DisplayName = "None"),
 	LowBattery        UMETA(DisplayName = "Low Battery"),
     Timeout           UMETA(DisplayName = "Timeout"),
-    SkillFailure      UMETA(DisplayName = "Skill Failure"),
+    SkillNotFound     UMETA(DisplayName = "Skill Not Found"),
+	SkillFailure      UMETA(DisplayName = "Skill Failure"),
     ObstacleDetected  UMETA(DisplayName = "Obstacle Detected"),
     UnknownReason     UMETA(DisplayName = "Unknown Reason")
 };

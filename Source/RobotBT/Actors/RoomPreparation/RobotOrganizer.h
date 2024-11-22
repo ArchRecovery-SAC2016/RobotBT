@@ -42,7 +42,7 @@ public:
 private:
 	// we need this because the room organize use 2 paths 
 	UPROPERTY()
-	ARoomPreparation* RoomPreparation;
+	ARoomPreparation* RoomPreparation = nullptr;
 
 	UPROPERTY()
 	bool IsOrganazing = false;
