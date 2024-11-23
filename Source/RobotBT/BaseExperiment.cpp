@@ -3,14 +3,12 @@
 #include "BaseExperiment.h"
 #include "RobotBTPlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "Struct/RobotProperties.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
-#include "Util/MyCSVReader.h"
 
 ABaseExperiment::ABaseExperiment()
 {
@@ -32,33 +30,20 @@ ABaseExperiment::ABaseExperiment()
 
 	PrimaryActorTick.bCanEverTick = true;
 
-	Experiment.ExperimentTime = 0.0f;
 }
 
 
 void ABaseExperiment::BeginPlay() {
     Super::BeginPlay();
 
-	// load all tasks from file
-	LoadTasksFromFile();
-
-	CurrentTask = GetNextTask();
-
-	ExecuteCurrentTask();
-
-	UMyCSVReader::CreateCSVFile(false);
-
-	Experiment.ExperimentId = 1;
-	Experiment.Approach = "Baseline";
-	Experiment.ExperimentTime = 0;
-	
-	
 }
 
 void ABaseExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
 	Experiment.ExperimentTime += DeltaTime;
+
+	
 }
 
 void ABaseExperiment::LoadTasksFromFile() {
@@ -67,7 +52,7 @@ void ABaseExperiment::LoadTasksFromFile() {
 
 FTask* ABaseExperiment::GetNextTask() {
 	 // Check if the tasks map is not empty
-	 if (Tasks.Num() == 0 || ExperimentIsOver) {
+	 if (Tasks.Num() == 0) {
 		 return nullptr;
 	 }
 
@@ -148,7 +133,6 @@ void ABaseExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 		else {
 			CurrentTask = GetNextTask();
 			ExecuteCurrentTask();
-			
 		}
 	} else {
 		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.EndRobotsProperties);

@@ -2,6 +2,7 @@
 #include "Actors/Room.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Util/MyCSVReader.h"
 #include "Util/UtilMethods.h"
 
 ARoomPreparationExperiment::ARoomPreparationExperiment() {
@@ -60,16 +61,54 @@ void ARoomPreparationExperiment::BeginPlay() {
 		return;
 	}
 
-	CurrentTask = GetNextTask();
+	// StartDefaultExperiment();
+	GenerateRandomProperties = false;
+	StartExperiment(1);
+}
 
-	ExecuteCurrentTask();
+void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
+	UMyCSVReader::CreateCSVFile(false);
+	LoadTasksFromFile();	// load all tasks from file
+	ExperimentId = 0; // start with id 0. ExecuteNextExperiment will increment
+	RepeatExperiment = numberOfTimes;
+	ExperimentIsOver = true; // this will make enter tick loop and executethe next 
 }
 
 void ARoomPreparationExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-	if (ExperimentIsOver) return;
+	if (ExperimentIsOver == true && ExperimentId < RepeatExperiment) {
+		ExecuteNextExperiment();
+	}
+	
 }
+
+void ARoomPreparationExperiment::ExecuteNextExperiment() {
+	UUtilMethods::ShowLogMessage(TEXT("Executing Next Experiment"), EMessageColorEnum::INFO);
+	ExperimentIsOver = false; // this willa void enter tick loop
+
+	ExperimentId++;
+	Experiment.ExperimentId = ExperimentId;
+	Experiment.Approach = "Baseline";
+	Experiment.ExperimentTime = 0;
+	CurrentTaskIndex = 0;
+	CurrentTask = GetNextTask();
+	ExecuteCurrentTask();
+
+	if (GenerateRandomProperties) {
+		CleanerRobot->GenerateRandomProperties();
+		for (auto* Organizer : OrganizersTeam) {
+			Organizer->GenerateRandomProperties();
+		}
+	}
+}
+
+bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
+	return Super::CheckPreCondition(NewTask);
+
+
+}
+
 
 void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 	// A decomposicao esta bem confusa. Ela esta com os argumentos incompletos. Entao vamos usar apenas o nome e pegamos o local das tasks. 

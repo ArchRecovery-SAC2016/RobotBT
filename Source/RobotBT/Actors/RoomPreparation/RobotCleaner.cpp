@@ -100,8 +100,6 @@ void ARobotCleaner::TaskFinished(FString TaskMessage) {
 	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
 }
 
-
-
 void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::ExecuteTask(SkillEnum, Room);
 

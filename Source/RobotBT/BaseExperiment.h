@@ -25,7 +25,7 @@ public:
 	void CurrentTaskFinished(FTaskResult TaskResult);
 
 	FExperimentResult Experiment;
-	
+
 protected:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
@@ -54,7 +54,23 @@ protected:
 
 	virtual bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
+	// when the experiment is over, this variable will be setted
 	bool ExperimentIsOver = false;
+
+	// used to indicate the Experiment Id. -1 will be a single experiment
+	int32 ExperimentId  = -1;
+
+	// will repet the experiment using this number
+	int32 RepeatExperiment = 1000;
+
+	// will repet the experiment using this number
+	bool GenerateRandomProperties = false;
+
+	UFUNCTION()
+	virtual void StartExperiment(int32 numberOfTimes) {};
+
+	UFUNCTION()
+	virtual void ExecuteNextExperiment() {};
 
 };
 

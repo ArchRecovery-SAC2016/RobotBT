@@ -31,6 +31,9 @@ public:
 
 	virtual void ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) override;
 
+	// Will generate randrom properties for the robot
+	virtual void GenerateRandomProperties() override;
+
 private:
 	UFUNCTION()
 	void StartSanitizationTask(ARoomPreparation* Room);
@@ -44,8 +47,7 @@ private:
 	UFUNCTION()
 	void TaskFinished(FString TaskMessage);
 
-	// Will generate randrom properties for the robot
-	virtual void GenerateRandomProperties() override;
+
 	
 
 };

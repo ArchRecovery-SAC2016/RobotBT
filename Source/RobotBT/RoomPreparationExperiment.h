@@ -18,6 +18,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+
 	// saves all organizers robots instance
 	UPROPERTY()
 	TArray<ARobotOrganizer*> OrganizersTeam;
@@ -48,6 +49,11 @@ private:
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
+	virtual void StartExperiment(int32 numberOfTimes) override;
+
+	virtual void ExecuteNextExperiment() override;
+
+	virtual bool CheckPreCondition(FTask* NewTask) override;
 };
 
 
