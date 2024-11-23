@@ -54,6 +54,8 @@ private:
 	virtual void ExecuteNextExperiment() override;
 
 	virtual bool CheckPreCondition(FTask* NewTask) override;
+
+	virtual FTask* GetNextTask() override;
 };
 
 

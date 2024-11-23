@@ -109,6 +109,16 @@ bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
 
 }
 
+FTask* ARoomPreparationExperiment::GetNextTask() {
+	FTask* NewTask = Super::GetNextTask();
+	
+	if (CheckPreCondition(NewTask)) {
+		return NewTask;
+	}
+	// if fails, we try another calling recursively. The super will stop when the task is null
+	CurrentTaskIndex++;
+	return GetNextTask();
+}
 
 void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 	// A decomposicao esta bem confusa. Ela esta com os argumentos incompletos. Entao vamos usar apenas o nome e pegamos o local das tasks. 

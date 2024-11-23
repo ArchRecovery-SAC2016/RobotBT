@@ -52,33 +52,21 @@ void ABaseExperiment::LoadTasksFromFile() {
 
 FTask* ABaseExperiment::GetNextTask() {
 	 // Check if the tasks map is not empty
-	 if (Tasks.Num() == 0) {
-		 return nullptr;
-	 }
+	 if (Tasks.Num() != 0) {
+		 TArray<FString> Keys;
+		 Tasks.GetKeys(Keys);
 
-	 // Retrieve all keys of the map
-	 TArray<FString> Keys;
-	 Tasks.GetKeys(Keys);
-
-	 while (CurrentTaskIndex < Tasks.Num()) {
-		FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
+	 	FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
 
 		if (Task != nullptr) {
-			if (CheckPreCondition(Task)) {
-				CurrentTaskIndex++;
-				return Task;
-			} else {
-				// if fails, we try another
-				CurrentTaskIndex++;
-			}
-		} else {
-			UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
-
-			ExperimentIsOver = true;
+			// if found, we increment the index, and return
+			CurrentTaskIndex++;
+			return Task;
 		}
-	}
+	 }
 
 	 UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
+	 ExperimentIsOver = true;
 	 return nullptr;
 }
 
