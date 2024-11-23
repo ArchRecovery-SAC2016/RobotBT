@@ -84,7 +84,8 @@ void ARoomPreparationExperiment::Tick(float DeltaTime) {
 }
 
 void ARoomPreparationExperiment::ExecuteNextExperiment() {
-	UUtilMethods::ShowLogMessage(TEXT("Executing Next Experiment"), EMessageColorEnum::INFO);
+	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	ExperimentIsOver = false; // this willa void enter tick loop
 
 	ExperimentId++;
@@ -104,13 +105,59 @@ void ARoomPreparationExperiment::ExecuteNextExperiment() {
 }
 
 bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
-	return Super::CheckPreCondition(NewTask);
+	if (NewTask == nullptr) return false;
 
+	for (const FPredicate& Predicate : NewTask->Preconditions) {
+		if (!EvaluatePreCondition(Predicate)) {
+			
+			FString Message = FString::Printf(TEXT("Precondition failed: %s"), *Predicate.Condition);
+			UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::WARNING);
 
+			return false;
+		}
+	}
+	return true; // Todas as precondições foram satisfeitas
+}
+
+bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicate) {
+	if (Predicate.Variable.Contains("Room")) {
+		// Trata-se de uma sala
+		ARoomPreparation* Room = GetRoomByName(Predicate.Variable);
+		if (!Room) {
+			UE_LOG(LogTemp, Error, TEXT("Room not found: %s"), *Predicate.Variable);
+			return false;
+		}
+
+		if (Predicate.Condition == "door_open") {
+			bool retorno = !Predicate.bNegated == Room->DoorOpened; // Negação simples 
+			return retorno;
+		}
+		if (Predicate.Condition == "is_clean") {
+			bool retorno = !Predicate.bNegated == Room->IsTrashClean();
+			return retorno;
+		}
+	}
+	else if (Predicate.Variable.Contains("?r")) {
+
+		if (Predicate.Condition == "is_sanitized") {
+			bool retorno = !Predicate.bNegated == CleanerRobot->IsSanitized;
+			return retorno;
+		}
+	}
+
+	UE_LOG(LogTemp, Error, TEXT("Unhandled Predicate: %s"), *Predicate.Condition);
+	return false;
 }
 
 FTask* ARoomPreparationExperiment::GetNextTask() {
 	FTask* NewTask = Super::GetNextTask();
+	if (NewTask == nullptr) {
+		ExperimentIsOver = true;
+		return nullptr;
+	}
+
+	FString Message = FString::Printf(TEXT("Next Task Id: %s name: %s"), *NewTask->Id, *NewTask->Name);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	
 	if (CheckPreCondition(NewTask)) {
 		return NewTask;

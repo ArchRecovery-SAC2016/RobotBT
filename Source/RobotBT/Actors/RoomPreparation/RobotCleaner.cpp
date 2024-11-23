@@ -26,6 +26,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 				UpdateCurrentActionText("sanitize-robot");
 				MoveAlongPath(DeltaTime);
 			} else {
+				IsSanitized = false;
 				TaskFinished("Task sanitize-robot Finished");
 				UpdateCurrentActionText("idle");
 			}
@@ -82,7 +83,7 @@ void ARobotCleaner::StartOpenDoorTask(ARoomPreparation* Room) {
 
 void ARobotCleaner::StartCleaninTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
-
+	IsSanitized = false;
 	IsCleaning = true;
 
 	SetRoom(Room);

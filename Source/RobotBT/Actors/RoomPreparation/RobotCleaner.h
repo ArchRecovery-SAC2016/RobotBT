@@ -20,6 +20,10 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	// Will be used to check if the robot is sanitized
+	UPROPERTY(EditInstanceOnly, Category = "Robot")
+	bool IsSanitized = false;
+
 	UPROPERTY()
 	bool IsSanitizing = false;
 

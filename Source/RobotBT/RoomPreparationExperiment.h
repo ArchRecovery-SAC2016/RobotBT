@@ -55,6 +55,8 @@ private:
 
 	virtual bool CheckPreCondition(FTask* NewTask) override;
 
+	bool EvaluatePreCondition(const FPredicate& Predicate);
+
 	virtual FTask* GetNextTask() override;
 };
 

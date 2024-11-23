@@ -23,7 +23,7 @@ void UUtilMethods::ShowLogMessage(const FString& Message, EMessageColorEnum Type
     }
 
     if (GEngine) {
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, Color, Message);
+        GEngine->AddOnScreenDebugMessage(-1, 25.f, Color, Message);
     }
     
 }

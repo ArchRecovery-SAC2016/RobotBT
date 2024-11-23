@@ -94,11 +94,12 @@ TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& Tas
         if (TaskObject->TryGetArrayField(TEXT("preconditions"), PreconditionsArray)) {
             for (const auto& Precondition : *PreconditionsArray) {
                 TSharedPtr<FJsonObject> PreconditionObject = Precondition->AsObject();
-                FTaskPrecondition TaskPrecondition;
-                PreconditionObject->TryGetStringField(TEXT("predicate"), TaskPrecondition.Predicate);
-                PreconditionObject->TryGetStringField(TEXT("vars"), TaskPrecondition.Vars);
-                PreconditionObject->TryGetStringField(TEXT("var_types"), TaskPrecondition.VarTypes);
-                Task.Preconditions.Add(TaskPrecondition);
+                FString PredicateStr;
+                if (PreconditionObject->TryGetStringField(TEXT("predicate"), PredicateStr)) {
+                    // Converte diretamente para FPredicate e adiciona ao array de precondições da tarefa
+                    FPredicate Predicate(PredicateStr);
+                    Task.Preconditions.Add(Predicate);
+                }
             }
         }
 

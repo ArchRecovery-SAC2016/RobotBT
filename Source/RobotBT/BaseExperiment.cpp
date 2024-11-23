@@ -52,7 +52,7 @@ void ABaseExperiment::LoadTasksFromFile() {
 
 FTask* ABaseExperiment::GetNextTask() {
 	 // Check if the tasks map is not empty
-	 if (Tasks.Num() != 0) {
+	 if (Tasks.Num() != 0 && Tasks.Num() > CurrentTaskIndex) {
 		 TArray<FString> Keys;
 		 Tasks.GetKeys(Keys);
 
