@@ -62,6 +62,8 @@ bool ABaseExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 Scen
 }
 
 FTask* ABaseExperiment::GetNextTask() {
+	CurrentTaskIndex++;
+
 	 // Check if the tasks map is not empty
 	 if (Tasks.Num() != 0 && Tasks.Num() > CurrentTaskIndex) {
 		 TArray<FString> Keys;
@@ -70,8 +72,6 @@ FTask* ABaseExperiment::GetNextTask() {
 	 	FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
 
 		if (Task != nullptr) {
-			// if found, we increment the index, and return
-			CurrentTaskIndex++;
 			return Task;
 		}
 	 }

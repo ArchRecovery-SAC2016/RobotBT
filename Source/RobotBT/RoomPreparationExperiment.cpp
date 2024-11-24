@@ -97,7 +97,7 @@ void ARoomPreparationExperiment::ExecuteNextExperiment() {
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = "Baseline";
 	Experiment.ExperimentTime = 0;
-	CurrentTaskIndex = 0;
+	CurrentTaskIndex = -1;
 	CurrentTask = GetNextTask();
 	ExecuteCurrentTask();
 
@@ -115,8 +115,9 @@ bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
 	for (const FPredicate& Predicate : NewTask->Preconditions) {
 		if (!EvaluatePreCondition(Predicate)) {
 			
-			FString Message = FString::Printf(TEXT("Precondition failed: %s"), *Predicate.Condition);
-			UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::WARNING);
+			FString ConditionMessage = FString::Printf(TEXT("%s %s %s"), *Predicate.Variable, Predicate.bNegated ? TEXT("not ") : TEXT(""), *Predicate.Condition);
+			FString Message = FString::Printf(TEXT("Precondition failed: %s Variable: %s"), *ConditionMessage, *Predicate.Variable);
+			UE_LOG(LogTemp, Error, TEXT("%s"), *Message);
 
 			return false;
 		}
@@ -134,25 +135,25 @@ bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicat
 		}
 
 		if (Predicate.Condition == "door_open") {
-			bool retorno = !Predicate.bNegated == Room->DoorOpened; // Negação simples 
-			return retorno;
+			if (Predicate.bNegated) return !Room->DoorOpened; // Negated
+			return Room->DoorOpened;
 		}
 		if (Predicate.Condition == "is_clean") {
-			bool retorno = !Predicate.bNegated == Room->IsTrashClean();
-			return retorno;
+			if (Predicate.bNegated) return !Room->IsTrashClean(); // Negated
+			return Room->IsTrashClean(); 
 		}
 	}
 	else if (Predicate.Variable.Contains("?r")) {
-
 		if (Predicate.Condition == "is_sanitized") {
-			bool retorno = !Predicate.bNegated == CleanerRobot->IsSanitized;
-			return retorno;
+			if (Predicate.bNegated) return !CleanerRobot->IsSanitized; // Negated
+			return CleanerRobot->IsSanitized;
 		}
 	}
 
 	UE_LOG(LogTemp, Error, TEXT("Unhandled Predicate: %s"), *Predicate.Condition);
 	return false;
 }
+
 
 FTask* ARoomPreparationExperiment::GetNextTask() {
 	FTask* NewTask = Super::GetNextTask();
@@ -168,7 +169,6 @@ FTask* ARoomPreparationExperiment::GetNextTask() {
 		return NewTask;
 	}
 	// if fails, we try another calling recursively. The super will stop when the task is null
-	CurrentTaskIndex++;
 	return GetNextTask();
 }
 

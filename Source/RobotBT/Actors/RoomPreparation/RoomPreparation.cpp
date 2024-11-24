@@ -63,7 +63,9 @@ void ARoomPreparation::Initiate(FWorldRoomDataStruct RoomData) {
 
 bool ARoomPreparation::IsTrashClean()	{
 	for (ARoomTrash* Trash : Trashes) {
-		if (!Trash->IsTrashClean) return false;
+		if (Trash->IsTrashClean) {
+			return false;
+		}
 	}
 
 	return true;

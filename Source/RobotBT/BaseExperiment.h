@@ -38,7 +38,7 @@ protected:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
-	int32 CurrentTaskIndex;
+	int32 CurrentTaskIndex= - 1;
 
 	// Some task need 2 robots. So for the sucess, the 2 robots need to return true. This counter controls this 
 	int32 NumberOfTask = 1;
