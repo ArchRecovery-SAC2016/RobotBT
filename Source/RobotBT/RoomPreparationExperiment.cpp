@@ -80,7 +80,6 @@ void ARoomPreparationExperiment::Tick(float DeltaTime) {
 	if (ExperimentIsOver == true && ExperimentId < RepeatExperiment) {
 		ExecuteNextExperiment();
 	}
-	
 }
 
 void ARoomPreparationExperiment::ExecuteNextExperiment() {
@@ -206,19 +205,23 @@ ARoomPreparation* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
 }
 
 void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
+	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::CLEAN_ROOM, Room);
 }
 
-void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
-	for (ARobotOrganizer* Organizer: OrganizersTeam) {
-		Organizer->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
-	};
-}
-
 void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
+	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::OPEN_DOOR, Room);
 }
 
 void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
+	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::SANITIZE_ROBOT, Room);
+}
+
+void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
+	NumberOfTask = 2;
+	for (ARobotOrganizer* Organizer : OrganizersTeam) {
+		Organizer->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
+	};
 }

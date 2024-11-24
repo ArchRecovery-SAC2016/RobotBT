@@ -116,9 +116,7 @@ void ABaseExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 	if (TaskResult.SuccessResult) {
 		NumberOfTask--; // substract the number o task, because the organizer need 2 tasks
 
-		if (NumberOfTask > 0) return;
-
-		if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num() ) {
+		if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num() && NumberOfTask <= 0) {
 			CurrentDecompositionIndex++;
 			ExecuteCurrentDecomposition();
 		}

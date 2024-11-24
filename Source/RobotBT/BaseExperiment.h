@@ -32,6 +32,9 @@ protected:
 
 	int32 CurrentTaskIndex;
 
+	// Some task need 2 robots. So for the sucess, the 2 robots need to return true. This counter controls this 
+	int32 NumberOfTask = 1;
+
 	FTask* CurrentTask;
 
 	// Get the next task to be executed and check if it is possible to execute it
