@@ -19,7 +19,7 @@ public:
 
 	// Load tasks from file
 	UFUNCTION()
-	virtual void LoadTasksFromFile();
+	virtual void LoadTasksFromFile(FString Experiment, int32 ScenarioId);
 
 	UFUNCTION()
 	void CurrentTaskFinished(FTaskResult TaskResult);

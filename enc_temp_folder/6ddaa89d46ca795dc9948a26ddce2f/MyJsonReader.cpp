@@ -8,7 +8,7 @@
 TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
 	TMap<FString, FTask> Tasks;
 
-    FString Path = "Data/" + Experiment;
+    FString Path = "Data/ " + Experiment;
 
 	if (ScenarioId != -1) {
 		Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/task_output.json";

@@ -68,7 +68,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 
 void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
 	UMyCSVReader::CreateCSVFile(false);
-	LoadTasksFromFile();	// load all tasks from file
+	LoadTasksFromFile("RoomPreparation", 1);	// load all tasks from file
 	ExperimentId = 0; // start with id 0. ExecuteNextExperiment will increment
 	RepeatExperiment = numberOfTimes;
 	ExperimentIsOver = true; // this will make enter tick loop and executethe next 

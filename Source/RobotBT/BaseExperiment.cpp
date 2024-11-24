@@ -45,8 +45,8 @@ void ABaseExperiment::Tick(float DeltaTime) {
 	
 }
 
-void ABaseExperiment::LoadTasksFromFile() {
-	Tasks = UMyJsonReader::ReadJsonFile();
+void ABaseExperiment::LoadTasksFromFile(FString ExperimentFolderName, int32 ScenarioId) {
+	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentFolderName, ScenarioId);
 }
 
 FTask* ABaseExperiment::GetNextTask() {

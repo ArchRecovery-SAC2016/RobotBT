@@ -10,7 +10,7 @@ class ROBOTBT_API  UMyJsonReader: public UBlueprintFunctionLibrary {
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
-	static  TMap<FString, FTask> ReadJsonFile();
+	static  TMap<FString, FTask> ReadTaskFromFile(FString Experiment, int32 ScenarioId);
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
 	static FString ReadStringFromFile(FString FilePath);
