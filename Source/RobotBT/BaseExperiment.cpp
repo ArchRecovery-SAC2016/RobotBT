@@ -2,7 +2,6 @@
 
 #include "BaseExperiment.h"
 #include "RobotBTPlayerController.h"
-#include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"

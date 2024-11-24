@@ -9,7 +9,7 @@ TMap<FString, FTask> UMyJsonReader::ReadJsonFile() {
 
 	TMap<FString, FTask> Tasks;
 
-    FString FilePath = FPaths::ProjectContentDir() + TEXT("task_output.json");
+    FString FilePath = FPaths::ProjectContentDir() +  TEXT("Data/RoomPreparation/task_output.json");
     FString JsonString = ReadStringFromFile(FilePath);
     
 	
