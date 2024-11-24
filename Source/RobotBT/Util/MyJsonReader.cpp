@@ -2,8 +2,12 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
+#include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "JsonObjectConverter.h"
 
 TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
 	TMap<FString, FTask> Tasks;
@@ -33,6 +37,60 @@ TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 S
 	return Tasks;
 
 }
+
+TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, int32 ScenarioId) {
+    TArray<FWorldRoomDataStruct> WorldDataArray;
+
+    // Monta o caminho do arquivo
+    FString Path = "Data/" + Experiment;
+    if (ScenarioId != -1) {
+        Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/World_db.json";
+    }
+    FString FilePath = FPaths::ProjectContentDir() + Path;
+
+    // Lê o conteúdo do arquivo
+    FString JsonString;
+    if (!FFileHelper::LoadFileToString(JsonString, *FilePath)) {
+        UE_LOG(LogTemp, Error, TEXT("Failed to load file at: %s"), *FilePath);
+        return WorldDataArray;
+    }
+
+    // Analisa o JSON
+    TSharedPtr<FJsonObject> JsonObject;
+    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
+
+    if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
+        // Obtém o array "rooms" do JSON
+        TArray<TSharedPtr<FJsonValue>> RoomsArray = JsonObject->GetObjectField("world_db")->GetArrayField("rooms");
+
+        // Converte cada objeto JSON para FWorldRoomDataStruct
+        for (const TSharedPtr<FJsonValue>& RoomValue : RoomsArray) {
+            FWorldRoomDataStruct RoomData;
+            if (RoomValue->Type == EJson::Object && RoomValue->AsObject().IsValid()) {
+                TSharedPtr<FJsonObject> RoomObject = RoomValue->AsObject();
+
+                RoomData.Name = RoomObject->GetStringField("name");
+                RoomData.Location = RoomObject->GetStringField("location");
+                RoomData.bIsClean = RoomObject->GetBoolField("is_clean");
+                RoomData.bIsPrepared = RoomObject->GetBoolField("is_prepared");
+                RoomData.bDoorOpen = RoomObject->GetBoolField("door_open");
+
+                WorldDataArray.Add(RoomData);
+            }
+            else {
+                UE_LOG(LogTemp, Error, TEXT("RoomValue is not a valid JSON object."));
+            }
+        }
+    }
+    else {
+        UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON file: %s"), *FilePath);
+    }
+
+    return WorldDataArray;
+}
+
+
+
 
 FString UMyJsonReader::ReadStringFromFile(FString FilePath) {
 	if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath)) {
@@ -175,3 +233,4 @@ void UMyJsonReader::ShowLogMessage(const FString& Message, EMessageColorEnum Typ
 
     UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ShowLogMessage] %s"), *Message);
 }
+

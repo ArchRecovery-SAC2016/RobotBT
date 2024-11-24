@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Struct/TaskStruct.h"
+#include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "MyJsonReader.generated.h"
 
 UCLASS()
@@ -21,4 +22,7 @@ public:
 	static TMap<FString, FTask> ReadTasks(const TSharedPtr<FJsonObject>& TasksObject);
 
 	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
+
+	UFUNCTION(BlueprintCallable, Category = "MyUtils")
+	static TArray<FWorldRoomDataStruct> LoadWorldData(FString Experiment, int32 ScenarioId);
 };

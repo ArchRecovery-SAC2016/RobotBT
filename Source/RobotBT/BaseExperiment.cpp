@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BaseExperiment.h"
+
 #include "RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyJsonReader.h"
@@ -47,6 +48,17 @@ void ABaseExperiment::Tick(float DeltaTime) {
 
 void ABaseExperiment::LoadTasksFromFile(FString ExperimentFolderName, int32 ScenarioId) {
 	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentFolderName, ScenarioId);
+}
+
+bool ABaseExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 ScenarioId) {
+	
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentFolderName, ScenarioId);
+	if (WorldRoomsStruct.Num() <= 0) {
+		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
+		return false;
+	}
+
+	return true;
 }
 
 FTask* ABaseExperiment::GetNextTask() {

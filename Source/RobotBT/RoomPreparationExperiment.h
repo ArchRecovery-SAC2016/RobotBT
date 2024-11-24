@@ -31,6 +31,9 @@ public:
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
 private:
+
+	
+
 	/* Saves all doors in the map	*/
 	UPROPERTY()
 	TArray<ARoomPreparation*> Rooms;
@@ -49,6 +52,7 @@ private:
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
+	
 	virtual void StartExperiment(int32 numberOfTimes) override;
 
 	virtual void ExecuteNextExperiment() override;
@@ -58,6 +62,8 @@ private:
 	bool EvaluatePreCondition(const FPredicate& Predicate);
 
 	virtual FTask* GetNextTask() override;
+
+	void PrepareWorld();
 };
 
 

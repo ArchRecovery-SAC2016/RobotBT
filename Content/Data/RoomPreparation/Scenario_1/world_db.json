@@ -1,0 +1,34 @@
+{
+  "world_db": {  
+    "rooms": [
+      {
+        "name": "RoomA",
+        "location": "c3",
+        "is_clean": false,
+        "is_prepared": false,
+        "door_open": false
+      },
+      {
+        "name": "RoomB",
+        "location": "c6",
+        "is_clean": false,
+        "is_prepared": false,
+        "door_open": true
+      },
+      {
+        "name": "RoomC",
+        "location": "c8",
+        "is_clean": true,
+        "is_prepared": true,
+        "door_open": true
+      },
+      {
+        "name": "SanitizationRoom",
+        "location": "c10",
+        "is_clean": true,
+        "is_prepared": true,
+        "door_open": true
+      }
+    ]
+  }
+}

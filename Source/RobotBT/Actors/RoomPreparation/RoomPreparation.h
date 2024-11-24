@@ -5,6 +5,7 @@
 #include "RoomTrash.h"
 #include "GameFramework/Actor.h"
 #include "RobotBT/Actors/Room.h"
+#include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "RoomPreparation.generated.h"
 
 UCLASS()
@@ -38,7 +39,7 @@ public:
 	USplineComponent* GetOrganizePath(int32 index);
 
 	// Initiate this room configuration. 
-	void Initiate(bool DoorOpen, bool WithTrash, bool FurnitureInPlace);
+	void Initiate(FWorldRoomDataStruct RoomData);
 
 	bool IsTrashClean();
 

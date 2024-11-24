@@ -68,7 +68,5 @@ void ARoom::ControlDoorOpen() {
 		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, -71)); // -240 will be near visible
 	}else {
 		DoorCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		FVector Location = DoorMesh->GetComponentLocation();
-		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, 0)); // 0 will be near visible
 	}
 }

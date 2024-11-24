@@ -4,6 +4,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "Struct/ExperimentResult.h"
 #include "Struct/TaskStruct.h"
+#include "Struct/WorldRoomDataStruct.h"
 #include "BaseExperiment.generated.h"
 
 UCLASS(minimalapi)
@@ -21,12 +22,19 @@ public:
 	UFUNCTION()
 	virtual void LoadTasksFromFile(FString Experiment, int32 ScenarioId);
 
+	// Load the world from file
+	UFUNCTION()
+	bool LoadWorldFromFile(FString Experiment, int32 ScenarioId);
+
 	UFUNCTION()
 	void CurrentTaskFinished(FTaskResult TaskResult);
 
 	FExperimentResult Experiment;
 
 protected:
+	// The world knowledge loaded from file
+	TArray<FWorldRoomDataStruct> WorldRoomsStruct;
+
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 

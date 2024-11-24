@@ -64,7 +64,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 
 	// StartDefaultExperiment();
 	GenerateRandomProperties = false;
-	StartExperiment(1);
+	StartExperiment(10);
 }
 
 void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
