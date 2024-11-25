@@ -63,7 +63,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 	}
 
 	// StartDefaultExperiment();
-	GenerateRandomProperties = true;
+	GenerateRandomProperties = false;
 	StartExperiment(2);
 }
 
@@ -93,7 +93,6 @@ void ARoomPreparationExperiment::ExecuteNextExperiment() {
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	ExperimentIsOver = false; // this willa void enter tick loop
 
-	PrepareWorld();
 	ExperimentId++;
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = "Baseline";

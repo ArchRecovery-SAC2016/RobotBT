@@ -20,6 +20,10 @@ AFurniture::AFurniture() {
 void AFurniture::BeginPlay() {
 	Super::BeginPlay();
 
+	// save this variables, because i can use it in the initialization
+	InitialLocation = FurnitureMesh->GetComponentLocation();
+	InitialRotation = FurnitureMesh->GetComponentRotation();
+
     if (Collision) {
         Collision->OnComponentBeginOverlap.AddDynamic(this, &AFurniture::OnOverlapBegin);
     }
@@ -52,8 +56,11 @@ void AFurniture::SetInPlace(bool NewValue) {
 		ChangeColor();
 		ShouldMove = false;
 	} else {
-		// nao preciso fazer nada pq os moveis jah estao posicionados de forma incorreta e com a colisao habilidade
+		FurnitureMesh->SetWorldLocationAndRotation(InitialLocation, InitialRotation);
+		CorrectLocationMesh->SetVisibility(true);
+		Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		InPlace = false;
+		ChangeColor();
 	}
 }
 

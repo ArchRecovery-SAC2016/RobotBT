@@ -64,4 +64,8 @@ private:
 	/* Called on tick, to move to the correct location */
 	UFUNCTION()
 	void MoveToCorrectLocation(float DeltaTime);
+
+	// This is a chace variable set on the BeginPlay. We use when resent the map
+	FVector InitialLocation;
+	FRotator InitialRotation;
 };

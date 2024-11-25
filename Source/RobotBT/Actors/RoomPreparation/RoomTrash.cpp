@@ -32,9 +32,8 @@ void ARoomTrash::SetIsTrashClean(bool NewValue) {
 	} else {
 		IsTrashClean = true;
 		TrashMesh->SetVisibility(true);
-		// Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	}
-
 }
 
 void ARoomTrash::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
