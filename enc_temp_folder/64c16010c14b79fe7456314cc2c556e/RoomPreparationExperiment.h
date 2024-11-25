@@ -18,6 +18,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+
 	// saves all organizers robots instance
 	UPROPERTY()
 	TArray<ARobotOrganizer*> OrganizersTeam;

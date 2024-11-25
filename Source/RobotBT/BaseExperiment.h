@@ -79,11 +79,17 @@ protected:
 	virtual void StartExperiment(int32 numberOfTimes) {};
 
 	UFUNCTION()
-	virtual void ExecuteNextExperiment() {};
+	virtual void ExecuteNextExperiment();
 
 	// Called when everything is finished
 	UFUNCTION()
 	virtual void FinishExperiment();
+
+	// the especialized class will implement this method
+	virtual void SetRandomRobotsProperties() {};
+
+	// the especialized class will implement this method
+	virtual void PrepareWorld() {};
 
 
 };

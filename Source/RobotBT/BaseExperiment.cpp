@@ -96,6 +96,31 @@ bool ABaseExperiment::ParsePredicate(const FString& Predicate, FString& OutObjec
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
+void ABaseExperiment::ExecuteNextExperiment() {
+	ExperimentId++;
+	if (ExperimentId >= RepeatExperiment) {
+		FinishExperiment();
+		return;
+	}
+
+	if (GenerateRandomProperties) {
+		SetRandomRobotsProperties();
+	}
+
+	// Prepare World to match the world knowledge
+	PrepareWorld();
+
+	Experiment.ExperimentId = ExperimentId;
+	Experiment.Approach = "Baseline";
+	Experiment.ExperimentTime = 0;
+	CurrentTaskIndex = -1;
+
+	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
+	CurrentTask = GetNextTask();
+	ExecuteCurrentTask();
+}
+
 void ABaseExperiment::FinishExperiment() {
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);

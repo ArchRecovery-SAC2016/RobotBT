@@ -5,6 +5,7 @@
 #include "Util/MyCSVReader.h"
 #include "Engine/World.h"
 #include "Util/MyJsonReader.h"
+#include "Util/UtilMethods.h"
 
 ARoomPreparationExperiment::ARoomPreparationExperiment() {
 	
@@ -63,8 +64,8 @@ void ARoomPreparationExperiment::BeginPlay() {
 	}
 
 	// Experiment configuration
-	GenerateRandomProperties = false;
-	StartExperiment(1);
+	GenerateRandomProperties = true;
+	StartExperiment(2);
 }
 
 void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
