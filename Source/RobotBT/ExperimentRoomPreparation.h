@@ -1,23 +1,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BaseExperiment.h"
+#include "Experiment.h"
 #include "Actors/RoomPreparation/RobotCleaner.h"
 #include "Actors/RoomPreparation/RobotOrganizer.h"
-#include "RoomPreparationExperiment.generated.h"
+#include "ExperimentRoomPreparation.generated.h"
 
 UCLASS(minimalapi)
-class ARoomPreparationExperiment : public ABaseExperiment
+class AExperimentRoomPreparation : public AExperiment
 {
 	GENERATED_BODY()
 
 public:
-	ARoomPreparationExperiment();
+	AExperimentRoomPreparation();
 
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
-
 
 	// saves all organizers robots instance
 	UPROPERTY()

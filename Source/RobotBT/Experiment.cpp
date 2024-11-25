@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "BaseExperiment.h"
+#include "Experiment.h"
 
 #include "RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
@@ -11,7 +11,7 @@
 #include "HAL/PlatformFilemanager.h"
 #include "Kismet/GameplayStatics.h"
 
-ABaseExperiment::ABaseExperiment()
+AExperiment::AExperiment()
 {
 	// use our custom PlayerController class
 	PlayerControllerClass = ARobotBTPlayerController::StaticClass();
@@ -34,12 +34,12 @@ ABaseExperiment::ABaseExperiment()
 }
 
 
-void ABaseExperiment::BeginPlay() {
+void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
 }
 
-void ABaseExperiment::Tick(float DeltaTime) {
+void AExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
 	Experiment.ExperimentTime += DeltaTime;
@@ -47,11 +47,11 @@ void ABaseExperiment::Tick(float DeltaTime) {
 	
 }
 
-void ABaseExperiment::LoadTasksFromFile(FString ExperimentFolderName, int32 ScenarioId) {
+void AExperiment::LoadTasksFromFile(FString ExperimentFolderName, int32 ScenarioId) {
 	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentFolderName, ScenarioId);
 }
 
-bool ABaseExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 ScenarioId) {
+bool AExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 ScenarioId) {
 	
 	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentFolderName, ScenarioId);
 	if (WorldRoomsStruct.Num() <= 0) {
@@ -62,7 +62,7 @@ bool ABaseExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 Scen
 	return true;
 }
 
-void ABaseExperiment::ExecuteCurrentTask() {
+void AExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
 		ExecuteNextExperiment();
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
@@ -81,22 +81,22 @@ void ABaseExperiment::ExecuteCurrentTask() {
 	ExecuteCurrentDecomposition();
 }
 
-void ABaseExperiment::ExecuteCurrentDecomposition() {
+void AExperiment::ExecuteCurrentDecomposition() {
 	// the implementation of this method is in the child class
 
 }
 
-bool ABaseExperiment::CheckPreCondition(FTask* NewTask) {
+bool AExperiment::CheckPreCondition(FTask* NewTask) {
 	// quem implementa isso eh o filho
 	return true;
 }
 
 
-bool ABaseExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
+bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-void ABaseExperiment::ExecuteNextExperiment() {
+void AExperiment::ExecuteNextExperiment() {
 	ExperimentId++;
 	if (ExperimentId >= RepeatExperiment) {
 		FinishExperiment();
@@ -121,12 +121,12 @@ void ABaseExperiment::ExecuteNextExperiment() {
 	ExecuteCurrentTask();
 }
 
-void ABaseExperiment::FinishExperiment() {
+void AExperiment::FinishExperiment() {
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
-FTask* ABaseExperiment::GetNextTask() {
+FTask* AExperiment::GetNextTask() {
 	FTask* NewTask = nullptr;
 	CurrentTaskIndex++;
 
@@ -158,7 +158,7 @@ FTask* ABaseExperiment::GetNextTask() {
 	return GetNextTask();
 }
 
-void ABaseExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
+void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 	Experiment.TaskResults.Add(TaskResult);
 
 	//TODO: SAVE HERE ON FILE

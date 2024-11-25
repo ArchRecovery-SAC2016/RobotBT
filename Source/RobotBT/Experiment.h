@@ -5,14 +5,14 @@
 #include "Struct/ExperimentResult.h"
 #include "Struct/TaskStruct.h"
 #include "Struct/WorldRoomDataStruct.h"
-#include "BaseExperiment.generated.h"
+#include "Experiment.generated.h"
 
 UCLASS(minimalapi)
-class ABaseExperiment : public AGameModeBase {
+class AExperiment : public AGameModeBase {
 	GENERATED_BODY()
 
 public:
-	ABaseExperiment();
+	AExperiment();
 
 	virtual void BeginPlay() override;
 

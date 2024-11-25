@@ -1,18 +1,17 @@
-#include "RoomPreparationExperiment.h"
+#include "ExperimentRoomPreparation.h"
 #include "Actors/Room.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyCSVReader.h"
 #include "Engine/World.h"
 #include "Util/MyJsonReader.h"
-#include "Util/UtilMethods.h"
 
-ARoomPreparationExperiment::ARoomPreparationExperiment() {
+AExperimentRoomPreparation::AExperimentRoomPreparation() {
 	
 
 }
 
-void ARoomPreparationExperiment::BeginPlay() {
+void AExperimentRoomPreparation::BeginPlay() {
     Super::BeginPlay();
 
 	// altera vecolidade pra ficar 10x mais rapido
@@ -38,7 +37,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 		ARobotCleaner* Cleaner = Cast<ARobotCleaner>(Actor);
 		if (Cleaner != nullptr) {
 			CleanerRobot = Cleaner;
-			CleanerRobot->OnTaskFinished.AddDynamic(this, &ABaseExperiment::CurrentTaskFinished);
+			CleanerRobot->OnTaskFinished.AddDynamic(this, &AExperiment::CurrentTaskFinished);
 		}
 	}
 
@@ -48,7 +47,7 @@ void ARoomPreparationExperiment::BeginPlay() {
 	for (AActor* Actor : FoundOrganizer) {
 		ARobotOrganizer* Organizer = Cast<ARobotOrganizer>(Actor);
 		if (Organizer != nullptr) {
-			Organizer->OnTaskFinished.AddDynamic(this, &ABaseExperiment::CurrentTaskFinished);
+			Organizer->OnTaskFinished.AddDynamic(this, &AExperiment::CurrentTaskFinished);
 			OrganizersTeam.Add(Organizer);
 		}
 	}
@@ -64,11 +63,11 @@ void ARoomPreparationExperiment::BeginPlay() {
 	}
 
 	// Experiment configuration
-	GenerateRandomProperties = true;
-	StartExperiment(2);
+	GenerateRandomProperties = false;
+	StartExperiment(1);
 }
 
-void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
+void AExperimentRoomPreparation::StartExperiment(int32 numberOfTimes) {
 	UMyCSVReader::CreateCSVFile(false);
 	LoadTasksFromFile("RoomPreparation", 1);	// load all tasks from file
 
@@ -82,11 +81,11 @@ void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
 	ExecuteNextExperiment();
 }
 
-void ARoomPreparationExperiment::Tick(float DeltaTime) {
+void AExperimentRoomPreparation::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 }
 
-void ARoomPreparationExperiment::SetRandomRobotsProperties() {
+void AExperimentRoomPreparation::SetRandomRobotsProperties() {
 	// Generate Random Properties for the Cleaner
 	CleanerRobot->GenerateRandomProperties();
 
@@ -96,7 +95,7 @@ void ARoomPreparationExperiment::SetRandomRobotsProperties() {
 	}
 }
 
-bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
+bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {
 	if (NewTask == nullptr) return false;
 
 	for (const FPredicate& Predicate : NewTask->Preconditions) {
@@ -109,10 +108,10 @@ bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
 			return false;
 		}
 	}
-	return true; // Todas as precondições foram satisfeitas
+	return true; // Todas as precondiï¿½ï¿½es foram satisfeitas
 }
 
-bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicate) {
+bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicate) {
 	if (Predicate.Variable.Contains("Room")) {
 		// Trata-se de uma sala
 		ARoomPreparation* Room = GetRoomByName(Predicate.Variable);
@@ -141,7 +140,7 @@ bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicat
 	return false;
 }
 
-void ARoomPreparationExperiment::PrepareWorld() {
+void AExperimentRoomPreparation::PrepareWorld() {
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
 		ARoomPreparation* Room = GetRoomByName(RoomData.Name);
 		if (Room == nullptr) {
@@ -152,7 +151,7 @@ void ARoomPreparationExperiment::PrepareWorld() {
 	}
 }
 
-void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
+void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
 	// A decomposicao esta bem confusa. Ela esta com os argumentos incompletos. Entao vamos usar apenas o nome e pegamos o local das tasks. 
 	const FTaskDecomposition& CurrentDecomposition = DecompositionQueue[CurrentDecompositionIndex];
 	FString RoomName = CurrentTask->Locations;
@@ -180,7 +179,7 @@ void ARoomPreparationExperiment::ExecuteCurrentDecomposition() {
 	UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
 }
 
-ARoomPreparation* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
+ARoomPreparation* AExperimentRoomPreparation::GetRoomByName(FString DoorName) {
 	for (auto Room : Rooms) {
 		if (Room->Name == DoorName) {
 			return Room;
@@ -190,22 +189,22 @@ ARoomPreparation* ARoomPreparationExperiment::GetRoomByName(FString DoorName) {
 	return nullptr;
 }
 
-void ARoomPreparationExperiment::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
+void AExperimentRoomPreparation::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::CLEAN_ROOM, Room);
 }
 
-void ARoomPreparationExperiment::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
+void AExperimentRoomPreparation::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::OPEN_DOOR, Room);
 }
 
-void ARoomPreparationExperiment::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
+void AExperimentRoomPreparation::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
 	CleanerRobot->ExecuteTask(ESkillEnum::SANITIZE_ROBOT, Room);
 }
 
-void ARoomPreparationExperiment::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
+void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 2;
 	for (ARobotOrganizer* Organizer : OrganizersTeam) {
 		Organizer->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
