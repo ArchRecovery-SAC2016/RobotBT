@@ -36,12 +36,6 @@ AExperiment::AExperiment()
 void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
-	// altera vecolidade pra ficar 10x mais rapido
-	if (GetWorld()) {
-		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentSpeed);
-	}
-
-
 	if (SaveResults) {
 		UMyCSVReader::CreateCSVFile(ExperimentName, ScenarioId);
 	}

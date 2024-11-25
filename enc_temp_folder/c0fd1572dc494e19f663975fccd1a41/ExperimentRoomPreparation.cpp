@@ -16,6 +16,11 @@ void AExperimentRoomPreparation::Tick(float DeltaTime) {
 void AExperimentRoomPreparation::BeginPlay() {
     Super::BeginPlay();
 
+	// altera vecolidade pra ficar 10x mais rapido
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentSpeed);
+	}
+
 	// Load all Doors Sensors, so we can watch it
     TArray<AActor*> RoomsOnMap;
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);

@@ -73,14 +73,6 @@ void AFurniture::ChangeColor() {
 }
 
 void AFurniture::MoveToCorrectLocation(float DeltaTime) {
-	// if the game is faster, we don't need to move slowling
-	if (GetWorld()->GetWorldSettings()->GetEffectiveTimeDilation() > 1) {
-		FurnitureMesh->SetWorldLocation(CorrectLocationMesh->GetComponentLocation());
-		FurnitureMesh->SetWorldRotation(CorrectLocationMesh->GetComponentRotation());
-		SetInPlace(true);
-		return;
-	}
-
 	// Get current and target transforms
 	FVector CurrentLocation = FurnitureMesh->GetComponentLocation();
 	FRotator CurrentRotation = FurnitureMesh->GetComponentRotation();
