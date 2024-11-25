@@ -2,7 +2,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
-#include "RobotBT/Util/MyCSVReader.h"
 #include "RobotBT/Actors/Room.h"
 #include "RobotBT/Util/MyJsonReader.h"
 
@@ -179,7 +178,7 @@ void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
 		FString RobotName = "CleanerRobot";
 		ExecuteOpenDoor(RobotName, RoomLocation);
 	} else if (CurrentDecomposition.Name == "move-furniture") {
-		FString RobotName = "CleanerRobot";
+		FString RobotName = "OrganizerTeam";
 		ExecuteMoveFurniture(RobotName, RoomLocation);
 	}
 	

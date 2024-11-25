@@ -15,7 +15,7 @@ enum class ESkillEnum: uint8 {
 class ESkillEnumHelper {
 public:
     static FString GetDisplayName(ESkillEnum Reason) {
-        const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EFailureReasonEnum"), true);
+        const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ESkillEnum"), true);
         if (!EnumPtr) {
             return FString("Invalid Enum");
         }

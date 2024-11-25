@@ -125,6 +125,8 @@ void ARobot::GenerateRandomProperties() {
 	};
 	int32 BatteryIndex = FMath::RandRange(0, Batteries.Num() - 1);
 	RobotProperties.Battery = Batteries[BatteryIndex];
+
+
 }
 
 void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {

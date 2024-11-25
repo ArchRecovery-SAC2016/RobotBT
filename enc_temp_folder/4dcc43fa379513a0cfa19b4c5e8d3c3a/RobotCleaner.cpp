@@ -131,11 +131,11 @@ void ARobotCleaner::GenerateRandomProperties() {
 	TArray<FSkill> CleanSkill {
 	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill
 	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.01f },
-	{ ESkillEnum::CLEAN_ROOM, 0.02f, 0.01f },
-	{ ESkillEnum::CLEAN_ROOM, 0.03f, 0.01f },
-	{ ESkillEnum::CLEAN_ROOM, 0.06f, 0.01f },
-	{ ESkillEnum::CLEAN_ROOM, 0.75f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.05f, 0.01f },
 	{ ESkillEnum::CLEAN_ROOM, 0.1f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.15f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.2f, 0.01f },
+	{ ESkillEnum::CLEAN_ROOM, 0.3f, 0.01f },
 
 	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.01f },
 	{ ESkillEnum::CLEAN_ROOM, 0.01f, 0.03f },
@@ -148,13 +148,13 @@ void ARobotCleaner::GenerateRandomProperties() {
 	RobotProperties.Skills.Add(CleanSkill[ClearSkillIndex]);
 
 	TArray<FSkill> SanitizeSkill{
-	{ ESkillEnum::NONE, 1.0f, 0.1f },
+	{ ESkillEnum::NONE, 0.01f, 0.1f },
 	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.01f },
-	{ ESkillEnum::SANITIZE_ROBOT, 0.02f, 0.01f },
-	{ ESkillEnum::SANITIZE_ROBOT, 0.03f, 0.01f },
-	{ ESkillEnum::SANITIZE_ROBOT, 0.06f, 0.01f },
-	{ ESkillEnum::SANITIZE_ROBOT, 0.75f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.05f, 0.01f },
 	{ ESkillEnum::SANITIZE_ROBOT, 0.1f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.15f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.2f, 0.01f },
+	{ ESkillEnum::SANITIZE_ROBOT, 0.3f, 0.01f },
 
 	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.01f },
 	{ ESkillEnum::SANITIZE_ROBOT, 0.01f, 0.03f },
@@ -169,11 +169,11 @@ void ARobotCleaner::GenerateRandomProperties() {
 	TArray<FSkill> OpenDoorSkill {
 	{ ESkillEnum::NONE, 0.01f, 0.1f },
 	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.01f },
-	{ ESkillEnum::OPEN_DOOR, 0.02f, 0.01f },
-	{ ESkillEnum::OPEN_DOOR, 0.03f, 0.01f },
-	{ ESkillEnum::OPEN_DOOR, 0.06f, 0.01f },
-	{ ESkillEnum::OPEN_DOOR, 0.75f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.05f, 0.01f },
 	{ ESkillEnum::OPEN_DOOR, 0.1f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.15f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.2f, 0.01f },
+	{ ESkillEnum::OPEN_DOOR, 0.3f, 0.01f },
 
 	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.01f },
 	{ ESkillEnum::OPEN_DOOR, 0.01f, 0.03f },
