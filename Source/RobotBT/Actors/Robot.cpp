@@ -30,7 +30,8 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	FTaskResult NewTaskResult; // need to create a new
 	NewTaskResult.Location = Room->Name;
 	NewTaskResult.InitialRobotsProperties = RobotProperties;
-	NewTaskResult.TaskName = ESkillEnumHelper::GetDisplayName(SkillEnum);
+	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
+
 	TaskResult = NewTaskResult;
 
 	FSkill SkillSelected;
@@ -48,6 +49,9 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 		TaskFailed(EFailureReasonEnum::SkillNotFound);
 		return;
 	}
+
+	TaskResult.SkillChanceToFail = SkillSelected.ChanceToFail;
+	TaskResult.SkillBatteryConsumeDischargeRate = SkillSelected.BatteryConsumeDischargeRate;
 
 	FString SkillName = UEnum::GetValueAsString(SkillEnum);
 	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillName);
@@ -101,6 +105,10 @@ void ARobot::UpdateCurrentActionText(FString NewAction) {
 }
 
 void ARobot::GenerateRandomProperties() {
+	// reset the base properties
+	IsMoving = false;
+	IsAtRoomLocation = false;
+	IsFinishedMovingAlongPath = false;
 	RobotProperties.Skills.Empty();
 
 	TArray<float> Speed{ 80, 100, 110, 120, 150 };

@@ -85,11 +85,11 @@ void ARobotOrganizer::GenerateRandomProperties() {
 	TArray<FSkill> MoveSkill{
 	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill
 	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.01f },
-	{ ESkillEnum::MOVE_FURNITURE, 0.05f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.02f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.03f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.06f, 0.01f },
+	{ ESkillEnum::MOVE_FURNITURE, 0.75f, 0.01f },
 	{ ESkillEnum::MOVE_FURNITURE, 0.1f, 0.01f },
-	{ ESkillEnum::MOVE_FURNITURE, 0.15f, 0.01f },
-	{ ESkillEnum::MOVE_FURNITURE, 0.2f, 0.01f },
-	{ ESkillEnum::MOVE_FURNITURE, 0.3f, 0.01f },
 
 	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.01f },
 	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.03f },

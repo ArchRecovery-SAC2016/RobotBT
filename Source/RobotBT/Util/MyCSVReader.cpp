@@ -13,16 +13,13 @@ void UMyCSVReader::CreateCSVFile(FString ExperimentName, int32 ScenarioId) {
 
     // Gerar o nome do arquivo com data e hora
     FDateTime Now = FDateTime::Now();
-    FString Timestamp = Now.ToString(TEXT("yyyy-MM-dd_HH-mm-ss"));
+    FString Timestamp = Now.ToString(TEXT("%Y-%m-%d_%H-%M-%S"));
     FilePath = FPaths::ProjectDir() + Path + TEXT("Experiment_") + Timestamp + TEXT(".csv");
-
-    /// Imprimir o caminho do arquivo no log para verificacao
-        UE_LOG(LogTemp, Display, TEXT("FilePath: %s"), *FilePath);
 
     // Definir os cabe�alhos do CSV
     FString CSVContent;
     CSVContent.Append(TEXT("ExperimentId,Approach,TaskFinishTime,"));
-    CSVContent.Append(TEXT("TaskName,Location,SuccessResult,FailureReasonEnum,"));
+    CSVContent.Append(TEXT("SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,"));
     CSVContent.Append(TEXT("RobotName,BatteryCharge,BatteryDischargeRate,Skills,Color,Speed,"));
     CSVContent.Append(TEXT("EndBatteryCharge\n"));
 
@@ -31,8 +28,7 @@ void UMyCSVReader::CreateCSVFile(FString ExperimentName, int32 ScenarioId) {
 
     if (bSuccess) {
         UE_LOG(LogTemp, Log, TEXT("Arquivo CSV criado com sucesso: %s"), *FilePath);
-    }
-    else {
+    } else {
         UE_LOG(LogTemp, Error, TEXT("Falha ao criar o arquivo CSV: %s"), *FilePath);
     }
 }
@@ -68,8 +64,10 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
             Result.ExperimentTime));
 
         FString FailureReason = EFailureReasonEnumHelper::GetDisplayName(Task.FailureReasonEnum);
-        Line.Append(FString::Printf(TEXT("%s,%s,%s,%s,"),
-            *Task.TaskName,
+        Line.Append(FString::Printf(TEXT("%s,%.2f,%.2f,%s,%s,%s,"),
+            *Task.SkillUsed,
+            Task.SkillChanceToFail,
+            Task.SkillBatteryConsumeDischargeRate,
             *Task.Location,
             Task.SuccessResult ? TEXT("true") : TEXT("false"),
             *FailureReason
@@ -83,6 +81,7 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
             *Task.InitialRobotsProperties.Color,
             Task.InitialRobotsProperties.Speed,
             Task.EndRobotsProperties.Battery.Charge));
+
     }
 
     // Adiciona a nova linha ao arquivo

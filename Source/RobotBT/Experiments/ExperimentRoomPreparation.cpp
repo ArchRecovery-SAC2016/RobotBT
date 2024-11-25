@@ -181,8 +181,11 @@ void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
 		FString RobotName = "OrganizerTeam";
 		ExecuteMoveFurniture(RobotName, RoomLocation);
 	}
-	
-	UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
+
+	/* isso aki tha dando crash quando tem muita 
+	if (*CurrentDecomposition.Name != nullptr && *CurrentDecomposition.Arguments != nullptr)
+		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
+	*/
 }
 
 ARoomPreparation* AExperimentRoomPreparation::GetRoomByName(FString DoorName) {
