@@ -16,7 +16,7 @@ void ARobotCleaner::BeginPlay() {
 void ARobotCleaner::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (IsSanitizing) {
+	if (CleanerProperties.IsSanitizing) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
 			UpdateCurrentActionText("move-to-location");
@@ -26,14 +26,14 @@ void ARobotCleaner::Tick(float DeltaTime) {
 				UpdateCurrentActionText("sanitize-robot");
 				MoveAlongPath(DeltaTime);
 			} else {
-				IsSanitized = false;
+				CleanerProperties.IsSanitized = false;
 				TaskFinished("Task sanitize-robot Finished");
 				UpdateCurrentActionText("idle");
 			}
 		}
 	}
 
-	if (IsOpeningDoor) {
+	if (CleanerProperties.IsOpeningDoor) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
 			UpdateCurrentActionText("move-to-location");
@@ -45,7 +45,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 		}
 	}
 
-	if (IsCleaning) {
+	if (CleanerProperties.IsCleaning) {
 		// first move to room location
 		if (IsAtRoomLocation == false) {
 			UpdateCurrentActionText("move-to-location");
@@ -65,7 +65,7 @@ void ARobotCleaner::Tick(float DeltaTime) {
 void ARobotCleaner::StartSanitizationTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 
-	IsSanitizing = true;
+	CleanerProperties.IsSanitizing = true;
 
 	// primeira coisa que faco eh preparar o robo para a tarefa
 	SetRoom(Room);
@@ -75,7 +75,7 @@ void ARobotCleaner::StartSanitizationTask(ARoomPreparation* Room) {
 void ARobotCleaner::StartOpenDoorTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
 
-	IsOpeningDoor = true;
+	CleanerProperties.IsOpeningDoor = true;
 
 	SetRoom(Room);
 	IsAtRoomLocation = false;
@@ -83,18 +83,18 @@ void ARobotCleaner::StartOpenDoorTask(ARoomPreparation* Room) {
 
 void ARobotCleaner::StartCleaninTask(ARoomPreparation* Room) {
 	if (Room == nullptr) return;
-	IsSanitized = false;
-	IsCleaning = true;
+	CleanerProperties.IsSanitized = false;
+	CleanerProperties.IsCleaning = true;
 
 	SetRoom(Room);
 	IsAtRoomLocation = false; // TODO: create a method to check if the robot is at the location, because if the robot is already at the location, it will not move
 }
 
 void ARobotCleaner::TaskFinished(FString TaskMessage) {
-	IsSanitizing = false;
+	CleanerProperties.IsSanitizing = false;
 	IsAtRoomLocation = false;
-	IsCleaning = false;
-	IsOpeningDoor = false;
+	CleanerProperties.IsCleaning = false;
+	CleanerProperties.IsOpeningDoor = false;
 	IsFinishedMovingAlongPath = false;
 
 	TaskFinishedWithSuccess();
@@ -123,6 +123,10 @@ void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 
 void ARobotCleaner::GenerateRandomProperties() {
 	Super::GenerateRandomProperties();
+
+	// reset the properties
+	FCleanerProperties NewProperties;
+	CleanerProperties = NewProperties;
 
 	TArray<FSkill> CleanSkill {
 	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill

@@ -86,7 +86,6 @@ void AExperimentRoomPreparation::StartExperiment() {
 	ExecuteNextExperiment();
 }
 
-
 void AExperimentRoomPreparation::SetRandomRobotsProperties() {
 	// Generate Random Properties for the Cleaner
 	CleanerRobot->GenerateRandomProperties();
@@ -133,8 +132,8 @@ bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicat
 	}
 	else if (Predicate.Variable.Contains("?r")) {
 		if (Predicate.Condition == "is_sanitized") {
-			if (Predicate.bNegated) return !CleanerRobot->IsSanitized; // Negated
-			return CleanerRobot->IsSanitized;
+			if (Predicate.bNegated) return !CleanerRobot->IsSanitized(); // Negated
+			return CleanerRobot->IsSanitized();
 		}
 	}
 

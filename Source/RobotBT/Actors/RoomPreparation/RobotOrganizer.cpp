@@ -79,6 +79,9 @@ void ARobotOrganizer::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 void ARobotOrganizer::GenerateRandomProperties() {
 	Super::GenerateRandomProperties();
 
+	// reset the variables
+	IsOrganazing = false;
+
 	TArray<FSkill> MoveSkill{
 	{ ESkillEnum::NONE, 0.01f, 0.1f }, // adiciono um none. Servira como se nao tivesse essa skill
 	{ ESkillEnum::MOVE_FURNITURE, 0.01f, 0.01f },
