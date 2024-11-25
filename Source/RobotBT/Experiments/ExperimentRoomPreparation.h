@@ -2,8 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Experiment.h"
-#include "Actors/RoomPreparation/RobotCleaner.h"
-#include "Actors/RoomPreparation/RobotOrganizer.h"
+#include "RobotBT/Actors/RoomPreparation/RobotCleaner.h"
+#include "RobotBT/Actors/RoomPreparation/RobotOrganizer.h"
 #include "ExperimentRoomPreparation.generated.h"
 
 UCLASS(minimalapi)
@@ -46,7 +46,7 @@ private:
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
-	virtual void StartExperiment(int32 numberOfTimes) override;
+	virtual void StartExperiment() override;
 
 	virtual void SetRandomRobotsProperties() override;
 

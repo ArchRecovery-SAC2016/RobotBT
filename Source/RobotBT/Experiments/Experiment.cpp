@@ -2,10 +2,10 @@
 
 #include "Experiment.h"
 
-#include "RobotBTPlayerController.h"
+#include "RobotBT/RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
-#include "Util/MyJsonReader.h"
-#include "Util/UtilMethods.h"
+#include "RobotBT/Util/MyJsonReader.h"
+#include "RobotBT/Util/UtilMethods.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
@@ -33,7 +33,6 @@ AExperiment::AExperiment()
 
 }
 
-
 void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
@@ -43,17 +42,14 @@ void AExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
 	Experiment.ExperimentTime += DeltaTime;
-
-	
 }
 
-void AExperiment::LoadTasksFromFile(FString ExperimentFolderName, int32 ScenarioId) {
-	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentFolderName, ScenarioId);
+void AExperiment::LoadTasksFromFile() {
+	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentName, ScenarioId);
 }
 
-bool AExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 ScenarioId) {
-	
-	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentFolderName, ScenarioId);
+bool AExperiment::LoadWorldFromFile() {
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentName, ScenarioId);
 	if (WorldRoomsStruct.Num() <= 0) {
 		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
 		return false;
@@ -98,7 +94,7 @@ bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectNam
 
 void AExperiment::ExecuteNextExperiment() {
 	ExperimentId++;
-	if (ExperimentId >= RepeatExperiment) {
+	if (ExperimentId >= RepeatExperimentFor) {
 		FinishExperiment();
 		return;
 	}
@@ -111,7 +107,7 @@ void AExperiment::ExecuteNextExperiment() {
 	PrepareWorld();
 
 	Experiment.ExperimentId = ExperimentId;
-	Experiment.Approach = "Baseline";
+	Experiment.Approach = Approach;
 	Experiment.ExperimentTime = 0;
 	CurrentTaskIndex = -1;
 

@@ -1,14 +1,17 @@
 #include "ExperimentRoomPreparation.h"
-#include "Actors/Room.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
-#include "Util/MyCSVReader.h"
 #include "Engine/World.h"
-#include "Util/MyJsonReader.h"
+#include "RobotBT/Util/MyCSVReader.h"
+#include "RobotBT/Actors/Room.h"
+#include "RobotBT/Util/MyJsonReader.h"
 
 AExperimentRoomPreparation::AExperimentRoomPreparation() {
-	
 
+}
+
+void AExperimentRoomPreparation::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
 }
 
 void AExperimentRoomPreparation::BeginPlay() {
@@ -16,7 +19,7 @@ void AExperimentRoomPreparation::BeginPlay() {
 
 	// altera vecolidade pra ficar 10x mais rapido
 	if (GetWorld()) {
-		GetWorld()->GetWorldSettings()->SetTimeDilation(10.0f);
+		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentSpeed);
 	}
 
 	// Load all Doors Sensors, so we can watch it
@@ -62,28 +65,23 @@ void AExperimentRoomPreparation::BeginPlay() {
 		return;
 	}
 
-	// Experiment configuration
-	GenerateRandomProperties = false;
-	StartExperiment(1);
+	// Start the experiment based on the properties set on the GM_ExperimentRoomPreparation	Blueprint. (in the editor)
+	StartExperiment();
 }
 
-void AExperimentRoomPreparation::StartExperiment(int32 numberOfTimes) {
+void AExperimentRoomPreparation::StartExperiment() {
 	UMyCSVReader::CreateCSVFile(false);
-	LoadTasksFromFile("RoomPreparation", 1);	// load all tasks from file
+	LoadTasksFromFile();	// load all tasks from file
 
-	if (!LoadWorldFromFile("RoomPreparation", 1)) return;
+	if (!LoadWorldFromFile()) return;
 
 	PrepareWorld();
 
 	ExperimentId = -1; // start with id 0. ExecuteNextExperiment will increment
-	RepeatExperiment = numberOfTimes;
 
 	ExecuteNextExperiment();
 }
 
-void AExperimentRoomPreparation::Tick(float DeltaTime) {
-    Super::Tick(DeltaTime);
-}
 
 void AExperimentRoomPreparation::SetRandomRobotsProperties() {
 	// Generate Random Properties for the Cleaner
@@ -141,6 +139,7 @@ bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicat
 }
 
 void AExperimentRoomPreparation::PrepareWorld() {
+	// prepare the rooms
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
 		ARoomPreparation* Room = GetRoomByName(RoomData.Name);
 		if (Room == nullptr) {
@@ -149,6 +148,8 @@ void AExperimentRoomPreparation::PrepareWorld() {
 		}
 		Room->Initiate(RoomData);
 	}
+
+	// prepare the robots
 }
 
 void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
