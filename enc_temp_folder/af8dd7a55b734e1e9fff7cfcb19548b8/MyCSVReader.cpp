@@ -20,8 +20,8 @@ void UMyCSVReader::CreateCSVFile(FString ExperimentName, int32 ScenarioId) {
     FString CSVContent;
     CSVContent.Append(TEXT("ExperimentId,Approach,TaskFinishTime,"));
     CSVContent.Append(TEXT("SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,"));
-    CSVContent.Append(TEXT("RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge\n"));
-    
+    CSVContent.Append(TEXT("RobotName,BatteryCharge,BatteryDischargeRate,Skills,Color,Speed,"));
+    CSVContent.Append(TEXT("EndBatteryCharge\n"));
 
     // Criar o arquivo
     bool bSuccess = FFileHelper::SaveStringToFile(CSVContent, *FilePath);
@@ -73,12 +73,12 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
             *FailureReason
             ));
 
-        Line.Append(FString::Printf(TEXT("%s,%s,%.2f,%.2f, %s,%.2f,%.2f\n"),
+        Line.Append(FString::Printf(TEXT("%s,%.2f,%.2f, %s,%.s,%.2f,%.2f\n"),
             *Task.InitialRobotsProperties.Name,
-            *Task.InitialRobotsProperties.Color,
             Task.InitialRobotsProperties.Battery.Charge,
             Task.InitialRobotsProperties.Battery.DischargeRate,
             *InitialSkills,
+            *Task.InitialRobotsProperties.Color,
             Task.InitialRobotsProperties.Speed,
             Task.EndRobotsProperties.Battery.Charge));
 

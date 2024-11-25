@@ -14,8 +14,8 @@ struct FTaskResult {
 	bool SuccessResult = false;
 	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
 	FString SkillUsed = "";
-	float SkillChanceToFail;
-	float SkillBatteryConsumeDischargeRate;
+	float SkillChanceToFail = 0;
+	float SkillBatteryConsumeDischargeRate = 0;
 	FRobotProperties InitialRobotsProperties;
 	FRobotProperties EndRobotsProperties;
 };

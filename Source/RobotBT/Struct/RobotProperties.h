@@ -55,7 +55,7 @@ struct FRobotProperties {
 	TArray<FSkill> Skills;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString Color;
+	FString Color = "Black";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	float Speed = 100;
