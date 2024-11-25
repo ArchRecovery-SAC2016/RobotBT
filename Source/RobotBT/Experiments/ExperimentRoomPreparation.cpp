@@ -74,7 +74,6 @@ void AExperimentRoomPreparation::BeginPlay() {
 }
 
 void AExperimentRoomPreparation::StartExperiment() {
-	UMyCSVReader::CreateCSVFile(false);
 	LoadTasksFromFile();	// load all tasks from file
 
 	if (!LoadWorldFromFile()) return;

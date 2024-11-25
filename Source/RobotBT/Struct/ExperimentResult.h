@@ -22,7 +22,7 @@ struct FExperimentResult{
 	GENERATED_BODY()
 
 	int32 ExperimentId; // preenchido por BaseExperiment
-	FString Approach = "Baseline";
+	FString Approach = "";
 	float ExperimentTime = 0; // preenchido por BaseExperiment
 	TArray<FTaskResult> TaskResults;
 };

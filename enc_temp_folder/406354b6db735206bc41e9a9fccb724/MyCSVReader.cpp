@@ -16,9 +16,6 @@ void UMyCSVReader::CreateCSVFile(FString ExperimentName, int32 ScenarioId) {
     FString Timestamp = Now.ToString(TEXT("yyyy-MM-dd_HH-mm-ss"));
     FilePath = FPaths::ProjectDir() + Path + TEXT("Experiment_") + Timestamp + TEXT(".csv");
 
-    /// Imprimir o caminho do arquivo no log para verificação
-        UE_LOG(LogTemp, Display, TEXT("FilePath: %s"), *FilePath);
-
     // Definir os cabeçalhos do CSV
     FString CSVContent;
     CSVContent.Append(TEXT("ExperimentId,Approach,ExperimentTime,"));

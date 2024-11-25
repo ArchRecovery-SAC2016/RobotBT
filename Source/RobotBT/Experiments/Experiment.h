@@ -18,7 +18,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-
 	/** Start Experiment Properties. */
 	/** Must be set on the GM blueprint. Example: GM_ExperimentRoomPreparation */
 
@@ -89,7 +88,7 @@ protected:
 	// used to indicate the Experiment Id. -1 will be a single experiment
 	int32 ExperimentId  = -1;
 
-	// saves the result of the experiment
+	// saves the result of the current experiment
 	FExperimentResult Experiment;
 
 	// try to execute the next task. If fails, the experiment is over
@@ -111,10 +110,10 @@ protected:
 	virtual void ExecuteCurrentTask();
 
 	// will execute the decomposition of the task
-	virtual void ExecuteCurrentDecomposition();
+	virtual void ExecuteCurrentDecomposition() { };
 
 	// All task have preconditions. This method check if the preconditions are satisfied
-	virtual bool CheckPreCondition(FTask* NewTask);
+	virtual bool CheckPreCondition(FTask* NewTask) { return true; }
 
 	virtual bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 

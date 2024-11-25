@@ -1,7 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "RobotBT/Enum/FailureReasonEnum.h"
-#include "RobotBT/Struct/RobotProperties.h"
+#include "RobotBT/Struct/ExperimentResult.h"
 #include "MyCSVReader.generated.h"
 
 UCLASS()
@@ -10,8 +9,10 @@ class ROBOTBT_API  UMyCSVReader: public UBlueprintFunctionLibrary {
 
 public:
 	UFUNCTION()
-	static void WriteCSVFile(FRobotProperties RobotProperties, EFailureReasonEnum FailureReason);
+	static void CreateCSVFile(FString ExperimentName, int32 ScenarioId);
 
 	UFUNCTION()
-	static void CreateCSVFile(bool NewFile);
+	static void AddToFile(FExperimentResult Result);
+
+	inline static FString FilePath = "";
 };

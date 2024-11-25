@@ -10,6 +10,7 @@
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Kismet/GameplayStatics.h"
+#include "RobotBT/Util/MyCSVReader.h"
 
 AExperiment::AExperiment()
 {
@@ -30,12 +31,14 @@ AExperiment::AExperiment()
 	}
 
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
+	if (SaveResults) {
+		UMyCSVReader::CreateCSVFile(ExperimentName, ScenarioId);
+	}
 }
 
 void AExperiment::Tick(float DeltaTime) {
@@ -44,55 +47,13 @@ void AExperiment::Tick(float DeltaTime) {
 	Experiment.ExperimentTime += DeltaTime;
 }
 
-void AExperiment::LoadTasksFromFile() {
-	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentName, ScenarioId);
-}
-
-bool AExperiment::LoadWorldFromFile() {
-	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentName, ScenarioId);
-	if (WorldRoomsStruct.Num() <= 0) {
-		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
-		return false;
-	}
-
-	return true;
-}
-
-void AExperiment::ExecuteCurrentTask() {
-	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
-		ExecuteNextExperiment();
-		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
-		return;
-	}
-
-	// restart the decomposition index
-	CurrentDecompositionIndex = 0;
-	DecompositionQueue.Empty();
-
-	// if is empty, so is the first time of this task, so we fill the decomposition queue
-	for (auto it = CurrentTask->Decomposition.CreateConstIterator(); it; ++it) {
-		DecompositionQueue.Add(it.Value());
-	}
-
-	ExecuteCurrentDecomposition();
-}
-
-void AExperiment::ExecuteCurrentDecomposition() {
-	// the implementation of this method is in the child class
-
-}
-
-bool AExperiment::CheckPreCondition(FTask* NewTask) {
-	// quem implementa isso eh o filho
-	return true;
-}
-
-
-bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
-	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
-}
 
 void AExperiment::ExecuteNextExperiment() {
+	// saves the result before continue
+	if (SaveResults && Experiment.TaskResults.Num() > 0) {
+		UMyCSVReader::AddToFile(Experiment);
+	}
+
 	ExperimentId++;
 	if (ExperimentId >= RepeatExperimentFor) {
 		FinishExperiment();
@@ -117,10 +78,6 @@ void AExperiment::ExecuteNextExperiment() {
 	ExecuteCurrentTask();
 }
 
-void AExperiment::FinishExperiment() {
-	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
-}
 
 FTask* AExperiment::GetNextTask() {
 	FTask* NewTask = nullptr;
@@ -140,7 +97,6 @@ FTask* AExperiment::GetNextTask() {
 
 	if (NewTask == nullptr) {
 		UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::INFO);
-		FinishExperiment();
 		return nullptr;
 	}
 
@@ -154,13 +110,31 @@ FTask* AExperiment::GetNextTask() {
 	return GetNextTask();
 }
 
+void AExperiment::ExecuteCurrentTask() {
+	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
+		ExecuteNextExperiment();
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
+		return;
+	}
+
+	// restart the decomposition index
+	CurrentDecompositionIndex = 0;
+	DecompositionQueue.Empty();
+
+	// if is empty, so is the first time of this task, so we fill the decomposition queue
+	for (auto it = CurrentTask->Decomposition.CreateConstIterator(); it; ++it) {
+		DecompositionQueue.Add(it.Value());
+	}
+
+	ExecuteCurrentDecomposition();
+}
+
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 	Experiment.TaskResults.Add(TaskResult);
 
-	//TODO: SAVE HERE ON FILE
-
 	// if the task was successful, we can go to the next decomposition
 	if (TaskResult.SuccessResult) {
+		
 		NumberOfTask--; // substract the number o task, because the organizer need 2 tasks
 
 		if (NumberOfTask > 0) return;
@@ -168,8 +142,7 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 		if (CurrentDecompositionIndex + 1 < DecompositionQueue.Num() ) {
 			CurrentDecompositionIndex++;
 			ExecuteCurrentDecomposition();
-		}
-		else {
+		} else {
 			CurrentTask = GetNextTask();
 			ExecuteCurrentTask();
 		}
@@ -177,4 +150,27 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.EndRobotsProperties);
 		ExecuteNextExperiment();
 	}
+}
+
+void AExperiment::FinishExperiment() {
+	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
+	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
+}
+
+void AExperiment::LoadTasksFromFile() {
+	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentName, ScenarioId);
+}
+
+bool AExperiment::LoadWorldFromFile() {
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentName, ScenarioId);
+	if (WorldRoomsStruct.Num() <= 0) {
+		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
+		return false;
+	}
+
+	return true;
 }
