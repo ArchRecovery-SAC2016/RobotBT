@@ -42,6 +42,8 @@ void AExperimentRoomPreparation::BeginPlay() {
 			CleanerRobot = Cleaner;
 			CleanerRobot->OnTaskFinished.AddDynamic(this, &AExperiment::CurrentTaskFinished);
 		}
+		// saves the initial transform
+		CleanerInitialTransform = CleanerRobot->GetActorTransform();
 	}
 
 	// Load organization robot
@@ -53,6 +55,8 @@ void AExperimentRoomPreparation::BeginPlay() {
 			Organizer->OnTaskFinished.AddDynamic(this, &AExperiment::CurrentTaskFinished);
 			OrganizersTeam.Add(Organizer);
 		}
+
+		OrganizeInitialTransform.Add(Organizer->GetActorTransform());
 	}
 
 	if (CleanerRobot == nullptr ) {
@@ -149,7 +153,11 @@ void AExperimentRoomPreparation::PrepareWorld() {
 		Room->Initiate(RoomData);
 	}
 
-	// prepare the robots
+	// prepare the robots, to stay in the intial position
+	CleanerRobot->SetActorTransform(CleanerInitialTransform);
+	for (auto* Organizer : OrganizersTeam) {
+		Organizer->SetActorTransform(OrganizeInitialTransform[OrganizersTeam.IndexOfByKey(Organizer)]);
+	}
 }
 
 void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {

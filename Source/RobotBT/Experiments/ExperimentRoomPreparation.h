@@ -55,6 +55,12 @@ private:
 	bool EvaluatePreCondition(const FPredicate& Predicate);
 
 	virtual void PrepareWorld() override;
+
+	// used to save the robot initial transform. When the experiment is finished, the robot will be placed in the initial position
+	FTransform CleanerInitialTransform;
+
+	// used to save the robot initial transform. When the experiment is finished, the robot will be placed in the initial position
+	TArray<FTransform> OrganizeInitialTransform;
 };
 
 
