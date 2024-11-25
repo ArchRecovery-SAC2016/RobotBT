@@ -42,8 +42,6 @@ private:
 
 	ARoomPreparation* GetRoomByName(FString DoorName);
 
-	bool ExperimentIsOver = false;
-
 	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
 
 	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
@@ -52,7 +50,6 @@ private:
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
-	
 	virtual void StartExperiment(int32 numberOfTimes) override;
 
 	virtual void ExecuteNextExperiment() override;

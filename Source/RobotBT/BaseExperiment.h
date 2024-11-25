@@ -83,6 +83,10 @@ protected:
 	UFUNCTION()
 	virtual void ExecuteNextExperiment() {};
 
+	// Called when everything is finished
+	UFUNCTION()
+	virtual void FinishExperiment();
+
 };
 
 

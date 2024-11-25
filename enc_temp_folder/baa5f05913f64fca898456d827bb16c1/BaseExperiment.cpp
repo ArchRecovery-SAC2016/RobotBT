@@ -84,9 +84,13 @@ FTask* ABaseExperiment::GetNextTask() {
 
 
 void ABaseExperiment::ExecuteCurrentTask() {
-	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
-		ExecuteNextExperiment();
+	if (CurrentTask == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
+		return;
+	}
+
+	if (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0) {
+		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTask.Decomposition is empty!"));
 		return;
 	}
 

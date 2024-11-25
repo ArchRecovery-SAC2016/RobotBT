@@ -3,6 +3,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Util/MyCSVReader.h"
+#include "Engine/World.h"
 #include "Util/MyJsonReader.h"
 #include "Util/UtilMethods.h"
 
@@ -75,39 +76,43 @@ void ARoomPreparationExperiment::StartExperiment(int32 numberOfTimes) {
 
 	PrepareWorld();
 
-	ExperimentId = 0; // start with id 0. ExecuteNextExperiment will increment
+	ExperimentId = -1; // start with id 0. ExecuteNextExperiment will increment
 	RepeatExperiment = numberOfTimes;
-	ExperimentIsOver = true; // this will make enter tick loop and executethe next 
+
+	ExecuteNextExperiment();
 }
 
 void ARoomPreparationExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
-
-	if (ExperimentIsOver == true && ExperimentId < RepeatExperiment) {
-		ExecuteNextExperiment();
-	}
 }
 
 void ARoomPreparationExperiment::ExecuteNextExperiment() {
-	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
-	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
-	ExperimentIsOver = false; // this willa void enter tick loop
-
-	PrepareWorld();
 	ExperimentId++;
-	Experiment.ExperimentId = ExperimentId;
-	Experiment.Approach = "Baseline";
-	Experiment.ExperimentTime = 0;
-	CurrentTaskIndex = -1;
-	CurrentTask = GetNextTask();
-	ExecuteCurrentTask();
+	if (ExperimentId >= RepeatExperiment) {
+		FinishExperiment();
+		return;
+	}
 
+	// Generate Random Properties
 	if (GenerateRandomProperties) {
 		CleanerRobot->GenerateRandomProperties();
 		for (auto* Organizer : OrganizersTeam) {
 			Organizer->GenerateRandomProperties();
 		}
 	}
+
+	// Prepare World to match the world knowledge
+	PrepareWorld();
+
+	Experiment.ExperimentId = ExperimentId;
+	Experiment.Approach = "Baseline";
+	Experiment.ExperimentTime = 0;
+	CurrentTaskIndex = -1;
+
+	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
+	CurrentTask = GetNextTask();
+	ExecuteCurrentTask();
 }
 
 bool ARoomPreparationExperiment::CheckPreCondition(FTask* NewTask) {
@@ -159,7 +164,7 @@ bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicat
 FTask* ARoomPreparationExperiment::GetNextTask() {
 	FTask* NewTask = Super::GetNextTask();
 	if (NewTask == nullptr) {
-		ExperimentIsOver = true;
+		FinishExperiment();
 		return nullptr;
 	}
 
