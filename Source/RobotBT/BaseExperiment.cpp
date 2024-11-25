@@ -62,27 +62,6 @@ bool ABaseExperiment::LoadWorldFromFile(FString ExperimentFolderName, int32 Scen
 	return true;
 }
 
-FTask* ABaseExperiment::GetNextTask() {
-	CurrentTaskIndex++;
-
-	 // Check if the tasks map is not empty
-	 if (Tasks.Num() != 0 && Tasks.Num() > CurrentTaskIndex) {
-		 TArray<FString> Keys;
-		 Tasks.GetKeys(Keys);
-
-	 	FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
-
-		if (Task != nullptr) {
-			return Task;
-		}
-	 }
-
-	 UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::ERROR);
-	 FinishExperiment();
-	 return nullptr;
-}
-
-
 void ABaseExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
 		ExecuteNextExperiment();
@@ -120,6 +99,38 @@ bool ABaseExperiment::ParsePredicate(const FString& Predicate, FString& OutObjec
 void ABaseExperiment::FinishExperiment() {
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+FTask* ABaseExperiment::GetNextTask() {
+	FTask* NewTask = nullptr;
+	CurrentTaskIndex++;
+
+	// Check if the tasks map is not empty
+	if (Tasks.Num() != 0 && Tasks.Num() > CurrentTaskIndex) {
+		TArray<FString> Keys;
+		Tasks.GetKeys(Keys);
+
+		FTask* Task = Tasks.Find(Keys[CurrentTaskIndex]);
+
+		if (Task != nullptr) {
+			NewTask = Task;
+		}
+	}
+
+	if (NewTask == nullptr) {
+		UUtilMethods::ShowLogMessage(TEXT("No task found! Experiment is over"), EMessageColorEnum::INFO);
+		FinishExperiment();
+		return nullptr;
+	}
+
+	FString Message = FString::Printf(TEXT("Next Task Id: %s name: %s"), *NewTask->Id, *NewTask->Name);
+	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
+
+	if (CheckPreCondition(NewTask)) {
+		return NewTask;
+	}
+	// if fails, we try another calling recursively. Will stop when the task is null
+	return GetNextTask();
 }
 
 void ABaseExperiment::CurrentTaskFinished(FTaskResult TaskResult) {

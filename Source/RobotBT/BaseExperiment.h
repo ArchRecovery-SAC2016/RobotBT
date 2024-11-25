@@ -31,6 +31,7 @@ public:
 
 	FExperimentResult Experiment;
 
+	virtual FTask* GetNextTask();
 protected:
 	// The world knowledge loaded from file
 	TArray<FWorldRoomDataStruct> WorldRoomsStruct;
@@ -44,9 +45,6 @@ protected:
 	int32 NumberOfTask = 1;
 
 	FTask* CurrentTask;
-
-	// Get the next task to be executed and check if it is possible to execute it
-	virtual FTask* GetNextTask();
 
 	// After the task is choosed, this method will execute it, creating the decomposition
 	virtual void ExecuteCurrentTask();
@@ -86,6 +84,7 @@ protected:
 	// Called when everything is finished
 	UFUNCTION()
 	virtual void FinishExperiment();
+
 
 };
 

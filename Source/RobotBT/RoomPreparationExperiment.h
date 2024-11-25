@@ -31,9 +31,6 @@ public:
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
 private:
-
-	
-
 	/* Saves all doors in the map	*/
 	UPROPERTY()
 	TArray<ARoomPreparation*> Rooms;
@@ -57,8 +54,6 @@ private:
 	virtual bool CheckPreCondition(FTask* NewTask) override;
 
 	bool EvaluatePreCondition(const FPredicate& Predicate);
-
-	virtual FTask* GetNextTask() override;
 
 	void PrepareWorld();
 };

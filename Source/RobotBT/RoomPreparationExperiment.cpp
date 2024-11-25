@@ -160,24 +160,6 @@ bool ARoomPreparationExperiment::EvaluatePreCondition(const FPredicate& Predicat
 	return false;
 }
 
-
-FTask* ARoomPreparationExperiment::GetNextTask() {
-	FTask* NewTask = Super::GetNextTask();
-	if (NewTask == nullptr) {
-		FinishExperiment();
-		return nullptr;
-	}
-
-	FString Message = FString::Printf(TEXT("Next Task Id: %s name: %s"), *NewTask->Id, *NewTask->Name);
-	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
-	
-	if (CheckPreCondition(NewTask)) {
-		return NewTask;
-	}
-	// if fails, we try another calling recursively. The super will stop when the task is null
-	return GetNextTask();
-}
-
 void ARoomPreparationExperiment::PrepareWorld() {
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
 		ARoomPreparation* Room = GetRoomByName(RoomData.Name);
