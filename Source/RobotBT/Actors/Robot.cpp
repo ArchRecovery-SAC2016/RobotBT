@@ -73,7 +73,11 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 		return;
 	}
 
-	RobotProperties.Battery.Charge -= DischargeAmount ;
+	float SpeedFactor = RobotProperties.Speed / 100.0f; // Factor tha impact the discharge rate. The higher the speed, the higher the discharge rate
+
+	float DischargeRate = RobotProperties.Battery.DischargeRate * SpeedFactor;
+
+	RobotProperties.Battery.Charge -= DischargeRate;
 	UpdateRobotWidget();
 }
 
@@ -120,16 +124,16 @@ void ARobot::GenerateRandomProperties() {
 	RobotProperties.Color = Colors[ColorIndex];
 
 	TArray<FBattery> Batteries{
-	{ 1.0f, 0.0f, 0.01f },
-	{ 0.9f, 0.0f, 0.01f },
-	{ 0.8f, 0.0f, 0.01f },
-	{ 0.7f, 0.0f, 0.01f },
-	{ 0.6f, 0.0f, 0.01f },
-	{ 1.0f, 0.0f, 0.02f },
-	{ 1.0f, 0.0f, 0.03f },
-	{ 1.0f, 0.0f, 0.04f },
-	{ 1.0f, 0.0f, 0.05f },
-	{ 1.0f, 0.0f, 0.06f }
+	{ 1.0f, 0.0f, 0.0001f },
+	{ 0.9f, 0.0f, 0.0001f },
+	{ 0.8f, 0.0f, 0.0001f },
+	{ 0.7f, 0.0f, 0.0001f },
+	{ 0.6f, 0.0f, 0.0001f },
+	{ 1.0f, 0.0f, 0.001f },
+	{ 1.0f, 0.0f, 0.0015f },
+	{ 1.0f, 0.0f, 0.002f },
+	{ 1.0f, 0.0f, 0.0025f },
+	{ 1.0f, 0.0f, 0.003f }
 	};
 	int32 BatteryIndex = FMath::RandRange(0, Batteries.Num() - 1);
 	RobotProperties.Battery = Batteries[BatteryIndex];
