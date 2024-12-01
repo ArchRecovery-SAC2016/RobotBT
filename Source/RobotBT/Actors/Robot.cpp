@@ -25,6 +25,16 @@ void ARobot::BeginPlay() {
 	UpdateRobotWidget();
 }
 
+void ARobot::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+
+	// Salva o Transform inicial
+	if (RootComponent) {
+		EditorRobotProperties = RobotProperties;
+		EditorRobotProperties.InitialTransform = RootComponent->GetComponentTransform();
+	}
+}
+
 
 void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	FTaskResult NewTaskResult; // need to create a new

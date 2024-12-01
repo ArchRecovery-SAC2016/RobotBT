@@ -9,7 +9,7 @@ enum class EFailureReasonEnum: uint8 {
     Timeout           UMETA(DisplayName = "Timeout"),
     SkillNotFound     UMETA(DisplayName = "Skill Not Found"),
 	SkillFailure      UMETA(DisplayName = "Skill Failure"),
-    ObstacleDetected  UMETA(DisplayName = "Obstacle Detected"),
+    NavigationError   UMETA(DisplayName = "Navigation Error"),
     UnknownReason     UMETA(DisplayName = "Unknown Reason")
 };
 

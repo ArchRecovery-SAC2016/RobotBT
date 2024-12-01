@@ -60,6 +60,5 @@ struct FRobotProperties {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	float Speed = 100;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FVector InitialLocation;
+	FTransform InitialTransform;
 };

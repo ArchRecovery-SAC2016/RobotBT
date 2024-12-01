@@ -20,6 +20,7 @@ class ROBOTBT_API ARobot : public ACharacter {
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
 	UPROPERTY()
 	ARobotController* RobotController = nullptr;
@@ -72,6 +73,9 @@ public:
 	// The result of task execution
 	FTaskResult TaskResult;
 
+	// saves the editor properties
+	FRobotProperties EditorRobotProperties;
+
 protected:
 	// indicate if the robot finished the action of move to a specific door
 	UPROPERTY()
@@ -114,5 +118,6 @@ private:
 
 	UPROPERTY()
 	FText CurrentAction;
+
 
 };

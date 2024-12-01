@@ -1,0 +1,78 @@
+ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge
+0,Baseline,4.31,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+0,Baseline,4.31,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+1,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+1,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+1,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+2,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+2,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+2,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+2,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+3,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+3,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+3,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+3,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+3,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+4,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+4,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+4,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+4,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+4,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+4,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+5,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+5,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+6,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+6,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+7,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+7,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+8,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+8,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Skill Failure,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+9,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Skill Failure,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, open-door*clean-room*sanitize-robot*,100.00,0.01
+9,Baseline,0.00,clean-room,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,0.01,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Skill Failure,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,false,Low Battery,Cleaner,Black,-0.00,0.00, open-door*clean-room*sanitize-robot*,100.00,-0.00

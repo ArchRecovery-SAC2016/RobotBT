@@ -1,0 +1,296 @@
+ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge
+0,Baseline,88.41,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+0,Baseline,88.41,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+0,Baseline,88.41,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+0,Baseline,88.41,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+0,Baseline,88.41,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+0,Baseline,88.41,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+0,Baseline,88.41,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+1,Baseline,105.37,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+1,Baseline,105.37,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+1,Baseline,105.37,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+1,Baseline,105.37,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+1,Baseline,105.37,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+1,Baseline,105.37,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+1,Baseline,105.37,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+1,Baseline,105.37,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+1,Baseline,105.37,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+1,Baseline,105.37,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+1,Baseline,105.37,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+1,Baseline,105.37,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+1,Baseline,105.37,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+1,Baseline,105.37,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+1,Baseline,105.37,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+2,Baseline,33.85,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+2,Baseline,33.85,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+2,Baseline,33.85,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+2,Baseline,33.85,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+2,Baseline,33.85,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+2,Baseline,33.85,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+2,Baseline,33.85,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+2,Baseline,33.85,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+2,Baseline,33.85,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+2,Baseline,33.85,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+2,Baseline,33.85,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+2,Baseline,33.85,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+2,Baseline,33.85,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+2,Baseline,33.85,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+2,Baseline,33.85,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+2,Baseline,33.85,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+2,Baseline,33.85,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+2,Baseline,33.85,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+2,Baseline,33.85,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+3,Baseline,28.18,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+3,Baseline,28.18,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+3,Baseline,28.18,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+3,Baseline,28.18,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+3,Baseline,28.18,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+3,Baseline,28.18,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+3,Baseline,28.18,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+3,Baseline,28.18,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+3,Baseline,28.18,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+3,Baseline,28.18,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+3,Baseline,28.18,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+3,Baseline,28.18,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+3,Baseline,28.18,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+3,Baseline,28.18,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+3,Baseline,28.18,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+3,Baseline,28.18,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+3,Baseline,28.18,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+3,Baseline,28.18,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+3,Baseline,28.18,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+3,Baseline,28.18,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+3,Baseline,28.18,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+3,Baseline,28.18,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+4,Baseline,36.63,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+4,Baseline,36.63,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+4,Baseline,36.63,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+4,Baseline,36.63,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+4,Baseline,36.63,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+4,Baseline,36.63,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+4,Baseline,36.63,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+4,Baseline,36.63,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+4,Baseline,36.63,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+4,Baseline,36.63,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+4,Baseline,36.63,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+4,Baseline,36.63,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+4,Baseline,36.63,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+4,Baseline,36.63,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+4,Baseline,36.63,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+4,Baseline,36.63,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+4,Baseline,36.63,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+4,Baseline,36.63,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+4,Baseline,36.63,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+4,Baseline,36.63,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+4,Baseline,36.63,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+4,Baseline,36.63,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+4,Baseline,36.63,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+4,Baseline,36.63,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+4,Baseline,36.63,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+4,Baseline,36.63,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+5,Baseline,65.14,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+5,Baseline,65.14,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+5,Baseline,65.14,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+5,Baseline,65.14,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+5,Baseline,65.14,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+5,Baseline,65.14,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+5,Baseline,65.14,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+5,Baseline,65.14,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+5,Baseline,65.14,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+5,Baseline,65.14,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+5,Baseline,65.14,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+5,Baseline,65.14,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+5,Baseline,65.14,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+5,Baseline,65.14,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+5,Baseline,65.14,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+5,Baseline,65.14,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+5,Baseline,65.14,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+5,Baseline,65.14,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+5,Baseline,65.14,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+5,Baseline,65.14,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+5,Baseline,65.14,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+5,Baseline,65.14,open-door,0.01,0.05,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,80.00,0.89
+5,Baseline,65.14,move-furniture,0.10,0.01,RoomA,true,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.99
+5,Baseline,65.14,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Black,0.73,0.00, clean-room*sanitize-robot*open-door*,80.00,0.41
+5,Baseline,65.14,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.60,0.00, move-furniture*,120.00,0.59
+5,Baseline,65.14,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Red,0.99,0.00, move-furniture*,100.00,0.97
+5,Baseline,65.14,clean-room,0.01,0.07,RoomB,false,Low Battery,Cleaner,Black,0.41,0.00, clean-room*sanitize-robot*open-door*,80.00,-0.00
+6,Baseline,10.44,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+6,Baseline,10.44,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+6,Baseline,10.44,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+6,Baseline,10.44,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+6,Baseline,10.44,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+6,Baseline,10.44,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+6,Baseline,10.44,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+6,Baseline,10.44,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+6,Baseline,10.44,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+6,Baseline,10.44,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+6,Baseline,10.44,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+6,Baseline,10.44,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+6,Baseline,10.44,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+6,Baseline,10.44,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+6,Baseline,10.44,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+6,Baseline,10.44,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+6,Baseline,10.44,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+6,Baseline,10.44,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+6,Baseline,10.44,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+6,Baseline,10.44,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+6,Baseline,10.44,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+6,Baseline,10.44,open-door,0.01,0.05,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,80.00,0.89
+6,Baseline,10.44,move-furniture,0.10,0.01,RoomA,true,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.99
+6,Baseline,10.44,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Black,0.73,0.00, clean-room*sanitize-robot*open-door*,80.00,0.41
+6,Baseline,10.44,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.60,0.00, move-furniture*,120.00,0.59
+6,Baseline,10.44,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Red,0.99,0.00, move-furniture*,100.00,0.97
+6,Baseline,10.44,clean-room,0.01,0.07,RoomB,false,Low Battery,Cleaner,Black,0.41,0.00, clean-room*sanitize-robot*open-door*,80.00,-0.00
+6,Baseline,10.44,open-door,0.10,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.80
+6,Baseline,10.44,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+6,Baseline,10.44,sanitize-robot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Blue,0.78,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+7,Baseline,172.28,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+7,Baseline,172.28,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+7,Baseline,172.28,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+7,Baseline,172.28,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+7,Baseline,172.28,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+7,Baseline,172.28,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+7,Baseline,172.28,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+7,Baseline,172.28,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+7,Baseline,172.28,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+7,Baseline,172.28,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+7,Baseline,172.28,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+7,Baseline,172.28,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+7,Baseline,172.28,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+7,Baseline,172.28,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+7,Baseline,172.28,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+7,Baseline,172.28,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+7,Baseline,172.28,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+7,Baseline,172.28,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+7,Baseline,172.28,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+7,Baseline,172.28,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+7,Baseline,172.28,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+7,Baseline,172.28,open-door,0.01,0.05,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,80.00,0.89
+7,Baseline,172.28,move-furniture,0.10,0.01,RoomA,true,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.99
+7,Baseline,172.28,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Black,0.73,0.00, clean-room*sanitize-robot*open-door*,80.00,0.41
+7,Baseline,172.28,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.60,0.00, move-furniture*,120.00,0.59
+7,Baseline,172.28,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Red,0.99,0.00, move-furniture*,100.00,0.97
+7,Baseline,172.28,clean-room,0.01,0.07,RoomB,false,Low Battery,Cleaner,Black,0.41,0.00, clean-room*sanitize-robot*open-door*,80.00,-0.00
+7,Baseline,172.28,open-door,0.10,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.80
+7,Baseline,172.28,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+7,Baseline,172.28,sanitize-robot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Blue,0.78,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+7,Baseline,172.28,open-door,0.01,0.12,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.60
+7,Baseline,172.28,clean-room,0.01,0.03,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.58
+7,Baseline,172.28,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.58,0.00, clean-room*sanitize-robot*open-door*,80.00,0.55
+7,Baseline,172.28,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,150.00,0.70
+7,Baseline,172.28,move-furniture,0.10,0.01,RoomA,true,None,Organizer2,Blue,1.00,0.00, move-furniture*,110.00,0.80
+7,Baseline,172.28,clean-room,0.01,0.03,RoomB,true,None,Cleaner,Yellow,0.55,0.00, clean-room*sanitize-robot*open-door*,80.00,0.52
+7,Baseline,172.28,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.52,0.00, clean-room*sanitize-robot*open-door*,80.00,0.49
+7,Baseline,172.28,move-furniture,0.01,0.07,RoomB,true,None,Organizer1,Green,0.70,0.00, move-furniture*,150.00,0.33
+7,Baseline,172.28,move-furniture,0.10,0.01,RoomB,true,None,Organizer2,Blue,0.80,0.00, move-furniture*,110.00,0.55
+8,Baseline,32.46,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+8,Baseline,32.46,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+8,Baseline,32.46,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+8,Baseline,32.46,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+8,Baseline,32.46,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+8,Baseline,32.46,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+8,Baseline,32.46,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+8,Baseline,32.46,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+8,Baseline,32.46,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+8,Baseline,32.46,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+8,Baseline,32.46,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+8,Baseline,32.46,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+8,Baseline,32.46,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+8,Baseline,32.46,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+8,Baseline,32.46,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+8,Baseline,32.46,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+8,Baseline,32.46,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+8,Baseline,32.46,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+8,Baseline,32.46,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+8,Baseline,32.46,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+8,Baseline,32.46,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+8,Baseline,32.46,open-door,0.01,0.05,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,80.00,0.89
+8,Baseline,32.46,move-furniture,0.10,0.01,RoomA,true,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.99
+8,Baseline,32.46,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Black,0.73,0.00, clean-room*sanitize-robot*open-door*,80.00,0.41
+8,Baseline,32.46,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.60,0.00, move-furniture*,120.00,0.59
+8,Baseline,32.46,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Red,0.99,0.00, move-furniture*,100.00,0.97
+8,Baseline,32.46,clean-room,0.01,0.07,RoomB,false,Low Battery,Cleaner,Black,0.41,0.00, clean-room*sanitize-robot*open-door*,80.00,-0.00
+8,Baseline,32.46,open-door,0.10,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.80
+8,Baseline,32.46,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+8,Baseline,32.46,sanitize-robot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Blue,0.78,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+8,Baseline,32.46,open-door,0.01,0.12,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.60
+8,Baseline,32.46,clean-room,0.01,0.03,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.58
+8,Baseline,32.46,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.58,0.00, clean-room*sanitize-robot*open-door*,80.00,0.55
+8,Baseline,32.46,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,150.00,0.70
+8,Baseline,32.46,move-furniture,0.10,0.01,RoomA,true,None,Organizer2,Blue,1.00,0.00, move-furniture*,110.00,0.80
+8,Baseline,32.46,clean-room,0.01,0.03,RoomB,true,None,Cleaner,Yellow,0.55,0.00, clean-room*sanitize-robot*open-door*,80.00,0.52
+8,Baseline,32.46,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.52,0.00, clean-room*sanitize-robot*open-door*,80.00,0.49
+8,Baseline,32.46,move-furniture,0.01,0.07,RoomB,true,None,Organizer1,Green,0.70,0.00, move-furniture*,150.00,0.33
+8,Baseline,32.46,move-furniture,0.10,0.01,RoomB,true,None,Organizer2,Blue,0.80,0.00, move-furniture*,110.00,0.55
+8,Baseline,32.46,open-door,0.06,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,100.00,0.87
+8,Baseline,32.46,clean-room,0.01,0.09,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,100.00,0.25
+8,Baseline,32.46,sanitize-robot,0.01,0.03,SanitizationRoom,false,Low Battery,Cleaner,Black,0.25,0.00, clean-room*sanitize-robot*open-door*,100.00,-0.00
+9,Baseline,0.00,open-door,0.02,0.01,RoomA,true,None,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*open-door*,150.00,0.99
+9,Baseline,0.00,clean-room,0.01,0.12,RoomA,true,None,Cleaner,Blue,0.99,0.00, clean-room*sanitize-robot*open-door*,150.00,0.79
+9,Baseline,0.00,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Blue,0.79,0.00, clean-room*sanitize-robot*open-door*,150.00,0.54
+9,Baseline,0.00,move-furniture,0.01,0.01,RoomA,true,None,Organizer2,Black,1.00,0.00, move-furniture*,150.00,0.98
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,110.00,0.52
+9,Baseline,0.00,clean-room,0.01,0.12,RoomB,true,None,Cleaner,Blue,0.54,0.00, clean-room*sanitize-robot*open-door*,150.00,0.28
+9,Baseline,0.00,sanitize-robot,0.01,0.01,SanitizationRoom,false,Low Battery,Cleaner,Blue,0.28,0.00, clean-room*sanitize-robot*open-door*,150.00,-0.00
+9,Baseline,0.00,open-door,0.01,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+9,Baseline,0.00,clean-room,0.10,0.01,RoomA,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.60
+9,Baseline,0.00,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.60,0.00, clean-room*sanitize-robot*open-door*,100.00,0.57
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomA,true,None,Organizer1,Blue,0.80,0.00, move-furniture*,120.00,0.78
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.70,0.00, move-furniture*,120.00,0.68
+9,Baseline,0.00,clean-room,0.10,0.01,RoomB,true,None,Cleaner,Green,0.57,0.00, clean-room*sanitize-robot*open-door*,100.00,0.54
+9,Baseline,0.00,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Green,0.54,0.00, clean-room*sanitize-robot*open-door*,100.00,0.51
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.78
+9,Baseline,0.00,open-door,0.01,0.12,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,1.00
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomB,true,Skill Failure,Organizer1,Blue,0.78,0.00, move-furniture*,120.00,0.38
+9,Baseline,0.00,sanitize-robot,0.01,0.01,SanitizationRoom,true,None,Cleaner,Black,0.98,0.00, clean-room*sanitize-robot*open-door*,120.00,0.97
+9,Baseline,0.00,move-furniture,0.01,0.03,RoomA,false,Low Battery,Organizer1,Black,0.38,0.00, move-furniture*,110.00,-0.00
+9,Baseline,0.00,open-door,0.03,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,120.00,0.87
+9,Baseline,0.00,clean-room,0.02,0.01,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,120.00,0.27
+9,Baseline,0.00,sanitize-robot,0.01,0.07,SanitizationRoom,false,Low Battery,Cleaner,Black,0.27,0.00, clean-room*sanitize-robot*open-door*,120.00,-0.00
+9,Baseline,0.00,open-door,0.10,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.90
+9,Baseline,0.00,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Green,0.90,0.00, clean-room*sanitize-robot*open-door*,110.00,0.88
+9,Baseline,0.00,sanitize-robot,0.01,0.03,SanitizationRoom,true,None,Cleaner,Green,0.88,0.00, clean-room*sanitize-robot*open-door*,110.00,0.86
+9,Baseline,0.00,move-furniture,0.10,0.01,RoomA,false,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.60
+9,Baseline,0.00,open-door,0.01,0.05,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,80.00,0.89
+9,Baseline,0.00,move-furniture,0.10,0.01,RoomA,true,Skill Failure,Organizer1,Yellow,0.60,0.00, move-furniture*,100.00,0.99
+9,Baseline,0.00,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Black,0.73,0.00, clean-room*sanitize-robot*open-door*,80.00,0.41
+9,Baseline,0.00,move-furniture,0.03,0.01,RoomA,true,None,Organizer2,Red,0.60,0.00, move-furniture*,120.00,0.59
+9,Baseline,0.00,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Red,0.99,0.00, move-furniture*,100.00,0.97
+9,Baseline,0.00,clean-room,0.01,0.07,RoomB,false,Low Battery,Cleaner,Black,0.41,0.00, clean-room*sanitize-robot*open-door*,80.00,-0.00
+9,Baseline,0.00,open-door,0.10,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.80
+9,Baseline,0.00,clean-room,0.01,0.01,RoomA,true,None,Cleaner,Blue,0.80,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+9,Baseline,0.00,sanitize-robot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Blue,0.78,0.00, clean-room*sanitize-robot*open-door*,150.00,0.78
+9,Baseline,0.00,open-door,0.01,0.12,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.60
+9,Baseline,0.00,clean-room,0.01,0.03,RoomA,true,None,Cleaner,Yellow,0.60,0.00, clean-room*sanitize-robot*open-door*,80.00,0.58
+9,Baseline,0.00,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.58,0.00, clean-room*sanitize-robot*open-door*,80.00,0.55
+9,Baseline,0.00,move-furniture,0.01,0.07,RoomA,true,None,Organizer1,Green,1.00,0.00, move-furniture*,150.00,0.70
+9,Baseline,0.00,move-furniture,0.10,0.01,RoomA,true,None,Organizer2,Blue,1.00,0.00, move-furniture*,110.00,0.80
+9,Baseline,0.00,clean-room,0.01,0.03,RoomB,true,None,Cleaner,Yellow,0.55,0.00, clean-room*sanitize-robot*open-door*,80.00,0.52
+9,Baseline,0.00,sanitize-robot,0.01,0.07,SanitizationRoom,true,None,Cleaner,Yellow,0.52,0.00, clean-room*sanitize-robot*open-door*,80.00,0.49
+9,Baseline,0.00,move-furniture,0.01,0.07,RoomB,true,None,Organizer1,Green,0.70,0.00, move-furniture*,150.00,0.33
+9,Baseline,0.00,move-furniture,0.10,0.01,RoomB,true,None,Organizer2,Blue,0.80,0.00, move-furniture*,110.00,0.55
+9,Baseline,0.00,open-door,0.06,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, clean-room*sanitize-robot*open-door*,100.00,0.87
+9,Baseline,0.00,clean-room,0.01,0.09,RoomA,true,None,Cleaner,Black,0.87,0.00, clean-room*sanitize-robot*open-door*,100.00,0.25
+9,Baseline,0.00,sanitize-robot,0.01,0.03,SanitizationRoom,false,Low Battery,Cleaner,Black,0.25,0.00, clean-room*sanitize-robot*open-door*,100.00,-0.00
+9,Baseline,0.00,open-door,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Blue,1.00,0.00, clean-room*sanitize-robot*none*,110.00,1.00
