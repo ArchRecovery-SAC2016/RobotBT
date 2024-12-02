@@ -35,7 +35,6 @@ void ARobot::PostInitializeComponents() {
 	}
 }
 
-
 void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	FTaskResult NewTaskResult; // need to create a new
 	NewTaskResult.Location = Room->Name;
@@ -43,6 +42,7 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
 
 	TaskResult = NewTaskResult;
+
 
 	FSkill SkillSelected;
 
@@ -71,10 +71,18 @@ void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	float RandomValue = FMath::FRand();
 	if (RandomValue < SkillSelected.ChanceToFail) {
 		TaskFailed(EFailureReasonEnum::SkillFailure);
+		return;
 	}
 
 	// Chama o método ConsumeBattery com o definido na skill
 	ConsumeBattery(SkillSelected.BatteryConsumeDischargeRate);
+	IsAtRoomLocation = false;
+	TaskAllocated = SkillEnum;
+}
+
+void ARobot::GoIdle() {
+	CurrentAction = FText::FromString("Idle");
+	IsMoving = false;
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
@@ -91,22 +99,15 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 	UpdateRobotWidget();
 }
 
-bool ARobot::MoveToRoomLocation(float DeltaTime) {
-	if (GetRoom() == nullptr) return nullptr;
-		
-	IsMoving = true;
-	FVector Location = GetRoom()->GetDoorEntrance();
-	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(Location, DeltaTime);
-	if (IsAtRoomLocation) {
-		IsMoving = false;
-	}
+const FVector ARobot::GetRoomEntrance() {
+	if (RoomInstace == nullptr) return FVector(0,0,0);
 
-	return IsAtRoomLocation;
+	return RoomInstace->GetDoorEntrance();
 }
 
-bool ARobot::MoveAlongPath(float DeltaTime) {
+bool ARobot::MoveAlongPath() {
 	IsMoving = true;
-	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), 0, GetRoomPath()->GetNumberOfSplinePoints() -1, DeltaTime);
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), 0, GetRoomPath()->GetNumberOfSplinePoints() -1);
 	if (IsFinishedMovingAlongPath) {
 		IsMoving = false;
 	}
@@ -156,10 +157,19 @@ void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {
 	OnTaskFinished.Broadcast(TaskResult);
 }
 
-void ARobot::TaskFinishedWithSuccess() {
+void ARobot::TaskFinished() {
+	IsAtRoomLocation = false;
+	IsFinishedMovingAlongPath = false;
+	TaskAllocated = ESkillEnum::NONE;
 	TaskResult.SuccessResult = true;
 	TaskResult.EndRobotsProperties = RobotProperties;
 	OnTaskFinished.Broadcast(TaskResult);
+	GoIdle();
+}
+
+bool ARobot::TaskExecution() {
+
+	return true;
 }
 
 USplineComponent* ARobot::GetRoomPath() {

@@ -28,7 +28,7 @@ public:
 	void RotateToFaceActor(const AActor* ActorSelected);
 
 	UFUNCTION()
-	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime);
+	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex);
 
 	UPROPERTY()
 	ARobot* ControlledPawn;

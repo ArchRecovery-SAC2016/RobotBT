@@ -22,9 +22,6 @@ public:
 	UPROPERTY(EditInstanceOnly, Category="Robot")
 	int32 PathIndex = 1;
 
-	UFUNCTION()
-	void TaskFinished(FString TaskMessage);
-
 	// override the GetRoomPath, because we don't want to pick the main path of the room
 	virtual USplineComponent* GetRoomPath() override;
 
@@ -39,6 +36,8 @@ public:
 	// Will generate randrom properties for the robot
 	virtual void GenerateRandomProperties() override;
 
+	virtual bool TaskExecution() override;
+
 private:
 	// we need this because the room organize use 2 paths 
 	UPROPERTY()
@@ -46,9 +45,5 @@ private:
 
 	UPROPERTY()
 	bool IsOrganazing = false;
-
-	UFUNCTION()
-	void StartOrganizeTask(ARoomPreparation* Room);
-
 };
 

@@ -13,16 +13,6 @@ struct FCleanerProperties {
 	// Will be used to check if the robot is sanitized
 	UPROPERTY(EditInstanceOnly, Category = "Robot")
 	bool IsSanitized = false;
-
-	UPROPERTY()
-	bool IsSanitizing = false;
-
-	UPROPERTY()
-	bool IsOpeningDoor = false;
-
-	UPROPERTY()
-	bool IsCleaning = false;
-
 };
 
 UCLASS()
@@ -46,20 +36,6 @@ public:
 
 	bool IsSanitized() { return CleanerProperties.IsSanitized; }
 
-private:
-	UFUNCTION()
-	void StartSanitizationTask(ARoomPreparation* Room);
-
-	UFUNCTION()
-	void StartOpenDoorTask(ARoomPreparation* Room);
-
-	UFUNCTION()
-	void StartCleaninTask(ARoomPreparation* Room);
-
-	UFUNCTION()
-	void TaskFinished(FString TaskMessage);
-
-
-	
+	virtual bool TaskExecution() override;
 
 };

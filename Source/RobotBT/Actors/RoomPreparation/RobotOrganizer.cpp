@@ -1,6 +1,6 @@
 #include "RobotOrganizer.h"
 
-#include "RobotBT/Enum/MessageColorEnum.h"
+#include "RobotCleaner.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotOrganizer::ARobotOrganizer() {
@@ -13,37 +13,17 @@ void ARobotOrganizer::BeginPlay() {
 
 void ARobotOrganizer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+}
 
-	if (IsOrganazing) {
-		// first move to room location
-		if (IsAtRoomLocation == false) {
-			UpdateCurrentActionText("move-to-location");
-			MoveToRoomLocation(DeltaTime);
-		} else {
-			if (IsFinishedMovingAlongPath == false) {
-				UpdateCurrentActionText("move-furniture");
-				MoveAlongPath(DeltaTime);
-			} else {
-				TaskFinished("Task move-furniture Finished");
-				UpdateCurrentActionText("idle");
-			}
-		}
+bool ARobotOrganizer::TaskExecution() {
+	Super::TaskExecution();
+
+	// sanitize and cleaning, just need to move along path
+	if (TaskAllocated == ESkillEnum::MOVE_FURNITURE) {
+		return MoveAlongPath();
 	}
-}
 
-void ARobotOrganizer::StartOrganizeTask(ARoomPreparation* Room) {
-	if (Room == nullptr) return;
-	SetRoom(Room);
-	IsAtRoomLocation = false;
-	IsOrganazing = true;
-}
-
-void ARobotOrganizer::TaskFinished(FString TaskMessage) {
-	IsOrganazing = false;
-	IsAtRoomLocation = false;
-	IsFinishedMovingAlongPath = false;
-	TaskFinishedWithSuccess();
-	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
+	return false;
 }
 
 USplineComponent* ARobotOrganizer::GetRoomPath() {
@@ -71,9 +51,7 @@ void ARobotOrganizer::SetRoom(ARoom* NewRoomInstance) {
 void ARobotOrganizer::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::ExecuteTask(SkillEnum, Room);
 
-	if (SkillEnum == ESkillEnum::MOVE_FURNITURE) {
-		StartOrganizeTask(Cast<ARoomPreparation>(Room));
-	}
+	SetRoom(Room);
 }
 
 void ARobotOrganizer::GenerateRandomProperties() {

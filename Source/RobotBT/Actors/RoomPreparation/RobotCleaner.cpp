@@ -2,7 +2,6 @@
 
 #include "RobotOrganizer.h"
 #include "RoomPreparation.h"
-#include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotCleaner::ARobotCleaner() {
@@ -16,91 +15,28 @@ void ARobotCleaner::BeginPlay() {
 void ARobotCleaner::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (CleanerProperties.IsSanitizing) {
-		// first move to room location
-		if (IsAtRoomLocation == false) {
-			UpdateCurrentActionText("move-to-location");
-			MoveToRoomLocation(DeltaTime);
-		} else {
-			if (IsFinishedMovingAlongPath == false) {
-				UpdateCurrentActionText("sanitize-robot");
-				MoveAlongPath(DeltaTime);
-			} else {
-				CleanerProperties.IsSanitized = false;
-				TaskFinished("Task sanitize-robot Finished");
-				UpdateCurrentActionText("idle");
-			}
-		}
+}
+
+bool ARobotCleaner::TaskExecution() {
+	Super::TaskExecution();
+
+	// sanitize and cleaning, just need to move along path
+	if (TaskAllocated == ESkillEnum::SANITIZE_ROBOT || TaskAllocated == ESkillEnum::CLEAN_ROOM) {
+		// will return true when finished
+		return MoveAlongPath();
 	}
 
-	if (CleanerProperties.IsOpeningDoor) {
-		// first move to room location
-		if (IsAtRoomLocation == false) {
-			UpdateCurrentActionText("move-to-location");
-			MoveToRoomLocation(DeltaTime);
-		} else {
-			UpdateCurrentActionText("open-door");
-			GetRoom()->OpenDoor(true);
-			TaskFinished("Task open-door Finished");
-		}
+	// open door, just open
+	if (TaskAllocated == ESkillEnum::OPEN_DOOR) {
+		GetRoom()->OpenDoor(true);
+		return true;
+
 	}
 
-	if (CleanerProperties.IsCleaning) {
-		// first move to room location
-		if (IsAtRoomLocation == false) {
-			UpdateCurrentActionText("move-to-location");
-			MoveToRoomLocation(DeltaTime);
-		} else {
-			if (IsFinishedMovingAlongPath == false) {
-				UpdateCurrentActionText("clean-room ");
-				MoveAlongPath(DeltaTime);
-			} else {
-				TaskFinished("Task clean-room Finished");
-				UpdateCurrentActionText("idle");
-			}
-		}
-	}
+	return false;
 }
 
-void ARobotCleaner::StartSanitizationTask(ARoomPreparation* Room) {
-	if (Room == nullptr) return;
-
-	CleanerProperties.IsSanitizing = true;
-
-	// primeira coisa que faco eh preparar o robo para a tarefa
-	SetRoom(Room);
-	IsAtRoomLocation = false;
-}
-
-void ARobotCleaner::StartOpenDoorTask(ARoomPreparation* Room) {
-	if (Room == nullptr) return;
-
-	CleanerProperties.IsOpeningDoor = true;
-
-	SetRoom(Room);
-	IsAtRoomLocation = false;
-}
-
-void ARobotCleaner::StartCleaninTask(ARoomPreparation* Room) {
-	if (Room == nullptr) return;
-	CleanerProperties.IsSanitized = false;
-	CleanerProperties.IsCleaning = true;
-
-	SetRoom(Room);
-	IsAtRoomLocation = false; // TODO: create a method to check if the robot is at the location, because if the robot is already at the location, it will not move
-}
-
-void ARobotCleaner::TaskFinished(FString TaskMessage) {
-	CleanerProperties.IsSanitizing = false;
-	IsAtRoomLocation = false;
-	CleanerProperties.IsCleaning = false;
-	CleanerProperties.IsOpeningDoor = false;
-	IsFinishedMovingAlongPath = false;
-
-	TaskFinishedWithSuccess();
-	UUtilMethods::ShowLogMessage(TaskMessage, EMessageColorEnum::INFO);
-}
-
+// TODO: CHANGE THIS TO START_TASK!!!
 void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::ExecuteTask(SkillEnum, Room);
 
@@ -109,16 +45,9 @@ void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
 		UE_LOG(LogTemp, Error, TEXT("Room not found!"));
 		return;
 	}
-
-	if (SkillEnum == ESkillEnum::CLEAN_ROOM) {
-		StartCleaninTask(Cast<ARoomPreparation>(Room));
-	} else if (SkillEnum == ESkillEnum::OPEN_DOOR) {
-		StartOpenDoorTask(Cast<ARoomPreparation>(Room));
-	} else if (SkillEnum == ESkillEnum::SANITIZE_ROBOT) {
-		StartSanitizationTask(Cast<ARoomPreparation>(Room));
-	} else {
-		UUtilMethods::PrintFailureMessage(EFailureReasonEnum::UnknownReason, RobotProperties);
-	}
+	
+	SetRoom(Room);
+	
 }
 
 void ARobotCleaner::GenerateRandomProperties() {

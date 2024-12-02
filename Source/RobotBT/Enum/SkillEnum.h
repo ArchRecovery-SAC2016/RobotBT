@@ -5,11 +5,11 @@
 
 UENUM(BlueprintType)
 enum class ESkillEnum: uint8 {
-	NONE			UMETA(DisplayName = "none"),
-	MOVE_FURNITURE	UMETA(DisplayName = "move-furniture"),
-	OPEN_DOOR		UMETA(DisplayName = "open-door"),
-	CLEAN_ROOM 		UMETA(DisplayName = "clean-room"),
-	SANITIZE_ROBOT	UMETA(DisplayName = "sanitize-robot"),
+	NONE			    UMETA(DisplayName = "none"),
+	MOVE_FURNITURE	    UMETA(DisplayName = "MoveFurniture"),
+	OPEN_DOOR		    UMETA(DisplayName = "OpenDoor"),
+	CLEAN_ROOM 		    UMETA(DisplayName = "CleanRoom"),
+	SANITIZE_ROBOT	    UMETA(DisplayName = "SanitizeRobot"),
 };
 
 class ESkillEnumHelper {

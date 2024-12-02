@@ -48,7 +48,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	virtual FVector GetDoorEntrance();
 
 	UFUNCTION()

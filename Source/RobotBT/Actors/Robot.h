@@ -42,6 +42,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	FRobotProperties RobotProperties;
 
+	// indicate if the robot finished the action of move to a specific door
+	UPROPERTY(BlueprintReadWrite)
+	bool IsAtRoomLocation = false;
+
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	bool ShowWidget = true;
 
@@ -52,7 +56,7 @@ public:
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	virtual ARoom* GetRoom();
 
 	UFUNCTION()
@@ -77,19 +81,16 @@ public:
 	FRobotProperties EditorRobotProperties;
 
 protected:
-	// indicate if the robot finished the action of move to a specific door
-	UPROPERTY()
-	bool IsAtRoomLocation = false;
 
 	// indicate if the robot move all path
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	bool IsFinishedMovingAlongPath = false;
 
-	UFUNCTION()
-	virtual bool MoveToRoomLocation(float DeltaTime);
+	UFUNCTION(BlueprintPure)
+	virtual const FVector GetRoomEntrance();
 
-	UFUNCTION()
-	virtual bool MoveAlongPath(float DeltaTime);
+	UFUNCTION(BlueprintCallable)
+	virtual bool MoveAlongPath();
 
 	UFUNCTION()
 	void UpdateCurrentActionText(FString NewAction);
@@ -101,8 +102,17 @@ protected:
 	UFUNCTION()
 	virtual  void TaskFailed(EFailureReasonEnum FailureReason);
 
-	UFUNCTION()
-	virtual void TaskFinishedWithSuccess();
+	UFUNCTION(BlueprintCallable)
+	virtual void TaskFinished();
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool TaskExecution();
+
+	UPROPERTY(BlueprintReadOnly)
+	ESkillEnum TaskAllocated = ESkillEnum::NONE;
+
+	UFUNCTION(BlueprintCallable)
+	void GoIdle();
 
 private:
 	UFUNCTION()
@@ -110,7 +120,7 @@ private:
 
 	// saves a instance of the current spline path
 	UPROPERTY()
-	ARoom* RoomInstace;
+	ARoom* RoomInstace = nullptr;
 
 	// saves a instance of the Robot Widget
 	UPROPERTY()

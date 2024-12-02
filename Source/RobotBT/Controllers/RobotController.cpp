@@ -92,7 +92,7 @@ bool ARobotController::MoveToNewLocation(const FVector& NewPositionVector, float
 }
 
 
-bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex, float DeltaTime) {
+bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex) {
 	if (SplineComponent == nullptr || ControlledPawn == nullptr) {
 		return false;
 	}
@@ -121,7 +121,7 @@ bool ARobotController::MoveAlongSpline(USplineComponent* SplineComponent, int32 
 	}
 
 	// Calcula a distância a ser percorrida neste frame
-	float TargetDistance = FMath::Min(ControlledPawn->RobotProperties.Speed * DeltaTime, EndDistance - CurrentDistance);
+	float TargetDistance = FMath::Min(ControlledPawn->RobotProperties.Speed * GetWorld()->GetDeltaSeconds(), EndDistance - CurrentDistance);
 	CurrentDistance += TargetDistance;
 
 	// Obtém a nova posição (mantendo a Z atual) e rotação (ignorando Z)
