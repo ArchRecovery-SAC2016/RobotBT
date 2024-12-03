@@ -22,9 +22,6 @@ public:
 	bool MoveToActorLocation(AActor* MoveToLocation);
 
 	UFUNCTION()
-	bool MoveToNewLocation(const FVector& Vector, float DeltaTime);
-
-	UFUNCTION()
 	void RotateToFaceActor(const AActor* ActorSelected);
 
 	UFUNCTION()

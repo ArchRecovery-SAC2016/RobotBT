@@ -72,7 +72,7 @@ public:
 	UFUNCTION()
 	URobotWidget* GetRobotWidget();
 
-	virtual void ExecuteTask(ESkillEnum SkillType, ARoom* Room);
+	virtual void StartNewTask(ESkillEnum SkillType, ARoom* Room);
 
 	// The result of task execution
 	FTaskResult TaskResult;

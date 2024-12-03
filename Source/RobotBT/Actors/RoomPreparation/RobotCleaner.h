@@ -29,7 +29,7 @@ public:
 
 	FCleanerProperties CleanerProperties;
 
-	virtual void ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) override;
+	virtual void StartNewTask(ESkillEnum SkillEnum, ARoom* Room) override;
 
 	// Will generate randrom properties for the robot
 	virtual void GenerateRandomProperties() override;
@@ -38,4 +38,8 @@ public:
 
 	virtual bool TaskExecution() override;
 
+private:
+	// we need this because the room organize use 2 paths 
+	UPROPERTY()
+	ARoomPreparation* RoomPreparation = nullptr;
 };

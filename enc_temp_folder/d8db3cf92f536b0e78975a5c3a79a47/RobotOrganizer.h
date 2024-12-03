@@ -25,6 +25,9 @@ public:
 	// override the GetRoomPath, because we don't want to pick the main path of the room
 	virtual USplineComponent* GetRoomPath() override;
 
+	// we need this to garantee that the NewRoomInstance is the type of ARoomPreparation
+	virtual void SetRoom(ARoom* NewRoomInstance) override;
+
 	virtual void StartNewTask(ESkillEnum SkillEnum, ARoom* Room) override;
 
 	// Will generate randrom properties for the robot

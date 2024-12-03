@@ -36,6 +36,14 @@ USplineComponent* ARobotOrganizer::GetRoomPath() {
 	return PreparationRoom->GetOrganizePath(PathIndex);
 }
 
+void ARobotOrganizer::SetRoom(ARoom* NewRoomInstance) {
+	if (ARoomPreparation* PrepRoom = Cast<ARoomPreparation>(NewRoomInstance)) {
+		RoomPreparation = PrepRoom;
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("SetRoom failed: RoomInstance is not an ARoomPreparation."));
+	}
+}
+
 void ARobotOrganizer::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::StartNewTask(SkillEnum, Room);
 

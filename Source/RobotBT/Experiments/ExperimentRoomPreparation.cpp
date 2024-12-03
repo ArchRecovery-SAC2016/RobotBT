@@ -196,22 +196,22 @@ ARoomPreparation* AExperimentRoomPreparation::GetRoomByName(FString DoorName) {
 
 void AExperimentRoomPreparation::ExecuteClean(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
-	CleanerRobot->ExecuteTask(ESkillEnum::CLEAN_ROOM, Room);
+	CleanerRobot->StartNewTask(ESkillEnum::CLEAN_ROOM, Room);
 }
 
 void AExperimentRoomPreparation::ExecuteOpenDoor(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
-	CleanerRobot->ExecuteTask(ESkillEnum::OPEN_DOOR, Room);
+	CleanerRobot->StartNewTask(ESkillEnum::OPEN_DOOR, Room);
 }
 
 void AExperimentRoomPreparation::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
-	CleanerRobot->ExecuteTask(ESkillEnum::SANITIZE_ROBOT, Room);
+	CleanerRobot->StartNewTask(ESkillEnum::SANITIZE_ROBOT, Room);
 }
 
 void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 2;
 	for (ARobotOrganizer* Organizer : OrganizersTeam) {
-		Organizer->ExecuteTask(ESkillEnum::MOVE_FURNITURE, Room);
+		Organizer->StartNewTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }

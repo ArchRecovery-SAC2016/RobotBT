@@ -35,7 +35,7 @@ void ARobot::PostInitializeComponents() {
 	}
 }
 
-void ARobot::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
+void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	FTaskResult NewTaskResult; // need to create a new
 	NewTaskResult.Location = Room->Name;
 	NewTaskResult.InitialRobotsProperties = RobotProperties;

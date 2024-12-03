@@ -37,8 +37,8 @@ bool ARobotCleaner::TaskExecution() {
 }
 
 // TODO: CHANGE THIS TO START_TASK!!!
-void ARobotCleaner::ExecuteTask(ESkillEnum SkillEnum, ARoom* Room) {
-	Super::ExecuteTask(SkillEnum, Room);
+void ARobotCleaner::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
+	Super::StartNewTask(SkillEnum, Room);
 
 	ARoomPreparation* RoomInstance = Cast<ARoomPreparation>(Room);
 	if (RoomInstance == nullptr) {
