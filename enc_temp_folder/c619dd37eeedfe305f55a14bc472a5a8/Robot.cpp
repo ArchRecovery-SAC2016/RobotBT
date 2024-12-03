@@ -36,14 +36,13 @@ void ARobot::PostInitializeComponents() {
 }
 
 void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
-	CurrentAction = FText::FromString(ESkillEnumHelper::GetDisplayName(SkillEnum));
-
 	FTaskResult NewTaskResult; // need to create a new
 	NewTaskResult.Location = Room->Name;
 	NewTaskResult.InitialRobotsProperties = RobotProperties;
 	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
 
 	TaskResult = NewTaskResult;
+
 
 	FSkill SkillSelected;
 
