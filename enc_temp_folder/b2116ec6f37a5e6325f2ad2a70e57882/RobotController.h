@@ -27,8 +27,6 @@ public:
 	UFUNCTION()
 	bool MoveAlongSpline(USplineComponent* SplineComponent, int32 StartIndex, int32 EndIndex);
 
-	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
-
 	UPROPERTY()
 	ARobot* ControlledPawn;
 

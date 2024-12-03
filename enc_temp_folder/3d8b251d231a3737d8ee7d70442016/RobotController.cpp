@@ -50,6 +50,7 @@ void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	ControlledPawn->SetActorRotation(FRotator(NewRotation.Pitch, NewRotation.Yaw, 0.0f));
 }
 
+
 bool ARobotController::MoveAlongSpline(USplineComponent* Spline, int32 StartIndex, int32 EndIndex) {
     if (!Spline || !ControlledPawn) {
         UE_LOG(LogTemp, Warning, TEXT("SplineComponent or ControlledPawn is null!"));
@@ -64,44 +65,31 @@ bool ARobotController::MoveAlongSpline(USplineComponent* Spline, int32 StartInde
 
     // Verificar se já alcançamos o índice final
     if (CurrentPathIndex > EndIndex) {
-        CurrentPathIndex = 0;
-        return true; // Movimento completo
+        return true;
     }
 
     // Obter a localização do ponto atual na spline
     FVector NewLocation = Spline->GetLocationAtSplinePoint(CurrentPathIndex, ESplineCoordinateSpace::World);
-    FRotator TargetRotation = Spline->GetRotationAtSplinePoint(CurrentPathIndex, ESplineCoordinateSpace::World);
-    
 
-    // Configurar um resultado para o movimento
-    FAIMoveRequest MoveRequest;
-    MoveRequest.SetGoalLocation(NewLocation);
-    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
-    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
+    // Mover o pawn para a nova localização
+    UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, NewLocation);
 
-    FNavPathSharedPtr NavPath;
-    EPathFollowingRequestResult::Type MoveResult = MoveTo(MoveRequest, &NavPath);
+    // Verificar se o pawn alcançou a localização
+    float DistanceToTarget = FVector::Dist(ControlledPawn->GetActorLocation(), NewLocation);
 
-    if (MoveResult == EPathFollowingRequestResult::AlreadyAtGoal) {
-        // Se já está no destino, incrementar imediatamente
+    // Considera que alcançou o ponto se a distância for menor que um limiar
+    const float ReachThreshold = 100.0f; // Tolerância para considerar que chegou
+    if (DistanceToTarget <= ReachThreshold) {
+        // Avançar para o próximo índice
         CurrentPathIndex++;
+
+        // Se atingiu o último índice, retornar true
+        if (CurrentPathIndex > EndIndex) {
+            return true;
+        }
     }
 
-    // Aplicar rotação suave enquanto o movimento está ocorrendo
-    FRotator CurrentRotation = ControlledPawn->GetActorRotation();
-    FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 2.0f); // Velocidade de interpolação
-    ControlledPawn->SetActorRotation(SmoothedRotation);
-
-    // Retornar false até que o movimento esteja completo
+    // Ainda não terminou
     return false;
-}
-
-void ARobotController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) {
-    Super::OnMoveCompleted(RequestID, Result);
-
-    // Se o movimento foi concluído com sucesso, incrementa o índice
-    if (Result.Code == EPathFollowingResult::Success) {
-        CurrentPathIndex++;
-    }
 }
 
