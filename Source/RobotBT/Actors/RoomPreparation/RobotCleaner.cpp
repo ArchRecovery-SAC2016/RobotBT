@@ -40,14 +40,6 @@ bool ARobotCleaner::TaskExecution() {
 void ARobotCleaner::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::StartNewTask(SkillEnum, Room);
 
-	ARoomPreparation* RoomInstance = Cast<ARoomPreparation>(Room);
-	if (RoomInstance == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("Room not found!"));
-		return;
-	}
-	
-	SetRoom(Room);
-	
 }
 
 void ARobotCleaner::GenerateRandomProperties() {
