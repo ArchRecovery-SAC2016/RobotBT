@@ -185,9 +185,8 @@ void ARobot::TaskFinished() {
 	TaskAllocated = ESkillEnum::NONE;
 	TaskResult.SuccessResult = true;
 	TaskResult.EndRobotsProperties = RobotProperties;
-	GoIdle();
-	UpdateRobotWidget();
 	OnTaskFinished.Broadcast(TaskResult);
+	GoIdle();
 }
 
 bool ARobot::TaskExecution() {
