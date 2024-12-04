@@ -38,9 +38,14 @@ void ARobot::PostInitializeComponents() {
 }
 
 void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
+	if (Room == nullptr) {
+		TaskFailed(EFailureReasonEnum::InvalidLocation);
+		return;
+	}
+	RoomInstace = Room;
 	CurrentAction = FText::FromString(ESkillEnumHelper::GetDisplayName(SkillEnum));
 
-	FTaskResult NewTaskResult; // need to create a new
+	FTaskResult NewTaskResult; // need to create a new one
 	NewTaskResult.Location = Room->Name;
 	NewTaskResult.InitialRobotsProperties = RobotProperties;
 	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
@@ -82,11 +87,13 @@ void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	ConsumeBattery(SkillSelected.BatteryConsumeDischargeRate);
 	IsAtRoomLocation = false;
 	TaskAllocated = SkillEnum;
+	UpdateRobotWidget();
 }
 
 void ARobot::GoIdle() {
 	CurrentAction = FText::FromString("Idle");
 	IsMoving = false;
+	UpdateRobotWidget();
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {
@@ -103,27 +110,23 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 	UpdateRobotWidget();
 }
 
-const FVector ARobot::GetRoomEntrance() {
-	if (RoomInstace == nullptr) return FVector(0,0,0);
-
-	return RoomInstace->GetDoorEntrance();
-}
-
 bool ARobot::MoveToRoomEntrance() {
-	if (RoomInstace == nullptr) return nullptr;
+	if (GetRoom() == nullptr) return nullptr;
 	if (IsAtRoomLocation) return true;
 
 	IsMoving = true;
 
-	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(GetRoomEntrance());
+	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(GetRoom()->GetDoorEntrance());
 	if (!IsAtRoomLocation) IsMoving = false;
 
 	return  IsAtRoomLocation;
 }
 
 bool ARobot::MoveAlongPath() {
+	if (GetRoom() == nullptr) return nullptr;
+
 	IsMoving = true;
-	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), 0, GetRoomPath()->GetNumberOfSplinePoints() -1);
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), 0, GetRoomPath()->GetNumberOfSplinePoints() - 1);
 	if (IsFinishedMovingAlongPath) {
 		IsMoving = false;
 	}
@@ -174,7 +177,6 @@ void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {
 }
 
 void ARobot::TaskFinished() {
-	
 	TaskResult.BatterySpentOnTask = RobotProperties.Battery.Charge - TaskResult.BatterySpentOnTask;
 	// calcula o tempo gasto. Pega o tempo atual e subtrai pelo tempo que foi salvo ao iniciar a task
 	TaskResult.TimeSpentOnTask = GetWorld()->GetTimeSeconds() - TaskResult.TimeSpentOnTask;
@@ -188,13 +190,8 @@ void ARobot::TaskFinished() {
 }
 
 bool ARobot::TaskExecution() {
+	// the child implement this task
 	return true;
-}
-
-USplineComponent* ARobot::GetRoomPath() {
-	if (GetRoom() == nullptr) return nullptr;
-
-	return GetRoom()->GetRoomPath();
 }
 
 void ARobot::UpdateRobotWidget() {
@@ -225,6 +222,17 @@ ARoom* ARobot::GetRoom() {
 	}
 
 	return RoomInstace;
+}
+
+USplineComponent* ARobot::GetRoomPath() {
+	if (GetRoom() == nullptr) return nullptr;
+
+	USplineComponent* RoomPath = GetRoom()->GetRoomPath();
+	if (RoomPath == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("[ARobot::GetRoomPath] RoomPath is nullptr"));
+	}
+
+	return RoomPath;
 }
 
 ARobotController* ARobot::GetRobotController() {

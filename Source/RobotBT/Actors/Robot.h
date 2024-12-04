@@ -42,9 +42,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	FRobotProperties RobotProperties;
 
-	// indicate if the robot finished the action of move to a specific door
-	UPROPERTY(BlueprintReadWrite)
-	bool IsAtRoomLocation = false;
 
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	bool ShowWidget = true;
@@ -59,12 +56,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual ARoom* GetRoom();
 
-	UFUNCTION()
-	virtual void SetRoom(ARoom* NewRoomInstance) { RoomInstace = NewRoomInstance; }
-
-	// this is the world knowledge of this robot. It will be used to make decisions
+	// some robots need to move to a specific location in the room
 	UFUNCTION()
 	virtual USplineComponent* GetRoomPath();
+
+	UFUNCTION()
+	virtual void SetRoom(ARoom* NewRoomInstance) { RoomInstace = NewRoomInstance; }
 
 	UFUNCTION()
 	void UpdateRobotWidget();
@@ -81,18 +78,11 @@ public:
 	FRobotProperties EditorRobotProperties;
 
 protected:
-
-	// indicate if the robot move all path
-	UPROPERTY(BlueprintReadOnly)
-	bool IsFinishedMovingAlongPath = false;
-
-	UFUNCTION(BlueprintPure)
-	virtual const FVector GetRoomEntrance();
-
 	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
 	UFUNCTION(BlueprintCallable)
 	bool MoveToRoomEntrance();
 
+	// Called when need to move along a path. 
 	UFUNCTION(BlueprintCallable)
 	virtual bool MoveAlongPath();
 
@@ -119,8 +109,13 @@ protected:
 	void GoIdle();
 
 private:
-	UFUNCTION()
-	void ConsumeBattery(float DeltaTime);
+	// indicate if the robot move all path
+	UPROPERTY()
+	bool IsFinishedMovingAlongPath = false;
+
+	// indicate if the robot finished the action of move to a specific door
+	UPROPERTY()
+	bool IsAtRoomLocation = false;
 
 	// saves a instance of the current spline path
 	UPROPERTY()
@@ -133,5 +128,7 @@ private:
 	UPROPERTY()
 	FText CurrentAction;
 
+	UFUNCTION()
+	void ConsumeBattery(float DeltaTime);
 
 };

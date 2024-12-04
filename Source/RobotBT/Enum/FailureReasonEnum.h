@@ -10,6 +10,7 @@ enum class EFailureReasonEnum: uint8 {
     SkillNotFound     UMETA(DisplayName = "Skill Not Found"),
 	SkillFailure      UMETA(DisplayName = "Skill Failure"),
     NavigationError   UMETA(DisplayName = "Navigation Error"),
+    InvalidLocation   UMETA(DisplayName = "InvalidLocation"),
     UnknownReason     UMETA(DisplayName = "Unknown Reason")
 };
 
