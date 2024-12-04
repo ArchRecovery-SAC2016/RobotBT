@@ -40,6 +40,24 @@ bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 	return false;
 }
 
+bool ARobotController::MoveToNewLocation(FVector NewLocation) {
+    if (ControlledPawn == nullptr) return false;
+
+    // Configurar um resultado para o movimento
+    FAIMoveRequest MoveRequest;
+    MoveRequest.SetGoalLocation(NewLocation);
+    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
+
+    FNavPathSharedPtr NavPath;
+    EPathFollowingRequestResult::Type MoveResult = MoveTo(MoveRequest, &NavPath);
+
+    if (MoveResult == EPathFollowingRequestResult::AlreadyAtGoal) {
+        return true;
+    }
+
+    return false;
+}
+
 void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	if (ControlledPawn == nullptr) return;
 
@@ -71,19 +89,9 @@ bool ARobotController::MoveAlongSpline(USplineComponent* Spline, int32 StartInde
     // Obter a localização do ponto atual na spline
     FVector NewLocation = Spline->GetLocationAtSplinePoint(CurrentPathIndex, ESplineCoordinateSpace::World);
     FRotator TargetRotation = Spline->GetRotationAtSplinePoint(CurrentPathIndex, ESplineCoordinateSpace::World);
-    
 
-    // Configurar um resultado para o movimento
-    FAIMoveRequest MoveRequest;
-    MoveRequest.SetGoalLocation(NewLocation);
-    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
-    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
-
-    FNavPathSharedPtr NavPath;
-    EPathFollowingRequestResult::Type MoveResult = MoveTo(MoveRequest, &NavPath);
-
-    if (MoveResult == EPathFollowingRequestResult::AlreadyAtGoal) {
-        // Se já está no destino, incrementar imediatamente
+    if (MoveToNewLocation(NewLocation)) {
+        // Se entrar aqui, entao já está no destino, incrementar imediatamente
         CurrentPathIndex++;
     }
 

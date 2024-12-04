@@ -15,7 +15,9 @@ ARobot::ARobot() {
 void ARobot::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	if (IsMoving) ConsumeBattery(RobotProperties.Battery.DischargeRate * DeltaTime);
+	if (IsMoving) {
+		ConsumeBattery(RobotProperties.Battery.DischargeRate * DeltaTime);
+	}
 }
 
 void ARobot::BeginPlay() {
@@ -105,6 +107,18 @@ const FVector ARobot::GetRoomEntrance() {
 	if (RoomInstace == nullptr) return FVector(0,0,0);
 
 	return RoomInstace->GetDoorEntrance();
+}
+
+bool ARobot::MoveToRoomEntrance() {
+	if (RoomInstace == nullptr) return nullptr;
+	if (IsAtRoomLocation) return true;
+
+	IsMoving = true;
+
+	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(GetRoomEntrance());
+	if (!IsAtRoomLocation) IsMoving = false;
+
+	return  IsAtRoomLocation;
 }
 
 bool ARobot::MoveAlongPath() {

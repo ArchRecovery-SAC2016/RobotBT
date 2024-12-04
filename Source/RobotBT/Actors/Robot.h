@@ -50,7 +50,7 @@ public:
 	bool ShowWidget = true;
 
 	// indicate if the robot is moving
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	bool IsMoving = false;
 
 	UPROPERTY()
@@ -88,6 +88,10 @@ protected:
 
 	UFUNCTION(BlueprintPure)
 	virtual const FVector GetRoomEntrance();
+
+	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
+	UFUNCTION(BlueprintCallable)
+	bool MoveToRoomEntrance();
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool MoveAlongPath();
