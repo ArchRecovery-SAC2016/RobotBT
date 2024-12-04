@@ -186,7 +186,6 @@ void ARobot::TaskFinished() {
 	TaskResult.SuccessResult = true;
 	TaskResult.EndRobotsProperties = RobotProperties;
 	GoIdle();
-	UpdateRobotWidget();
 	OnTaskFinished.Broadcast(TaskResult);
 }
 
@@ -215,6 +214,24 @@ URobotWidget* ARobot::GetRobotWidget() {
 	}
 
 	return RobotWidget;
+}
+
+void ARobot::Initiate(bool bGenerateRandomProperties) {
+	if (bGenerateRandomProperties) {
+		GenerateRandomProperties();
+	} else {
+		RobotProperties = EditorRobotProperties;
+	}
+
+	IsMoving = false;
+	IsFinishedMovingAlongPath = false;
+	IsAtRoomLocation = false;
+	TaskAllocated = ESkillEnum::NONE;
+
+	GoIdle();
+
+	// move to the editor position
+	SetActorTransform(EditorRobotProperties.InitialTransform);
 }
 
 ARoom* ARobot::GetRoom() {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RoomPreparation.h"
 #include "../Robot.h"
 #include "RobotCleaner.generated.h"
 

@@ -42,7 +42,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	FRobotProperties RobotProperties;
 
-
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	bool ShowWidget = true;
 
@@ -68,6 +67,10 @@ public:
 
 	UFUNCTION()
 	URobotWidget* GetRobotWidget();
+
+	// initiate the robot. Called when start a new experiment. Will set the properties and move to the editor position
+	UFUNCTION()
+	void Initiate(bool bGenerateRandomProperties);
 
 	virtual void StartNewTask(ESkillEnum SkillType, ARoom* Room);
 

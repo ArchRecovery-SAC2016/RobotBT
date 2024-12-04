@@ -75,16 +75,6 @@ void AExperimentRoomPreparation::StartExperiment() {
 	ExecuteNextExperiment();
 }
 
-void AExperimentRoomPreparation::SetRandomRobotsProperties() {
-	// Generate Random Properties for the Cleaner
-	CleanerRobot->GenerateRandomProperties();
-
-	// Generate Random Properties for the Organizers
-	for (auto* Organizer : OrganizersTeam) {
-		Organizer->GenerateRandomProperties();
-	}
-}
-
 bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {
 	if (NewTask == nullptr) return false;
 
@@ -141,15 +131,10 @@ void AExperimentRoomPreparation::PrepareWorld() {
 		Room->Initiate(RoomData);
 	}
 
-	if (GenerateRandomProperties == false) {
-
-		// prepare the robots, to stay in the intial position
-		CleanerRobot->RobotProperties = CleanerRobot->EditorRobotProperties;
-		CleanerRobot->SetActorTransform(CleanerRobot->RobotProperties.InitialTransform);
-		for (auto* Organizer : OrganizersTeam) {
-			Organizer->RobotProperties = Organizer->EditorRobotProperties;
-			Organizer->SetActorTransform(Organizer->RobotProperties.InitialTransform);
-		}
+	// initiate the robots
+	CleanerRobot->Initiate(GenerateRandomProperties);
+	for (auto* Organizer : OrganizersTeam) {
+		Organizer->Initiate(GenerateRandomProperties);
 	}
 }
 

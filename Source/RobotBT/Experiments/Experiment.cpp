@@ -66,10 +66,6 @@ void AExperiment::ExecuteNextExperiment() {
 		return;
 	}
 
-	if (GenerateRandomProperties) {
-		SetRandomRobotsProperties();
-	}
-
 	// Prepare World to match the world knowledge
 	PrepareWorld();
 

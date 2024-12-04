@@ -48,8 +48,6 @@ private:
 
 	virtual void StartExperiment() override;
 
-	virtual void SetRandomRobotsProperties() override;
-
 	virtual bool CheckPreCondition(FTask* NewTask) override;
 
 	bool EvaluatePreCondition(const FPredicate& Predicate);
