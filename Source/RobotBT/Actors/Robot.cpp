@@ -42,7 +42,8 @@ void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	NewTaskResult.Location = Room->Name;
 	NewTaskResult.InitialRobotsProperties = RobotProperties;
 	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
-
+	NewTaskResult.TimeSpentOnTask = GetWorld()->GetTimeSeconds(); // saves the current time
+	NewTaskResult.BatterySpentOnTask = RobotProperties.Battery.Charge; // saves the battery level before the task
 	TaskResult = NewTaskResult;
 
 	FSkill SkillSelected;
@@ -159,6 +160,10 @@ void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {
 }
 
 void ARobot::TaskFinished() {
+	
+	TaskResult.BatterySpentOnTask = RobotProperties.Battery.Charge - TaskResult.BatterySpentOnTask;
+	// calcula o tempo gasto. Pega o tempo atual e subtrai pelo tempo que foi salvo ao iniciar a task
+	TaskResult.TimeSpentOnTask = GetWorld()->GetTimeSeconds() - TaskResult.TimeSpentOnTask;
 	IsAtRoomLocation = false;
 	IsFinishedMovingAlongPath = false;
 	TaskAllocated = ESkillEnum::NONE;
@@ -169,7 +174,6 @@ void ARobot::TaskFinished() {
 }
 
 bool ARobot::TaskExecution() {
-
 	return true;
 }
 

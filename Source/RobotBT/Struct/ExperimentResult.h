@@ -9,13 +9,16 @@ USTRUCT(BlueprintType)
 struct FTaskResult {
 	GENERATED_BODY()
 
-	
 	FString Location = "";
 	bool SuccessResult = false;
 	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
 	FString SkillUsed = "";
 	float SkillChanceToFail = 0;
 	float SkillBatteryConsumeDischargeRate = 0;
+	// How much time spent to performe a specific task
+	float TimeSpentOnTask = 0.0f;
+	// Battery spent on this task
+	float BatterySpentOnTask = 0.0f;
 	FRobotProperties InitialRobotsProperties;
 	FRobotProperties EndRobotsProperties;
 };

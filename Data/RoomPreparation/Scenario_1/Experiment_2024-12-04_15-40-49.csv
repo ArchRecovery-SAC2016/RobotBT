@@ -1,0 +1,43 @@
+ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge,TimeSpent, BatterySpent
+0,Baseline,9.53,OpenDoor,0.01,0.12,RoomA,true,None,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,-0.00
+0,Baseline,9.53,CleanRoom,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,0.60
+1,Baseline,93.15,OpenDoor,0.01,0.12,RoomA,true,None,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,-0.00
+1,Baseline,93.15,CleanRoom,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,0.60
+1,Baseline,93.15,OpenDoor,0.01,0.09,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.900.63,-0.00
+1,Baseline,93.15,CleanRoom,0.01,0.01,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8912.13,-0.01
+1,Baseline,93.15,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.89,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8716.85,-0.02
+1,Baseline,93.15,MoveFurniture,0.01,0.07,RoomA,true,None,Organizer2,Blue,0.60,0.00, MoveFurniture*,150.00,0.5817.59,-0.02
+1,Baseline,93.15,MoveFurniture,0.01,0.01,RoomA,true,None,Organizer1,Blue,0.70,0.00, MoveFurniture*,80.00,0.6824.07,-0.02
+1,Baseline,93.15,CleanRoom,0.01,0.01,RoomB,true,None,Cleaner,Red,0.87,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8617.63,-0.01
+1,Baseline,93.15,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.86,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8521.85,-0.02
+1,Baseline,93.15,MoveFurniture,0.01,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.68,0.00, MoveFurniture*,80.00,0.68102.68,0.68
+2,Baseline,15.79,OpenDoor,0.01,0.12,RoomA,true,None,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,-0.00
+2,Baseline,15.79,CleanRoom,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,0.60
+2,Baseline,15.79,OpenDoor,0.01,0.09,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.900.63,-0.00
+2,Baseline,15.79,CleanRoom,0.01,0.01,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8912.13,-0.01
+2,Baseline,15.79,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.89,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8716.85,-0.02
+2,Baseline,15.79,MoveFurniture,0.01,0.07,RoomA,true,None,Organizer2,Blue,0.60,0.00, MoveFurniture*,150.00,0.5817.59,-0.02
+2,Baseline,15.79,MoveFurniture,0.01,0.01,RoomA,true,None,Organizer1,Blue,0.70,0.00, MoveFurniture*,80.00,0.6824.07,-0.02
+2,Baseline,15.79,CleanRoom,0.01,0.01,RoomB,true,None,Cleaner,Red,0.87,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8617.63,-0.01
+2,Baseline,15.79,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.86,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8521.85,-0.02
+2,Baseline,15.79,MoveFurniture,0.01,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.68,0.00, MoveFurniture*,80.00,0.68102.68,0.68
+2,Baseline,15.79,OpenDoor,0.01,0.03,RoomA,true,None,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.001.63,-0.00
+2,Baseline,15.79,CleanRoom,0.06,0.01,RoomA,true,None,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,0.7914.15,-0.21
+2,Baseline,15.79,SanitizeRobot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Green,0.79,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,0.79118.47,0.79
+3,Baseline,22.80,OpenDoor,0.01,0.12,RoomA,true,None,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,-0.00
+3,Baseline,22.80,CleanRoom,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.609.53,0.60
+3,Baseline,22.80,OpenDoor,0.01,0.09,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.900.63,-0.00
+3,Baseline,22.80,CleanRoom,0.01,0.01,RoomA,true,None,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8912.13,-0.01
+3,Baseline,22.80,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.89,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8716.85,-0.02
+3,Baseline,22.80,MoveFurniture,0.01,0.07,RoomA,true,None,Organizer2,Blue,0.60,0.00, MoveFurniture*,150.00,0.5817.59,-0.02
+3,Baseline,22.80,MoveFurniture,0.01,0.01,RoomA,true,None,Organizer1,Blue,0.70,0.00, MoveFurniture*,80.00,0.6824.07,-0.02
+3,Baseline,22.80,CleanRoom,0.01,0.01,RoomB,true,None,Cleaner,Red,0.87,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8617.63,-0.01
+3,Baseline,22.80,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.86,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8521.85,-0.02
+3,Baseline,22.80,MoveFurniture,0.01,0.01,RoomB,false,Skill Failure,Organizer1,Blue,0.68,0.00, MoveFurniture*,80.00,0.68102.68,0.68
+3,Baseline,22.80,OpenDoor,0.01,0.03,RoomA,true,None,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.001.63,-0.00
+3,Baseline,22.80,CleanRoom,0.06,0.01,RoomA,true,None,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,0.7914.15,-0.21
+3,Baseline,22.80,SanitizeRobot,0.75,0.01,SanitizationRoom,false,Skill Failure,Cleaner,Green,0.79,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,0.79118.47,0.79
+3,Baseline,22.80,OpenDoor,0.01,0.01,RoomA,true,None,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.001.17,-0.00
+3,Baseline,22.80,MoveFurniture,0.01,0.07,RoomB,true,None,Organizer2,Blue,0.58,0.00, MoveFurniture*,150.00,0.8021.18,0.22
+3,Baseline,22.80,SanitizeRobot,0.10,0.01,SanitizationRoom,true,None,Cleaner,Red,0.95,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.6717.41,-0.28
+3,Baseline,22.80,MoveFurniture,0.06,0.01,RoomA,false,Skill Failure,Organizer2,Red,0.80,0.00, MoveFurniture*,80.00,0.80141.27,0.80

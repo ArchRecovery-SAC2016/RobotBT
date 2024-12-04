@@ -36,6 +36,8 @@ struct FSkill {
 	// How much battery will consume when performe this skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
 	float BatteryConsumeDischargeRate = 0.1f;
+
+
 };
 
 USTRUCT(BlueprintType)
@@ -44,9 +46,6 @@ struct FRobotProperties {
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FString Name = "Robot";
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
-	FString SquadName = "Squad";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	FBattery Battery;
@@ -61,4 +60,6 @@ struct FRobotProperties {
 	float Speed = 100;
 
 	FTransform InitialTransform;
+
+
 };
