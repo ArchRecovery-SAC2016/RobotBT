@@ -1,5 +1,4 @@
 #include "RobotOrganizer.h"
-#include "RobotCleaner.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotOrganizer::ARobotOrganizer() {
@@ -25,6 +24,7 @@ bool ARobotOrganizer::TaskExecution() {
 	return false;
 }
 
+// here we need to get a different path from the cleaner
 USplineComponent* ARobotOrganizer::GetRoomPath() {
 	ARoomPreparation* PreparationRoom = Cast<ARoomPreparation>(GetRoom());
 	if (PreparationRoom == nullptr) {

@@ -1,7 +1,4 @@
 #include "RobotCleaner.h"
-
-#include "RobotOrganizer.h"
-#include "RoomPreparation.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotCleaner::ARobotCleaner() {
@@ -36,10 +33,8 @@ bool ARobotCleaner::TaskExecution() {
 	return false;
 }
 
-// TODO: CHANGE THIS TO START_TASK!!!
 void ARobotCleaner::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	Super::StartNewTask(SkillEnum, Room);
-
 }
 
 void ARobotCleaner::GenerateRandomProperties() {
