@@ -59,7 +59,7 @@ struct FRobotProperties {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot")
 	float Speed = 100;
 
-	UPROPERTY()
+	UPROPERTY(Transient)
 	FTransform InitialTransform;
 
 };
