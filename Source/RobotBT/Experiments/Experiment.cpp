@@ -40,11 +40,6 @@ void AExperiment::BeginPlay() {
 	if (GetWorld()) {
 		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentSpeed);
 	}
-
-
-	if (SaveResults) {
-		UMyCSVReader::CreateCSVFile(ExperimentName, ScenarioId);
-	}
 }
 
 void AExperiment::Tick(float DeltaTime) {
@@ -62,11 +57,6 @@ void AExperiment::Tick(float DeltaTime) {
 void AExperiment::ExecuteNextExperiment() {
 	ExperimentStartTime = GetWorld()->GetTimeSeconds();
 
-	// saves the result before continue
-	if (SaveResults && Experiment.TaskResults.Num() > 0) {
-		UMyCSVReader::AddToFile(Experiment);
-	}
-
 	ExperimentId++;
 	if (ExperimentId >= RepeatExperimentFor) {
 		FinishAllExperiment();
@@ -79,6 +69,7 @@ void AExperiment::ExecuteNextExperiment() {
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = Approach;
 	Experiment.WallClockInSeconds = 0;
+	Experiment.Robots = RobotsProperties;
 	CurrentTaskIndex = -1;
 
 	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
@@ -120,8 +111,11 @@ FTask* AExperiment::GetNextTask() {
 
 void AExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
+		// se entrar aqui, entao acabou as tarefas.
+		UE_LOG(LogTemp, Error, TEXT("[AExperiment::ExecuteCurrentTask] Experiment finished!"));
+		Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
+		Experiments.Add(Experiment);
 		ExecuteNextExperiment();
-		UE_LOG(LogTemp, Error, TEXT("[UWidgetController::BeginPlay] CurrentTaskIterator is null!"));
 		return;
 	}
 
@@ -138,7 +132,6 @@ void AExperiment::ExecuteCurrentTask() {
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
-	Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 	Experiment.TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition
@@ -152,6 +145,7 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 			CurrentDecompositionIndex++;
 			ExecuteCurrentDecomposition();
 		} else {
+			Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 			CurrentTask = GetNextTask();
 			ExecuteCurrentTask();
 		}
@@ -162,6 +156,12 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 }
 
 void AExperiment::FinishAllExperiment() {
+	if (SaveResults) {
+
+		// UMyCSVReader::CreateCSVFile(ExperimentName, ScenarioId);
+	}
+
+
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }

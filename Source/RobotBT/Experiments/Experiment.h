@@ -93,6 +93,8 @@ protected:
 	// saves the result of the current experiment
 	FExperimentResult Experiment;
 
+	TArray<FExperimentResult> Experiments;
+
 	// try to execute the next task. If fails, the experiment is over
 	virtual FTask* GetNextTask();
 
@@ -131,6 +133,10 @@ protected:
 	// need this variable to calculate the wall clock
 	UPROPERTY()
 	float ExperimentStartTime = 0.0f;
+
+	// robots properties used in this experiment
+	UPROPERTY()
+	TArray<FRobotProperties> RobotsProperties;
 };
 
 

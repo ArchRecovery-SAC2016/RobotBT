@@ -133,8 +133,10 @@ void AExperimentRoomPreparation::PrepareWorld() {
 
 	// initiate the robots
 	CleanerRobot->Initiate(GenerateRandomProperties);
+	RobotsProperties.Add(CleanerRobot->RobotProperties);
 	for (auto* Organizer : OrganizersTeam) {
 		Organizer->Initiate(GenerateRandomProperties);
+		RobotsProperties.Add(Organizer->RobotProperties);
 	}
 }
 
@@ -171,11 +173,6 @@ void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
 		FString RobotName = "OrganizerTeam";
 		ExecuteMoveFurniture(RobotName, RoomLocation);
 	}
-
-	/* isso aki tha dando crash quando tem muita 
-	if (*CurrentDecomposition.Name != nullptr && *CurrentDecomposition.Arguments != nullptr)
-		UE_LOG(LogTemp, Log, TEXT("Executing Decomposition: %s, Arguments: %s"), *CurrentDecomposition.Name, *CurrentDecomposition.Arguments);
-	*/
 }
 
 ARoomPreparation* AExperimentRoomPreparation::GetRoomByName(FString DoorName) {
