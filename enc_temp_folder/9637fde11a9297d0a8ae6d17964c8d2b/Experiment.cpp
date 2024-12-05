@@ -157,8 +157,9 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 
 void AExperiment::FinishAllExperiment() {
 	if (SaveResults) {
-		UMyCSVReader::AddToJsonFile(Experiments);
+		// UMyCSVReader::AddToJsonFile(Experiments);
 	}
+
 
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);

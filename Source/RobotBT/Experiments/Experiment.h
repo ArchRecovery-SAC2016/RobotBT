@@ -91,8 +91,10 @@ protected:
 	int32 ExperimentId  = -1;
 
 	// saves the result of the current experiment
+	UPROPERTY()
 	FExperimentResult Experiment;
 
+	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 
 	// try to execute the next task. If fails, the experiment is over

@@ -114,7 +114,7 @@ void UMyCSVReader::AddToJsonFile(TArray<FExperimentResult> Results) {
     FString JSONPayload;
     FJsonObjectConverter::UStructToJsonObjectString(NewJson, JSONPayload, 0, 0);
 
-    
+    /*
 	bool bSuccess = FFileHelper::SaveStringToFile(JSONPayload, *FilePath);
 
 	if (bSuccess) {
@@ -123,4 +123,6 @@ void UMyCSVReader::AddToJsonFile(TArray<FExperimentResult> Results) {
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Falha ao criar o arquivo JSON: %s"), *FilePath);
 	}
+    */
+    
 }
