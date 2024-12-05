@@ -96,6 +96,10 @@ void ARobot::GoIdle() {
 	UpdateRobotWidget();
 }
 
+void ARobot::TimeIsOver() {
+	if (TaskAllocated != ESkillEnum::NONE) TaskFailed(EFailureReasonEnum::Timeout);
+}
+
 void ARobot::ConsumeBattery(float DischargeAmount) {
 	if (RobotProperties.Battery.Charge <= RobotProperties.Battery.MinimumUsefulLevel) {
 		TaskFailed(EFailureReasonEnum::LowBattery);

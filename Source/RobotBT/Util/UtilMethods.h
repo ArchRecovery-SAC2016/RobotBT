@@ -12,5 +12,5 @@ class ROBOTBT_API  UUtilMethods: public UBlueprintFunctionLibrary {
 public:
 	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
 
-	static void PrintFailureMessage(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties);
+	static void PrintFailureMessage(EFailureReasonEnum FailureReason, FString RobotName);
 };

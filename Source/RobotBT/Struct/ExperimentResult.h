@@ -29,6 +29,6 @@ struct FExperimentResult{
 
 	int32 ExperimentId; // preenchido por BaseExperiment
 	FString Approach = "";
-	float ExperimentTime = 0; // preenchido por BaseExperiment
+	float WallClockInSeconds = 0; // The experiment timer
 	TArray<FTaskResult> TaskResults;
 };

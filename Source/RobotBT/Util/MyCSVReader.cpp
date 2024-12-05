@@ -34,7 +34,6 @@ void UMyCSVReader::CreateCSVFile(FString ExperimentName, int32 ScenarioId) {
     }
 }
 
-
 void UMyCSVReader::AddToFile(FExperimentResult Result) {
     // Verifica se o arquivo existe
     if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath)) {
@@ -62,7 +61,7 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
         Line.Append(FString::Printf(TEXT("%d,%s,%.2f,"),
             Result.ExperimentId,
             *Result.Approach,
-            Result.ExperimentTime));
+            Result.WallClockInSeconds));
 
         FString FailureReason = EFailureReasonEnumHelper::GetDisplayName(Task.FailureReasonEnum);
         Line.Append(FString::Printf(TEXT("%s,%.2f,%.2f,%s,%s,%s,"),

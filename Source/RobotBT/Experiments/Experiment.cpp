@@ -50,11 +50,18 @@ void AExperiment::BeginPlay() {
 void AExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
-	Experiment.ExperimentTime += DeltaTime;
+	// update the wall clock in seconds
+	float CurrentTime = GetWorld()->GetTimeSeconds();
+	Experiment.WallClockInSeconds = CurrentTime - ExperimentStartTime;
+
+	if (Experiment.WallClockInSeconds > MaxWallClockInSeconds) {
+		TimeIsOver();
+	}
 }
 
-
 void AExperiment::ExecuteNextExperiment() {
+	ExperimentStartTime = GetWorld()->GetTimeSeconds();
+
 	// saves the result before continue
 	if (SaveResults && Experiment.TaskResults.Num() > 0) {
 		UMyCSVReader::AddToFile(Experiment);
@@ -62,7 +69,7 @@ void AExperiment::ExecuteNextExperiment() {
 
 	ExperimentId++;
 	if (ExperimentId >= RepeatExperimentFor) {
-		FinishExperiment();
+		FinishAllExperiment();
 		return;
 	}
 
@@ -71,7 +78,7 @@ void AExperiment::ExecuteNextExperiment() {
 
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = Approach;
-	Experiment.ExperimentTime = 0;
+	Experiment.WallClockInSeconds = 0;
 	CurrentTaskIndex = -1;
 
 	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
@@ -79,7 +86,6 @@ void AExperiment::ExecuteNextExperiment() {
 	CurrentTask = GetNextTask();
 	ExecuteCurrentTask();
 }
-
 
 FTask* AExperiment::GetNextTask() {
 	FTask* NewTask = nullptr;
@@ -132,6 +138,7 @@ void AExperiment::ExecuteCurrentTask() {
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
+	Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 	Experiment.TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition
@@ -149,12 +156,12 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 			ExecuteCurrentTask();
 		}
 	} else {
-		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.EndRobotsProperties);
+		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.InitialRobotsProperties.Name);
 		ExecuteNextExperiment();
 	}
 }
 
-void AExperiment::FinishExperiment() {
+void AExperiment::FinishAllExperiment() {
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }

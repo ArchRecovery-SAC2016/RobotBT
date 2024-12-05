@@ -54,4 +54,6 @@ private:
 
 	virtual void PrepareWorld() override;
 
+	virtual void TimeIsOver() override;
+
 };

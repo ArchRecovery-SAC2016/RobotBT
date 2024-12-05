@@ -1,5 +1,0 @@
-ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge,TimeSpent, BatterySpent
-0,Baseline,41.23,OpenDoor,0.01,0.01,RoomA,true,None,Cleaner,Red,0.70,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.707.94,-0.00
-0,Baseline,41.23,CleanRoom,0.01,0.05,RoomA,true,None,Cleaner,Red,0.70,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6812.69,-0.02
-0,Baseline,41.23,SanitizeRobot,0.06,0.01,SanitizationRoom,true,None,Cleaner,Red,0.68,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6620.60,-0.02
-0,Baseline,41.23,MoveFurniture,0.00,0.00,RoomA,false,Skill Not Found,Organizer1,Red,0.60,0.00, none*,150.00,0.6041.23,0.60

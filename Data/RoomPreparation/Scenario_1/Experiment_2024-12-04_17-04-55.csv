@@ -1,9 +1,0 @@
-ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge,TimeSpent, BatterySpent
-0,Baseline,0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Black,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.000.00,1.00
-1,Baseline,86.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Black,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.000.00,1.00
-1,Baseline,86.00,OpenDoor,0.10,0.01,RoomA,true,None,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9910.44,-0.01
-1,Baseline,86.00,CleanRoom,0.01,0.05,RoomA,true,None,Cleaner,Black,0.99,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.6615.12,-0.33
-1,Baseline,86.00,SanitizeRobot,0.10,0.01,SanitizationRoom,true,None,Cleaner,Black,0.66,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.1821.43,-0.48
-1,Baseline,86.00,MoveFurniture,0.02,0.01,RoomA,true,None,Organizer1,Red,1.00,0.00, MoveFurniture*,110.00,0.5717.95,-0.43
-1,Baseline,86.00,MoveFurniture,0.01,0.03,RoomA,true,None,Organizer2,Blue,1.00,0.00, MoveFurniture*,80.00,0.5624.89,-0.44
-1,Baseline,86.00,CleanRoom,0.01,0.05,RoomB,false,Low Battery,Cleaner,Black,0.18,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,-0.0071.88,0.18

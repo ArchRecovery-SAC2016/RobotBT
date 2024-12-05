@@ -49,6 +49,8 @@ public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 		bool SaveResults = false;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+		float MaxWallClockInSeconds = 2000.0f;
 	/** End Experiment Properties. */
 
 	// Load tasks from file
@@ -104,7 +106,7 @@ protected:
 
 	// Called when everything is finished
 	UFUNCTION()
-	virtual void FinishExperiment();
+	virtual void FinishAllExperiment();
 
 	// After the task is choosed, this method will execute it, creating the decomposition
 	virtual void ExecuteCurrentTask();
@@ -122,6 +124,13 @@ protected:
 
 	// the especialized class will implement this method
 	virtual void PrepareWorld() {};
+
+	// Callled when the time is over. Will notify all robots. The especialized that will implemtn this method
+	virtual void TimeIsOver() {};
+
+	// need this variable to calculate the wall clock
+	UPROPERTY()
+	float ExperimentStartTime = 0.0f;
 };
 
 

@@ -80,6 +80,9 @@ public:
 	// saves the editor properties
 	FRobotProperties EditorRobotProperties;
 
+	/* Called by the controler, to tell the that the wall time is over */
+	UFUNCTION()
+	void TimeIsOver();
 protected:
 	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
 	UFUNCTION(BlueprintCallable)
@@ -110,6 +113,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void GoIdle();
+
 
 private:
 	// indicate if the robot move all path

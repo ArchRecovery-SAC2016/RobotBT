@@ -28,14 +28,14 @@ void UUtilMethods::ShowLogMessage(const FString& Message, EMessageColorEnum Type
     
 }
 
-void UUtilMethods::PrintFailureMessage(EFailureReasonEnum FailureReason, FRobotProperties RobotProperties) {
+void UUtilMethods::PrintFailureMessage(EFailureReasonEnum FailureReason, FString RobotName) {
     const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EFailureReasonEnum"), true);
     if (!EnumPtr) return ShowLogMessage(TEXT("Invalid Reason"), EMessageColorEnum::ERROR);
 
 	// get the string value of the enum
     FString Reason= EnumPtr->GetDisplayNameTextByIndex(static_cast<int32>(FailureReason)).ToString();
 
-	FString Message = FString::Printf(TEXT("Robot %s failed due to: %s"), *RobotProperties.Name, *Reason);
+	FString Message = FString::Printf(TEXT("Robot %s failed due to: %s"), *RobotName, *Reason);
 	ShowLogMessage(Message, EMessageColorEnum::ERROR);
 
 }

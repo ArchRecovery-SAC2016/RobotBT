@@ -1,0 +1,254 @@
+ExperimentId,Approach,TaskFinishTime,SkillName,SkillChanceToFail,SkillBatteryConsume, Location,SuccessResult,FailureReasonEnum,RobotName, RobotColor, BatteryCharge,BatteryDischargeRate,Skills,Speed,EndBatteryCharge,TimeSpent, BatterySpent
+0,Baseline,2.20,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+1,Baseline,2.02,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+1,Baseline,2.02,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+2,Baseline,0.00,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+2,Baseline,0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+2,Baseline,0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+3,Baseline,2.08,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+3,Baseline,2.08,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+3,Baseline,2.08,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+3,Baseline,2.08,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+4,Baseline,2.06,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+4,Baseline,2.06,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+4,Baseline,2.06,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+4,Baseline,2.06,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+4,Baseline,2.06,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+5,Baseline,2.05,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+5,Baseline,2.05,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+5,Baseline,2.05,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+5,Baseline,2.05,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+5,Baseline,2.05,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+5,Baseline,2.05,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+6,Baseline,-0.00,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+6,Baseline,-0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+6,Baseline,-0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+6,Baseline,-0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+6,Baseline,-0.00,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+6,Baseline,-0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+6,Baseline,-0.00,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+7,Baseline,2.06,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+7,Baseline,2.06,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+7,Baseline,2.06,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+7,Baseline,2.06,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+7,Baseline,2.06,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+7,Baseline,2.06,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+7,Baseline,2.06,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+7,Baseline,2.06,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+8,Baseline,2.07,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+8,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+8,Baseline,2.07,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+8,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+8,Baseline,2.07,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+8,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+8,Baseline,2.07,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+8,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+8,Baseline,2.07,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+9,Baseline,2.08,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+9,Baseline,2.08,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+9,Baseline,2.08,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+9,Baseline,2.08,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+9,Baseline,2.08,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+9,Baseline,2.08,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+9,Baseline,2.08,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+9,Baseline,2.08,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+9,Baseline,2.08,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+9,Baseline,2.08,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+10,Baseline,2.08,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+10,Baseline,2.08,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+10,Baseline,2.08,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+10,Baseline,2.08,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+10,Baseline,2.08,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+10,Baseline,2.08,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+10,Baseline,2.08,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+10,Baseline,2.08,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+10,Baseline,2.08,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+10,Baseline,2.08,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+10,Baseline,2.08,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+11,Baseline,2.07,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+11,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+11,Baseline,2.07,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+11,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+11,Baseline,2.07,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+11,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+11,Baseline,2.07,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+11,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+11,Baseline,2.07,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+11,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+11,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+11,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+12,Baseline,2.03,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+12,Baseline,2.03,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+12,Baseline,2.03,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+12,Baseline,2.03,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+12,Baseline,2.03,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+12,Baseline,2.03,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+12,Baseline,2.03,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+12,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+12,Baseline,2.03,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+12,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+12,Baseline,2.03,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+12,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+12,Baseline,2.03,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+13,Baseline,2.02,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+13,Baseline,2.02,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+13,Baseline,2.02,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+13,Baseline,2.02,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+13,Baseline,2.02,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+13,Baseline,2.02,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+13,Baseline,2.02,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+13,Baseline,2.02,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+13,Baseline,2.02,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+13,Baseline,2.02,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+13,Baseline,2.02,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+13,Baseline,2.02,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+13,Baseline,2.02,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+13,Baseline,2.02,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+14,Baseline,2.03,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+14,Baseline,2.03,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+14,Baseline,2.03,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+14,Baseline,2.03,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+14,Baseline,2.03,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+14,Baseline,2.03,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+14,Baseline,2.03,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+14,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+14,Baseline,2.03,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+14,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+14,Baseline,2.03,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+14,Baseline,2.03,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+14,Baseline,2.03,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+14,Baseline,2.03,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+14,Baseline,2.03,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+15,Baseline,2.06,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+15,Baseline,2.06,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+15,Baseline,2.06,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+15,Baseline,2.06,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+15,Baseline,2.06,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+15,Baseline,2.06,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+15,Baseline,2.06,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+15,Baseline,2.06,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+15,Baseline,2.06,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+15,Baseline,2.06,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+15,Baseline,2.06,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+15,Baseline,2.06,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+15,Baseline,2.06,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+15,Baseline,2.06,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+15,Baseline,2.06,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+15,Baseline,2.06,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+16,Baseline,-0.00,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+16,Baseline,-0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+16,Baseline,-0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+16,Baseline,-0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+16,Baseline,-0.00,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+16,Baseline,-0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+16,Baseline,-0.00,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+16,Baseline,-0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+16,Baseline,-0.00,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+16,Baseline,-0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+16,Baseline,-0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+16,Baseline,-0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+16,Baseline,-0.00,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+16,Baseline,-0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+16,Baseline,-0.00,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+16,Baseline,-0.00,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+16,Baseline,-0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+17,Baseline,2.05,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+17,Baseline,2.05,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+17,Baseline,2.05,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+17,Baseline,2.05,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+17,Baseline,2.05,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+17,Baseline,2.05,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+17,Baseline,2.05,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+17,Baseline,2.05,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+17,Baseline,2.05,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+17,Baseline,2.05,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+17,Baseline,2.05,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+17,Baseline,2.05,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+17,Baseline,2.05,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Black,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6028.91,0.60
+18,Baseline,2.04,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+18,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+18,Baseline,2.04,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+18,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+18,Baseline,2.04,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+18,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+18,Baseline,2.04,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+18,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+18,Baseline,2.04,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+18,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+18,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+18,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+18,Baseline,2.04,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+18,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+18,Baseline,2.04,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+18,Baseline,2.04,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+18,Baseline,2.04,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+18,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Black,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6028.91,0.60
+18,Baseline,2.04,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,1.0030.96,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+19,Baseline,0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+19,Baseline,0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+19,Baseline,0.00,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+19,Baseline,0.00,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+19,Baseline,0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+19,Baseline,0.00,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+19,Baseline,0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+19,Baseline,0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+19,Baseline,0.00,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+19,Baseline,0.00,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+19,Baseline,0.00,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+19,Baseline,0.00,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+19,Baseline,0.00,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Black,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6028.91,0.60
+19,Baseline,0.00,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,1.0030.96,1.00
+19,Baseline,0.00,OpenDoor,0.03,0.01,RoomA,false,Skill Failure,Cleaner,Blue,0.80,0.00, CleanRoom*none*OpenDoor*,110.00,0.8033.00,0.80
+20,Baseline,2.07,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+20,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+20,Baseline,2.07,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+20,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+20,Baseline,2.07,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+20,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+20,Baseline,2.07,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+20,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+20,Baseline,2.07,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+20,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+20,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+20,Baseline,2.07,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+20,Baseline,2.07,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+20,Baseline,2.07,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+20,Baseline,2.07,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+20,Baseline,2.07,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+20,Baseline,2.07,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+20,Baseline,2.07,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Black,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6028.91,0.60
+20,Baseline,2.07,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,1.0030.96,1.00
+20,Baseline,2.07,OpenDoor,0.03,0.01,RoomA,false,Skill Failure,Cleaner,Blue,0.80,0.00, CleanRoom*none*OpenDoor*,110.00,0.8033.00,0.80
+20,Baseline,2.07,OpenDoor,0.01,0.12,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0033.00,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.000.00,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.002.20,1.00
+21,Baseline,2.04,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Red,0.80,0.00, none*SanitizeRobot*OpenDoor*,100.00,0.804.21,0.80
+21,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.004.21,1.00
+21,Baseline,2.04,OpenDoor,0.02,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.006.30,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Green,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.808.35,0.80
+21,Baseline,2.04,OpenDoor,0.00,0.00,RoomA,false,Skill Not Found,Cleaner,Red,0.60,0.00, CleanRoom*none*none*,150.00,0.6010.40,0.60
+21,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0010.40,1.00
+21,Baseline,2.04,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*none*OpenDoor*,110.00,1.0012.46,1.00
+21,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Blue,0.80,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,0.8014.53,0.80
+21,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0016.62,1.00
+21,Baseline,2.04,OpenDoor,0.06,0.01,RoomA,false,Timeout,Cleaner,Red,0.90,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,0.9018.70,0.90
+21,Baseline,2.04,OpenDoor,0.01,0.09,RoomA,false,Timeout,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0020.77,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.05,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,80.00,1.0022.80,1.00
+21,Baseline,2.04,OpenDoor,0.10,0.01,RoomA,false,Timeout,Cleaner,Green,1.00,0.00, none*SanitizeRobot*OpenDoor*,150.00,1.0024.82,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.07,RoomA,false,Timeout,Cleaner,Red,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0026.85,1.00
+21,Baseline,2.04,OpenDoor,0.75,0.01,RoomA,false,Skill Failure,Cleaner,Blue,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,120.00,1.0028.91,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Black,0.60,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,0.6028.91,0.60
+21,Baseline,2.04,OpenDoor,0.03,0.01,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,150.00,1.0030.96,1.00
+21,Baseline,2.04,OpenDoor,0.03,0.01,RoomA,false,Skill Failure,Cleaner,Blue,0.80,0.00, CleanRoom*none*OpenDoor*,110.00,0.8033.00,0.80
+21,Baseline,2.04,OpenDoor,0.01,0.12,RoomA,false,Timeout,Cleaner,Black,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,100.00,1.0033.00,1.00
+21,Baseline,2.04,OpenDoor,0.01,0.03,RoomA,false,Timeout,Cleaner,Yellow,1.00,0.00, CleanRoom*SanitizeRobot*OpenDoor*,110.00,1.0035.07,1.00

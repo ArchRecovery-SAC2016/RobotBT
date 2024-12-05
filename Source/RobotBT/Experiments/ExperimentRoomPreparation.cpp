@@ -88,7 +88,7 @@ bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {
 			return false;
 		}
 	}
-	return true; // Todas as precondi��es foram satisfeitas
+	return true; // Todas as precondicoees foram satisfeitas
 }
 
 bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicate) {
@@ -135,6 +135,15 @@ void AExperimentRoomPreparation::PrepareWorld() {
 	CleanerRobot->Initiate(GenerateRandomProperties);
 	for (auto* Organizer : OrganizersTeam) {
 		Organizer->Initiate(GenerateRandomProperties);
+	}
+}
+
+void AExperimentRoomPreparation::TimeIsOver() {
+	Super::TimeIsOver();
+
+	CleanerRobot->TimeIsOver();
+	for (auto* Organizer : OrganizersTeam) {
+		Organizer->TimeIsOver();
 	}
 }
 
