@@ -13,7 +13,7 @@ struct FTaskResult {
 	FString RobotName = "";
 
 	UPROPERTY()
-	FString TaskName = "";
+	ESkillEnum TaskName;
 
 	UPROPERTY()
 	FString Location = "";
