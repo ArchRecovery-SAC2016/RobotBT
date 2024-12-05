@@ -1,4 +1,4 @@
-#include "MyJsonReader.h"
+ï»¿#include "MyJsonReader.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
@@ -10,31 +10,32 @@
 #include "JsonObjectConverter.h"
 
 TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
-	TMap<FString, FTask> Tasks;
+    TMap<FString, FTask> Tasks;
 
     FString Path = "Data/" + Experiment;
 
-	if (ScenarioId != -1) {
-		Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/task_output.json";
-	}
+    if (ScenarioId != -1) {
+        Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/task_output.json";
+    }
 
     FString FilePath = FPaths::ProjectContentDir() + Path;
     FString JsonString = ReadStringFromFile(FilePath);
-	
+
     TSharedPtr<FJsonObject> JsonObject;
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
 
     if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
-       
+
         const TSharedPtr<FJsonObject>* TasksObject;
         if (JsonObject->TryGetObjectField(TEXT("tasks"), TasksObject)) {
-			return ReadTasks(*TasksObject);
+            return ReadTasks(*TasksObject);
         }
-    } else {
+    }
+    else {
         UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON"));
     }
-  
-	return Tasks;
+
+    return Tasks;
 
 }
 
@@ -48,7 +49,7 @@ TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, in
     }
     FString FilePath = FPaths::ProjectContentDir() + Path;
 
-    // Lê o conteúdo do arquivo
+    // Lï¿½ o conteï¿½do do arquivo
     FString JsonString;
     if (!FFileHelper::LoadFileToString(JsonString, *FilePath)) {
         UE_LOG(LogTemp, Error, TEXT("Failed to load file at: %s"), *FilePath);
@@ -60,7 +61,7 @@ TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, in
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
 
     if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
-        // Obtém o array "rooms" do JSON
+        // Obtï¿½m o array "rooms" do JSON
         TArray<TSharedPtr<FJsonValue>> RoomsArray = JsonObject->GetObjectField("world_db")->GetArrayField("rooms");
 
         // Converte cada objeto JSON para FWorldRoomDataStruct
@@ -90,20 +91,18 @@ TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, in
 }
 
 
-
-
 FString UMyJsonReader::ReadStringFromFile(FString FilePath) {
-	if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath)) {
+    if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath)) {
         UE_LOG(LogTemp, Error, TEXT("[UMyJsonReader::ReadStringFromFile] File not found"));
-		return "";
-	}
+        return "";
+    }
 
     FString RetString = "";
 
     if (!FFileHelper::LoadFileToString(RetString, *FilePath)) {
         UE_LOG(LogTemp, Error, TEXT("[UMyJsonReader::ReadStringFromFile] Failed to load file"));
-		return "";
-	}
+        return "";
+    }
 
     UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on read file"));
     return RetString;
@@ -158,7 +157,7 @@ TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& Tas
                 TSharedPtr<FJsonObject> PreconditionObject = Precondition->AsObject();
                 FString PredicateStr;
                 if (PreconditionObject->TryGetStringField(TEXT("predicate"), PredicateStr)) {
-                    // Converte diretamente para FPredicate e adiciona ao array de precondições da tarefa
+                    // Converte diretamente para FPredicate e adiciona ao array de precondiï¿½ï¿½es da tarefa
                     FPredicate Predicate(PredicateStr);
                     Task.Preconditions.Add(Predicate);
                 }
@@ -205,7 +204,8 @@ TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& Tas
 void UMyJsonReader::WriteStringToFile(FString FilePath, FString String) {
     if (!FFileHelper::SaveStringToFile(String, *FilePath)) {
         UE_LOG(LogTemp, Error, TEXT("[UMyJsonReader::WriteStringToFile] Failed to save file"));
-    } else {
+    }
+    else {
         UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on save file"));
     }
 

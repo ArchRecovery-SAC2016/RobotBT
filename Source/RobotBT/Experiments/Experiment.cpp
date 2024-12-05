@@ -10,7 +10,7 @@
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Kismet/GameplayStatics.h"
-#include "RobotBT/Util/MyCSVReader.h"
+#include "RobotBT/Util/MyJsonWriter.h"
 
 AExperiment::AExperiment()
 {
@@ -164,7 +164,7 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 
 void AExperiment::FinishAllExperiment() {
 	if (SaveResults) {
-		UMyCSVReader::AddToJsonFile(Experiments);
+		UMyJsonWriter::AddToJsonFile(Experiments, ExperimentName, ScenarioId);
 	}
 
 	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);

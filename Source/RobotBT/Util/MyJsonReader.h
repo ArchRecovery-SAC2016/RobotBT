@@ -14,9 +14,6 @@ public:
 	static  TMap<FString, FTask> ReadTaskFromFile(FString Experiment, int32 ScenarioId);
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
-	static FString ReadStringFromFile(FString FilePath);
-
-	UFUNCTION(BlueprintCallable, Category = "MyUtils")
 	static void WriteStringToFile(FString FilePath, FString String);
 
 	static TMap<FString, FTask> ReadTasks(const TSharedPtr<FJsonObject>& TasksObject);
@@ -25,4 +22,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
 	static TArray<FWorldRoomDataStruct> LoadWorldData(FString Experiment, int32 ScenarioId);
+
+	static FString ReadStringFromFile(FString FilePath);
 };
