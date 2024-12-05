@@ -10,6 +10,12 @@ struct FTaskResult {
 	GENERATED_BODY()
 
 	UPROPERTY()
+	FString RobotName = "";
+
+	UPROPERTY()
+	FString TaskName = "";
+
+	UPROPERTY()
 	FString Location = "";
 
 	UPROPERTY()
@@ -18,15 +24,6 @@ struct FTaskResult {
 	UPROPERTY()
 	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
 
-	UPROPERTY()
-	FString SkillUsed = "";
-
-	UPROPERTY()
-	float SkillChanceToFail = 0;
-
-	UPROPERTY()
-	float SkillBatteryConsumeDischargeRate = 0;
-
 	// How much time spent to performe a specific task
 	UPROPERTY()
 	float TimeSpentOnTask = 0.0f;
@@ -34,13 +31,6 @@ struct FTaskResult {
 	// Battery spent on this task
 	UPROPERTY()
 	float BatterySpentOnTask = 0.0f;
-
-	// TODO: REMMOVER ISSO AKI!!!
-	UPROPERTY()
-	FRobotProperties InitialRobotsProperties;
-
-	UPROPERTY()
-	FRobotProperties EndRobotsProperties;
 };
 
 USTRUCT(BlueprintType)

@@ -53,11 +53,7 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
             return;
         }
 
-        // Cria os dados para a linha
-        FString InitialSkills;
-        for (const FSkill& Skill : Task.InitialRobotsProperties.Skills) {
-            InitialSkills += ESkillEnumHelper::GetDisplayName(Skill.SkillEnum) + "*";
-        }
+
 
         Line.Append(FString::Printf(TEXT("%d,%s,%.2f,"),
             Result.ExperimentId,
@@ -66,22 +62,11 @@ void UMyCSVReader::AddToFile(FExperimentResult Result) {
 
         FString FailureReason = EFailureReasonEnumHelper::GetDisplayName(Task.FailureReasonEnum);
         Line.Append(FString::Printf(TEXT("%s,%.2f,%.2f,%s,%s,%s,"),
-            *Task.SkillUsed,
-            Task.SkillChanceToFail,
-            Task.SkillBatteryConsumeDischargeRate,
             *Task.Location,
             Task.SuccessResult ? TEXT("true") : TEXT("false"),
             *FailureReason
             ));
 
-        Line.Append(FString::Printf(TEXT("%s,%s,%.2f,%.2f, %s,%.2f,%.2f"),
-            *Task.InitialRobotsProperties.Name,
-            *Task.InitialRobotsProperties.Color,
-            Task.InitialRobotsProperties.Battery.Charge,
-            Task.InitialRobotsProperties.Battery.DischargeRate,
-            *InitialSkills,
-            Task.InitialRobotsProperties.Speed,
-            Task.EndRobotsProperties.Battery.Charge));
 
         Line.Append(FString::Printf(TEXT("%.2f,%.2f\n"),
             Task.TimeSpentOnTask,

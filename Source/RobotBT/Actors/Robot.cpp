@@ -47,8 +47,8 @@ void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 
 	FTaskResult NewTaskResult; // need to create a new one
 	NewTaskResult.Location = Room->Name;
-	NewTaskResult.InitialRobotsProperties = RobotProperties;
-	NewTaskResult.SkillUsed = ESkillEnumHelper::GetDisplayName(SkillEnum);
+	NewTaskResult.TaskName = ESkillEnumHelper::GetDisplayName(SkillEnum);
+	NewTaskResult.RobotName = RobotProperties.Name;
 	NewTaskResult.TimeSpentOnTask = GetWorld()->GetTimeSeconds(); // saves the current time
 	NewTaskResult.BatterySpentOnTask = RobotProperties.Battery.Charge; // saves the battery level before the task
 	TaskResult = NewTaskResult;
@@ -68,9 +68,6 @@ void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 		TaskFailed(EFailureReasonEnum::SkillNotFound);
 		return;
 	}
-
-	TaskResult.SkillChanceToFail = SkillSelected.ChanceToFail;
-	TaskResult.SkillBatteryConsumeDischargeRate = SkillSelected.BatteryConsumeDischargeRate;
 
 	FString SkillName = UEnum::GetValueAsString(SkillEnum);
 	FString Message = FString::Printf(TEXT("Initiating skill: %s"), *SkillName);
@@ -176,7 +173,6 @@ void ARobot::GenerateRandomProperties() {
 void ARobot::TaskFailed(EFailureReasonEnum FailureReason) {
 	TaskResult.SuccessResult = false;
 	TaskResult.FailureReasonEnum = FailureReason;
-	TaskResult.EndRobotsProperties = RobotProperties;
 	OnTaskFinished.Broadcast(TaskResult);
 }
 
@@ -188,7 +184,6 @@ void ARobot::TaskFinished() {
 	IsFinishedMovingAlongPath = false;
 	TaskAllocated = ESkillEnum::NONE;
 	TaskResult.SuccessResult = true;
-	TaskResult.EndRobotsProperties = RobotProperties;
 	GoIdle();
 	OnTaskFinished.Broadcast(TaskResult);
 }

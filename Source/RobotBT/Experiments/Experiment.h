@@ -90,10 +90,6 @@ protected:
 	// used to indicate the Experiment Id. -1 will be a single experiment
 	int32 ExperimentId  = -1;
 
-	// saves the result of the current experiment
-	UPROPERTY()
-	FExperimentResult Experiment;
-
 	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 

@@ -1,0 +1,1628 @@
+{
+	"result": [
+		{
+			"experimentId": 8,
+			"approach": "Baseline",
+			"wallClockInSeconds": 123.03885650634766,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 10.038080215454102,
+					"batterySpentOnTask": -0.00035995244979858398
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 10.038080215454102,
+					"batterySpentOnTask": 0.99964004755020142
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.9874978065490723,
+					"batterySpentOnTask": -0.00032991170883178711
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 18.025577545166016,
+					"batterySpentOnTask": 0.59967011213302612
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 18.025577545166016,
+					"batterySpentOnTask": 0.60000002384185791
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.8411574363708496,
+					"batterySpentOnTask": -0.0090000629425048828
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 25.866735458374023,
+					"batterySpentOnTask": 0.99099993705749512
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.8723206520080566,
+					"batterySpentOnTask": -0.0067500472068786621
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 0.90623027086257935,
+					"batterySpentOnTask": -0.013500094413757324
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 19.381406784057617,
+					"batterySpentOnTask": -0.4455031156539917
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.305790901184082,
+					"batterySpentOnTask": -0.3300023078918457
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 17.352453231811523,
+					"batterySpentOnTask": -0.15620052814483643
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 20.076982498168945,
+					"batterySpentOnTask": -0.3194986879825592
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": false,
+					"failureReasonEnum": "LowBattery",
+					"timeSpentOnTask": 91.456130981445312,
+					"batterySpentOnTask": 0.21474805474281311
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.4956164360046387,
+					"batterySpentOnTask": -0.0067500472068786621
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 0.47850155830383301,
+					"batterySpentOnTask": -0.0045000314712524414
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 19.985387802124023,
+					"batterySpentOnTask": -0.4455031156539917
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 12.945618629455566,
+					"batterySpentOnTask": -0.01060175895690918
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 17.446470260620117,
+					"batterySpentOnTask": -0.014202356338500977
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 20.065820693969727,
+					"batterySpentOnTask": -0.31949874758720398
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": false,
+					"failureReasonEnum": "LowBattery",
+					"timeSpentOnTask": 172.34510803222656,
+					"batterySpentOnTask": 0.22374805808067322
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.4259123802185059,
+					"batterySpentOnTask": -0.0045000314712524414
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 0.48685881495475769,
+					"batterySpentOnTask": -0.0030000209808349609
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 19.613363265991211,
+					"batterySpentOnTask": -0.29700207710266113
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 215.52445983886719,
+					"batterySpentOnTask": 0.89999997615814209
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 215.52445983886719,
+					"batterySpentOnTask": 1
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OpenDoor",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 7.6712970733642578,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.81800651550293,
+					"batterySpentOnTask": -0.013802289962768555
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 19.698101043701172,
+					"batterySpentOnTask": -0.020203351974487305
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.564397811889648,
+					"batterySpentOnTask": -0.0091187953948974609
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MoveFurniture",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 16.880775451660156,
+					"batterySpentOnTask": -0.017037749290466309
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CleanRoom",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 20.056577682495117,
+					"batterySpentOnTask": -0.014602422714233398
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SanitizeRobot",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 24.547988891601562,
+					"batterySpentOnTask": -0.019403219223022461
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MoveFurniture",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 17.241239547729492,
+					"batterySpentOnTask": -0.0084788799285888672
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MoveFurniture",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 20.366138458251953,
+					"batterySpentOnTask": -0.017997622489929199
+				}
+			],
+			"robots": [
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.019999999552965164,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.10000000149011612,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Black",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						}
+					],
+					"color": "Blue",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0020000000949949026
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						}
+					],
+					"color": "Green",
+					"speed": 80,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.05000000074505806
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Yellow",
+					"speed": 120,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Black",
+					"speed": 120,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0020000000949949026
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						}
+					],
+					"color": "Black",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 0.60000002384185791,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.019999999552965164,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Green",
+					"speed": 110,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0020000000949949026
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Red",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Red",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 0.60000002384185791,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						}
+					],
+					"color": "Yellow",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 0.80000001192092896,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Black",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0020000000949949026
+					},
+					"skills": [
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						}
+					],
+					"color": "Blue",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0030000000260770321
+					},
+					"skills": [
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						}
+					],
+					"color": "Green",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 0.80000001192092896,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						}
+					],
+					"color": "Blue",
+					"speed": 80,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.001500000013038516
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.75,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Yellow",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.001500000013038516
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Yellow",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Red",
+					"speed": 110,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0030000000260770321
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Red",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.001500000013038516
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Red",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						}
+					],
+					"color": "Blue",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 0.80000001192092896,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Red",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.019999999552965164,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.05000000074505806
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						}
+					],
+					"color": "Blue",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0030000000260770321
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						}
+					],
+					"color": "Blue",
+					"speed": 120,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 0.89999997615814209,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						}
+					],
+					"color": "Blue",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0020000000949949026
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.070000000298023224
+						},
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						}
+					],
+					"color": "Red",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 0.0024999999441206455
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Green",
+					"speed": 110,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.019999999552965164,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Black",
+					"speed": 150,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Green",
+					"speed": 100,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 0.80000001192092896,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Blue",
+					"speed": 120,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 0.89999997615814209,
+						"minimumUsefulLevel": 0,
+						"dischargeRate": 9.9999997473787516e-05
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Blue",
+					"speed": 80,
+					"initialTransform":
+					{
+						"rotation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0,
+							"w": 1
+						},
+						"translation":
+						{
+							"x": 0,
+							"y": 0,
+							"z": 0
+						},
+						"scale3D":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				}
+			]
+		}
+	]
+}

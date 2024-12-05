@@ -46,15 +46,21 @@ void AExperiment::Tick(float DeltaTime) {
     Super::Tick(DeltaTime);
 
 	// update the wall clock in seconds
-	float CurrentTime = GetWorld()->GetTimeSeconds();
-	Experiment.WallClockInSeconds = CurrentTime - ExperimentStartTime;
+	float WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 
-	if (Experiment.WallClockInSeconds > MaxWallClockInSeconds) {
+	if (WallClockInSeconds > MaxWallClockInSeconds) {
 		TimeIsOver();
 	}
 }
 
 void AExperiment::ExecuteNextExperiment() {
+	// if get here, so the experiment is over. We need to start a new one
+	// but before, we set the wall clock in seconds for the last experiment
+	if (Experiments.Num() > 0) {
+		Experiments.Last().WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
+	}
+
+	// need to reset the timer
 	ExperimentStartTime = GetWorld()->GetTimeSeconds();
 
 	ExperimentId++;
@@ -66,11 +72,14 @@ void AExperiment::ExecuteNextExperiment() {
 	// Prepare World to match the world knowledge
 	PrepareWorld();
 
+	FExperimentResult Experiment;
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = Approach;
 	Experiment.WallClockInSeconds = 0;
 	Experiment.Robots = RobotsProperties;
 	CurrentTaskIndex = -1;
+
+	Experiments.Add(Experiment);
 
 	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
@@ -113,8 +122,7 @@ void AExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
 		// se entrar aqui, entao acabou as tarefas.
 		UE_LOG(LogTemp, Error, TEXT("[AExperiment::ExecuteCurrentTask] Experiment finished!"));
-		Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
-		Experiments.Add(Experiment);
+		// pega o ultimo experimento e configuro o clock in seconds
 		ExecuteNextExperiment();
 		return;
 	}
@@ -132,7 +140,7 @@ void AExperiment::ExecuteCurrentTask() {
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
-	Experiment.TaskResults.Add(TaskResult);
+	Experiments.Last().TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition
 	if (TaskResult.SuccessResult) {
@@ -145,12 +153,11 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 			CurrentDecompositionIndex++;
 			ExecuteCurrentDecomposition();
 		} else {
-			Experiment.WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 			CurrentTask = GetNextTask();
 			ExecuteCurrentTask();
 		}
 	} else {
-		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.InitialRobotsProperties.Name);
+		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.RobotName);
 		ExecuteNextExperiment();
 	}
 }
