@@ -87,9 +87,6 @@ protected:
 	// when the experiment is over, this variable will be setted
 	bool ExperimentIsOver = false;
 
-	// used to indicate the Experiment Id. -1 will be a single experiment
-	int32 ExperimentId  = -1;
-
 	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 
