@@ -36,8 +36,6 @@ struct FSkill {
 	// How much battery will consume when performe this skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Robot Skills")
 	float BatteryConsumeDischargeRate = 0.1f;
-
-
 };
 
 USTRUCT(BlueprintType)

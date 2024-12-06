@@ -121,6 +121,8 @@ bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicat
 }
 
 void AExperimentRoomPreparation::PrepareWorld() {
+	UE_LOG(LogTemp, Display, TEXT("Preparing the world for Experiment: %d"), ExperimentId);
+
 	// prepare the rooms
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
 		ARoomPreparation* Room = GetRoomByName(RoomData.Name);
@@ -130,6 +132,9 @@ void AExperimentRoomPreparation::PrepareWorld() {
 		}
 		Room->Initiate(RoomData);
 	}
+
+	// clean the array of robots properties
+	RobotsProperties.Empty();
 
 	// initiate the robots
 	CleanerRobot->Initiate(GenerateRandomProperties);
