@@ -74,6 +74,7 @@ struct FExperimentResult {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 	bool SaveResults = false;
 
+	// will save the results
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 	float MaxWallClockInSeconds = 2000.0f;
 
@@ -82,5 +83,17 @@ struct FExperimentResult {
 
 	UPROPERTY()
 	TArray<FRobotProperties> Robots;
+
+	// output json file path, provided by MutRose
+	UPROPERTY(Transient)
+	FString OutputJsonString = "";
+
+	// world knowledge json file path
+	UPROPERTY(Transient)
+	FString WorldJsonString = "";
+
+	// robots configuration file path
+	UPROPERTY(Transient)
+	FString RobotsConfigJsonString = "";
 
 };

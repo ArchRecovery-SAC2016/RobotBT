@@ -25,7 +25,6 @@ TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 S
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
 
     if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
-
         const TSharedPtr<FJsonObject>* TasksObject;
         if (JsonObject->TryGetObjectField(TEXT("tasks"), TasksObject)) {
             return ReadTasks(*TasksObject);
@@ -36,7 +35,6 @@ TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 S
     }
 
     return Tasks;
-
 }
 
 TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, int32 ScenarioId) {
