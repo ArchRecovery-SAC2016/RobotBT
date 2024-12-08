@@ -26,7 +26,7 @@ void UExperimentInstance::NextExperiment() {
 	FExperimentResult Experiment;
 	Experiment.ExperimentId = ExperimentId++;
 	Experiment.Approach = CurrentExperiment.Approach;
-	Experiment.ExperementSpeed = CurrentExperiment.ExperementSpeed;
+	Experiment.ExperimentSpeed = CurrentExperiment.ExperimentSpeed;
 	Experiment.WallClockInSeconds = 0;
 	Experiment.RepeatExperimentFor = CurrentExperiment.RepeatExperimentFor;
 	

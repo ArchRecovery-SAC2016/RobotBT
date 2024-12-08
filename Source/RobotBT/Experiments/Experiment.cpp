@@ -53,7 +53,7 @@ void AExperiment::ExecuteExperiment(FExperimentResult NewExperiment) {
 
 	// change the speed of the world
 	if (GetWorld()) {
-		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
+		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperimentSpeed);
 	}
 
 

@@ -81,6 +81,8 @@ public:
 	UPROPERTY()
 	FExperimentResult Experiment;
 
+	bool ValidateInputs();
+
 
 
 };

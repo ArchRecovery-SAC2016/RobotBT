@@ -40,31 +40,32 @@ struct FExperimentResult {
 	UPROPERTY()
 	int32 ExperimentId = 0; // preenchido por BaseExperiment
 
+	// the experiment speed
+	UPROPERTY(Transient)
+	int32 ExperimentSpeed = 10;
+
+	// will save the results
 	UPROPERTY()
-	float ExperementSpeed = 100; // The Speed of the experiment
+	float MaxWallClockInSeconds = 2000.0f;
 
-	UPROPERTY()
-	float WallClockInSeconds = 0; // The experiment timer
+	// Default value for the repeat experiment of
+	UPROPERTY(Transient)
+	int32 RepeatExperimentFor = 10;
 
-	/** Start Experiment Properties. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-	int32 RepeatExperimentFor = 1;
-
+	// TODO: REMOVE THIS. 
 	// The name, can be: RoomPreparation, ...
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	UPROPERTY(Transient)
 	FString ExperimentName = "RoomPreparation";
 
+	// TODO: REMOVE THIS. 
 	// the scenario id, ca ben: 1, ...
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	UPROPERTY(Transient)
 	int32 ScenarioId = 1;
 
+	// TODO: REMOVE THIS. 
 	// the approach, ca ben: Baseline, ..
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 	FString Approach = "Baseline";
-
-	// the approach, ca ben: Baseline, ..
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-	int32 ExperimentSpeed = 1;
 
 	// will repeat the experiment using this number
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
@@ -74,9 +75,9 @@ struct FExperimentResult {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 	bool SaveResults = false;
 
-	// will save the results
+	// Default value for the WalClock
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-	float MaxWallClockInSeconds = 2000.0f;
+	float WallClockInSeconds = 0;
 
 	UPROPERTY()
 	TArray<FTaskResult> TaskResults;

@@ -10,18 +10,26 @@ void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();
 
 	// set the default values for output path
-    FString RoomPreparationPath = "Data/RoomPreparation/Scenario_1/task_output.json";
-	FString Path = RoomPreparationPath;
-	FString FilePath = FPaths::ProjectContentDir() + Path;
-	SetOutputPath(FilePath);
+	FString Path = "Data/RoomPreparation/Scenario_1/";
+	FString OutputPathFile = FPaths::ProjectContentDir() + Path + "task_output.json";
+	SetOutputPath(OutputPathFile);
 
 	// set the default values for output path
-	ExperimentSpeed->SetText(FText::FromString("2"));
-	RepeatExperimentFor->SetText(FText::FromString("10"));
-	MaxWallClockInSeconds->SetText(FText::FromString("140"));
-	BaselineApproach->SetCheckedState(ECheckBoxState::Checked);
-	SaveResults->SetCheckedState(ECheckBoxState::Checked);
+	FString WorldPathFile = FPaths::ProjectContentDir() + Path + "world_db.json" ;
+	SetWorldPath(WorldPathFile);
 
+	// set the default values. It is the default values for the FExperimentResult
+	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
+	RepeatExperimentFor->SetText(FText::AsNumber(Experiment.RepeatExperimentFor));
+	MaxWallClockInSeconds->SetText(FText::AsNumber(Experiment.MaxWallClockInSeconds));
+	
+	BaselineApproach->SetCheckedState(ECheckBoxState::Checked);
+
+	if (Experiment.SaveResults) {
+		SaveResults->SetCheckedState(ECheckBoxState::Checked);
+	} else {
+		SaveResults->SetCheckedState(ECheckBoxState::Unchecked);
+	}
 }
 
 void UExperimentSetupWidget::InitiateExperiment() {
@@ -29,14 +37,45 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	Experiment.RepeatExperimentFor = FCString::Atoi(*RepeatExperimentFor->GetText().ToString());
 	Experiment.MaxWallClockInSeconds = FCString::Atoi(*MaxWallClockInSeconds->GetText().ToString());
 
-	if (GetWorld()->GetGameInstance() == nullptr) return;
+	ExperimentIsValid = ValidateInputs();
+
+	if (!ExperimentIsValid) return;
+
 	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
 
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
+		ExperimentStarted = true;
 		ExperimentInstance->StartNewExperiment(Experiment);
-	} else {
-		SetMessage("Experiment is not valid. Please, check the paths.");
+	} 
+}
+
+bool UExperimentSetupWidget::ValidateInputs() {
+	if (Experiment.ExperimentSpeed == 0) {
+		SetMessage("Experiment speed invalid.");
+		return false;
 	}
+
+	if (Experiment.RepeatExperimentFor == 0) {
+		SetMessage("RepeatExperimentFor invalid.");
+		return false;
+	}
+
+	if (Experiment.MaxWallClockInSeconds == 0) {
+		SetMessage("MaxWallClockInSeconds invalid.");
+		return false;
+	}
+
+	if (Experiment.OutputJsonString == "") {
+		SetMessage("Output Json invalid.");
+		return false;
+	}
+
+	if (Experiment.WorldJsonString == "") {
+		SetMessage("World Json invalid.");
+		return false;
+	}
+
+	return true;
 }
 
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
@@ -58,6 +97,8 @@ void UExperimentSetupWidget::SetMessage(FString NewMessage) {
 
 
 }
+
+
 
 
 
