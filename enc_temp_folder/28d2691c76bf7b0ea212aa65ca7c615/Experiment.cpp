@@ -48,25 +48,23 @@ void AExperiment::BeginPlay() {
 	UExperimentInstance* RobotBTInstance = Cast<UExperimentInstance>(GetGameInstance());
 	if (RobotBTInstance) {
 		CurrentExperiment = RobotBTInstance->GetCurrentExperiment();
-
-		// change the speed of the world
-		if (GetWorld()) {
-			GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
-		}
 	}
 
 	// The especialized method that will start the experiment
 }
 
 void AExperiment::ExecuteExperiment() {
+	// change the speed of the world
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
+	}
+
 	// Todo: Change this to the game instance
 	LoadTasksFromFile();
 
-	// Todo: Change this to the game instance
-	LoadWorldFromFile();
-
 	// Prepare World to match the world knowledge
 	PrepareWorld();
+
 
 	// TODO: REMOVE THE ROBOTS PROPERTIES FROM HERE AND GET FROM FILES 
 	CurrentExperiment.Robots = RobotsProperties;
@@ -76,6 +74,20 @@ void AExperiment::ExecuteExperiment() {
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	CurrentTask = GetNextTask();
 	ExecuteCurrentTask();
+}
+
+
+void AExperiment::ExperimentFinished() {
+	UGameInstance * GameInstance = GetGameInstance();
+
+	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GameInstance);
+
+	if (ExperimentInstance) {
+		// Agora você pode acessar os métodos ou variáveis do URobotBTInstance
+		ExperimentInstance->ExperimentFinished(CurrentExperiment);
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("URobotBTInstance not found!"));
+	}
 }
 
 FTask* AExperiment::GetNextTask() {
@@ -151,19 +163,6 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 	}
 }
 
-void AExperiment::ExperimentFinished() {
-	UGameInstance* GameInstance = GetGameInstance();
-
-	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GameInstance);
-
-	if (ExperimentInstance) {
-		// Agora você pode acessar os métodos ou variáveis do URobotBTInstance
-		ExperimentInstance->ExperimentFinished(CurrentExperiment);
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("URobotBTInstance not found!"));
-	}
-}
 
 bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
