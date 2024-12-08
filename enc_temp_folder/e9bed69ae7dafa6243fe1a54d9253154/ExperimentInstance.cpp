@@ -56,23 +56,14 @@ void UExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	ExperimentId++;
 	if (ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
-		return;
 	}
 
 	// restart the level
 	if (UWorld* World = GetWorld()) {
 		FName CurrentLevelName = World->GetFName();
-		FLatentActionInfo LatentInfo;
-		LatentInfo.CallbackTarget = this;
-		LatentInfo.ExecutionFunction = FName("OnLevelLoaded");
-		LatentInfo.Linkage = 0;
-		LatentInfo.UUID = __LINE__; // Número único para o callback.
-
-		UGameplayStatics::LoadStreamLevel(World, CurrentLevelName, true, false, LatentInfo);
+		UGameplayStatics::OpenLevel(World, CurrentLevelName, true);
 	}
-}
 
-void UExperimentInstance::OnLevelLoaded() {
 	NextExperiment();
 }
 

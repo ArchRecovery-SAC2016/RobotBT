@@ -58,9 +58,6 @@ void AExperimentRoomPreparation::BeginPlay() {
 		UE_LOG(LogTemp, Error, TEXT("Failed do instantiate Organizer Team. Please add at least one. No task will be executed!"));
 		return;
 	}
-
-	// Start the experiment based on the properties set on the GM_ExperimentRoomPreparation	Blueprint. (in the editor)
-	ExecuteExperiment();
 }
 
 bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {

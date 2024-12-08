@@ -29,9 +29,6 @@ public:
 	void ExperimentFinished(FExperimentResult NewExperiment);
 
 	UFUNCTION()
-	void OnLevelLoaded();
-
-	UFUNCTION()
 	void NextExperiment();
 
 	FExperimentResult& GetCurrentExperiment();

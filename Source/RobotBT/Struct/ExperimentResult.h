@@ -38,7 +38,7 @@ struct FExperimentResult {
 	GENERATED_BODY()
 
 	UPROPERTY()
-	int32 ExperimentId = -1; // preenchido por BaseExperiment
+	int32 ExperimentId = 0; // preenchido por BaseExperiment
 
 	UPROPERTY()
 	float ExperementSpeed = 100; // The Speed of the experiment

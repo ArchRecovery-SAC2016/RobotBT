@@ -19,7 +19,7 @@ public:
 	void NativeConstruct();
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	bool ExperimentIsValid = false;
+	bool ExperimentIsValid = true;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	bool ExperimentStarted = false;

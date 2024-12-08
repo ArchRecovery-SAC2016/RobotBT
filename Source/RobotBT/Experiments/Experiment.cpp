@@ -33,6 +33,8 @@ AExperiment::AExperiment()
 void AExperiment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+	if (ExperimentStarted == false) return;
+
 	// update the wall clock in seconds
 	float WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 
@@ -44,21 +46,17 @@ void AExperiment::Tick(float DeltaTime) {
 void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
-	// Obtém o GameInstance
-	UExperimentInstance* RobotBTInstance = Cast<UExperimentInstance>(GetGameInstance());
-	if (RobotBTInstance) {
-		CurrentExperiment = RobotBTInstance->GetCurrentExperiment();
-
-		// change the speed of the world
-		if (GetWorld()) {
-			GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
-		}
-	}
-
-	// The especialized method that will start the experiment
 }
 
-void AExperiment::ExecuteExperiment() {
+void AExperiment::ExecuteExperiment(FExperimentResult NewExperiment) {
+	CurrentExperiment = NewExperiment;
+
+	// change the speed of the world
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
+	}
+
+
 	// Todo: Change this to the game instance
 	LoadTasksFromFile();
 
@@ -76,6 +74,8 @@ void AExperiment::ExecuteExperiment() {
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	CurrentTask = GetNextTask();
 	ExecuteCurrentTask();
+
+	ExperimentStarted = true;
 }
 
 FTask* AExperiment::GetNextTask() {

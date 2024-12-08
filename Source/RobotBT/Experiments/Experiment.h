@@ -29,6 +29,10 @@ public:
 	UFUNCTION()
 	void CurrentTaskFinished(FTaskResult TaskResult);
 
+	// the experiment
+	UFUNCTION()
+	virtual void ExecuteExperiment(FExperimentResult NewExperiment);
+
 protected:
 	// The world knowledge loaded from file
 	TArray<FWorldRoomDataStruct> WorldRoomsStruct;
@@ -57,10 +61,6 @@ protected:
 
 	UFUNCTION()
 	virtual void ExperimentFinished();
-
-	// the experiment
-	UFUNCTION()
-	virtual void ExecuteExperiment();
 
 	// After the task is choosed, this method will execute it, creating the decomposition
 	virtual void ExecuteCurrentTask();
@@ -91,6 +91,8 @@ protected:
 	TArray<FRobotProperties> RobotsProperties;
 
 	FExperimentResult CurrentExperiment;
+
+	bool ExperimentStarted = false;
 };
 
 

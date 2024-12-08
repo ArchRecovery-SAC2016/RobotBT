@@ -1,6 +1,8 @@
 #include "ExperimentSetupWidget.h"
 #include "Components/CheckBox.h"
 #include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
+#include "RobotBT/Experiments/ExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Util/MyJsonReader.h"
 
@@ -27,15 +29,18 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	Experiment.RepeatExperimentFor = FCString::Atoi(*RepeatExperimentFor->GetText().ToString());
 	Experiment.MaxWallClockInSeconds = FCString::Atoi(*MaxWallClockInSeconds->GetText().ToString());
 
-	if (ExperimentIsValid) {
+	if (GetWorld()->GetGameInstance() == nullptr) return;
+	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
 
+	if (ExperimentIsValid && ExperimentInstance != nullptr) {
+		ExperimentInstance->StartNewExperiment(Experiment);
 	} else {
 		SetMessage("Experiment is not valid. Please, check the paths.");
 	}
 }
 
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
-	
+	UGameplayStatics::SetGamePaused(GetWorld(), NewValue);
 }
 
 void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
