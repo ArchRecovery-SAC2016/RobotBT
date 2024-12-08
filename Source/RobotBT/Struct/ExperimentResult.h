@@ -34,21 +34,53 @@ struct FTaskResult {
 };
 
 USTRUCT(BlueprintType)
-struct FExperimentResult{
+struct FExperimentResult {
 	GENERATED_BODY()
 
 	UPROPERTY()
-	int32 ExperimentId; // preenchido por BaseExperiment
+	int32 ExperimentId = -1; // preenchido por BaseExperiment
 
 	UPROPERTY()
-	FString Approach = "";
+	float ExperementSpeed = 100; // The Speed of the experiment
 
 	UPROPERTY()
 	float WallClockInSeconds = 0; // The experiment timer
+
+	/** Start Experiment Properties. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	int32 RepeatExperimentFor = 1;
+
+	// The name, can be: RoomPreparation, ...
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	FString ExperimentName = "RoomPreparation";
+
+	// the scenario id, ca ben: 1, ...
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	int32 ScenarioId = 1;
+
+	// the approach, ca ben: Baseline, ..
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	FString Approach = "Baseline";
+
+	// the approach, ca ben: Baseline, ..
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	int32 ExperimentSpeed = 1;
+
+	// will repeat the experiment using this number
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	bool GenerateRandomProperties = false;
+
+	// will save the results
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	bool SaveResults = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	float MaxWallClockInSeconds = 2000.0f;
 
 	UPROPERTY()
 	TArray<FTaskResult> TaskResults;
 
 	UPROPERTY()
 	TArray<FRobotProperties> Robots;
+
 };

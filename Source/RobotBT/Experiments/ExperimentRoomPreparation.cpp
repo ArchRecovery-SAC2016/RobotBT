@@ -60,19 +60,7 @@ void AExperimentRoomPreparation::BeginPlay() {
 	}
 
 	// Start the experiment based on the properties set on the GM_ExperimentRoomPreparation	Blueprint. (in the editor)
-	StartExperiment();
-}
-
-void AExperimentRoomPreparation::StartExperiment() {
-	LoadTasksFromFile();	// load all tasks from file
-
-	if (!LoadWorldFromFile()) return;
-
-	PrepareWorld();
-
-	ExperimentId = -1; // start with id 0. ExecuteNextExperiment will increment
-
-	ExecuteNextExperiment();
+	ExecuteExperiment();
 }
 
 bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {
@@ -121,7 +109,7 @@ bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicat
 }
 
 void AExperimentRoomPreparation::PrepareWorld() {
-	UE_LOG(LogTemp, Display, TEXT("Preparing the world for Experiment: %d"), ExperimentId);
+	UE_LOG(LogTemp, Display, TEXT("Preparing the world for Experiment: %d"), CurrentExperiment.ExperimentId);
 
 	// prepare the rooms
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
@@ -137,10 +125,10 @@ void AExperimentRoomPreparation::PrepareWorld() {
 	RobotsProperties.Empty();
 
 	// initiate the robots
-	CleanerRobot->Initiate(GenerateRandomProperties);
+	CleanerRobot->Initiate(CurrentExperiment.GenerateRandomProperties);
 	RobotsProperties.Add(CleanerRobot->RobotProperties);
 	for (auto* Organizer : OrganizersTeam) {
-		Organizer->Initiate(GenerateRandomProperties);
+		Organizer->Initiate(CurrentExperiment.GenerateRandomProperties);
 		RobotsProperties.Add(Organizer->RobotProperties);
 	}
 }

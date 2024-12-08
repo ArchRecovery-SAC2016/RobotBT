@@ -18,41 +18,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	/** Start Experiment Properties. */
-	/** Must be set on the GM blueprint. Example: GM_ExperimentRoomPreparation */
-
-		// will repeat the experiment for this number 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		int32 RepeatExperimentFor = 1;
-
-		// The name, can be: RoomPreparation, ...
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		FString ExperimentName = "RoomPreparation";
-
-		// the scenario id, ca ben: 1, ...
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		int32 ScenarioId = 1;
-
-		// the approach, ca ben: Baseline, ..
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		FString Approach = "Baseline";
-
-		// the approach, ca ben: Baseline, ..
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		int32 ExperimentSpeed = 1;
-
-		// will repeat the experiment using this number
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		bool GenerateRandomProperties = false;
-
-		// will save the results
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		bool SaveResults = false;
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
-		float MaxWallClockInSeconds = 2000.0f;
-	/** End Experiment Properties. */
-
 	// Load tasks from file
 	UFUNCTION()
 	virtual void LoadTasksFromFile();
@@ -87,23 +52,15 @@ protected:
 	// when the experiment is over, this variable will be setted
 	bool ExperimentIsOver = false;
 
-	UPROPERTY()
-	TArray<FExperimentResult> Experiments;
-
 	// try to execute the next task. If fails, the experiment is over
 	virtual FTask* GetNextTask();
 
-	// set the initial data for the experiment
 	UFUNCTION()
-	virtual void StartExperiment() {};
+	virtual void ExperimentFinished();
 
 	// the experiment
 	UFUNCTION()
-	virtual void ExecuteNextExperiment();
-
-	// Called when everything is finished
-	UFUNCTION()
-	virtual void FinishAllExperiment();
+	virtual void ExecuteExperiment();
 
 	// After the task is choosed, this method will execute it, creating the decomposition
 	virtual void ExecuteCurrentTask();
@@ -132,6 +89,8 @@ protected:
 	// robots properties used in this experiment
 	UPROPERTY()
 	TArray<FRobotProperties> RobotsProperties;
+
+	FExperimentResult CurrentExperiment;
 };
 
 

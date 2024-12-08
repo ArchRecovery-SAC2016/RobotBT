@@ -46,8 +46,6 @@ private:
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
 
-	virtual void StartExperiment() override;
-
 	virtual bool CheckPreCondition(FTask* NewTask) override;
 
 	bool EvaluatePreCondition(const FPredicate& Predicate);

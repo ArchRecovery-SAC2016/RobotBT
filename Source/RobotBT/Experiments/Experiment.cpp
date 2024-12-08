@@ -1,7 +1,6 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "Experiment.h"
 
+#include "ExperimentInstance.h"
 #include "RobotBT/RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
 #include "RobotBT/Util/MyJsonReader.h"
@@ -9,8 +8,6 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
-#include "Kismet/GameplayStatics.h"
-#include "RobotBT/Util/MyJsonWriter.h"
 
 AExperiment::AExperiment()
 {
@@ -33,58 +30,64 @@ AExperiment::AExperiment()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AExperiment::BeginPlay() {
-    Super::BeginPlay();
-
-	// altera vecolidade pra ficar 10x mais rapido
-	if (GetWorld()) {
-		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentSpeed);
-	}
-}
-
 void AExperiment::Tick(float DeltaTime) {
-    Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime);
 
 	// update the wall clock in seconds
 	float WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
 
-	if (WallClockInSeconds > MaxWallClockInSeconds) {
+	if (WallClockInSeconds > CurrentExperiment.MaxWallClockInSeconds) {
 		TimeIsOver();
 	}
 }
 
-void AExperiment::ExecuteNextExperiment() {
-	// if get here, so the experiment is over. We need to start a new one
-	// but before, we set the wall clock in seconds for the last experiment
-	if (Experiments.Num() > 0) {
-		Experiments.Last().WallClockInSeconds = GetWorld()->GetTimeSeconds() - ExperimentStartTime;
+void AExperiment::BeginPlay() {
+    Super::BeginPlay();
+
+	// Obtém o GameInstance
+	UExperimentInstance* RobotBTInstance = Cast<UExperimentInstance>(GetGameInstance());
+	if (RobotBTInstance) {
+		CurrentExperiment = RobotBTInstance->GetCurrentExperiment();
 	}
 
-	// need to reset the timer
-	ExperimentStartTime = GetWorld()->GetTimeSeconds();
+	// The especialized method that will start the experiment
+}
 
-	ExperimentId++;
-	if (ExperimentId >= RepeatExperimentFor) {
-		FinishAllExperiment();
-		return;
+void AExperiment::ExecuteExperiment() {
+	// change the speed of the world
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperementSpeed);
 	}
+
+	// Todo: Change this to the game instance
+	LoadTasksFromFile();
 
 	// Prepare World to match the world knowledge
 	PrepareWorld();
 
-	FExperimentResult Experiment;
-	Experiment.ExperimentId = ExperimentId;
-	Experiment.Approach = Approach;
-	Experiment.WallClockInSeconds = 0;
-	Experiment.Robots = RobotsProperties;
+
+	// TODO: REMOVE THE ROBOTS PROPERTIES FROM HERE AND GET FROM FILES 
+	CurrentExperiment.Robots = RobotsProperties;
 	CurrentTaskIndex = -1;
 
-	Experiments.Add(Experiment);
-
-	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), Experiment.ExperimentId);
+	FString Message = FString::Printf(TEXT("Executing Experiment With Id: %d"), CurrentExperiment.ExperimentId);
 	UUtilMethods::ShowLogMessage(Message, EMessageColorEnum::INFO);
 	CurrentTask = GetNextTask();
 	ExecuteCurrentTask();
+}
+
+
+void AExperiment::ExperimentFinished() {
+	UGameInstance * GameInstance = GetGameInstance();
+
+	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GameInstance);
+
+	if (ExperimentInstance) {
+		// Agora você pode acessar os métodos ou variáveis do URobotBTInstance
+		ExperimentInstance->ExperimentFinished(CurrentExperiment);
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("URobotBTInstance not found!"));
+	}
 }
 
 FTask* AExperiment::GetNextTask() {
@@ -121,9 +124,8 @@ FTask* AExperiment::GetNextTask() {
 void AExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
 		// se entrar aqui, entao acabou as tarefas.
-		UE_LOG(LogTemp, Error, TEXT("[AExperiment::ExecuteCurrentTask] Experiment finished!"));
-		// pega o ultimo experimento e configuro o clock in seconds
-		ExecuteNextExperiment();
+		UE_LOG(LogTemp, Error, TEXT("[AExperiment::ExecuteCurrentTask] No more tasks found!"));
+		ExperimentFinished();
 		return;
 	}
 
@@ -140,11 +142,10 @@ void AExperiment::ExecuteCurrentTask() {
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
-	Experiments.Last().TaskResults.Add(TaskResult);
+	CurrentExperiment.TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition
 	if (TaskResult.SuccessResult) {
-		
 		NumberOfTask--; // substract the number o task, because the organizer need 2 tasks
 
 		if (NumberOfTask > 0) return;
@@ -158,29 +159,21 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 		}
 	} else {
 		UUtilMethods::PrintFailureMessage(TaskResult.FailureReasonEnum, TaskResult.RobotName);
-		ExecuteNextExperiment();
+		ExperimentFinished();
 	}
 }
 
-void AExperiment::FinishAllExperiment() {
-	if (SaveResults) {
-		UMyJsonWriter::AddToJsonFile(Experiments, ExperimentName, ScenarioId);
-	}
-
-	UUtilMethods::ShowLogMessage("All Finished!!!", EMessageColorEnum::INFO);
-	UGameplayStatics::SetGamePaused(GetWorld(), true);
-}
 
 bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
 void AExperiment::LoadTasksFromFile() {
-	Tasks = UMyJsonReader::ReadTaskFromFile(ExperimentName, ScenarioId);
+	Tasks = UMyJsonReader::ReadTaskFromFile(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
 }
 
 bool AExperiment::LoadWorldFromFile() {
-	WorldRoomsStruct = UMyJsonReader::LoadWorldData(ExperimentName, ScenarioId);
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
 	if (WorldRoomsStruct.Num() <= 0) {
 		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
 		return false;
