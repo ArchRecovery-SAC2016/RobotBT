@@ -46,7 +46,6 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;
 		ExperimentInstance->StartNewExperiment(Experiment);
-		PauseExperiment(false);
 	} 
 }
 
@@ -80,8 +79,7 @@ bool UExperimentSetupWidget::ValidateInputs() {
 }
 
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
-	ExperimentPaused = NewValue;
-	UGameplayStatics::SetGamePaused(GetWorld(), ExperimentPaused);
+	UGameplayStatics::SetGamePaused(GetWorld(), NewValue);
 }
 
 void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
