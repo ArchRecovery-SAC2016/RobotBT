@@ -70,16 +70,13 @@ public:
 	void PauseExperiment(bool NewValue);
 
 	UFUNCTION(BlueprintCallable)
-	void OpenFileClicked(FString Type);
-
-	UFUNCTION(BlueprintCallable)
 	void SetOutputPath(FString NewPath);
 
 	UFUNCTION(BlueprintCallable)
-	void SetWorldPath(FString NewPath);
+	void OpenFileClicked(FString Type);
 
 	UFUNCTION(BlueprintCallable)
-	void SetRobotsPath(FString NewPath);
+	void SetWorldPath(FString NewPath);
 
 	UFUNCTION(BlueprintCallable)
 	void SetMessage(FString NewMessage);

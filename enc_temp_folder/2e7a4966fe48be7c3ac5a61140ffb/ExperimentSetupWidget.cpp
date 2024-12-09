@@ -5,6 +5,10 @@
 #include "RobotBT/Experiments/ExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Util/MyJsonReader.h"
+#include "DesktopPlatformModule.h"
+#include "IDesktopPlatform.h"
+#include "HAL/PlatformFilemanager.h"
+#include "Misc/FileHelper.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();
@@ -46,6 +50,7 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;
 		ExperimentInstance->StartNewExperiment(Experiment);
+		PauseExperiment(false);
 	} 
 }
 
@@ -79,12 +84,49 @@ bool UExperimentSetupWidget::ValidateInputs() {
 }
 
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
-	UGameplayStatics::SetGamePaused(GetWorld(), NewValue);
+	ExperimentPaused = NewValue;
+	UGameplayStatics::SetGamePaused(GetWorld(), ExperimentPaused);
 }
 
 void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
 	OutputPath->SetText(FText::FromString(NewPath));
 	Experiment.OutputJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+}
+
+void UExperimentSetupWidget::OpenFileClicked(FString Type) {
+	FString SelectedFilePath;
+
+	// Acessa a interface DesktopPlatform
+	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+	if (DesktopPlatform) {
+		// Define a janela para selecionar o arquivo
+		TArray<FString> OutFileNames;
+		const void* ParentWindowHandle = FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr);
+
+		// Filtra os tipos de arquivo desejados
+		bool bFileSelected = DesktopPlatform->OpenFileDialog(
+			ParentWindowHandle,
+			TEXT("Selecione um Arquivo"),
+			FPaths::ProjectContentDir(),
+			TEXT(""),
+			TEXT("Arquivos JSON (*.json)|*.json|Todos os Arquivos (*.*)|*.*"),
+			EFileDialogFlags::None,
+			OutFileNames
+		);
+
+		if (bFileSelected && OutFileNames.Num() > 0) {
+			// Pega o primeiro arquivo selecionado
+			SelectedFilePath = OutFileNames[0];
+			UE_LOG(LogTemp, Log, TEXT("Arquivo selecionado: %s"), *SelectedFilePath);
+
+			// Carrega o conteúdo do arquivo como exemplo (opcional)
+			FString FileContents;
+			if (FFileHelper::LoadFileToString(FileContents, *SelectedFilePath)) {
+				UE_LOG(LogTemp, Log, TEXT("Conteúdo do Arquivo: %s"), *FileContents);
+				// Chame sua lógica para processar o arquivo aqui
+			}
+		}
+	}
 }
 
 void UExperimentSetupWidget::SetWorldPath(FString NewPath) {

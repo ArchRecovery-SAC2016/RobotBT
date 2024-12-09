@@ -5,6 +5,10 @@
 #include "RobotBT/Experiments/ExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Util/MyJsonReader.h"
+#include "DesktopPlatformModule.h"
+#include "IDesktopPlatform.h"
+#include "HAL/PlatformFilemanager.h"
+#include "Misc/FileHelper.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();
@@ -84,14 +88,51 @@ void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
 	UGameplayStatics::SetGamePaused(GetWorld(), ExperimentPaused);
 }
 
+void UExperimentSetupWidget::OpenFileClicked(FString Type) {
+	// Acessa a interface DesktopPlatform
+	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+	if (DesktopPlatform) {
+		// Define a janela para selecionar o arquivo
+		TArray<FString> OutFileNames;
+		const void* ParentWindowHandle = FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr);
+
+		// Filtra os tipos de arquivo desejados
+		bool bFileSelected = DesktopPlatform->OpenFileDialog(
+			ParentWindowHandle,
+			TEXT("Select a File"),
+			FPaths::ProjectContentDir(),
+			TEXT(""),
+			TEXT("Arquivos JSON (*.json)|*.json|Todos os Arquivos (*.*)|*.*"),
+			EFileDialogFlags::None,
+			OutFileNames
+		);
+
+		if (bFileSelected && OutFileNames.Num() > 0) {
+			// Pega o primeiro arquivo selecionado
+			FString SelectedFilePath = OutFileNames[0];
+			UE_LOG(LogTemp, Log, TEXT("Arquivo selecionado: %s"), *SelectedFilePath);
+
+			if (Type == "Output") SetOutputPath(SelectedFilePath);
+			else if (Type == "World") SetWorldPath(SelectedFilePath);
+			else if (Type == "Robots") SetRobotsPath(SelectedFilePath);
+			else UE_LOG(LogTemp, Log, TEXT("Invalid Type. Type must be Output, World, Robots"));
+		}
+	}
+}
+
 void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
-	OutputPath->SetText(FText::FromString(NewPath));
+	OutputPath->SetText(FText::FromString(NewPath)); 	// TODO: Validade file
 	Experiment.OutputJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetWorldPath(FString NewPath) {
 	WorldPath->SetText(FText::FromString(NewPath));
 	Experiment.WorldJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+}
+
+void UExperimentSetupWidget::SetRobotsPath(FString NewPath) {
+	WorldPath->SetText(FText::FromString(NewPath));
+	Experiment.RobotsConfigJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetMessage(FString NewMessage) {
