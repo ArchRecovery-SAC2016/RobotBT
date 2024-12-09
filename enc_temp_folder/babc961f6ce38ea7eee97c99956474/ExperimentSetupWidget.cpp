@@ -38,15 +38,6 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	Experiment.RepeatExperimentFor = FCString::Atoi(*RepeatExperimentFor->GetText().ToString());
 	Experiment.MaxWallClockInSeconds = FCString::Atoi(*MaxWallClockInSeconds->GetText().ToString());
 
-	if (SaveResults->GetCheckedState() == ECheckBoxState::Checked) Experiment.SaveResults = true;
-	else Experiment.SaveResults = false;
-
-	if (GenerateRandomProperties->GetCheckedState() == ECheckBoxState::Checked) Experiment.GenerateRandomProperties = true;
-	else Experiment.GenerateRandomProperties = false;
-
-	if (GenerateRandomProperties)
-	Experiment.GenerateRandomProperties = 
-
 	ExperimentIsValid = ValidateInputs();
 
 	if (!ExperimentIsValid) return;
@@ -143,6 +134,8 @@ void UExperimentSetupWidget::SetRobotsPath(FString NewPath) {
 
 void UExperimentSetupWidget::SetMessage(FString NewMessage) {
 	Message->SetText(FText::FromString(NewMessage));
+
+
 }
 
 FText UExperimentSetupWidget::GetExperimentIdValue() {
@@ -162,3 +155,7 @@ FText UExperimentSetupWidget::GetTimerValue() {
 
 	return FText::FromString("Timer");
 }
+
+
+
+

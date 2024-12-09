@@ -13,6 +13,8 @@ void UMainExperimentInstance::Init() {
 }
 
 void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
+	Experiments.Empty();
+
 	ExperimentId = 0;
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.WallClockInSeconds = 0;
@@ -29,8 +31,7 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		} else {
 			UE_LOG(LogTemp, Warning, TEXT("Failed to load AExperiment."));
 		}
-	}
-	else {
+	} else {
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load World."));
 	}
 
@@ -38,22 +39,16 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 }
 
 void UMainExperimentInstance::NextExperiment() {
-	FExperimentResult Experiment;
-	Experiment.ExperimentId = ExperimentId;
-	Experiment.Approach = CurrentExperiment.Approach;
-	Experiment.ExperimentSpeed = CurrentExperiment.ExperimentSpeed;
-	Experiment.WallClockInSeconds = 0;
-	Experiment.RepeatExperimentFor = CurrentExperiment.RepeatExperimentFor;
+	CurrentExperiment.ExperimentId = ExperimentId;
+	CurrentExperiment.WallClockInSeconds = 0;
 	
 	if (ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
 	}
 
-	CurrentExperiment = Experiment;
 	if (ExperimentGameMode != nullptr) {
 		ExperimentGameMode->ExecuteExperiment(CurrentExperiment);
 	}
-
 }
 
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {

@@ -131,7 +131,6 @@ void AExperiment::ExecuteCurrentTask() {
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
-	CurrentExperiment.WallClockInSeconds = WallClockInSeconds;
 	CurrentExperiment.TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition

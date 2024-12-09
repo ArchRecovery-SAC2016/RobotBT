@@ -1,0 +1,174 @@
+{
+	"result": [
+		{
+			"experimentId": 0,
+			"maxWallClockInSeconds": 200,
+			"approach": "Baseline",
+			"generateRandomProperties": true,
+			"saveResults": true,
+			"wallClockInSeconds": 0,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillNotFound",
+					"timeSpentOnTask": 10.131223678588867,
+					"batterySpentOnTask": 1
+				}
+			],
+			"robots": [
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0.15000000596046448,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.75,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.029999999329447746,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "NONE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.10000000149011612
+						}
+					],
+					"color": "Blue",
+					"speed": 120
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0.029999999329447746,
+						"dischargeRate": 0.0099999997764825821
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Yellow",
+					"speed": 150
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0.029999999329447746,
+						"dischargeRate": 0.02500000037252903
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						}
+					],
+					"color": "Green",
+					"speed": 110
+				}
+			]
+		},
+		{
+			"experimentId": 1,
+			"maxWallClockInSeconds": 200,
+			"approach": "Baseline",
+			"generateRandomProperties": true,
+			"saveResults": true,
+			"wallClockInSeconds": 0,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": false,
+					"failureReasonEnum": "SkillFailure",
+					"timeSpentOnTask": 10.131223678588867,
+					"batterySpentOnTask": 0.89999997615814209
+				}
+			],
+			"robots": [
+				{
+					"name": "Cleaner",
+					"battery":
+					{
+						"charge": 0.89999997615814209,
+						"minimumUsefulLevel": 0.029999999329447746,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "CLEAN_ROOM",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.090000003576278687
+						},
+						{
+							"skillEnum": "SANITIZE_ROBOT",
+							"chanceToFail": 0.059999998658895493,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						},
+						{
+							"skillEnum": "OPEN_DOOR",
+							"chanceToFail": 0.75,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Green",
+					"speed": 120
+				},
+				{
+					"name": "Organizer2",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0.059999998658895493,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.019999999552965164,
+							"batteryConsumeDischargeRate": 0.0099999997764825821
+						}
+					],
+					"color": "Black",
+					"speed": 150
+				},
+				{
+					"name": "Organizer1",
+					"battery":
+					{
+						"charge": 1,
+						"minimumUsefulLevel": 0.15000000596046448,
+						"dischargeRate": 0.0010000000474974513
+					},
+					"skills": [
+						{
+							"skillEnum": "MOVE_FURNITURE",
+							"chanceToFail": 0.0099999997764825821,
+							"batteryConsumeDischargeRate": 0.11999999731779099
+						}
+					],
+					"color": "Black",
+					"speed": 110
+				}
+			]
+		}
+	]
+}
