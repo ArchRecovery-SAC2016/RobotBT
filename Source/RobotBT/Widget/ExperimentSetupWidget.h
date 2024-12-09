@@ -5,6 +5,7 @@
 #include "Components/CheckBox.h"
 #include "Components/EditableText.h"
 #include "Components/TextBlock.h"
+#include "RobotBT/Experiments/ExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "ExperimentSetupWidget.generated.h"
 
@@ -52,7 +53,7 @@ public:
 	UEditableText* RobotsConfigurationPath;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	UCheckBox* BaselineApproach;
+	UCheckBox* GenerateRandomProperties;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UCheckBox* SaveResults;
@@ -84,11 +85,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetMessage(FString NewMessage);
 
+	UFUNCTION(BlueprintCallable)
+	FText GetExperimentIdValue();
+
+	UFUNCTION(BlueprintCallable)
+	FText GetTimerValue();
+
 	UPROPERTY()
 	FExperimentResult Experiment;
 
 	bool ValidateInputs();
 
-
+	UPROPERTY()
+	UExperimentInstance* ExperimentInstance;
 
 };

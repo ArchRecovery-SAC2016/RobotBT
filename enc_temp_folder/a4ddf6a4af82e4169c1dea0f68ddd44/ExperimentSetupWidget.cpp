@@ -26,8 +26,6 @@ void UExperimentSetupWidget::NativeConstruct() {
 	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
 	RepeatExperimentFor->SetText(FText::AsNumber(Experiment.RepeatExperimentFor));
 	MaxWallClockInSeconds->SetText(FText::AsNumber(Experiment.MaxWallClockInSeconds));
-	
-	BaselineApproach->SetCheckedState(ECheckBoxState::Checked);
 
 	if (Experiment.SaveResults) {
 		SaveResults->SetCheckedState(ECheckBoxState::Checked);
@@ -45,7 +43,7 @@ void UExperimentSetupWidget::InitiateExperiment() {
 
 	if (!ExperimentIsValid) return;
 
-	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
+	ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
 
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;
@@ -88,14 +86,7 @@ void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
 	UGameplayStatics::SetGamePaused(GetWorld(), ExperimentPaused);
 }
 
-void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
-	OutputPath->SetText(FText::FromString(NewPath));
-	Experiment.OutputJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
-}
-
 void UExperimentSetupWidget::OpenFileClicked(FString Type) {
-	FString SelectedFilePath;
-
 	// Acessa a interface DesktopPlatform
 	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
 	if (DesktopPlatform) {
@@ -106,7 +97,7 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 		// Filtra os tipos de arquivo desejados
 		bool bFileSelected = DesktopPlatform->OpenFileDialog(
 			ParentWindowHandle,
-			TEXT("Selecione um Arquivo"),
+			TEXT("Select a File"),
 			FPaths::ProjectContentDir(),
 			TEXT(""),
 			TEXT("Arquivos JSON (*.json)|*.json|Todos os Arquivos (*.*)|*.*"),
@@ -116,22 +107,30 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 
 		if (bFileSelected && OutFileNames.Num() > 0) {
 			// Pega o primeiro arquivo selecionado
-			SelectedFilePath = OutFileNames[0];
+			FString SelectedFilePath = OutFileNames[0];
 			UE_LOG(LogTemp, Log, TEXT("Arquivo selecionado: %s"), *SelectedFilePath);
 
-			// Carrega o conteúdo do arquivo como exemplo (opcional)
-			FString FileContents;
-			if (FFileHelper::LoadFileToString(FileContents, *SelectedFilePath)) {
-				UE_LOG(LogTemp, Log, TEXT("Conteúdo do Arquivo: %s"), *FileContents);
-				// Chame sua lógica para processar o arquivo aqui
-			}
+			if (Type == "Output") SetOutputPath(SelectedFilePath);
+			else if (Type == "World") SetWorldPath(SelectedFilePath);
+			else if (Type == "Robots") SetRobotsPath(SelectedFilePath);
+			else UE_LOG(LogTemp, Log, TEXT("Invalid Type. Type must be Output, World, Robots"));
 		}
 	}
+}
+
+void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
+	OutputPath->SetText(FText::FromString(NewPath)); 	// TODO: Validade file
+	Experiment.OutputJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetWorldPath(FString NewPath) {
 	WorldPath->SetText(FText::FromString(NewPath));
 	Experiment.WorldJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+}
+
+void UExperimentSetupWidget::SetRobotsPath(FString NewPath) {
+	WorldPath->SetText(FText::FromString(NewPath));
+	Experiment.RobotsConfigJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetMessage(FString NewMessage) {
@@ -140,7 +139,22 @@ void UExperimentSetupWidget::SetMessage(FString NewMessage) {
 
 }
 
+FText UExperimentSetupWidget::GetExperimentIdValue() {
+	if (ExperimentInstance != nullptr) {
+		return FText::AsNumber(ExperimentInstance->ExperimentId);
+	}
 
+	return FText::FromString("");
+}
+
+
+FText UExperimentSetupWidget::GetTimerValue() {
+	if (ExperimentInstance != nullptr) {
+		return FText::AsNumber(ExperimentInstance->GetTimer());
+	}
+
+	return FText::FromString("Timer");
+}
 
 
 

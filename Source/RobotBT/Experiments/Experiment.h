@@ -18,6 +18,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY()
+	float WallClockInSeconds = 0;
+
 	// Load tasks from file
 	UFUNCTION()
 	virtual void LoadTasksFromFile();
@@ -31,7 +34,10 @@ public:
 
 	// the experiment
 	UFUNCTION()
-	virtual void ExecuteExperiment(FExperimentResult NewExperiment);
+	virtual void ExecuteExperiment(FExperimentResult& NewExperiment);
+
+	UPROPERTY()
+	FExperimentResult CurrentExperiment;
 
 protected:
 	// The world knowledge loaded from file
@@ -90,9 +96,10 @@ protected:
 	UPROPERTY()
 	TArray<FRobotProperties> RobotsProperties;
 
-	FExperimentResult CurrentExperiment;
 
 	bool ExperimentStarted = false;
+
+	
 };
 
 

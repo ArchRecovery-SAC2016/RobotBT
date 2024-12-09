@@ -4,6 +4,8 @@
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "ExperimentInstance.generated.h"
 
+class AExperiment;
+
 UCLASS()
 class UExperimentInstance : public UGameInstance {
 	GENERATED_BODY()
@@ -39,9 +41,13 @@ public:
 	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	FExperimentResult CurrentExperiment;
 
+	UFUNCTION()
+	float GetTimer();
+private:
+	AExperiment* ExperimentGameMode;
 
 
 };

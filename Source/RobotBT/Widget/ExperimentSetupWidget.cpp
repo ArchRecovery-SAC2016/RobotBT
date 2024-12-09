@@ -26,8 +26,6 @@ void UExperimentSetupWidget::NativeConstruct() {
 	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
 	RepeatExperimentFor->SetText(FText::AsNumber(Experiment.RepeatExperimentFor));
 	MaxWallClockInSeconds->SetText(FText::AsNumber(Experiment.MaxWallClockInSeconds));
-	
-	BaselineApproach->SetCheckedState(ECheckBoxState::Checked);
 
 	if (Experiment.SaveResults) {
 		SaveResults->SetCheckedState(ECheckBoxState::Checked);
@@ -45,7 +43,7 @@ void UExperimentSetupWidget::InitiateExperiment() {
 
 	if (!ExperimentIsValid) return;
 
-	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
+	ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
 
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;
@@ -141,7 +139,23 @@ void UExperimentSetupWidget::SetMessage(FString NewMessage) {
 
 }
 
+FText UExperimentSetupWidget::GetExperimentIdValue() {
+	if (ExperimentInstance != nullptr) {
+		return FText::AsNumber(ExperimentInstance->ExperimentId);
+	}
 
+	return FText::FromString("");
+}
+
+FText UExperimentSetupWidget::GetTimerValue() {
+	if (ExperimentInstance != nullptr) {
+		float TimerValue = ExperimentInstance->GetTimer();
+		FString FormattedTime = FString::Printf(TEXT("%.2f s"), TimerValue);
+		return FText::FromString(FormattedTime);
+	}
+
+	return FText::FromString("Timer");
+}
 
 
 

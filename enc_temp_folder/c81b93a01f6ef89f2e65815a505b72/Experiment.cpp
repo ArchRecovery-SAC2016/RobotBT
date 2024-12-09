@@ -50,7 +50,6 @@ void AExperiment::BeginPlay() {
 
 void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
 	CurrentExperiment = NewExperiment;
-	ExperimentStartTime = GetWorld()->GetTimeSeconds();
 
 	// change the speed of the world
 	if (GetWorld()) {

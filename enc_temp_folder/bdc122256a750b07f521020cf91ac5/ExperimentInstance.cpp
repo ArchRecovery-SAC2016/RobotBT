@@ -52,9 +52,11 @@ FExperimentResult& UExperimentInstance::GetCurrentExperiment() {
 
 float UExperimentInstance::GetTimer() {
 	if (ExperimentGameMode != nullptr) {
-		return  ExperimentGameMode->WallClockInSeconds;
+		ExperimentGameMode->WallClockInSeconds;
+		
 	}
 	return 0;
+
 }
 
 void UExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
