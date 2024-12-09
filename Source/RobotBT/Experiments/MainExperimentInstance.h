@@ -2,18 +2,18 @@
 
 #include "CoreMinimal.h"
 #include "RobotBT/Struct/ExperimentResult.h"
-#include "ExperimentInstance.generated.h"
+#include "MainExperimentInstance.generated.h"
 
 class AExperiment;
 
 UCLASS()
-class UExperimentInstance : public UGameInstance {
+class UMainExperimentInstance : public UGameInstance {
 	GENERATED_BODY()
 
 public:
-	UExperimentInstance();
+	UMainExperimentInstance();
 
-	void Init() override;
+	virtual void Init() override;
 
 	// used to indicate the Experiment Id.
 	int32 ExperimentId = 0;
@@ -47,6 +47,7 @@ public:
 	UFUNCTION()
 	float GetTimer();
 private:
+	UPROPERTY()
 	AExperiment* ExperimentGameMode;
 
 

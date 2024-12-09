@@ -1,6 +1,6 @@
 #include "Experiment.h"
 
-#include "ExperimentInstance.h"
+#include "MainExperimentInstance.h"
 #include "RobotBT/RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
 #include "RobotBT/Util/MyJsonReader.h"
@@ -153,17 +153,7 @@ void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
 }
 
 void AExperiment::ExperimentFinished() {
-	UGameInstance* GameInstance = GetGameInstance();
-
-	UExperimentInstance* ExperimentInstance = Cast<UExperimentInstance>(GameInstance);
-
-	if (ExperimentInstance) {
-		// Agora você pode acessar os métodos ou variáveis do URobotBTInstance
-		ExperimentInstance->ExperimentFinished(CurrentExperiment);
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("URobotBTInstance not found!"));
-	}
+	OnExperimentFinished.Broadcast(CurrentExperiment);
 }
 
 bool AExperiment::ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition) {

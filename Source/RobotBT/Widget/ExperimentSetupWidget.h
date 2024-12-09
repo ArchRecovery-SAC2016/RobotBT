@@ -5,7 +5,7 @@
 #include "Components/CheckBox.h"
 #include "Components/EditableText.h"
 #include "Components/TextBlock.h"
-#include "RobotBT/Experiments/ExperimentInstance.h"
+#include "RobotBT/Experiments/MainExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "ExperimentSetupWidget.generated.h"
 
@@ -97,6 +97,6 @@ public:
 	bool ValidateInputs();
 
 	UPROPERTY()
-	UExperimentInstance* ExperimentInstance;
+	UMainExperimentInstance* ExperimentInstance;
 
 };

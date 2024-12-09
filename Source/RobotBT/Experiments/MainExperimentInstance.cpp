@@ -1,26 +1,40 @@
-#include "ExperimentInstance.h"
+#include "MainExperimentInstance.h"
 
 #include "Experiment.h"
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Util/MyJsonWriter.h"
 
-UExperimentInstance::UExperimentInstance() {
+UMainExperimentInstance::UMainExperimentInstance() {
 	
 }
 
-void UExperimentInstance::Init() {
+void UMainExperimentInstance::Init() {
 	Super::Init();
 }
 
-void UExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
+void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.WallClockInSeconds = 0;
 	CurrentExperiment = Experiment;
 
+	if (UWorld* World = GetWorld()) {
+		ExperimentGameMode = Cast<AExperiment>(World->GetAuthGameMode());
+		ExperimentGameMode->OnExperimentFinished.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
+
+		if (ExperimentGameMode != nullptr) {
+			ExperimentGameMode->ExecuteExperiment(CurrentExperiment);
+		} else {
+			UE_LOG(LogTemp, Warning, TEXT("Failed to load AExperiment."));
+		}
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Failed to load World."));
+	}
+
 	NextExperiment();
 }
 
-void UExperimentInstance::NextExperiment() {
+void UMainExperimentInstance::NextExperiment() {
 	FExperimentResult Experiment;
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = CurrentExperiment.Approach;
@@ -33,26 +47,13 @@ void UExperimentInstance::NextExperiment() {
 	}
 
 	CurrentExperiment = Experiment;
-
-	if (UWorld* World = GetWorld()) {
-		ExperimentGameMode = Cast<AExperiment>(World->GetAuthGameMode());
-		if (ExperimentGameMode != nullptr) {
-			ExperimentGameMode->ExecuteExperiment(CurrentExperiment);
-		} else {
-			UE_LOG(LogTemp, Warning, TEXT("Failed to load AExperiment."));
-		}
-	}
-}
-
-
-float UExperimentInstance::GetTimer() {
 	if (ExperimentGameMode != nullptr) {
-		return  ExperimentGameMode->WallClockInSeconds;
+		ExperimentGameMode->ExecuteExperiment(CurrentExperiment);
 	}
-	return 0;
+
 }
 
-void UExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
+void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	Experiments.Add(NewExperiment);
 
 	ExperimentId++;
@@ -74,11 +75,11 @@ void UExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	}
 }
 
-void UExperimentInstance::OnLevelLoaded() {
+void UMainExperimentInstance::OnLevelLoaded() {
 	NextExperiment();
 }
 
-void UExperimentInstance::FinishAllExperiment() {
+void UMainExperimentInstance::FinishAllExperiment() {
 	if (CurrentExperiment.SaveResults) {
 		UMyJsonWriter::AddToJsonFile(Experiments, CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
 	}
@@ -86,7 +87,13 @@ void UExperimentInstance::FinishAllExperiment() {
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
+float UMainExperimentInstance::GetTimer() {
+	if (ExperimentGameMode != nullptr) {
+		return  ExperimentGameMode->WallClockInSeconds;
+	}
+	return 0;
+}
 
-FExperimentResult& UExperimentInstance::GetCurrentExperiment() {
+FExperimentResult& UMainExperimentInstance::GetCurrentExperiment() {
 	return CurrentExperiment;
 }

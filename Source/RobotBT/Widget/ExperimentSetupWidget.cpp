@@ -2,7 +2,6 @@
 #include "Components/CheckBox.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
-#include "RobotBT/Experiments/ExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Util/MyJsonReader.h"
 #include "DesktopPlatformModule.h"
@@ -43,7 +42,7 @@ void UExperimentSetupWidget::InitiateExperiment() {
 
 	if (!ExperimentIsValid) return;
 
-	ExperimentInstance = Cast<UExperimentInstance>(GetWorld()->GetGameInstance());
+	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;

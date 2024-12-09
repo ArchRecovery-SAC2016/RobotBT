@@ -7,6 +7,8 @@
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "Experiment.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExperimentFinished, FExperimentResult, ExperimentResult);
+
 UCLASS(minimalapi)
 class AExperiment : public AGameModeBase {
 	GENERATED_BODY()
@@ -38,6 +40,8 @@ public:
 
 	UPROPERTY()
 	FExperimentResult CurrentExperiment;
+
+	FOnExperimentFinished OnExperimentFinished;
 
 protected:
 	// The world knowledge loaded from file
