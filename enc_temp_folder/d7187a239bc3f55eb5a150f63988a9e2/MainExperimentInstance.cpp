@@ -13,15 +13,12 @@ void UMainExperimentInstance::Init() {
 }
 
 void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
-	ExperimentId = 0;
 	Experiment.ExperimentId = ExperimentId;
 	Experiment.WallClockInSeconds = 0;
 	CurrentExperiment = Experiment;
 
 	if (UWorld* World = GetWorld()) {
 		ExperimentGameMode = Cast<AExperiment>(World->GetAuthGameMode());
-		// Remove the existing dynamic delegate
-		ExperimentGameMode->OnExperimentFinished.RemoveDynamic(this, &UMainExperimentInstance::ExperimentFinished);
 		ExperimentGameMode->OnExperimentFinished.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
 
 		if (ExperimentGameMode != nullptr) {
