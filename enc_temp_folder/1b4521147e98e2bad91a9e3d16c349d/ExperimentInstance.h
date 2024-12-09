@@ -15,8 +15,8 @@ public:
 
 	void Init() override;
 
-	// used to indicate the Experiment Id.
-	int32 ExperimentId = 0;
+	// used to indicate the Experiment Id. -1 will be a single experiment
+	int32 ExperimentId = -1;
 
 	// End Experiment Properties. 
 	UFUNCTION()

@@ -46,7 +46,7 @@ struct FExperimentResult {
 
 	// will save the results
 	UPROPERTY()
-	float MaxWallClockInSeconds = 200.0f;
+	float MaxWallClockInSeconds = 2000.0f;
 
 	// Default value for the repeat experiment of
 	UPROPERTY(Transient)

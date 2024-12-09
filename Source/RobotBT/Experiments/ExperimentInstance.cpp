@@ -10,12 +10,10 @@ UExperimentInstance::UExperimentInstance() {
 
 void UExperimentInstance::Init() {
 	Super::Init();
-
-
 }
 
 void UExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
-	Experiment.ExperimentId = 0;
+	Experiment.ExperimentId = ExperimentId;
 	Experiment.WallClockInSeconds = 0;
 	CurrentExperiment = Experiment;
 
@@ -24,7 +22,7 @@ void UExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 
 void UExperimentInstance::NextExperiment() {
 	FExperimentResult Experiment;
-	Experiment.ExperimentId = ExperimentId++;
+	Experiment.ExperimentId = ExperimentId;
 	Experiment.Approach = CurrentExperiment.Approach;
 	Experiment.ExperimentSpeed = CurrentExperiment.ExperimentSpeed;
 	Experiment.WallClockInSeconds = 0;
@@ -46,9 +44,6 @@ void UExperimentInstance::NextExperiment() {
 	}
 }
 
-FExperimentResult& UExperimentInstance::GetCurrentExperiment() {
-	return CurrentExperiment;
-}
 
 float UExperimentInstance::GetTimer() {
 	if (ExperimentGameMode != nullptr) {
@@ -89,4 +84,9 @@ void UExperimentInstance::FinishAllExperiment() {
 	}
 
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+
+FExperimentResult& UExperimentInstance::GetCurrentExperiment() {
+	return CurrentExperiment;
 }
