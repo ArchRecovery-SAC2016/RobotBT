@@ -109,10 +109,10 @@ struct FTask {
     TArray<FTaskEffect> Effects;
 
     UPROPERTY(BlueprintReadOnly)
-    TArray<FString> TriggeringEvents;
+    TArray<FTaskDecomposition> Decomposition;
 
     UPROPERTY(BlueprintReadOnly)
-    TMap<FString, FTaskDecomposition> Decomposition;
+    TArray<FString> TriggeringEvents;
 
     UPROPERTY(BlueprintReadOnly)
     FString Group;

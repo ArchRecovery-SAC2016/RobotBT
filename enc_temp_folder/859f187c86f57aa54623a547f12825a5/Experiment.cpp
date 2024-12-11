@@ -123,14 +123,15 @@ void AExperiment::ExecuteCurrentTask() {
 	DecompositionQueue.Empty();
 
 	// if is empty, so is the first time of this task, so we fill the decomposition queue
-	for (auto it = CurrentTask->Decomposition.CreateConstIterator(); it; ++it) {
-		DecompositionQueue.Add(it.Value());
+	for (int32 i = 0; i <= CurrentTask->Decomposition.Num(); i++) {
+		DecompositionQueue.Add(CurrentTask->Decomposition[i]);
 	}
 
 	ExecuteCurrentDecomposition();
 }
 
 void AExperiment::CurrentTaskFinished(FTaskResult TaskResult) {
+	CurrentExperiment.WallClockInSeconds = WallClockInSeconds;
 	CurrentExperiment.TaskResults.Add(TaskResult);
 
 	// if the task was successful, we can go to the next decomposition

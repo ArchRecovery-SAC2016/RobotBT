@@ -189,7 +189,7 @@ TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& Tas
                 FTaskDecomposition Decomp;
                 DecompObject->TryGetStringField(TEXT("name"), Decomp.Name);
                 DecompObject->TryGetStringField(TEXT("arguments"), Decomp.Arguments);
-                Task.Decomposition.Add(DecompKey, Decomp);
+                Task.Decomposition.Add(Decomp);
             }
         }
 
