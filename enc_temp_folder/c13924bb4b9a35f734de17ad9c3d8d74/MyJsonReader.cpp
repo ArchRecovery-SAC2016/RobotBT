@@ -9,7 +9,6 @@
 #include "Serialization/JsonSerializer.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
-#include "JsonObjectConverter.h"
 
 TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
     TMap<FString, FTask> Tasks;
@@ -106,9 +105,7 @@ FString UMyJsonReader::ReadStringFromFile(FString FilePath) {
 
     UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on read file"));
     return RetString;
-
 }
-
 
 
 TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& TasksObject) {
@@ -210,7 +207,6 @@ void UMyJsonReader::WriteStringToFile(FString FilePath, FString String) {
         UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on save file"));
     }
 }
-
 FGoalModel UMyJsonReader::ReadGoalModel(FString Experiment, int32 ScenarioId) {
     FString Path = "Data/" + Experiment;
     if (ScenarioId != -1) {
@@ -222,10 +218,10 @@ FGoalModel UMyJsonReader::ReadGoalModel(FString Experiment, int32 ScenarioId) {
     FString JsonString;
     if (!FFileHelper::LoadFileToString(JsonString, *FilePath)) {
         UE_LOG(LogTemp, Error, TEXT("Failed to load Goal Model from file at: %s"), *FilePath);
-		return  FGoalModel();
+        return FGoalModel();
     }
 
-	FGoalModel GoalModel;
+    FGoalModel GoalModel;
 
     TSharedPtr<FJsonObject> JsonObject;
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
@@ -245,27 +241,33 @@ FGoalModel UMyJsonReader::ReadGoalModel(FString Experiment, int32 ScenarioId) {
                                 FGoalNode NewNode;
                                 NewNode.Id = (*NodeObject)->GetStringField("id");
                                 NewNode.Text = (*NodeObject)->GetStringField("text");
-                                NewNode.GoalType = (*NodeObject)->GetStringField("GoalType");
-                                NewNode.AchieveCondition = (*NodeObject)->GetStringField("AchieveCondition");
-                                NewNode.CreationCondition = (*NodeObject)->GetStringField("CreationCondition");
 
-                                // Controles
-                                const TSharedPtr<FJsonObject>* ControlsObject;
-                                if ((*NodeObject)->TryGetObjectField("Controls", ControlsObject)) {
-                                    for (const auto& Control : (*ControlsObject)->Values) {
-                                        NewNode.Controls.Add(Control.Key, Control.Value->AsString());
+                                // Lê as propriedades do nó que estão em 'customProperties'
+                                const TSharedPtr<FJsonObject>* CustomPropertiesObject;
+                                if ((*NodeObject)->TryGetObjectField("customProperties", CustomPropertiesObject)) {
+                                    // Acessa as propriedades dentro de customProperties
+                                    NewNode.GoalType = (*CustomPropertiesObject)->GetStringField("GoalType");
+                                    NewNode.AchieveCondition = (*CustomPropertiesObject)->GetStringField("AchieveCondition");
+                                    NewNode.CreationCondition = (*CustomPropertiesObject)->GetStringField("CreationCondition");
+                                    NewNode.QueriedProperty = (*CustomPropertiesObject)->GetStringField("QueriedProperty");
+                                    NewNode.Location = (*CustomPropertiesObject)->GetStringField("Location");
+
+                                    // Controles
+                                    const TSharedPtr<FJsonObject>* ControlsObject;
+                                    if ((*CustomPropertiesObject)->TryGetObjectField("Controls", ControlsObject)) {
+                                        for (const auto& Control : (*ControlsObject)->Values) {
+                                            NewNode.Controls.Add(Control.Key, Control.Value->AsString());
+                                        }
+                                    }
+
+                                    // Monitores
+                                    FString MonitorsValue;
+                                    if ((*CustomPropertiesObject)->TryGetStringField("Monitors", MonitorsValue)) {
+                                        NewNode.Monitors.Add(*MonitorsValue);
                                     }
                                 }
 
-                                // Monitores
-                                const TArray<TSharedPtr<FJsonValue>>* MonitorsArray;
-                                if ((*NodeObject)->TryGetArrayField("Monitors", MonitorsArray)) {
-                                    for (const auto& MonitorValue : *MonitorsArray) {
-                                        NewNode.Monitors.Add(MonitorValue->AsString());
-                                    }
-                                }
-
-                                // Adiciona o nó na GoalModel
+                                // Adiciona o nó no GoalModel
                                 GoalModel.Nodes.Add(NewNode);
                             }
                         }
@@ -277,6 +279,7 @@ FGoalModel UMyJsonReader::ReadGoalModel(FString Experiment, int32 ScenarioId) {
 
     return GoalModel;
 }
+
 
 
 void UMyJsonReader::ShowLogMessage(const FString& Message, EMessageColorEnum Type) {

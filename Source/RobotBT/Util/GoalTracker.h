@@ -23,6 +23,12 @@ struct FGoalNode {
     TArray<FString> Monitors;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
+    FString QueriedProperty;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
+    FString Location;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
     FString AchieveCondition;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
