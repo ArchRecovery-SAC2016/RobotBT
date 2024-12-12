@@ -28,6 +28,6 @@ public:
 
 	// Load the goal mode from a json string
 	UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
-	FGoalModel LoadGoalModelFromJson(const FString& JsonString);
+	static FGoalModel ReadGoalModel(FString Experiment, int32 ScenarioId);
 
 };

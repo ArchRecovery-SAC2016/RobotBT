@@ -46,15 +46,6 @@ void AExperiment::Tick(float DeltaTime) {
 void AExperiment::BeginPlay() {
     Super::BeginPlay();
 
-	// Todo: Change this to the game instance
-	LoadTasksFromFile();
-
-	// Todo: Change this to the game instance
-	LoadGoalFromFile();
-
-	// Todo: Change this to the game instance
-	LoadWorldFromFile();
-
 }
 
 void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
@@ -65,6 +56,13 @@ void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
 	if (GetWorld()) {
 		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperimentSpeed);
 	}
+
+
+	// Todo: Change this to the game instance
+	LoadTasksFromFile();
+
+	// Todo: Change this to the game instance
+	LoadWorldFromFile();
 
 	// Prepare World to match the world knowledge
 	PrepareWorld();

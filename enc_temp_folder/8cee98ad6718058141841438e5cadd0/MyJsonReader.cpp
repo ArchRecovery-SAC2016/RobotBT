@@ -9,6 +9,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
+#include "JsonObjectConverter.h"
 
 TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
     TMap<FString, FTask> Tasks;
@@ -105,7 +106,9 @@ FString UMyJsonReader::ReadStringFromFile(FString FilePath) {
 
     UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on read file"));
     return RetString;
+
 }
+
 
 
 TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& TasksObject) {

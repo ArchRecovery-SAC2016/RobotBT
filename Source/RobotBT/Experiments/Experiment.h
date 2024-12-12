@@ -5,6 +5,7 @@
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Struct/TaskStruct.h"
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
+#include "RobotBT/Util/GoalTracker.h"
 #include "Experiment.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExperimentFinished, FExperimentResult, ExperimentResult);
@@ -27,6 +28,10 @@ public:
 	UFUNCTION()
 	virtual void LoadTasksFromFile();
 
+	// Load tasks from file
+	UFUNCTION()
+	virtual void LoadGoalFromFile();
+
 	// Load the world from file
 	UFUNCTION()
 	bool LoadWorldFromFile();
@@ -47,8 +52,13 @@ protected:
 	// The world knowledge loaded from file
 	TArray<FWorldRoomDataStruct> WorldRoomsStruct;
 
+	// Tasks loaded from file
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
+
+	// Goal model loaded from file
+	UPROPERTY()
+	FGoalModel GoalModel;
 
 	int32 CurrentTaskIndex= - 1;
 
