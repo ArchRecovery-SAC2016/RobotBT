@@ -1,4 +1,6 @@
 ﻿#include "MyJsonReader.h"
+
+#include "GoalTracker.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
@@ -108,6 +110,7 @@ FString UMyJsonReader::ReadStringFromFile(FString FilePath) {
 }
 
 
+
 TMap<FString, FTask> UMyJsonReader::ReadTasks(const TSharedPtr<FJsonObject>& TasksObject) {
     TMap<FString, FTask> Tasks;
 
@@ -208,6 +211,61 @@ void UMyJsonReader::WriteStringToFile(FString FilePath, FString String) {
     }
 
 }
+
+FGoalModel UMyJsonReader::LoadGoalModelFromJson(const FString& JsonString) {
+    FGoalModel GoalModel;
+
+    TSharedPtr<FJsonObject> JsonObject;
+    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
+
+    if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
+        const TArray<TSharedPtr<FJsonValue>>* ActorsArray;
+        if (JsonObject->TryGetArrayField("actors", ActorsArray)) {
+            for (const auto& ActorValue : *ActorsArray) {
+                const TSharedPtr<FJsonObject>* ActorObject;
+                if (ActorValue->TryGetObject(ActorObject)) {
+                    // Para cada ator, vamos pegar os nós (nodes)
+                    const TArray<TSharedPtr<FJsonValue>>* NodesArray;
+                    if ((*ActorObject)->TryGetArrayField("nodes", NodesArray)) {
+                        for (const auto& NodeValue : *NodesArray) {
+                            const TSharedPtr<FJsonObject>* NodeObject;
+                            if (NodeValue->TryGetObject(NodeObject)) {
+                                FGoalNode NewNode;
+                                NewNode.Id = (*NodeObject)->GetStringField("id");
+                                NewNode.Text = (*NodeObject)->GetStringField("text");
+                                NewNode.GoalType = (*NodeObject)->GetStringField("GoalType");
+                                NewNode.AchieveCondition = (*NodeObject)->GetStringField("AchieveCondition");
+                                NewNode.CreationCondition = (*NodeObject)->GetStringField("CreationCondition");
+
+                                // Controles
+                                const TSharedPtr<FJsonObject>* ControlsObject;
+                                if ((*NodeObject)->TryGetObjectField("Controls", ControlsObject)) {
+                                    for (const auto& Control : (*ControlsObject)->Values) {
+                                        NewNode.Controls.Add(Control.Key, Control.Value->AsString());
+                                    }
+                                }
+
+                                // Monitores
+                                const TArray<TSharedPtr<FJsonValue>>* MonitorsArray;
+                                if ((*NodeObject)->TryGetArrayField("Monitors", MonitorsArray)) {
+                                    for (const auto& MonitorValue : *MonitorsArray) {
+                                        NewNode.Monitors.Add(MonitorValue->AsString());
+                                    }
+                                }
+
+                                // Adiciona o nó na GoalModel
+                                GoalModel.Nodes.Add(NewNode);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return GoalModel;
+}
+
 
 void UMyJsonReader::ShowLogMessage(const FString& Message, EMessageColorEnum Type) {
     FColor Color = FColor::Emerald;

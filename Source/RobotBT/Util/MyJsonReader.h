@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "GoalTracker.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
 #include "RobotBT/Struct/TaskStruct.h"
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
@@ -24,4 +25,9 @@ public:
 	static TArray<FWorldRoomDataStruct> LoadWorldData(FString Experiment, int32 ScenarioId);
 
 	static FString ReadStringFromFile(FString FilePath);
+
+	// Load the goal mode from a json string
+	UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
+	FGoalModel LoadGoalModelFromJson(const FString& JsonString);
+
 };

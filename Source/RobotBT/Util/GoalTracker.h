@@ -63,10 +63,6 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Evaluator")
     FGoalModel GoalModel;
 
-    // Carregar modelo de goals a partir de JSON
-    UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
-    void LoadGoalModelFromJson(const FString& JsonString);
-
     // Avaliar a condição de criação de um goal
     UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
     bool EvaluateCreationCondition(const FString& GoalId, const TMap<FString, FString>& WorldState);
