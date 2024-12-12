@@ -2,11 +2,14 @@
 #include "RobotController.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "CADKernel/Math/BSpline.h"
 #include "Components/SplineComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "RobotBT/Actors/Robot.h"
+
 
 ARobotController::ARobotController() {
 	
