@@ -34,6 +34,8 @@ private:
 	UPROPERTY()
 	TArray<ARoomPreparation*> Rooms;
 
+	virtual void FetchRoomsToBePrepared() override;
+
 	virtual void ExecuteCurrentDecomposition() override;
 
 	ARoomPreparation* GetRoomByName(FString DoorName);

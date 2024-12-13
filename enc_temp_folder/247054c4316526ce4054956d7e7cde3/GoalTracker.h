@@ -5,6 +5,14 @@
 
 
 USTRUCT(BlueprintType)
+struct FGoalMonitor {
+    GENERATED_BODY()
+
+
+
+};
+
+USTRUCT(BlueprintType)
 struct FGoalNode {
     GENERATED_BODY()
 
@@ -36,10 +44,19 @@ struct FGoalNode {
     FString CreationCondition;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
-    bool IsAchieved = false;
+    bool bIsAchieved = false;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
-    bool IsCreated = false;
+    bool bIsCreated = false;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
+    float Progress;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
+    float ElapsedTime;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Node")
+    bool Result;
 
     FGoalNode() {}
 

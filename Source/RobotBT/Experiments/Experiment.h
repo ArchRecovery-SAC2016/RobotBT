@@ -80,6 +80,9 @@ protected:
 	virtual FTask* GetNextTask();
 
 	UFUNCTION()
+	virtual void FetchRoomsToBePrepared() ;
+
+	UFUNCTION()
 	virtual void ExperimentFinished();
 
 	// After the task is choosed, this method will execute it, creating the decomposition

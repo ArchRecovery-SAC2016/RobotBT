@@ -154,9 +154,9 @@ void AExperimentRoomPreparation::FetchRoomsToBePrepared() {
 	}
 
 	if (Rooms.Num() > 0) {
-		CurrentGoal->IsAchieved = true;
+		CurrentGoal->Result = true;
 	} else {
-		CurrentGoal->IsAchieved = false;
+		CurrentGoal->Result = false;
 	}
 }
 
