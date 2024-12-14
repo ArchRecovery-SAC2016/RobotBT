@@ -26,7 +26,7 @@ FGoalModel UGoalTracker::Evaluate_G2(FGoalModel GoalModel, TArray<ARoomPreparati
     }
 
 	for (auto Room : WorldRooms) {
-		if (Room->IsRoomPrepared() && Room->ActorHasTag("Room")) {
+		if (Room->IsRoomPrepared()) {
             CurrentGoal->IsAchieved = true;
 			return GoalModel;
 		}
@@ -43,12 +43,13 @@ FGoalModel UGoalTracker::Evaluate_G3(FGoalModel GoalModel, TArray <ARoomPreparat
 
     bool AllRoomsPrepared = true;
     for (auto Room : WorldRooms) {
-        if (Room->IsRoomPrepared() && Room->ActorHasTag("Room")) {
+        if (Room->IsRoomPrepared()) {
             AllRoomsPrepared = false;
         }
     }
 
     CurrentGoal->IsAchieved = AllRoomsPrepared;
+    
     return GoalModel;
 }
 
