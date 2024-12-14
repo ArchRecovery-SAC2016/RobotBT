@@ -16,8 +16,16 @@ void AExperimentRoomPreparation::Tick(float DeltaTime) {
 void AExperimentRoomPreparation::BeginPlay() {
     Super::BeginPlay();
 
-	// G2
-	FetchRoomsToBePrepared();
+	// Load all Rooms
+	TArray<AActor*> RoomsOnMap;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);
+
+	for (AActor* Actor : RoomsOnMap) {
+		ARoomPreparation* Room = Cast<ARoomPreparation>(Actor);
+		if (Room != nullptr) {
+			Rooms.Add(Room);
+		}
+	}
     
 
 	// Load cleaning robot
@@ -51,6 +59,13 @@ void AExperimentRoomPreparation::BeginPlay() {
 		UE_LOG(LogTemp, Error, TEXT("Failed do instantiate Organizer Team. Please add at least one. No task will be executed!"));
 		return;
 	}
+}
+
+void AExperimentRoomPreparation::ExecuteExperiment(FExperimentResult& NewExperiment) {
+	// G2 Rooms to be Prepared Are Fetched
+	FetchRoomsToBePrepared();
+
+	Super::ExecuteExperiment(NewExperiment);
 }
 
 bool AExperimentRoomPreparation::CheckPreCondition(FTask* NewTask) {
@@ -135,17 +150,12 @@ void AExperimentRoomPreparation::TimeIsOver() {
 void AExperimentRoomPreparation::FetchRoomsToBePrepared() {
 	Super::FetchRoomsToBePrepared();
 
-	// Load all Doors Sensors, so we can watch it
-	TArray<AActor*> RoomsOnMap;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);
+	// Remove all that are prepared. Menos a SanitizationRoom
+	Rooms.RemoveAll([](ARoomPreparation* Room) {
+		return Room != nullptr && Room->IsRoomPrepared() && Room->Name != "SanitizationRoom";
+	});
 
-	for (AActor* Actor : RoomsOnMap) {
-		ARoomPreparation* Room = Cast<ARoomPreparation>(Actor);
-		if (Room != nullptr && !Room->IsRoomPrepared()) {
-			Rooms.Add(Room);
-		}
-	}
-
+	// Evaluate G2
 	UGoalTracker::Evaluate_G2(GoalModel, Rooms);
 }
 
@@ -198,6 +208,13 @@ void AExperimentRoomPreparation::ExecuteOpenDoor(FString RobotName, ARoomPrepara
 void AExperimentRoomPreparation::ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* Room) {
 	NumberOfTask = 1;
 	CleanerRobot->StartNewTask(ESkillEnum::SANITIZE_ROBOT, Room);
+}
+
+void AExperimentRoomPreparation::ExperimentFinished() {
+	Super::ExperimentFinished();
+
+	// Evaluate G3. for All Rooms are prepared
+	UGoalTracker::Evaluate_G3(GoalModel, Rooms);
 }
 
 void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {

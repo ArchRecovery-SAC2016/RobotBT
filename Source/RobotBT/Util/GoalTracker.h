@@ -79,6 +79,9 @@ public:
     UFUNCTION()
     static FGoalModel Evaluate_G2(FGoalModel CurrentGoalModel, TArray<ARoomPreparation*> Rooms);
 
+    UFUNCTION()
+    static FGoalModel Evaluate_G3(FGoalModel CurrentGoalModel, TArray <ARoomPreparation*> WorldRooms);
+
 private:
     // Função auxiliar para avaliar uma condição genérica
     static bool EvaluateCondition(const FString& Condition, const TMap<FString, FString>& WorldState);

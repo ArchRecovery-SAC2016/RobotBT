@@ -35,6 +35,24 @@ FGoalModel UGoalTracker::Evaluate_G2(FGoalModel GoalModel, TArray<ARoomPreparati
 	return GoalModel;
 }
 
+FGoalModel UGoalTracker::Evaluate_G3(FGoalModel GoalModel, TArray <ARoomPreparation*> WorldRooms) {
+    FGoalNode* CurrentGoal = GoalModel.FindNodeById("4ba74b3c-1ef2-4ac3-8b0b-2bc35cbdef98");
+    if (CurrentGoal == nullptr) {
+        UE_LOG(LogTemp, Error, TEXT("No Goal found for Rooms Are Prepared!"));
+    }
+
+    bool AllRoomsPrepared = true;
+    for (auto Room : WorldRooms) {
+        if (Room->IsRoomPrepared()) {
+            AllRoomsPrepared = false;
+        }
+    }
+
+    CurrentGoal->IsAchieved = AllRoomsPrepared;
+    
+    return GoalModel;
+}
+
 bool UGoalTracker::EvaluateCondition(const FString& Condition, const TMap<FString, FString>& WorldState) {
     // Exemplo de uma simples avaliação de condição
     for (const auto& KeyValue : WorldState) {

@@ -113,10 +113,7 @@ protected:
 	UPROPERTY()
 	TArray<FRobotProperties> RobotsProperties;
 
-
 	bool ExperimentStarted = false;
-
-	
 };
 
 

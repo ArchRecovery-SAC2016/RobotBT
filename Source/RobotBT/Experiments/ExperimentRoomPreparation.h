@@ -29,10 +29,17 @@ public:
 	UFUNCTION()
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
+
 private:
 	/* Saves all doors in the map	*/
 	UPROPERTY()
 	TArray<ARoomPreparation*> Rooms;
+
+	/* Monitors the current room */
+	UPROPERTY()
+	ARoomPreparation* CurrentRoom;
+
+	virtual void ExecuteExperiment(FExperimentResult& NewExperiment) override;
 
 	virtual void FetchRoomsToBePrepared() override;
 
@@ -47,6 +54,8 @@ private:
 	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
 
 	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
+
+	virtual void ExperimentFinished() override;
 
 	virtual bool CheckPreCondition(FTask* NewTask) override;
 

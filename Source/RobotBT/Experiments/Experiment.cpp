@@ -112,10 +112,7 @@ FTask* AExperiment::GetNextTask() {
 	return GetNextTask();
 }
 
-void AExperiment::FetchRoomsToBePrepared() {
-
-
-}
+void AExperiment::FetchRoomsToBePrepared() { }
 
 void AExperiment::ExecuteCurrentTask() {
 	if (CurrentTask == nullptr || (CurrentTask != nullptr && CurrentTask->Decomposition.Num() == 0)) {
