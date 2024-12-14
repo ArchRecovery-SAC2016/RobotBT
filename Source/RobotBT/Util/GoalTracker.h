@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "RobotBT/Actors/RoomPreparation/RoomPreparation.h"
 #include "GoalTracker.generated.h"
 
 
@@ -67,18 +68,18 @@ class ROBOTBT_API UGoalTracker : public UBlueprintFunctionLibrary {
     GENERATED_BODY()
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Goal Evaluator")
-    FGoalModel GoalModel;
-
     // Avaliar a condição de criação de um goal
     UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
-    bool EvaluateCreationCondition(const FString& GoalId, const TMap<FString, FString>& WorldState);
+    static bool EvaluateCreationCondition(FGoalModel GoalModel, const FString& GoalId, const TMap<FString, FString>& WorldState);
 
     // Avaliar a condição de realização de um goal
     UFUNCTION(BlueprintCallable, Category = "Goal Evaluator")
-    bool EvaluateAchieveCondition(const FString& GoalId, const TMap<FString, FString>& WorldState);
+    static bool EvaluateAchieveCondition(FGoalModel GoalModel, const FString& GoalId, const TMap<FString, FString>& WorldState);
+
+    UFUNCTION()
+    static FGoalModel Evaluate_G2(FGoalModel CurrentGoalModel, TArray<ARoomPreparation*> Rooms);
 
 private:
     // Função auxiliar para avaliar uma condição genérica
-    bool EvaluateCondition(const FString& Condition, const TMap<FString, FString>& WorldState);
+    static bool EvaluateCondition(const FString& Condition, const TMap<FString, FString>& WorldState);
 };

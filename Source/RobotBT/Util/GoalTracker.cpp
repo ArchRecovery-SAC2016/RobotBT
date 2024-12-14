@@ -1,22 +1,38 @@
 ﻿#include "GoalTracker.h"
 
 
-bool UGoalTracker::EvaluateCreationCondition(const FString& GoalId, const TMap<FString, FString>& WorldState) {
+bool UGoalTracker::EvaluateCreationCondition(FGoalModel GoalModel, const FString& GoalId, const TMap<FString, FString>& WorldState) {
     FGoalNode* Goal = GoalModel.FindNodeById(GoalId);
     if (Goal) {
-        Goal->bIsCreated = EvaluateCondition(Goal->CreationCondition, WorldState);
-        return Goal->bIsCreated;
+        Goal->IsCreated = EvaluateCondition(Goal->CreationCondition, WorldState);
+        return Goal->IsCreated;
     }
     return false;
 }
 
-bool UGoalTracker::EvaluateAchieveCondition(const FString& GoalId, const TMap<FString, FString>& WorldState) {
+bool UGoalTracker::EvaluateAchieveCondition(FGoalModel GoalModel, const FString& GoalId, const TMap<FString, FString>& WorldState) {
     FGoalNode* Goal = GoalModel.FindNodeById(GoalId);
-    if (Goal && Goal->bIsCreated) {
-        Goal->bIsAchieved = EvaluateCondition(Goal->AchieveCondition, WorldState);
-        return Goal->bIsAchieved;
+    if (Goal && Goal->IsCreated) {
+        Goal->IsAchieved = EvaluateCondition(Goal->AchieveCondition, WorldState);
+        return Goal->IsAchieved;
     }
     return false;
+}
+
+FGoalModel UGoalTracker::Evaluate_G2(FGoalModel GoalModel, TArray<ARoomPreparation*> WorldRooms) {
+    FGoalNode* CurrentGoal = GoalModel.FindNodeById("f942813f-cc19-456b-bed4-7e56c17f7bd4");
+    if (CurrentGoal == nullptr) {
+        UE_LOG(LogTemp, Error, TEXT("No Goal found for FetchRoomsToBePrepared!"));
+    }
+
+	for (auto Room : WorldRooms) {
+		if (Room->IsRoomPrepared()) {
+            CurrentGoal->IsAchieved = true;
+			return GoalModel;
+		}
+	}
+    CurrentGoal->IsAchieved = false;
+	return GoalModel;
 }
 
 bool UGoalTracker::EvaluateCondition(const FString& Condition, const TMap<FString, FString>& WorldState) {

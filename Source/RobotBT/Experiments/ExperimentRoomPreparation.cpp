@@ -146,18 +146,7 @@ void AExperimentRoomPreparation::FetchRoomsToBePrepared() {
 		}
 	}
 
-	// TODO: CHANGE THIS BE AUTOMATIC
-	FGoalNode* CurrentGoal = GoalModel.FindNodeById("f942813f-cc19-456b-bed4-7e56c17f7bd4");
-	if (CurrentGoal == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("No go found for FetchRoomsToBePrepared!"));
-		return ;
-	}
-
-	if (Rooms.Num() > 0) {
-		CurrentGoal->IsAchieved = true;
-	} else {
-		CurrentGoal->IsAchieved = false;
-	}
+	UGoalTracker::Evaluate_G2(GoalModel, Rooms);
 }
 
 void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {
