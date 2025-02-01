@@ -59,5 +59,4 @@ struct FRobotProperties {
 
 	UPROPERTY(Transient)
 	FTransform InitialTransform;
-
 };

@@ -112,7 +112,7 @@ void ARobot::ConsumeBattery(float DischargeAmount) {
 }
 
 bool ARobot::MoveToRoomEntrance() {
-	if (GetRoom() == nullptr) return nullptr;
+	if (GetRoom() == nullptr) return false;
 	if (IsAtRoomLocation) return true;
 
 	IsMoving = true;
@@ -124,7 +124,7 @@ bool ARobot::MoveToRoomEntrance() {
 }
 
 bool ARobot::MoveAlongPath() {
-	if (GetRoom() == nullptr) return nullptr;
+	if (GetRoom() == nullptr) return false;
 
 	IsMoving = true;
 	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), 0, GetRoomPath()->GetNumberOfSplinePoints() - 1);

@@ -29,7 +29,6 @@ public:
 	UFUNCTION()
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
-
 private:
 	/* Saves all doors in the map	*/
 	UPROPERTY()
