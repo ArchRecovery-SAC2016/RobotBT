@@ -2,11 +2,11 @@
 
 ## Overview
 
-RobotBT is a project developed in Unreal Engine 5 using C++. This project utilizes Behavior Trees to simulate robot behavior within a virtual environment.
+RobotBT is a project developed in Unreal Engine 5.5.2 using C++. This project utilizes Behavior Trees to simulate robot behavior within a virtual environment.
 
 ## Prerequisites
 
-- Unreal Engine 5 installed. [Installation Guide](https://dev.epicgames.com/documentation/en-us/unreal-engine/setting-up-visual-studio-development-environment-for-cplusplus-projects-in-unreal-engine)
+- Unreal Engine 5.5.2 installed. [Installation Guide](https://dev.epicgames.com/documentation/en-us/unreal-engine/setting-up-visual-studio-development-environment-for-cplusplus-projects-in-unreal-engine)
 - Visual Studio (with C++ development tools)
 - Git installed
 
