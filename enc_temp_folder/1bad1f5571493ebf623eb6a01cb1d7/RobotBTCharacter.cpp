@@ -9,22 +9,16 @@
 ARobotBTCharacter::ARobotBTCharacter() {
 	Super::BeginPlay();
 
-
+	// Mostra o ponteiro do mouse
+	if (APlayerController* PC = Cast<APlayerController>(GetController())) {
+		PC->bShowMouseCursor = true;
+		PC->bEnableClickEvents = true;
+		PC->bEnableMouseOverEvents = true;
+		PC->DefaultMouseCursor = EMouseCursor::Default;
+	}
 }
 
 void ARobotBTCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-    APlayerController* PC = Cast<APlayerController>(GetController());
-    if (PC) {
-        PC->bShowMouseCursor = true;
-        PC->bEnableClickEvents = true;
-        PC->bEnableMouseOverEvents = true;
-
-        // Permite movimentação E interação com UI simultaneamente
-        PC->SetInputMode(FInputModeGameAndUI());
-    }
-
-
 }

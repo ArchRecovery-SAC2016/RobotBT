@@ -3,45 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "GameFramework/DefaultPawn.h"
 #include "RobotBTCharacter.generated.h"
 
 UCLASS(Blueprintable)
-class ARobotBTCharacter : public ACharacter
-{
+class ARobotBTCharacter : public ADefaultPawn {
 	GENERATED_BODY()
 
 public:
-	ARobotBTCharacter();
+    ARobotBTCharacter();
 
-	UFUNCTION()
-	void MoveForward(float Value);
-
-	UFUNCTION()
-	void MoveRight(float Value);
-
-	UFUNCTION()
-	void MoveUp(float Value);
-
-	UFUNCTION()
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-	// Called every frame.
-	virtual void Tick(float DeltaSeconds) override;
-
-	/** Returns TopDownCameraComponent subobject **/
-	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
-
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-
-private:
-	/** Top down camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* TopDownCameraComponent;
-
-	/** Camera boom positioning the camera above the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+protected:
+    virtual void BeginPlay() override;
 };
 
