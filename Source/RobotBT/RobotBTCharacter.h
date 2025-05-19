@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -14,11 +14,24 @@ class ARobotBTCharacter : public ACharacter
 public:
 	ARobotBTCharacter();
 
+	UFUNCTION()
+	void MoveForward(float Value);
+
+	UFUNCTION()
+	void MoveRight(float Value);
+
+	UFUNCTION()
+	void MoveUp(float Value);
+
+	UFUNCTION()
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
 	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
+
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
