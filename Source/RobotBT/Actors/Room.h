@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "NavigableArea.h"
 #include "SplinePath.h"
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
@@ -9,7 +10,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoorOpenChange, bool, NewState);
 
 UCLASS()
-class ROBOTBT_API ARoom : public AActor {
+class ROBOTBT_API ARoom : public ANavigableArea {
 	GENERATED_BODY()
 
 protected:

@@ -7,7 +7,6 @@
 #include "Engine/World.h"
 
 ARobotBTCharacter::ARobotBTCharacter() {
-	Super::BeginPlay();
 
 
 }
