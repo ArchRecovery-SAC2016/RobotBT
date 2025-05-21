@@ -20,13 +20,17 @@ protected:
 public:	
 	ANavigableArea();
 
+	/* Hide or show the roof. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	bool RoofVisible = false;
+
 	/* Put all Base Meshes here */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USceneComponent* BaseMeshes;
+	USceneComponent* SceneStructure;
 
 	/* Put all Roof meshes here */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USceneComponent* RoofMeshes;
+	USceneComponent* RoofStructure;
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation")
 	void HideRoof(bool NewValue);
