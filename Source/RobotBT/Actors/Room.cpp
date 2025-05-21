@@ -1,4 +1,4 @@
-#include "Room.h"
+﻿#include "Room.h"
 #include "Components/BoxComponent.h"
 #include "Components/SplineComponent.h"
 #include "RobotBT/Util/UtilMethods.h"
@@ -9,42 +9,28 @@ ARoom::ARoom() {
 	BaseLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("Base Location"));
 	BaseLocation->SetupAttachment(RootComponent);
 
-	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door Mesh"));
-	DoorMesh->SetupAttachment(BaseLocation);
-
-	DoorCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Door DoorCollision"));
-	DoorCollision->SetupAttachment(DoorMesh);
-
 	MainPath = CreateDefaultSubobject<USplineComponent>(TEXT("Main Path"));
 	MainPath->SetupAttachment(BaseLocation);
-}
-
-void ARoom::BeginPlay() {
-	Super::BeginPlay();
-
-	ControlDoorOpen();
 }
 
 void ARoom::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 }
 
+void ARoom::BeginPlay() {
+	Super::BeginPlay();
+
+	OpenDoor(DoorOpened);
+}
+
 void ARoom::OpenDoor(bool NewValue) {
 	DoorOpened = NewValue;
-	ControlDoorOpen();
+
+	AnimateOpenDoor(NewValue);
 }
 
 void ARoom::ChangeColorToOK(bool NewValue) {
-	if (DoorMesh == nullptr) {
-		UE_LOG(LogTemp, Error, TEXT("No DoorMesh set for %s"), *GetName());
-		return;
-	}
 
-	if (NewValue) {
-		DoorMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(GreenColor));
-	} else {
-		DoorMesh->SetVectorParameterValueOnMaterials("BaseColor", FVector(RedColor));
-	}
 }
 
 USplineComponent* ARoom::GetRoomPath() {
@@ -59,16 +45,4 @@ FVector ARoom::GetDoorEntrance() {
 	}
 
 	return GetRoomPath()->GetLocationAtSplinePoint(0, ESplineCoordinateSpace::World);
-}
-
-void ARoom::ControlDoorOpen() {
-	if (DoorOpened) {
-		DoorCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		FVector Location = DoorMesh->GetComponentLocation();
-		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, -71)); // -240 will be near visible
-	}else {
-		DoorCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		FVector Location = DoorMesh->GetComponentLocation();
-		DoorMesh->SetWorldLocation(FVector(Location.X, Location.Y, 0)); // 0 will be  visible
-	}
 }

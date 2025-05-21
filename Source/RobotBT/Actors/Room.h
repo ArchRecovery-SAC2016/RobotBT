@@ -27,12 +27,6 @@ public:
 	UArrowComponent* BaseLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
-	UStaticMeshComponent* DoorMesh;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Room")
-	class UBoxComponent* DoorCollision;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room")
 	bool DoorOpened = true;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Room")
@@ -55,14 +49,13 @@ public:
 	UFUNCTION()
 	void OpenDoor(bool NewValue);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void AnimateOpenDoor(bool NewValue);
+
 	UFUNCTION()
 	void ChangeColorToOK(bool NewValue);
 
 	UFUNCTION()
 	virtual USplineComponent* GetRoomPath();
-private:
-	UFUNCTION()
-	void ControlDoorOpen();
-
 
 };
