@@ -1,4 +1,4 @@
-﻿#include "ExperimentSetupWidget.h"
+#include "ExperimentSetupWidget.h"
 #include "Components/CheckBox.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
@@ -43,6 +43,9 @@ void UExperimentSetupWidget::InitiateExperiment() {
 
 	if (GenerateRandomProperties->GetCheckedState() == ECheckBoxState::Checked) Experiment.GenerateRandomProperties = true;
 	else Experiment.GenerateRandomProperties = false;
+
+	if (GenerateRandomProperties)
+	Experiment.GenerateRandomProperties = 
 
 	ExperimentIsValid = ValidateInputs();
 
