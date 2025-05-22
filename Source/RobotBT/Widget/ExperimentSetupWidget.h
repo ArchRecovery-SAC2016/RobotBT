@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
@@ -97,6 +97,12 @@ public:
 	bool ValidateInputs();
 
 	UPROPERTY()
-	UMainExperimentInstance* ExperimentInstance;
+	UMainExperimentInstance* ExperimentInstance = nullptr;
 
+	UFUNCTION(BlueprintCallable)
+	void RobotCameraSelected(FString RobotSelected);
+
+
+	UFUNCTION(BlueprintCallable)
+	void HideRoof(bool NewValue);
 };

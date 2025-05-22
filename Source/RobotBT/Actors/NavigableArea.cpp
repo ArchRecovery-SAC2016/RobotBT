@@ -16,7 +16,7 @@ ANavigableArea::ANavigableArea() {
 
 void ANavigableArea::HideRoof(bool NewValue) {
 	if (RoofStructure != nullptr) {
-		RoofStructure->SetVisibility(NewValue, true);
+		RoofStructure->SetVisibility(!NewValue, true);
 	}
 }
 void ANavigableArea::BeginPlay() {

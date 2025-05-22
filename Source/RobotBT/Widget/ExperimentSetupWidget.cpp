@@ -8,6 +8,7 @@
 #include "IDesktopPlatform.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Misc/FileHelper.h"
+#include "RobotBT/Experiments/ExperimentRoomPreparation.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();
@@ -84,6 +85,52 @@ bool UExperimentSetupWidget::ValidateInputs() {
 	}
 
 	return true;
+}
+
+void UExperimentSetupWidget::RobotCameraSelected(FString RobotSelected) {
+	TArray<AActor*> RobotsOnMap;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobot::StaticClass(), RobotsOnMap);
+
+	if (RobotSelected == "Default") {
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+		
+		if (PlayerController) {
+			APawn* PlayerPawn = PlayerController->GetPawn();
+			if (PlayerPawn) {
+				PlayerController->SetViewTargetWithBlend(PlayerPawn, 0.5f);
+				HideRoof(true); // Certifique-se de que HideRoof(false) faz o que você espera
+				return;
+			}
+		}
+		return;
+	}
+
+	for (AActor* Actor : RobotsOnMap) {
+		ARobot* Robot = Cast<ARobot>(Actor);
+		if (Robot != nullptr && Robot->RobotProperties.Name == RobotSelected) {
+			Robot->ActivateRobotCamera();
+			HideRoof(false);
+			return;
+		}
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::RobotCameraSelected] No Robot whit name %s found"), *RobotSelected);
+}
+
+void UExperimentSetupWidget::HideRoof(bool NewValue) {
+	// Load all Doors Sensors, so we can watch it
+	TArray<AActor*> RoomsOnMap;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ANavigableArea::StaticClass(), RoomsOnMap);
+
+	for (AActor* Actor : RoomsOnMap) {
+		ANavigableArea* Room = Cast<ANavigableArea>(Actor);
+		if (Room != nullptr) {
+			Room->HideRoof(NewValue);
+		}
+		else {
+			Room->HideRoof(NewValue);
+		}
+	}
 }
 
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {

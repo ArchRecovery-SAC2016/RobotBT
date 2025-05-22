@@ -1,6 +1,9 @@
-#include "Robot.h"
+﻿#include "Robot.h"
+
+#include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/SplineComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "RobotBT/Controllers/RobotController.h"
 #include "RobotBT/Util/UtilMethods.h"
 #include "RobotBT/Widget/RobotWidget.h"
@@ -10,6 +13,14 @@ ARobot::ARobot() {
 
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget Component"));
 	WidgetComponent->SetupAttachment(RootComponent);
+
+	// Inicializa a câmera e anexa ao mesh ou capsule
+	RobotCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("RobotCamera"));
+	RobotCamera->SetupAttachment(RootComponent); // ou Mesh, dependendo de onde você quer a câmera
+
+	// Ajuste a posição se necessário
+	RobotCamera->SetRelativeLocation(FVector(0.0f, 0.0f, 80.0f));
+	RobotCamera->bUsePawnControlRotation = true;
 }
 
 void ARobot::Tick(float DeltaTime) {
@@ -223,6 +234,13 @@ URobotWidget* ARobot::GetRobotWidget() {
 	}
 
 	return RobotWidget;
+}
+
+void ARobot::ActivateRobotCamera() {
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController && RobotCamera) {
+		PlayerController->SetViewTargetWithBlend(this, 0.5f); // Suaviza a transição de câmera
+	}
 }
 
 void ARobot::Initiate(bool bGenerateRandomProperties) {

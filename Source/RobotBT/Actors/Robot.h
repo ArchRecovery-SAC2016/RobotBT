@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Room.h"
@@ -31,6 +31,9 @@ public:
 	ARobot();
 
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	class UCameraComponent* RobotCamera;
 
 	// the widget that will be used to show the robot information
 	UPROPERTY(EditDefaultsOnly, Category = "Robot")
@@ -67,6 +70,9 @@ public:
 
 	UFUNCTION()
 	URobotWidget* GetRobotWidget();
+
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	void ActivateRobotCamera();
 
 	// initiate the robot. Called when start a new experiment. Will set the properties and move to the editor position
 	UFUNCTION()
