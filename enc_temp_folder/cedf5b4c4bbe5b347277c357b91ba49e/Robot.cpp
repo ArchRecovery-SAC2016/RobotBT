@@ -139,7 +139,7 @@ bool ARobot::MoveAlongPath() {
 
 	IsMoving = true;
 
-	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath());
+	IsFinishedMovingAlongPath = GetRobotController()->MoveAlongSpline(GetRoomPath(), RobotProperties.Speed);
 	if (IsFinishedMovingAlongPath) {
 		IsMoving = false;
 	}

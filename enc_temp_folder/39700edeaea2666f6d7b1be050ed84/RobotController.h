@@ -28,7 +28,7 @@ public:
 	void RotateToFaceActor(const AActor* ActorSelected);
 
 	UFUNCTION()
-	bool MoveAlongSpline(USplineComponent* Spline);
+	bool MoveAlongSpline(USplineComponent* Spline, float Speed);
 
 	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 
@@ -46,8 +46,6 @@ private:
 
 	UPROPERTY()
 	float CurrentDistanceAlongSpline = 0.0f; // Armazena a distância atual ao longo da spline
-
-	bool bIsMovingToSplinePoint = false;
 };
 
 

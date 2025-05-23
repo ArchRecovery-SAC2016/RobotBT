@@ -21,8 +21,6 @@ void ARobotController::BeginPlay() {
 	if (!MyBlackboard) {
 		MyBlackboard->SetValueAsObject(TEXT("SelfActor"), ControlledPawn);
 	}
-
-    CurrentDistanceAlongSpline = 0.0f;
 }
 
 bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
@@ -67,29 +65,40 @@ void ARobotController::RotateToFaceActor(const AActor* ActorSelected) {
 	ControlledPawn->SetActorRotation(FRotator(NewRotation.Pitch, NewRotation.Yaw, 0.0f));
 }
 
-bool ARobotController::MoveAlongSpline(USplineComponent* Spline) {
-    if (!Spline || !ControlledPawn) return false;
 
-    const int32 NumPoints = Spline->GetNumberOfSplinePoints();
 
-    // Se já passou do último ponto
-    if (CurrentPathIndex >= NumPoints) {
-        CurrentPathIndex = 0;
-        return true;
+bool ARobotController::MoveAlongSpline(USplineComponent* Spline, float Speed) {
+    if (!Spline || !ControlledPawn) {
+        UE_LOG(LogTemp, Warning, TEXT("SplineComponent or ControlledPawn is null!"));
+        return false;
     }
 
-    // Localização do ponto atual
-    FVector TargetLocation = Spline->GetLocationAtSplinePoint(CurrentPathIndex, ESplineCoordinateSpace::World);
+    float SplineLength = Spline->GetSplineLength();
+    float DeltaTime = GetWorld()->GetDeltaSeconds();
 
-    // Tenta se mover
-    bool bArrived = MoveToNewLocation(TargetLocation) ;
-
-    if (bArrived) {
-        CurrentPathIndex++; // Vai pro próximo ponto
+    if (CurrentDistanceAlongSpline >= SplineLength) {
+		CurrentDistanceAlongSpline = 0.0f; // Reinicia a distância se já chegou ao fim
+        return true; // Chegou ao fim da spline
     }
+
+    // Avança distância suavemente
+    CurrentDistanceAlongSpline = FMath::Min(CurrentDistanceAlongSpline + Speed * DeltaTime, SplineLength);
+
+    FTransform SplineTransform = Spline->GetTransformAtDistanceAlongSpline(CurrentDistanceAlongSpline, ESplineCoordinateSpace::World);
+
+    // Movimento e rotação suave
+    FVector NewLocation = SplineTransform.GetLocation();
+    FRotator TargetRotation = SplineTransform.GetRotation().Rotator();
+    FRotator CurrentRotation = ControlledPawn->GetActorRotation();
+    FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, 3.0f);
+
+    ControlledPawn->SetActorLocation(NewLocation);
+    ControlledPawn->SetActorRotation(SmoothedRotation);
 
     return false; // Ainda está se movendo
 }
+
+
 
 void ARobotController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) {
     Super::OnMoveCompleted(RequestID, Result);
