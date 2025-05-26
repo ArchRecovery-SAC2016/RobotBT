@@ -1,4 +1,4 @@
-#include "Experiment.h"
+﻿#include "Experiment.h"
 
 #include "MainExperimentInstance.h"
 #include "RobotBT/RobotBTPlayerController.h"
@@ -50,11 +50,7 @@ void AExperiment::BeginPlay() {
 	LoadTasksFromFile();
 
 	// Todo: Change this to the game instance
-	LoadGoalFromFile();
-
-	// Todo: Change this to the game instance
 	LoadWorldFromFile();
-
 }
 
 void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
@@ -169,10 +165,6 @@ void AExperiment::LoadTasksFromFile() {
 	Tasks = UMyJsonReader::ReadTaskFromFile(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
 }
 
-
-void AExperiment::LoadGoalFromFile() {
-	GoalModel = UMyJsonReader::ReadGoalModel(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
-}
 
 bool AExperiment::LoadWorldFromFile() {
 	WorldRoomsStruct = UMyJsonReader::LoadWorldData(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);

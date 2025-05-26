@@ -1,6 +1,5 @@
 ﻿#include "MyJsonReader.h"
 
-#include "GoalTracker.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "RobotBT/Enum/MessageColorEnum.h"
@@ -207,77 +206,6 @@ void UMyJsonReader::WriteStringToFile(FString FilePath, FString String) {
         UE_LOG(LogTemp, Display, TEXT("[UMyJsonReader::ReadStringFromFile] Success on save file"));
     }
 }
-FGoalModel UMyJsonReader::ReadGoalModel(FString Experiment, int32 ScenarioId) {
-    FString Path = "Data/" + Experiment;
-    if (ScenarioId != -1) {
-        Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/goal_model.json";
-    }
-    FString FilePath = FPaths::ProjectContentDir() + Path;
-
-    // Read file
-    FString JsonString;
-    if (!FFileHelper::LoadFileToString(JsonString, *FilePath)) {
-        UE_LOG(LogTemp, Error, TEXT("Failed to load Goal Model from file at: %s"), *FilePath);
-        return FGoalModel();
-    }
-
-    FGoalModel GoalModel;
-
-    TSharedPtr<FJsonObject> JsonObject;
-    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
-
-    if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
-        const TArray<TSharedPtr<FJsonValue>>* ActorsArray;
-        if (JsonObject->TryGetArrayField("actors", ActorsArray)) {
-            for (const auto& ActorValue : *ActorsArray) {
-                const TSharedPtr<FJsonObject>* ActorObject;
-                if (ActorValue->TryGetObject(ActorObject)) {
-                    // Para cada ator, vamos pegar os nós (nodes)
-                    const TArray<TSharedPtr<FJsonValue>>* NodesArray;
-                    if ((*ActorObject)->TryGetArrayField("nodes", NodesArray)) {
-                        for (const auto& NodeValue : *NodesArray) {
-                            const TSharedPtr<FJsonObject>* NodeObject;
-                            if (NodeValue->TryGetObject(NodeObject)) {
-                                FGoalNode NewNode;
-                                NewNode.Id = (*NodeObject)->GetStringField("id");
-                                NewNode.Text = (*NodeObject)->GetStringField("text");
-
-                                // Lê as propriedades do nó que estão em 'customProperties'
-                                const TSharedPtr<FJsonObject>* CustomPropertiesObject;
-                                if ((*NodeObject)->TryGetObjectField("customProperties", CustomPropertiesObject)) {
-                                    // Acessa as propriedades dentro de customProperties
-                                    NewNode.GoalType = (*CustomPropertiesObject)->GetStringField("GoalType");
-                                    NewNode.AchieveCondition = (*CustomPropertiesObject)->GetStringField("AchieveCondition");
-                                    NewNode.CreationCondition = (*CustomPropertiesObject)->GetStringField("CreationCondition");
-                                    NewNode.QueriedProperty = (*CustomPropertiesObject)->GetStringField("QueriedProperty");
-                                    NewNode.Location = (*CustomPropertiesObject)->GetStringField("Location");
-
-                                    // Controles
-                                    FString ControlsValue;
-                                    if ((*CustomPropertiesObject)->TryGetStringField("Controls", ControlsValue)) {
-                                        NewNode.Controls.Add("Controls", *ControlsValue); // Aqui armazenamos o valor como string
-                                    }
-
-                                    // Monitores
-                                    FString MonitorsValue;
-                                    if ((*CustomPropertiesObject)->TryGetStringField("Monitors", MonitorsValue)) {
-                                        NewNode.Monitors.Add(*MonitorsValue);
-                                    }
-                                }
-
-                                // Adiciona o nó no GoalModel
-                                GoalModel.Nodes.Add(NewNode);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return GoalModel;
-}
-
 
 
 void UMyJsonReader::ShowLogMessage(const FString& Message, EMessageColorEnum Type) {

@@ -163,9 +163,6 @@ void AExperimentRoomPreparation::FetchRoomsToBePrepared() {
 	Rooms.RemoveAll([](ARoomPreparation* Room) {
 		return Room != nullptr && Room->IsRoomPrepared() && Room->Name != "SanitizationRoom";
 	});
-
-	// Evaluate G2
-	UGoalTracker::Evaluate_G2(GoalModel, Rooms);
 }
 
 void AExperimentRoomPreparation::ExecuteCurrentDecomposition() {

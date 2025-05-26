@@ -1,11 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Struct/TaskStruct.h"
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
-#include "RobotBT/Util/GoalTracker.h"
 #include "Experiment.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExperimentFinished, FExperimentResult, ExperimentResult);
@@ -27,10 +26,6 @@ public:
 	// Load tasks from file
 	UFUNCTION()
 	virtual void LoadTasksFromFile();
-
-	// Load tasks from file
-	UFUNCTION()
-	virtual void LoadGoalFromFile();
 
 	// Load the world from file
 	UFUNCTION()
@@ -55,10 +50,6 @@ protected:
 	// Tasks loaded from file
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
-
-	// Goal model loaded from file
-	UPROPERTY()
-	FGoalModel GoalModel;
 
 	int32 CurrentTaskIndex= - 1;
 
