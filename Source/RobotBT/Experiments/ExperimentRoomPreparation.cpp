@@ -104,8 +104,11 @@ bool AExperimentRoomPreparation::EvaluatePreCondition(const FPredicate& Predicat
 			return Room->DoorOpened;
 		}
 		if (Predicate.Condition == "is_clean") {
-			if (Predicate.bNegated) return !Room->IsTrashClean(); // Negated
-			return Room->IsTrashClean(); 
+			bool RoomIsClean = Room->IsTrashClean();
+			UE_LOG(LogTemp, Error, TEXT("Check if Room: %s is Clean. Result: %s"), *Room->Name, RoomIsClean ? TEXT("true") : TEXT("false"));
+
+			if (Predicate.bNegated) return !RoomIsClean; // Negated
+			return RoomIsClean;
 		}
 	}
 	else if (Predicate.Variable.Contains("?r")) {

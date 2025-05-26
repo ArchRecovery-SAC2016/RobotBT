@@ -1,4 +1,4 @@
-﻿#include "RoomTrash.h"
+#include "RoomTrash.h"
 #include "Components/BoxComponent.h"
 
 ARoomTrash::ARoomTrash() {
@@ -30,7 +30,7 @@ void ARoomTrash::SetIsTrashClean(bool NewValue) {
 		TrashMesh->SetVisibility(false);
 		Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	} else {
-		IsTrashClean = false;
+		IsTrashClean = true;
 		TrashMesh->SetVisibility(true);
 		Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	}

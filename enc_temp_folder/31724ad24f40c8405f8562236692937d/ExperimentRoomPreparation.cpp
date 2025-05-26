@@ -237,7 +237,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 	FValidationStruct Result;
 
 	for (auto Organizer: OrganizersTeam) {
-		Result.RobotsOrganizer.Add(Organizer->RobotProperties.Name);
+		Result.robots_organizer.Add(Organizer->RobotProperties.Name);
 	}
 
 	Result.Robots.Add(CleanerRobot->RobotProperties.Name);
@@ -246,16 +246,16 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 	// preenche o initial state das salas
 	for (auto WorldRoom: WorldRoomsStruct) {
 		Result.Rooms.Add(WorldRoom.Name);
-		Result.DoorOpenInicial.Add(WorldRoom.Name, WorldRoom.bDoorOpen);
-		Result.RoomCleanInitialState.Add(WorldRoom.Name, WorldRoom.bIsClean);
-		Result.RoomOrganizeInitialState.Add(WorldRoom.Name, WorldRoom.bIsPrepared);
+		Result.door_open_inicial.Add(WorldRoom.Name, WorldRoom.bDoorOpen);
+		Result.room_clean_initial_state.Add(WorldRoom.Name, WorldRoom.bIsClean);
+		Result.room_organize_initial_state.Add(WorldRoom.Name, WorldRoom.bIsPrepared);
 	}
 
 	// preenche o final state das salas
 	for (auto Room: Rooms) {
-		Result.DoorOpenFinal.Add(Room->Name, Room->DoorOpened);
-		Result.RoomCleanFinalState.Add(Room->Name, Room->IsTrashClean());
-		Result.RoomOrganizeFinalState.Add(Room->Name, Room->IsFurnitureOrganized());
+		Result.door_open_final.Add(Room->Name, Room->DoorOpened);
+		Result.room_clean_final_state.Add(Room->Name, Room->IsTrashClean());
+		Result.room_organize_final_state.Add(Room->Name, Room->IsFurnitureOrganized());
 	}
 
 	TMap<FString, FRoomAssignment> CleaningAssignments;
@@ -264,20 +264,20 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 	for (const FTaskResult& TaskResult : CurrentExperiment.TaskResults) {
 		if (TaskResult.TaskName == ESkillEnum::CLEAN_ROOM) {
 			FRoomAssignment& Assignment = CleaningAssignments.FindOrAdd(TaskResult.Location);
-			Assignment.AssignedRobots.Add(TaskResult.RobotName);
+			Assignment.assignedRobots.Add(TaskResult.RobotName);
 		}
 
 		if (TaskResult.TaskName == ESkillEnum::SANITIZE_ROBOT) {
 			FRoomAssignment& Assignment = SanitizationTasks.FindOrAdd(TaskResult.Location);
-			Assignment.AssignedRobots.Add(TaskResult.RobotName);
+			Assignment.assignedRobots.Add(TaskResult.RobotName);
 		}
 	}
 
-	Result.CleaningAssignments = CleaningAssignments;
-	Result.SanitizationTasks = SanitizationTasks;
+	Result.cleaning_assignments = CleaningAssignments;
+	Result.sanitization_tasks = SanitizationTasks;
 
-	Result.MinOrganizers = 2;
-	Result.MaxOrganizers = 4;
+	Result.min_organizers = 2;
+	Result.max_organizers = 4;
 
 	return Result;
 }
