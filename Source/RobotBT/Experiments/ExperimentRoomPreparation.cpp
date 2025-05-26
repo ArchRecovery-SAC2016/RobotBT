@@ -326,8 +326,7 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 			if (bWasSuccessful && Response.IsValid()) {
 				FString ResponseContent = Response->GetContentAsString();
-				UE_LOG(LogTemp, Log, TEXT("Resposta: %s"), *ResponseContent);
-				// CHAME SEU MÉTODO AQUI APÓS O SUCESSO!
+				CurrentExperiment.ValidationResult = Response->GetContentAsString();
 				this->HandleValidationSuccess(ResponseContent);
 			}
 			else {
@@ -335,8 +334,8 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 				if (Response.IsValid()) {
 					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
 					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
+					CurrentExperiment.ValidationResult = Response->GetContentAsString();
 				}
-				// CHAME SEU MÉTODO AQUI APÓS A FALHA (OPCIONAL)!
 				this->HandleValidationFailure();
 			}
 		}

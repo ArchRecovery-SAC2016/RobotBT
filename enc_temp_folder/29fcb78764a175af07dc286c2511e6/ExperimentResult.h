@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "CoreMinimal.h"
 #include "RobotProperties.h"
@@ -96,9 +96,5 @@ struct FExperimentResult {
 	// robots configuration file path
 	UPROPERTY(Transient)
 	FString RobotsConfigJsonString = "";
-
-	// validationResult
-	UPROPERTY(Transient)
-	FString ValidationResult = "";
 
 };
