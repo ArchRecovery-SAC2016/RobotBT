@@ -53,6 +53,8 @@ private:
 	FValidationStruct GetValidationStruct();
 
 	void ValidateExperiment(FValidationStruct ValidationStruct);
+	void HandleValidationSuccess(const FString& ResponseContent);
+	void HandleValidationFailure();
 
 	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
 

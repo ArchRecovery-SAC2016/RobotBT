@@ -220,13 +220,11 @@ void AExperimentRoomPreparation::ExecuteSanitizeRobot(FString RobotName, ARoomPr
 }
 
 void AExperimentRoomPreparation::ExperimentFinished() {
-	Super::ExperimentFinished();
-
-	// Evaluate G3. for All Rooms are prepared
-	UGoalTracker::Evaluate_G3(GoalModel, Rooms);
-
 	FValidationStruct Validation = GetValidationStruct();
 	ValidateExperiment(Validation);
+
+
+	
 }
 
 void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
@@ -280,7 +278,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 			RoomsCleanedByRobot.FindOrAdd(TaskResult.RobotName).Add(TaskResult.Location);
 
 			FRoomAssignment& Assignment = CleaningAssignments.FindOrAdd(TaskResult.Location);
-			Assignment.assignedRobots.Add(TaskResult.RobotName);
+			Assignment.assigned.Add(TaskResult.RobotName);
 		}
 	}
 
@@ -292,7 +290,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 			if (RoomsCleanedByRobot.Contains(Robot)) {
 				FRoomAssignment& SanitizationAssignment = SanitizationTasks.FindOrAdd(Robot);
 				for (const FString& CleanedRoom : RoomsCleanedByRobot[Robot]) {
-					SanitizationAssignment.assignedRobots.AddUnique(CleanedRoom);
+					SanitizationAssignment.assigned.AddUnique(CleanedRoom);
 				}
 			}
 		}
@@ -326,9 +324,12 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 	Request->SetContentAsString(RequestBody);
 
 	Request->OnProcessRequestComplete().BindLambda(
-		[](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 			if (bWasSuccessful && Response.IsValid()) {
-				UE_LOG(LogTemp, Log, TEXT("Resposta: %s"), *Response->GetContentAsString());
+				FString ResponseContent = Response->GetContentAsString();
+				UE_LOG(LogTemp, Log, TEXT("Resposta: %s"), *ResponseContent);
+				// CHAME SEU MÉTODO AQUI APÓS O SUCESSO!
+				this->HandleValidationSuccess(ResponseContent);
 			}
 			else {
 				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
@@ -336,10 +337,26 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
 					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
 				}
+				// CHAME SEU MÉTODO AQUI APÓS A FALHA (OPCIONAL)!
+				this->HandleValidationFailure();
 			}
 		}
 	);
-
 	Request->ProcessRequest();
 }
 
+// Seu método que será chamado após o sucesso da requisição
+void AExperimentRoomPreparation::HandleValidationSuccess(const FString& ResponseContent) {
+	UE_LOG(LogTemp, Log, TEXT("Validação HTTP bem-sucedida! Conteúdo recebido: %s"), *ResponseContent);
+
+
+	Super::ExperimentFinished();
+}
+
+// Seu método que será chamado após a falha da requisição (opcional)
+void AExperimentRoomPreparation::HandleValidationFailure() {
+	UE_LOG(LogTemp, Error, TEXT("Falha na validação HTTP."));
+
+
+	Super::ExperimentFinished();
+}
