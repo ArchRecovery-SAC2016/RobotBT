@@ -245,6 +245,15 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 
 	Result.Robots.Add(CleanerRobot->RobotProperties.Name);
 
+	TArray<AActor*> RoomsOnMap;
+	TArray<ARoomPreparation*> AllRooms;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARoomPreparation::StaticClass(), RoomsOnMap);
+	for (AActor* Actor : RoomsOnMap) {
+		ARoomPreparation* Room = Cast<ARoomPreparation>(Actor);
+		if (Room != nullptr) {
+			AllRooms.Add(Room);
+		}
+	}
 
 	// preenche o initial state das salas
 	for (auto WorldRoom: WorldRoomsStruct) {
@@ -255,7 +264,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 	}
 
 	// preenche o final state das salas
-	for (auto Room: Rooms) {
+	for (auto Room: AllRooms) {
 		Result.door_open_final.Add(Room->Name, Room->DoorOpened);
 		Result.room_clean_final_state.Add(Room->Name, Room->IsTrashClean());
 		Result.room_organize_final_state.Add(Room->Name, Room->IsFurnitureOrganized());
@@ -264,15 +273,28 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 	TMap<FString, FRoomAssignment> CleaningAssignments;
 	TMap<FString, FRoomAssignment> SanitizationTasks;
 
+	TMap<FString, TArray<FString>> RoomsCleanedByRobot;
 	for (const FTaskResult& TaskResult : CurrentExperiment.TaskResults) {
 		if (TaskResult.TaskName == ESkillEnum::CLEAN_ROOM) {
+			// Atualiza o mapa de limpeza
+			RoomsCleanedByRobot.FindOrAdd(TaskResult.RobotName).Add(TaskResult.Location);
+
 			FRoomAssignment& Assignment = CleaningAssignments.FindOrAdd(TaskResult.Location);
 			Assignment.assignedRobots.Add(TaskResult.RobotName);
 		}
+	}
 
+	// check if the robot sanitize after clean
+	for (const FTaskResult& TaskResult : CurrentExperiment.TaskResults) {
 		if (TaskResult.TaskName == ESkillEnum::SANITIZE_ROBOT) {
-			FRoomAssignment& Assignment = SanitizationTasks.FindOrAdd(TaskResult.Location);
-			Assignment.assignedRobots.Add(TaskResult.RobotName);
+			const FString& Robot = TaskResult.RobotName;
+
+			if (RoomsCleanedByRobot.Contains(Robot)) {
+				FRoomAssignment& SanitizationAssignment = SanitizationTasks.FindOrAdd(Robot);
+				for (const FString& CleanedRoom : RoomsCleanedByRobot[Robot]) {
+					SanitizationAssignment.assignedRobots.AddUnique(CleanedRoom);
+				}
+			}
 		}
 	}
 
@@ -294,7 +316,6 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 	}
 
 	// 🔍 Loga o JSON antes de enviar
-	UE_LOG(LogTemp, Warning, TEXT("NEW REQUEST!!!! ¥"));
 	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
 
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
