@@ -8,7 +8,7 @@ struct FRoomAssignment {
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FString> assigned;
+	TArray<FString> assignedRobots;
 };
 
 USTRUCT(BlueprintType)

@@ -280,7 +280,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 			RoomsCleanedByRobot.FindOrAdd(TaskResult.RobotName).Add(TaskResult.Location);
 
 			FRoomAssignment& Assignment = CleaningAssignments.FindOrAdd(TaskResult.Location);
-			Assignment.assigned.Add(TaskResult.RobotName);
+			Assignment.assignedRobots.Add(TaskResult.RobotName);
 		}
 	}
 
@@ -292,7 +292,7 @@ FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
 			if (RoomsCleanedByRobot.Contains(Robot)) {
 				FRoomAssignment& SanitizationAssignment = SanitizationTasks.FindOrAdd(Robot);
 				for (const FString& CleanedRoom : RoomsCleanedByRobot[Robot]) {
-					SanitizationAssignment.assigned.AddUnique(CleanedRoom);
+					SanitizationAssignment.assignedRobots.AddUnique(CleanedRoom);
 				}
 			}
 		}
@@ -342,3 +342,4 @@ void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct Validation
 
 	Request->ProcessRequest();
 }
+
