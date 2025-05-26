@@ -8,7 +8,7 @@ struct FRoomAssignment {
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FString> assignedRobots;
+	TArray<FString> AssignedRobots;
 };
 
 USTRUCT(BlueprintType)
@@ -25,41 +25,43 @@ struct FValidationStruct {
 	TArray<FString> Robots;
 
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FString> robots_organizer;
+	TArray<FString> RobotsOrganizer;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> room_clean_initial_state;
+	TMap<FString, bool> RoomCleanInitialState;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> room_clean_final_state;
+	TMap<FString, bool> RoomCleanFinalState;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> room_organize_initial_state;
+	TMap<FString, bool> RoomOrganizeInitialState;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> room_organize_final_state;
+	TMap<FString, bool> RoomOrganizeFinalState;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> door_open_inicial;
+	TMap<FString, bool> DoorOpenInicial;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, bool> door_open_final;
+	TMap<FString, bool> DoorOpenFinal;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, FRoomAssignment> cleaning_assignments;
+	TMap<FString, FRoomAssignment> CleaningAssignments;
 
 	UPROPERTY(BlueprintReadWrite)
-	TMap<FString, FRoomAssignment> sanitization_tasks;
+	TMap<FString, FRoomAssignment> SanitizationTasks;
 
 	UPROPERTY(BlueprintReadWrite)
-	int32 min_organizers = 0;
+	int32 MinOrganizers = 0;
 
 	UPROPERTY(BlueprintReadWrite)
-	int32 max_organizers = 0;
+	int32 MaxOrganizers = 0;
 
 	UPROPERTY(BlueprintReadWrite)
-	int32 min_cleaners = 0;
+	int32 MinCleaners = 0;
 
 	UPROPERTY(BlueprintReadWrite)
-	int32 max_cleaners = 0;
+	int32 MaxCleaners = 0;
+
+
 };
