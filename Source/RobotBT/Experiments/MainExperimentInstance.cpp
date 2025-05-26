@@ -1,6 +1,9 @@
-#include "MainExperimentInstance.h"
+ï»¿#include "MainExperimentInstance.h"
 
 #include "Experiment.h"
+#include "HttpModule.h"
+#include "Interfaces/IHttpResponse.h"
+
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Util/MyJsonWriter.h"
 
@@ -67,7 +70,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		LatentInfo.CallbackTarget = this;
 		LatentInfo.ExecutionFunction = FName("OnLevelLoaded");
 		LatentInfo.Linkage = 0;
-		LatentInfo.UUID = __LINE__; // Número único para o callback.
+		LatentInfo.UUID = __LINE__; // NÃºmero Ãºnico para o callback.
 
 		UGameplayStatics::LoadStreamLevel(World, CurrentLevelName, true, false, LatentInfo);
 	}

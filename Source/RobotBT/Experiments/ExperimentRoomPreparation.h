@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Experiment.h"
 #include "RobotBT/Actors/RoomPreparation/RobotCleaner.h"
 #include "RobotBT/Actors/RoomPreparation/RobotOrganizer.h"
+#include "RobotBT/Struct/ValidationStruct.h"
 #include "ExperimentRoomPreparation.generated.h"
 
 UCLASS(minimalapi)
@@ -49,6 +50,9 @@ private:
 	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
 
 	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
+	FValidationStruct GetValidationStruct();
+
+	void ValidateExperiment(FValidationStruct ValidationStruct);
 
 	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
 
@@ -63,5 +67,7 @@ private:
 	virtual void PrepareWorld() override;
 
 	virtual void TimeIsOver() override;
+
+
 
 };

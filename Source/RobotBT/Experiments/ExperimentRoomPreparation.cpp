@@ -1,8 +1,14 @@
-#include "ExperimentRoomPreparation.h"
+﻿#include "ExperimentRoomPreparation.h"
+
+#include "HttpModule.h"
+#include "JsonObjectConverter.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
+#include "Interfaces/IHttpRequest.h"
+#include "Interfaces/IHttpResponse.h"
 #include "RobotBT/Actors/Room.h"
+#include "RobotBT/Struct/ValidationStruct.h"
 #include "RobotBT/Util/MyJsonReader.h"
 
 AExperimentRoomPreparation::AExperimentRoomPreparation() {
@@ -215,6 +221,9 @@ void AExperimentRoomPreparation::ExperimentFinished() {
 
 	// Evaluate G3. for All Rooms are prepared
 	UGoalTracker::Evaluate_G3(GoalModel, Rooms);
+
+	FValidationStruct Validation = GetValidationStruct();
+	ValidateExperiment(Validation);
 }
 
 void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
@@ -223,3 +232,93 @@ void AExperimentRoomPreparation::ExecuteMoveFurniture(FString RobotName, ARoomPr
 		Organizer->StartNewTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }
+
+FValidationStruct AExperimentRoomPreparation::GetValidationStruct() {
+	FValidationStruct Result;
+
+	for (auto Organizer: OrganizersTeam) {
+		Result.RobotsOrganizer.Add(Organizer->RobotProperties.Name);
+	}
+
+	Result.Robots.Add(CleanerRobot->RobotProperties.Name);
+
+
+	// preenche o initial state das salas
+	for (auto WorldRoom: WorldRoomsStruct) {
+		Result.Rooms.Add(WorldRoom.Name);
+		Result.DoorOpenInicial.Add(WorldRoom.Name, WorldRoom.bDoorOpen);
+		Result.RoomCleanInitialState.Add(WorldRoom.Name, WorldRoom.bIsClean);
+		Result.RoomOrganizeInitialState.Add(WorldRoom.Name, WorldRoom.bIsPrepared);
+	}
+
+	// preenche o final state das salas
+	for (auto Room: Rooms) {
+		Result.DoorOpenInicial.Add(Room->Name, Room->DoorOpened);
+		Result.RoomCleanFinalState.Add(Room->Name, Room->IsTrashClean());
+		Result.RoomOrganizeFinalState.Add(Room->Name, Room->IsFurnitureOrganized());
+	}
+
+	TMap<FString, FRoomAssignment> CleaningAssignments;
+	TMap<FString, FRoomAssignment> SanitizationTasks;
+
+
+	for (const FTaskResult& TaskResult : CurrentExperiment.TaskResults) {
+		if (TaskResult.TaskName == ESkillEnum::CLEAN_ROOM) {
+			FRoomAssignment& Assignment = CleaningAssignments.FindOrAdd(TaskResult.Location);
+			Assignment.AssignedRobots.Add(TaskResult.RobotName);
+		}
+
+		if (TaskResult.TaskName== ESkillEnum::SANITIZE_ROBOT) {
+			FRoomAssignment& Assignment = SanitizationTasks.FindOrAdd(TaskResult.Location);
+			Assignment.AssignedRobots.Add(TaskResult.RobotName);
+		}
+		
+	}
+
+	Result.CleaningAssignments = CleaningAssignments;
+	Result.SanitizationTasks = SanitizationTasks;
+
+	Result.MinOrganizers = 2;
+	Result.MaxOrganizers = 4;
+
+	return Result;
+	
+}
+
+void AExperimentRoomPreparation::ValidateExperiment(FValidationStruct ValidationStruct) {
+	FString RequestBody;
+
+	if (!FJsonObjectConverter::UStructToJsonObjectString(ValidationStruct, RequestBody)) {
+		UE_LOG(LogTemp, Error, TEXT("Erro ao converter ValidationStruct para JSON"));
+		return;
+	}
+
+	// 🔍 Loga o JSON antes de enviar
+	UE_LOG(LogTemp, Warning, TEXT("NEW REQUEST!!!! ¥"));
+	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
+
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
+
+	Request->SetURL(TEXT("http://127.0.0.1:8000/validar"));
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	Request->SetContentAsString(RequestBody);
+
+	Request->OnProcessRequestComplete().BindLambda(
+		[](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+			if (bWasSuccessful && Response.IsValid()) {
+				UE_LOG(LogTemp, Log, TEXT("Resposta: %s"), *Response->GetContentAsString());
+			}
+			else {
+				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
+				if (Response.IsValid()) {
+					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
+					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
+				}
+			}
+		}
+	);
+
+	Request->ProcessRequest();
+}
+

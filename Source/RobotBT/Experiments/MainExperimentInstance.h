@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "RobotBT/Struct/ExperimentResult.h"
@@ -49,7 +49,6 @@ public:
 private:
 	UPROPERTY()
 	AExperiment* ExperimentGameMode;
-
 
 };
 
