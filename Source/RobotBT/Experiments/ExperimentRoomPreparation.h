@@ -1,4 +1,4 @@
-﻿#pragma once
+﻿	#pragma once
 
 #include "CoreMinimal.h"
 #include "Experiment.h"
@@ -13,6 +13,12 @@ class AExperimentRoomPreparation : public AExperiment
 	GENERATED_BODY()
 
 public:
+	SIMPLIFICAR ISSO AKI
+
+	EU QUERIA FAZER DOIS CONTROLADORES. UM BASELINE E OUTRO INTELIGENTE
+	ENTAO TODA ESSA PARTE DE PEGAR A PROXIMA, DECOMPOSICAO, ETC, TEM QUE SER ABSTRATO. 
+
+
 	AExperimentRoomPreparation();
 
 	virtual void BeginPlay() override;
