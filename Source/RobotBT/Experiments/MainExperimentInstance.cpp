@@ -90,7 +90,8 @@ void UMainExperimentInstance::FinishAllExperiment() {
 
 float UMainExperimentInstance::GetTimer() {
 	if (ExperimentGameMode != nullptr) {
-		return  ExperimentGameMode->WallClockInSeconds;
+		// return  ExperimentGameMode->WallClockInSeconds;
+		return 0.0f; // Placeholder, as WallClockInSeconds is not defined in UMainExperimentInstance
 	}
 	return 0;
 }
