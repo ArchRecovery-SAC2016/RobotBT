@@ -8,7 +8,7 @@
 #include "IDesktopPlatform.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Misc/FileHelper.h"
-#include "RobotBT/Experiments/ExperimentRoomPreparation.h"
+#include "RobotBT/Experiments/Experiment.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();

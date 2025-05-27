@@ -2,8 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "RobotBT/Actors/RoomPreparation/RobotCleaner.h"
+#include "RobotBT/Actors/RoomPreparation/RobotOrganizer.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "RobotBT/Struct/TaskStruct.h"
+#include "RobotBT/Struct/ValidationStruct.h"
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "Experiment.generated.h"
 
@@ -43,6 +46,27 @@ public:
 
 	FOnExperimentFinished OnExperimentFinished;
 
+	// saves all organizers robots instance
+	UPROPERTY()
+	TArray<ARobotOrganizer*> OrganizersTeam;
+
+	// saves the robot cleaner
+	UPROPERTY()
+	ARobotCleaner* CleanerRobot;
+
+	UFUNCTION()
+	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
+
+
+private:
+	/* Saves all doors in the map	*/
+	UPROPERTY()
+	TArray<ARoomPreparation*> Rooms;
+
+	/* Monitors the current room */
+	UPROPERTY()
+	ARoomPreparation* CurrentRoom;
+
 protected:
 	// The world knowledge loaded from file
 	TArray<FWorldRoomDataStruct> WorldRoomsStruct;
@@ -51,7 +75,7 @@ protected:
 	UPROPERTY()
 	TMap<FString, FTask> Tasks;
 
-	int32 CurrentTaskIndex= - 1;
+	int32 CurrentTaskIndex = -1;
 
 	// Some task need 2 robots. So for the sucess, the 2 robots need to return true. This counter controls this 
 	int32 NumberOfTask = 1;
@@ -71,7 +95,7 @@ protected:
 	virtual FTask* GetNextTask();
 
 	UFUNCTION()
-	virtual void FetchRoomsToBePrepared() ;
+	virtual void FetchRoomsToBePrepared();
 
 	UFUNCTION()
 	virtual void ExperimentFinished();
@@ -80,10 +104,10 @@ protected:
 	virtual void ExecuteCurrentTask();
 
 	// will execute the decomposition of the task
-	virtual void ExecuteCurrentDecomposition() { };
+	virtual void ExecuteCurrentDecomposition();
 
 	// All task have preconditions. This method check if the preconditions are satisfied
-	virtual bool CheckPreCondition(FTask* NewTask) { return true; }
+	virtual bool CheckPreCondition(FTask* NewTask);
 
 	virtual bool ParsePredicate(const FString& Predicate, FString& OutObjectName, FString& OutCondition);
 
@@ -91,10 +115,10 @@ protected:
 	virtual void SetRandomRobotsProperties() {};
 
 	// the especialized class will implement this method
-	virtual void PrepareWorld() {};
+	virtual void PrepareWorld();
 
 	// Callled when the time is over. Will notify all robots. The especialized that will implemtn this method
-	virtual void TimeIsOver() {};
+	virtual void TimeIsOver();
 
 	// need this variable to calculate the wall clock
 	UPROPERTY()
@@ -105,6 +129,24 @@ protected:
 	TArray<FRobotProperties> RobotsProperties;
 
 	bool ExperimentStarted = false;
+
+	ARoomPreparation* GetRoomByName(FString DoorName);
+
+	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
+
+	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
+
+	FValidationStruct GetValidationStruct();
+
+	void ValidateExperiment(FValidationStruct ValidationStruct);
+	void HandleValidationSuccess(const FString& ResponseContent);
+	void HandleValidationFailure();
+
+	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
+
+	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
+
+	bool EvaluatePreCondition(const FPredicate& Predicate);
 };
 
 
