@@ -35,8 +35,8 @@ void UExperimentSetupWidget::NativeConstruct() {
 
 	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 	if (ExperimentInstance != nullptr) {
-		if (ExperimentInstance->MustContinueExperiment) { // essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
-			ExperimentInstance->NextExperiment();
+		if (ExperimentInstance->MustContinueExperiment) {
+			InitiateExperiment();
 
 		}
 	}
@@ -56,6 +56,8 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	ExperimentIsValid = ValidateInputs();
 
 	if (!ExperimentIsValid) return;
+
+	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 
 	if (ExperimentIsValid && ExperimentInstance != nullptr) {
 		ExperimentStarted = true;

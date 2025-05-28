@@ -35,6 +35,9 @@ public:
 	void ResetLevel();
 
 	UFUNCTION()
+	void OnLevelLoaded();
+
+	UFUNCTION()
 	void NextExperiment();
 
 	FExperimentResult& GetCurrentExperiment();
@@ -50,8 +53,6 @@ public:
 
 	UPROPERTY()
 	bool MustContinueExperiment = false;
-
-	bool IsExperimentOver();
 
 private:
 	/** Handle do Timer */

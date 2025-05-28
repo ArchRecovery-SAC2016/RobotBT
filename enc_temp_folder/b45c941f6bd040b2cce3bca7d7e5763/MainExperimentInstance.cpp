@@ -60,12 +60,10 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 	Experiments.Add(NewExperiment);
 
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
-		MustContinueExperiment = false;
 		FinishAllExperiment();
 		return;
 	}
 
-	MustContinueExperiment = true;
 	ResetLevel();
 }
 
@@ -76,7 +74,11 @@ void UMainExperimentInstance::ResetLevel() {
 		UGameplayStatics::OpenLevel(World, CurrentLevelName, false);
 	}
 
-	
+	NextExperiment();
+}
+
+void UMainExperimentInstance::OnLevelLoaded() {
+	NextExperiment();
 }
 
 void UMainExperimentInstance::FinishAllExperiment() {
