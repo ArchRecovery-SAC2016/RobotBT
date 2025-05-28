@@ -1,20 +1,15 @@
 ﻿#include "Experiment.h"
+
+#include "HttpModule.h"
+#include "JsonObjectConverter.h"
 #include "RobotBT/RobotBTPlayerController.h"
 #include "UObject/ConstructorHelpers.h"
+#include "RobotBT/Util/MyJsonReader.h"
+#include "RobotBT/Util/UtilMethods.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
 #include "RobotBT/Controllers/RoomPreparationBaseController.h"
-
-
-void AExperiment::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-}
-
-void AExperiment::BeginPlay() {
-	Super::BeginPlay();
-
-}
 
 AExperiment::AExperiment() {
 	// use our custom PlayerController class
@@ -29,6 +24,16 @@ AExperiment::AExperiment() {
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void AExperiment::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+}
+
+void AExperiment::BeginPlay() {
+	Super::BeginPlay();
+
+	
+}
 
 void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
 	ARoomPreparationBaseController* Controller = GetWorld()->SpawnActor<ARoomPreparationBaseController>();

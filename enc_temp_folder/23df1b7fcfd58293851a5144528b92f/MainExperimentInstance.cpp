@@ -1,5 +1,9 @@
 ﻿#include "MainExperimentInstance.h"
+
 #include "Experiment.h"
+#include "HttpModule.h"
+#include "Interfaces/IHttpResponse.h"
+
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Util/MyJsonWriter.h"
 
