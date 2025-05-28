@@ -5,7 +5,6 @@
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "Experiment.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExperimentFinished, FExperimentResult, ExperimentResult);
 
 UCLASS(minimalapi)
 class AExperiment : public AGameModeBase {
@@ -17,16 +16,7 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
-
-	// the experiment
-	UFUNCTION()
-	virtual void ExecuteExperiment(FExperimentResult& NewExperiment);
-
-	UFUNCTION()
-	void ExperimentFinished(FExperimentResult CurrentExperiment);
-
-	FOnExperimentFinished OnExperimentFinished;
-
+	void ExecuteExperiment(FExperimentResult& NewExperiment);
 };
 
 

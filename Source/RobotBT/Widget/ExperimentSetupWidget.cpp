@@ -8,6 +8,7 @@
 #include "IDesktopPlatform.h"
 #include "HAL/PlatformFilemanager.h"
 #include "Misc/FileHelper.h"
+#include "RobotBT/Actors/Robot.h"
 #include "RobotBT/Experiments/Experiment.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
@@ -191,7 +192,7 @@ void UExperimentSetupWidget::SetMessage(FString NewMessage) {
 
 FText UExperimentSetupWidget::GetExperimentIdValue() {
 	if (ExperimentInstance != nullptr) {
-		return FText::AsNumber(ExperimentInstance->ExperimentId);
+		return FText::AsNumber(ExperimentInstance->CurrentExperiment.ExperimentId);
 	}
 
 	return FText::FromString("");

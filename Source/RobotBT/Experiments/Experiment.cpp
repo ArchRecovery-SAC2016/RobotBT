@@ -4,8 +4,6 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
-#include "RobotBT/Controllers/RoomPreparationBaseController.h"
-
 
 void AExperiment::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
@@ -27,24 +25,4 @@ AExperiment::AExperiment() {
 	}
 
 	PrimaryActorTick.bCanEverTick = true;
-}
-
-
-void AExperiment::ExecuteExperiment(FExperimentResult& NewExperiment) {
-	ARoomPreparationBaseController* Controller = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
-	Controller->ExecuteExperiment(NewExperiment);
-
-	Controller->FOnPreparationFinish.AddDynamic(this, &AExperiment::ExperimentFinished);
-}
-
-
-void AExperiment::ExperimentFinished(FExperimentResult CurrentExperiment) {
-	/*
-	FValidationStruct Validation = GetValidationStruct();
-
-	// Validate Experiment is a Assync method. So we need to wait it finished, and then we call Super:ExperimentFinished
-	ValidateExperiment(Validation);
-	*/
-
-	OnExperimentFinished.Broadcast(CurrentExperiment);
 }

@@ -37,6 +37,8 @@ public:
 	UFUNCTION()
 	void NextExperiment();
 
+	
+
 	FExperimentResult& GetCurrentExperiment();
 
 	UPROPERTY()

@@ -32,7 +32,7 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		TimerHandle_CountSeconds,                   // Handle
 		this,                                         // Objeto
 		&UMainExperimentInstance::IncrementSeconds,   // Função a ser chamada
-		0.01f,                                         // Intervalo em segundos
+		1.0f,                                         // Intervalo em segundos
 		true                                          // Repetir
 	);
 
@@ -92,11 +92,11 @@ void UMainExperimentInstance::FinishAllExperiment() {
 }
 
 float UMainExperimentInstance::GetTimer() {
-	return CurrentExperiment.WallClockInSeconds;
+	return 0;
 }
 
 void UMainExperimentInstance::IncrementSeconds() {
-	CurrentExperiment.WallClockInSeconds += 0.01f;
+	CurrentExperiment.WallClockInSeconds++;
 }
 
 FExperimentResult& UMainExperimentInstance::GetCurrentExperiment() {
