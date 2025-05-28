@@ -1,9 +1,7 @@
-#include "RobotWidget.h"
-#include "RoomPropertiesWidget.h"
+﻿#include "RobotWidget.h"
 
 void URobotWidget::NativeConstruct() {
 	Super::NativeConstruct();
-
 }
 
 void URobotWidget::SetBattery(float BatteryLevel) {

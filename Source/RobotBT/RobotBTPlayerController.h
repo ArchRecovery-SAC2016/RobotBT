@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -21,11 +21,6 @@ public:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = MyComponent)
-	TSubclassOf<class UWorldKnowledgeWidget> WorldKnowledgeWBP;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = MyComponent)
-	class UWorldKnowledgeWidget* WorldKnowledgeWidget;
 
 };
 
