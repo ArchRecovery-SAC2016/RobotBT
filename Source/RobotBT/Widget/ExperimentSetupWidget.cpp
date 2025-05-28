@@ -9,7 +9,6 @@
 #include "HAL/PlatformFilemanager.h"
 #include "Misc/FileHelper.h"
 #include "RobotBT/Actors/Robot.h"
-#include "RobotBT/Experiments/Experiment.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();

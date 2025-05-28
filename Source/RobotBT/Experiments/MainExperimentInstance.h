@@ -13,7 +13,6 @@ class UMainExperimentInstance : public UGameInstance {
 public:
 	UMainExperimentInstance();
 
-
 	virtual void Init() override;
 
 	// End Experiment Properties. 
@@ -30,6 +29,7 @@ public:
 	// Current Experiment finished. Called by the Experiment
 	UFUNCTION()
 	void ExperimentFinished(FExperimentResult NewExperiment);
+	void ResetLevel();
 
 	UFUNCTION()
 	void OnLevelLoaded();

@@ -1,5 +1,4 @@
 ﻿#include "MainExperimentInstance.h"
-#include "Experiment.h"
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Controllers/RoomPreparationBaseController.h"
 #include "RobotBT/Util/MyJsonWriter.h"
@@ -66,16 +65,15 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		return;
 	}
 
-	// restart the level
-	if (UWorld* World = GetWorld()) {
-		FName CurrentLevelName = World->GetFName();
-		FLatentActionInfo LatentInfo;
-		LatentInfo.CallbackTarget = this;
-		LatentInfo.ExecutionFunction = FName("OnLevelLoaded");
-		LatentInfo.Linkage = 0;
-		LatentInfo.UUID = __LINE__; // Número único para o callback.
+	ResetLevel();
+}
 
-		UGameplayStatics::LoadStreamLevel(World, CurrentLevelName, true, false, LatentInfo);
+
+void UMainExperimentInstance::ResetLevel() {
+	UWorld* World = GetWorld();
+	if (World) {
+		FName CurrentLevelName = FName(*World->GetName());
+		UGameplayStatics::OpenLevel(World, CurrentLevelName, false);
 	}
 }
 
