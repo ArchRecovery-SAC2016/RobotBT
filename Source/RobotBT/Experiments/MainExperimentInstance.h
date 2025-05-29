@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "RobotBT/Struct/ExperimentResult.h"
+#include "RobotBT/Struct/ValidationStruct.h"
 #include "MainExperimentInstance.generated.h"
 
 class AExperiment;
@@ -35,6 +36,15 @@ public:
 	void ResetLevel();
 
 	UFUNCTION()
+	void ValidateExperiment(FValidationStruct ValidationStruct);
+
+	UFUNCTION()
+	void HandleValidationSuccess(const FString& ResponseContent);
+
+	UFUNCTION()
+	void HandleValidationFailure();
+
+	UFUNCTION()
 	void NextExperiment();
 
 	FExperimentResult& GetCurrentExperiment();
@@ -51,7 +61,9 @@ public:
 	UPROPERTY()
 	bool MustContinueExperiment = false;
 
-	bool IsExperimentOver();
+	// used to control async methods, like the validation
+	UPROPERTY()
+	bool IsLoading = false;
 
 private:
 	/** Handle do Timer */
@@ -59,6 +71,10 @@ private:
 
 	/** Função chamada a cada segundo */
 	void IncrementSeconds();
+
+	/* saves witch controller is running */
+	UPROPERTY()
+	class ARoomPreparationBaseController* CurrentController = nullptr;
 };
 
 

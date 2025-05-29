@@ -1,4 +1,8 @@
 ﻿#include "MainExperimentInstance.h"
+
+#include "HttpModule.h"
+#include "JsonObjectConverter.h"
+#include "Interfaces/IHttpResponse.h"
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Controllers/RoomPreparationBaseController.h"
 #include "RobotBT/Util/MyJsonWriter.h"
@@ -49,12 +53,11 @@ void UMainExperimentInstance::NextExperiment() {
 }
 
 void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment) {
-	ARoomPreparationBaseController* Controller = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
-	Controller->ExecuteExperiment(NewExperiment);
+	CurrentController = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
+	CurrentController->ExecuteExperiment(NewExperiment);
 
-	Controller->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
+	CurrentController->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
 }
-
 
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	Experiments.Add(NewExperiment);
@@ -66,7 +69,10 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 	}
 
 	MustContinueExperiment = true;
-	ResetLevel();
+
+	FValidationStruct Validation = CurrentController->GetValidationStruct();
+	ValidateExperiment(Validation);
+	
 }
 
 void UMainExperimentInstance::ResetLevel() {
@@ -75,8 +81,62 @@ void UMainExperimentInstance::ResetLevel() {
 		FName CurrentLevelName = FName(*World->GetName());
 		UGameplayStatics::OpenLevel(World, CurrentLevelName, false);
 	}
+}
 
-	
+void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStruct) {
+	IsLoading = true;
+	FString RequestBody;
+
+	if (!FJsonObjectConverter::UStructToJsonObjectString(ValidationStruct, RequestBody)) {
+		UE_LOG(LogTemp, Error, TEXT("Erro ao converter ValidationStruct para JSON"));
+		return;
+	}
+
+	// 🔍 Loga o JSON antes de enviar
+	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
+
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
+
+	Request->SetURL(TEXT("http://127.0.0.1:8000/validar"));
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	Request->SetContentAsString(RequestBody);
+
+	Request->OnProcessRequestComplete().BindLambda(
+		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+			if (bWasSuccessful && Response.IsValid()) {
+				FString ResponseContent = Response->GetContentAsString();
+				CurrentExperiment.ValidationResult = Response->GetContentAsString();
+				this->HandleValidationSuccess(ResponseContent);
+			}
+			else {
+				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
+				if (Response.IsValid()) {
+					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
+					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
+					CurrentExperiment.ValidationResult = Response->GetContentAsString();
+				}
+				this->HandleValidationFailure();
+			}
+		}
+	);
+	Request->ProcessRequest();
+}
+
+// Seu método que será chamado após o sucesso da requisição
+void UMainExperimentInstance::HandleValidationSuccess(const FString& ResponseContent) {
+	UE_LOG(LogTemp, Log, TEXT("Validação HTTP bem-sucedida! Conteúdo recebido: %s"), *ResponseContent);
+
+	IsLoading = false;
+	ResetLevel();
+}
+
+// Seu método que será chamado após a falha da requisição (opcional)
+void UMainExperimentInstance::HandleValidationFailure() {
+	UE_LOG(LogTemp, Error, TEXT("Falha na validação HTTP."));
+	IsLoading = false;
+
+	ResetLevel();
 }
 
 void UMainExperimentInstance::FinishAllExperiment() {

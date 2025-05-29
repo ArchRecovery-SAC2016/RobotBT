@@ -215,10 +215,7 @@ void ARoomPreparationBaseController::CurrentTaskFinished(FTaskResult TaskResult)
 }
 
 void ARoomPreparationBaseController::ExperimentFinished() {
-	FValidationStruct Validation = GetValidationStruct();
 
-	// Validate RoomPreparationBaseController is a Assync method. So we need to wait it finished, and then we call Super:ExperimentFinished
-	ValidateExperiment(Validation);
 
 	FOnPreparationFinish.Broadcast(CurrentExperiment);
 }
@@ -431,58 +428,4 @@ FValidationStruct ARoomPreparationBaseController::GetValidationStruct() {
 	Result.max_organizers = 4;
 
 	return Result;
-}
-
-
-void ARoomPreparationBaseController::ValidateExperiment(FValidationStruct ValidationStruct) {
-	FString RequestBody;
-
-	if (!FJsonObjectConverter::UStructToJsonObjectString(ValidationStruct, RequestBody)) {
-		UE_LOG(LogTemp, Error, TEXT("Erro ao converter ValidationStruct para JSON"));
-		return;
-	}
-
-	// 🔍 Loga o JSON antes de enviar
-	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
-
-	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
-
-	Request->SetURL(TEXT("http://127.0.0.1:8000/validar"));
-	Request->SetVerb(TEXT("POST"));
-	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->SetContentAsString(RequestBody);
-
-	Request->OnProcessRequestComplete().BindLambda(
-		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
-			if (bWasSuccessful && Response.IsValid()) {
-				FString ResponseContent = Response->GetContentAsString();
-				CurrentExperiment.ValidationResult = Response->GetContentAsString();
-				this->HandleValidationSuccess(ResponseContent);
-			}
-			else {
-				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
-				if (Response.IsValid()) {
-					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
-					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
-					CurrentExperiment.ValidationResult = Response->GetContentAsString();
-				}
-				this->HandleValidationFailure();
-			}
-		}
-	);
-	Request->ProcessRequest();
-}
-
-// Seu método que será chamado após o sucesso da requisição
-void ARoomPreparationBaseController::HandleValidationSuccess(const FString& ResponseContent) {
-	UE_LOG(LogTemp, Log, TEXT("Validação HTTP bem-sucedida! Conteúdo recebido: %s"), *ResponseContent);
-
-	// ExperimentFinished();
-}
-
-// Seu método que será chamado após a falha da requisição (opcional)
-void ARoomPreparationBaseController::HandleValidationFailure() {
-	UE_LOG(LogTemp, Error, TEXT("Falha na validação HTTP."));
-
-	// ExperimentFinished();
 }

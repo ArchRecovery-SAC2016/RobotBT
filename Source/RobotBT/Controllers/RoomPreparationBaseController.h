@@ -56,6 +56,9 @@ public:
 	UFUNCTION()
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
 
+	UFUNCTION()
+	FValidationStruct GetValidationStruct();
+
 
 private:
 	/* Saves all doors in the map	*/
@@ -134,12 +137,6 @@ protected:
 	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
 
 	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
-
-	FValidationStruct GetValidationStruct();
-
-	void ValidateExperiment(FValidationStruct ValidationStruct);
-	void HandleValidationSuccess(const FString& ResponseContent);
-	void HandleValidationFailure();
 
 	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
 

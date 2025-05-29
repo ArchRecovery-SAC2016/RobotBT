@@ -6,8 +6,6 @@
 #include "RobotBT/Util/MyJsonReader.h"
 #include "DesktopPlatformModule.h"
 #include "IDesktopPlatform.h"
-#include "HAL/PlatformFilemanager.h"
-#include "Misc/FileHelper.h"
 #include "RobotBT/Actors/Robot.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
@@ -37,7 +35,6 @@ void UExperimentSetupWidget::NativeConstruct() {
 	if (ExperimentInstance != nullptr) {
 		if (ExperimentInstance->MustContinueExperiment) { // essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
 			ExperimentInstance->NextExperiment();
-
 		}
 	}
 }
