@@ -114,23 +114,7 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 			if (bWasSuccessful && Response.IsValid()) {
 				FString ResponseContent = Response->GetContentAsString();
-
-				TSharedPtr<FJsonObject> JsonObject;
-				TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseContent);
-
-				bool bJsonOk = FJsonSerializer::Deserialize(Reader, JsonObject);
-
-				if (bJsonOk && JsonObject.IsValid()) {
-					bool bValido = JsonObject->GetBoolField("valido");
-					FString Mensagem = JsonObject->GetStringField("mensagem");
-
-					// Aqui você pode passar os valores extraídos
-					this->HandleValidation(Mensagem, bValido);
-				}
-				else {
-					UE_LOG(LogTemp, Error, TEXT("Falha ao parsear o JSON: %s"), *ResponseContent);
-					this->HandleValidation(TEXT("Resposta inválida do servidor."), false);
-				}
+				this->HandleValidation(ResponseContent, true);
 			} else {
 				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
 				FString ResponseContent = "Unknow error.";
@@ -148,11 +132,11 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, bool ManageToCallValidation) {
 	if (ManageToCallValidation) {
 		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::ValidationResult;
+		CurrentExperiment.ResultFinal.Description = "All task finished. Validation Result: " + ResponseContent;
 	} else {
 		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::ValidationCallFailed;
+		CurrentExperiment.ResultFinal.Description = "Failed to Call Validation: " + ResponseContent;
 	}
-
-	CurrentExperiment.ResultFinal.Description = ResponseContent;
 	
 	Experiments.Add(CurrentExperiment);
 	IsLoading = false;
