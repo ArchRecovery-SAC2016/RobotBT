@@ -109,5 +109,7 @@ public:
 	bool IsLoading();
 
 	UFUNCTION(BlueprintCallable)
-	FString GetLastExperimentResult();
+	FResultFinal GetLastExperimentResult();
+
+
 };

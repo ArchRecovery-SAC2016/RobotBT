@@ -62,6 +62,20 @@ void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	Experiments.Add(NewExperiment);
 
+	FTaskResult LastResult = NewExperiment.TaskResults.Last();
+
+	if (LastResult.SuccessResult) {
+		// TODO: Individualizar isso aki. tah muito voltado pro RoomPreparation. Talvez a validacao deve estar lah mesmo. ou entao, lah deve retornar tudo que eh necessario como o RequestBody e a url e aki soh chamar
+		// o Validation Struct eh o pai, e tem FValidationRoomPreparationStruct filho desse validation struct
+		FValidationStruct Validation = CurrentController->GetValidationStruct();
+		ValidateExperiment(Validation);
+	} else {
+		CurrentExperiment.ResultFinal.Success = false;
+		CurrentExperiment.ResultFinal.FailureReasonEnum = LastResult.FailureReasonEnum;
+		CurrentExperiment.ResultFinal.ManagedToValidate = false;
+	}
+
+
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		MustContinueExperiment = false;
 		FinishAllExperiment();
@@ -69,10 +83,6 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 	}
 
 	MustContinueExperiment = true;
-
-	FValidationStruct Validation = CurrentController->GetValidationStruct();
-	ValidateExperiment(Validation);
-	
 }
 
 void UMainExperimentInstance::ResetLevel() {
@@ -102,21 +112,22 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetContentAsString(RequestBody);
 
+	FResultFinal ResultFinal= FResultFinal();
+	ResultFinal.Success = true;
+
 	Request->OnProcessRequestComplete().BindLambda(
 		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 			if (bWasSuccessful && Response.IsValid()) {
 				FString ResponseContent = Response->GetContentAsString();
-				CurrentExperiment.ResultDescription = Response->GetContentAsString();
-				this->HandleValidationSuccess(ResponseContent);
-			}
-			else {
+				this->HandleValidation(ResponseContent, true);
+			} else {
 				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
+				FString ResponseContent = "Unknow error.";
 				if (Response.IsValid()) {
-					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
-					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
-					CurrentExperiment.ResultDescription = Response->GetContentAsString();
+					ResponseContent = Response->GetResponseCode() + TEXT(" - ") + Response->GetContentAsString();
 				}
-				this->HandleValidationFailure();
+
+				this->HandleValidation(ResponseContent, false);
 			}
 		}
 	);
@@ -124,18 +135,11 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 }
 
 // Seu método que será chamado após o sucesso da requisição
-void UMainExperimentInstance::HandleValidationSuccess(const FString& ResponseContent) {
-	UE_LOG(LogTemp, Log, TEXT("Validação HTTP bem-sucedida! Conteúdo recebido: %s"), *ResponseContent);
+void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, bool Success) {
+	CurrentExperiment.ResultFinal.ManagedToValidate = Success;
+	CurrentExperiment.ResultFinal.ValidationResult = ResponseContent;
 
 	IsLoading = false;
-	ResetLevel();
-}
-
-// Seu método que será chamado após a falha da requisição (opcional)
-void UMainExperimentInstance::HandleValidationFailure() {
-	UE_LOG(LogTemp, Error, TEXT("Falha na validação HTTP."));
-	IsLoading = false;
-
 	ResetLevel();
 }
 

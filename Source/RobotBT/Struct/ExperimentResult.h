@@ -37,15 +37,25 @@ USTRUCT(BlueprintType)
 struct FResultFinal {
 	GENERATED_BODY()
 
-	UPROPERTY()
-	bool SuccessResult = false;
+	// mark if the experiment was successful or not
+	UPROPERTY(BlueprintReadOnly)
+	bool Success = false;
 
-	UPROPERTY()
+	// mark if managed to validate the experiment, calling the API
+	UPROPERTY(BlueprintReadOnly)
+	bool ManagedToValidate = false;
+
+	// if the result failed, this will contain the reason
+	UPROPERTY(BlueprintReadOnly)
 	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
 
-	// How much time spent to performe a specific task
-	UPROPERTY()
-	FString Description = "None";
+	// the root cause of the failure, if any
+	UPROPERTY(BlueprintReadOnly)
+	FString RootCauseAnalysis = "None";
+
+	// the general description of the result. 
+	UPROPERTY(BlueprintReadOnly)
+	FString ValidationResult = "None";
 };
 
 USTRUCT(BlueprintType)
@@ -113,10 +123,7 @@ struct FExperimentResult {
 	UPROPERTY(Transient)
 	FString RobotsConfigJsonString = "";
 
-	// validationResult
-	UPROPERTY(Transient, BlueprintReadOnly)
-	FString ResultDescription = "None";
-
+	// the final result. Contains information about the experiment, like success or failure
 	UPROPERTY(Transient, BlueprintReadOnly)
 	FResultFinal ResultFinal = FResultFinal();
 };

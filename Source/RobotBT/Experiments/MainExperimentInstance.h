@@ -39,10 +39,7 @@ public:
 	void ValidateExperiment(FValidationStruct ValidationStruct);
 
 	UFUNCTION()
-	void HandleValidationSuccess(const FString& ResponseContent);
-
-	UFUNCTION()
-	void HandleValidationFailure();
+	void HandleValidation(const FString& ResponseContent, bool Success);
 
 	UFUNCTION()
 	void NextExperiment();
