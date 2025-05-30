@@ -68,7 +68,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		FValidationStruct Validation = CurrentController->GetValidationStruct();
 		ValidateExperiment(Validation);
 	} else {
-		CurrentExperiment.ResultFinal.FinalResult = EnumResultFinal::CausalAnalysisCallFailed;
+		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
 		CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
 		Experiments.Add(CurrentExperiment);
 	}
@@ -131,10 +131,10 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 // Seu método que será chamado após o sucesso da requisição
 void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, bool ManageToCallValidation) {
 	if (ManageToCallValidation) {
-		CurrentExperiment.ResultFinal.FinalResult = EnumResultFinal::ValidationResult;
-		CurrentExperiment.ResultFinal.Description = "Validation Result: " + ResponseContent;
+		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::ValidationResult;
+		CurrentExperiment.ResultFinal.Description = "All task finished. Validation Result: " + ResponseContent;
 	} else {
-		CurrentExperiment.ResultFinal.FinalResult = EnumResultFinal::ValidationCallFailed;
+		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::ValidationCallFailed;
 		CurrentExperiment.ResultFinal.Description = "Failed to Call Validation: " + ResponseContent;
 	}
 	

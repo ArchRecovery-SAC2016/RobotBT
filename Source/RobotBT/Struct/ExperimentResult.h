@@ -50,7 +50,7 @@ struct FResultFinal {
 
 	// mark if the experiment was successful or not
 	UPROPERTY(BlueprintReadOnly)
-	EnumResultFinal FinalResult = EnumResultFinal::NotProcessed;
+	EnumResultFinal ResultEnum = EnumResultFinal::NotProcessed;
 
 	// the general description of the result. 
 	UPROPERTY(BlueprintReadOnly)

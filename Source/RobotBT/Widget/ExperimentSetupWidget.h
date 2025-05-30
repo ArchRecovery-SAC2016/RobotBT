@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/CheckBox.h"
 #include "Components/EditableText.h"
+#include "Components/RichTextBlock.h"
 #include "Components/TextBlock.h"
 #include "RobotBT/Experiments/MainExperimentInstance.h"
 #include "RobotBT/Struct/ExperimentResult.h"
@@ -64,6 +65,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UTextBlock* Timer;
 
+	// Final Result. It is a rich text. You can use <Green> value </> to print a Green text. And <Red> value </> to print a Red text. \n to break line
+	UPROPERTY(meta = (BindWidget))
+	URichTextBlock* FinalResult;
+
 	UFUNCTION(BlueprintCallable)
 	void InitiateExperiment();
 
@@ -109,7 +114,7 @@ public:
 	bool IsLoading();
 
 	UFUNCTION(BlueprintCallable)
-	FResultFinal GetLastExperimentResult();
+	void GetLastExperimentResult();
 
 
 };
