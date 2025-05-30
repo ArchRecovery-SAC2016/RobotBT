@@ -34,37 +34,53 @@ struct FTaskResult {
 };
 
 USTRUCT(BlueprintType)
-struct FExperimentResult {
+struct FResultFinal {
 	GENERATED_BODY()
 
 	UPROPERTY()
+	bool SuccessResult = false;
+
+	UPROPERTY()
+	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
+
+	// How much time spent to performe a specific task
+	UPROPERTY()
+	FString Description = "None";
+};
+
+USTRUCT(BlueprintType)
+struct FExperimentResult {
+	GENERATED_BODY()
+
+	// TODOl: DELETAR. TAH USANDO O ExperimentInstance->CurrentExperiment.ExperimentId
+	UPROPERTY(BlueprintReadOnly)
 	int32 ExperimentId = 0; // preenchido por BaseExperiment
 
 	// the experiment speed
-	UPROPERTY(Transient)
+	UPROPERTY(Transient, BlueprintReadOnly)
 	int32 ExperimentSpeed = 10;
 
 	// will save the results
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	float MaxWallClockInSeconds = 200.0f;
 
 	// Default value for the repeat experiment of
-	UPROPERTY(Transient)
+	UPROPERTY(Transient, BlueprintReadOnly)
 	int32 RepeatExperimentFor = 10;
 
 	// TODO: REMOVE THIS. 
 	// The name, can be: RoomPreparation, ...
-	UPROPERTY(Transient)
+	UPROPERTY(Transient, BlueprintReadOnly)
 	FString ExperimentName = "RoomPreparation";
 
 	// TODO: REMOVE THIS. 
 	// the scenario id, ca ben: 1, ...
-	UPROPERTY(Transient)
+	UPROPERTY(Transient, BlueprintReadOnly)
 	int32 ScenarioId = 1;
 
 	// TODO: REMOVE THIS. 
 	// the approach, ca ben: Baseline, ..
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyExperiment")
 	FString Approach = "Baseline";
 
 	// will repeat the experiment using this number
@@ -79,7 +95,7 @@ struct FExperimentResult {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")
 	float WallClockInSeconds = 0;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TArray<FTaskResult> TaskResults;
 
 	UPROPERTY()
@@ -98,7 +114,9 @@ struct FExperimentResult {
 	FString RobotsConfigJsonString = "";
 
 	// validationResult
-	UPROPERTY(Transient)
-	FString ValidationResult = "";
+	UPROPERTY(Transient, BlueprintReadOnly)
+	FString ResultDescription = "None";
 
+	UPROPERTY(Transient, BlueprintReadOnly)
+	FResultFinal ResultFinal = FResultFinal();
 };

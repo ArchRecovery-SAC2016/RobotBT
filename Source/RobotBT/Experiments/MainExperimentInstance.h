@@ -52,7 +52,7 @@ public:
 	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category = "Experiment")
 	FExperimentResult CurrentExperiment;
 
 	UFUNCTION()
@@ -62,8 +62,11 @@ public:
 	bool MustContinueExperiment = false;
 
 	// used to control async methods, like the validation
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	bool IsLoading = false;
+
+	UFUNCTION(BlueprintCallable, Category = "Experiment")
+	FExperimentResult GetExperimentById(int32 Id) const;
 
 private:
 	/** Handle do Timer */

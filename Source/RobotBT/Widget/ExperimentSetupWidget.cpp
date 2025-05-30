@@ -136,6 +136,20 @@ void UExperimentSetupWidget::HideRoof(bool NewValue) {
 	}
 }
 
+bool UExperimentSetupWidget::IsLoading() {
+	if (ExperimentInstance == nullptr) return false;
+
+	return ExperimentInstance->IsLoading;
+}
+
+FString UExperimentSetupWidget::GetLastExperimentResult() {
+	if (ExperimentInstance == nullptr || (ExperimentInstance != nullptr && ExperimentInstance->CurrentExperiment.ExperimentId <= 1)) return "None";
+
+	FExperimentResult Result = ExperimentInstance->GetExperimentById(ExperimentInstance->CurrentExperiment.ExperimentId -1); // i want to get the last one.
+
+	return Result.ResultDescription;
+}
+
 void UExperimentSetupWidget::PauseExperiment(bool NewValue) {
 	ExperimentPaused = NewValue;
 	UGameplayStatics::SetGamePaused(GetWorld(), ExperimentPaused);

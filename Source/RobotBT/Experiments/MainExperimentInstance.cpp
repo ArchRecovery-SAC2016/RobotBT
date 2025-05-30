@@ -106,7 +106,7 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 		[this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 			if (bWasSuccessful && Response.IsValid()) {
 				FString ResponseContent = Response->GetContentAsString();
-				CurrentExperiment.ValidationResult = Response->GetContentAsString();
+				CurrentExperiment.ResultDescription = Response->GetContentAsString();
 				this->HandleValidationSuccess(ResponseContent);
 			}
 			else {
@@ -114,7 +114,7 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 				if (Response.IsValid()) {
 					UE_LOG(LogTemp, Error, TEXT("Código HTTP: %d"), Response->GetResponseCode());
 					UE_LOG(LogTemp, Error, TEXT("Resposta: %s"), *Response->GetContentAsString());
-					CurrentExperiment.ValidationResult = Response->GetContentAsString();
+					CurrentExperiment.ResultDescription = Response->GetContentAsString();
 				}
 				this->HandleValidationFailure();
 			}
@@ -149,6 +149,15 @@ void UMainExperimentInstance::FinishAllExperiment() {
 
 float UMainExperimentInstance::GetTimer() {
 	return CurrentExperiment.WallClockInSeconds;
+}
+
+FExperimentResult UMainExperimentInstance::GetExperimentById(int32 Id) const {
+	for (const FExperimentResult& Experiment : Experiments) {
+		if (Experiment.ExperimentId == Id) {
+			return Experiment;
+		}
+	}
+	return FExperimentResult(); // Retorna um objeto vazio se não encontrar
 }
 
 void UMainExperimentInstance::IncrementSeconds() {

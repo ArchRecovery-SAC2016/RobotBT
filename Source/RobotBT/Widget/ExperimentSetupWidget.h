@@ -102,7 +102,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RobotCameraSelected(FString RobotSelected);
 
-
 	UFUNCTION(BlueprintCallable)
 	void HideRoof(bool NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	bool IsLoading();
+
+	UFUNCTION(BlueprintCallable)
+	FString GetLastExperimentResult();
 };
