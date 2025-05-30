@@ -46,6 +46,9 @@ public:
 
 	FExperimentResult& GetCurrentExperiment();
 
+	UFUNCTION()
+	FExperimentResult GetLastExperimentResult();
+
 	UPROPERTY()
 	TArray<FExperimentResult> Experiments;
 
@@ -64,7 +67,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Experiment")
 	FExperimentResult GetExperimentById(int32 Id) const;
-
 private:
 	/** Handle do Timer */
 	FTimerHandle TimerHandle_CountSeconds;

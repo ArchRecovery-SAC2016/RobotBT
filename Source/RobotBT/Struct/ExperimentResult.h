@@ -33,29 +33,28 @@ struct FTaskResult {
 	float BatterySpentOnTask = 0.0f;
 };
 
+UENUM(BlueprintType)
+enum class EnumResultFinal : uint8 {
+	NotProcessed        UMETA(DisplayName = "Not Processed"),         // Nunca chegou a processar o resultado
+	
+	ValidationResult               UMETA(DisplayName = "Validation Result"),          // Chamou mas validação retornou um resultado
+	ValidationCallFailed           UMETA(DisplayName = "Validation Call Failed"),     // Não conseguiu nem chamar a validação
+
+	CausalAnalysisResult			UMETA(DisplayName = "Causal Analysis Result"),  // Chamou o causal analysis e deu esse resultado
+	CausalAnalysisCallFailed       UMETA(DisplayName = "Causal Analysis Call Failed") // Tentou chamar mas deu erro
+};
+
 USTRUCT(BlueprintType)
 struct FResultFinal {
 	GENERATED_BODY()
 
 	// mark if the experiment was successful or not
 	UPROPERTY(BlueprintReadOnly)
-	bool Success = false;
-
-	// mark if managed to validate the experiment, calling the API
-	UPROPERTY(BlueprintReadOnly)
-	bool ManagedToValidate = false;
-
-	// if the result failed, this will contain the reason
-	UPROPERTY(BlueprintReadOnly)
-	EFailureReasonEnum FailureReasonEnum = EFailureReasonEnum::None;
-
-	// the root cause of the failure, if any
-	UPROPERTY(BlueprintReadOnly)
-	FString RootCauseAnalysis = "None";
+	EnumResultFinal FinalResult = EnumResultFinal::NotProcessed;
 
 	// the general description of the result. 
 	UPROPERTY(BlueprintReadOnly)
-	FString ValidationResult = "None";
+	FString Description = "";
 };
 
 USTRUCT(BlueprintType)

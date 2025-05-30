@@ -215,8 +215,6 @@ void ARoomPreparationBaseController::CurrentTaskFinished(FTaskResult TaskResult)
 }
 
 void ARoomPreparationBaseController::ExperimentFinished() {
-
-
 	FOnPreparationFinish.Broadcast(CurrentExperiment);
 }
 

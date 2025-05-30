@@ -143,10 +143,8 @@ bool UExperimentSetupWidget::IsLoading() {
 }
 
 FResultFinal UExperimentSetupWidget::GetLastExperimentResult() {
-	if (ExperimentInstance == nullptr || (ExperimentInstance != nullptr && ExperimentInstance->CurrentExperiment.ExperimentId <= 1)) return FResultFinal();
-
-	FExperimentResult Result = ExperimentInstance->GetExperimentById(ExperimentInstance->CurrentExperiment.ExperimentId -1); // i want to get the last one.
-
+	if (ExperimentInstance == nullptr) return FResultFinal();
+	FExperimentResult Result = ExperimentInstance->GetLastExperimentResult(); // i want to get the last one.
 	return Result.ResultFinal;
 }
 

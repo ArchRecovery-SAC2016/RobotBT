@@ -135,7 +135,7 @@ void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, b
 		CurrentExperiment.ResultFinal.Description = "Validation Result: " + ResponseContent;
 	} else {
 		CurrentExperiment.ResultFinal.FinalResult = EnumResultFinal::ValidationCallFailed;
-		CurrentExperiment.ResultFinal.Description = "Failed to Call Validation: " + ResponseContent;
+		CurrentExperiment.ResultFinal.Description = "Failed to Call: " + ResponseContent;
 	}
 	
 	Experiments.Add(CurrentExperiment);
