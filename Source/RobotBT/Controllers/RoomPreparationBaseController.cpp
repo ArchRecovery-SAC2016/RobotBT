@@ -1,15 +1,10 @@
 ﻿#include "RoomPreparationBaseController.h"
-
-#include "HttpModule.h"
-#include "JsonObjectConverter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "RobotBT/Util/MyJsonReader.h"
 #include "RobotBT/Util/UtilMethods.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
-#include "Interfaces/IHttpRequest.h"
-#include "Interfaces/IHttpResponse.h"
 #include "Kismet/GameplayStatics.h"
 #include "RobotBT/Actors/RoomPreparation/RoomPreparation.h"
 
@@ -32,12 +27,6 @@ void ARoomPreparationBaseController::Tick(float DeltaTime) {
 
 void ARoomPreparationBaseController::BeginPlay() {
 	Super::BeginPlay();
-
-	// Todo: Change this to the game instance
-	LoadTasksFromFile();
-
-	// Todo: Change this to the game instance
-	LoadWorldFromFile();
 
 	// Load all Rooms
 	TArray<AActor*> RoomsOnMap;
@@ -84,18 +73,20 @@ void ARoomPreparationBaseController::BeginPlay() {
 }
 
 void ARoomPreparationBaseController::ExecuteExperiment(FExperimentResult& NewExperiment) {
-	FetchRoomsToBePrepared();
-
+	// Prepare World to match the world knowledge
+	PrepareWorld(NewExperiment.WorldJsonString);
 	CurrentExperiment = NewExperiment;
 	ExperimentStartTime = GetWorld()->GetTimeSeconds();
+
+	FetchRoomsToBePrepared();
 
 	// change the speed of the world
 	if (GetWorld()) {
 		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperimentSpeed);
 	}
 
-	// Prepare World to match the world knowledge
-	PrepareWorld();
+	// Load tasks from file
+	LoadTasksFromFile();
 
 	// TODO: REMOVE THE ROBOTS PROPERTIES FROM HERE AND GET FROM FILES 
 	CurrentExperiment.Robots = RobotsProperties;
@@ -216,6 +207,7 @@ void ARoomPreparationBaseController::CurrentTaskFinished(FTaskResult TaskResult)
 
 void ARoomPreparationBaseController::ExperimentFinished() {
 	FOnPreparationFinish.Broadcast(CurrentExperiment);
+	ExperimentStarted = false;
 }
 
 bool ARoomPreparationBaseController::CheckPreCondition(FTask* NewTask) {
@@ -238,8 +230,10 @@ bool ARoomPreparationBaseController::ParsePredicate(const FString& Predicate, FS
 	return Predicate.Split(TEXT("."), &OutObjectName, &OutCondition);
 }
 
-void ARoomPreparationBaseController::PrepareWorld() {
+void ARoomPreparationBaseController::PrepareWorld(FString WorldJsonString) {
 	UE_LOG(LogTemp, Display, TEXT("Preparing the world for RoomPreparationBaseController: %d"), CurrentExperiment.ExperimentId);
+	
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(WorldJsonString);
 
 	// prepare the rooms
 	for (FWorldRoomDataStruct RoomData : WorldRoomsStruct) {
@@ -276,7 +270,7 @@ void ARoomPreparationBaseController::LoadTasksFromFile() {
 
 
 bool ARoomPreparationBaseController::LoadWorldFromFile() {
-	WorldRoomsStruct = UMyJsonReader::LoadWorldData(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(CurrentExperiment.WorldJsonString);
 	if (WorldRoomsStruct.Num() <= 0) {
 		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
 		return false;

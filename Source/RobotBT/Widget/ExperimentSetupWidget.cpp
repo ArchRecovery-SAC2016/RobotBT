@@ -208,7 +208,7 @@ void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
 }
 
 void UExperimentSetupWidget::SetWorldPath(FString NewPath) {
-	WorldPath->SetText(FText::FromString(NewPath));
+ 	WorldPath->SetText(FText::FromString(NewPath));
 	Experiment.WorldJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 

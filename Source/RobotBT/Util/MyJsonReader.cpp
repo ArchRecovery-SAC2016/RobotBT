@@ -37,23 +37,10 @@ TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 S
     return Tasks;
 }
 
-TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, int32 ScenarioId) {
+TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString WorldJsonStringPath) {
     TArray<FWorldRoomDataStruct> WorldDataArray;
-
-    // Monta o caminho do arquivo
-    FString Path = "Data/" + Experiment;
-    if (ScenarioId != -1) {
-        Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/World_db.json";
-    }
-    FString FilePath = FPaths::ProjectContentDir() + Path;
-
-    // L� o conteudo do arquivo
-    FString JsonString;
-    if (!FFileHelper::LoadFileToString(JsonString, *FilePath)) {
-        UE_LOG(LogTemp, Error, TEXT("Failed to load file at: %s"), *FilePath);
-        return WorldDataArray;
-    }
-
+    FString JsonString = WorldJsonStringPath;
+    
     // Analisa o JSON
     TSharedPtr<FJsonObject> JsonObject;
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
@@ -80,9 +67,6 @@ TArray<FWorldRoomDataStruct> UMyJsonReader::LoadWorldData(FString Experiment, in
                 UE_LOG(LogTemp, Error, TEXT("RoomValue is not a valid JSON object."));
             }
         }
-    }
-    else {
-        UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON file: %s"), *FilePath);
     }
 
     return WorldDataArray;

@@ -14,6 +14,7 @@ UMainExperimentInstance::UMainExperimentInstance() {
 void UMainExperimentInstance::Init() {
 	Super::Init();
 
+	
 }
 
 void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
@@ -53,10 +54,12 @@ void UMainExperimentInstance::NextExperiment() {
 }
 
 void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment) {
-	CurrentController = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
-	CurrentController->ExecuteExperiment(NewExperiment);
+	if (CurrentController == nullptr) {
+		CurrentController = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
+		CurrentController->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
+	}
 
-	CurrentController->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
+	CurrentController->ExecuteExperiment(NewExperiment);
 }
 
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
@@ -121,11 +124,10 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 				bool bJsonOk = FJsonSerializer::Deserialize(Reader, JsonObject);
 
 				if (bJsonOk && JsonObject.IsValid()) {
-					bool bValido = JsonObject->GetBoolField("valido");
-					FString Mensagem = JsonObject->GetStringField("mensagem");
+					FString Mensagem = JsonObject->GetStringField("description");
 
 					// Aqui você pode passar os valores extraídos
-					this->HandleValidation(Mensagem, bValido);
+					this->HandleValidation(Mensagem, true);
 				}
 				else {
 					UE_LOG(LogTemp, Error, TEXT("Falha ao parsear o JSON: %s"), *ResponseContent);

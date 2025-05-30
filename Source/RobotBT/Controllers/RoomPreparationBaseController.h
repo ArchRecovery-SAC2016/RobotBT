@@ -117,7 +117,7 @@ protected:
 	virtual void SetRandomRobotsProperties() {};
 
 	// the especialized class will implement this method
-	virtual void PrepareWorld();
+	virtual void PrepareWorld(FString WorldJsonString);
 
 	// Callled when the time is over. Will notify all robots. The especialized that will implemtn this method
 	virtual void TimeIsOver();

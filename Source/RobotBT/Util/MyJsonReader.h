@@ -21,7 +21,7 @@ public:
 	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
-	static TArray<FWorldRoomDataStruct> LoadWorldData(FString Experiment, int32 ScenarioId);
+	static TArray<FWorldRoomDataStruct> LoadWorldData(FString WorldPath);
 
 	static FString ReadStringFromFile(FString FilePath);
 
