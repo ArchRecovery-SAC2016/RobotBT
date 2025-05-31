@@ -1,4 +1,4 @@
-﻿#include "RobotCleaner.h"
+#include "RobotCleaner.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotCleaner::ARobotCleaner() {
@@ -101,3 +101,5 @@ void ARobotCleaner::GenerateRandomProperties() {
 	int32 OpenDoorIndex = FMath::RandRange(0, OpenDoorSkill.Num() - 1);
 	RobotProperties.Skills.Add(OpenDoorSkill[OpenDoorIndex]);
 }
+
+

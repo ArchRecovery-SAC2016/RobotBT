@@ -21,7 +21,3 @@ void ARobotBTPlayerController::BeginPlay() {
     InputMode.SetHideCursorDuringCapture(false);
     SetInputMode(InputMode);
 }
-
-
-
-
