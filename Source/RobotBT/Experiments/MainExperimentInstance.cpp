@@ -124,6 +124,7 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 				bool bJsonOk = FJsonSerializer::Deserialize(Reader, JsonObject);
 
 				if (bJsonOk && JsonObject.IsValid()) {
+					bool bValido = JsonObject->GetBoolField("valid");
 					FString Mensagem = JsonObject->GetStringField("description");
 
 					// Aqui você pode passar os valores extraídos
