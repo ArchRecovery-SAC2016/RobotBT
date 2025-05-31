@@ -22,10 +22,7 @@ void ARobotBTCharacter::BeginPlay()
         PC->bEnableMouseOverEvents = true;
 
         // Permite movimentação E interação com UI simultaneamente
-        FInputModeGameAndUI InputMode;
-        InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-        InputMode.SetHideCursorDuringCapture(false);
-        PC->SetInputMode(InputMode);
+        PC->SetInputMode(FInputModeGameAndUI());
     }
 
 
