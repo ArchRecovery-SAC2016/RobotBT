@@ -10,8 +10,7 @@ class ROBOTBT_API  UMyJsonReader: public UBlueprintFunctionLibrary {
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "MyUtils")
-	static  TMap<FString, FTask> ReadTaskFromFile(FString Experiment, int32 ScenarioId);
+	
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
 	static void WriteStringToFile(FString FilePath, FString String);
@@ -21,7 +20,10 @@ public:
 	static void ShowLogMessage(const FString& Message, EMessageColorEnum Type);
 
 	UFUNCTION(BlueprintCallable, Category = "MyUtils")
-	static TArray<FWorldRoomDataStruct> LoadWorldData(FString WorldPath);
+	static  TMap<FString, FTask> LoadTaskData(FString TasksJsonString);
+
+	UFUNCTION(BlueprintCallable, Category = "MyUtils")
+	static TArray<FWorldRoomDataStruct> LoadWorldData(FString WorldJsonStringPath);
 
 	static FString ReadStringFromFile(FString FilePath);
 

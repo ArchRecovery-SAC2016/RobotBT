@@ -80,7 +80,7 @@ bool UExperimentSetupWidget::ValidateInputs() {
 		return false;
 	}
 
-	if (Experiment.OutputJsonString == "") {
+	if (Experiment.OutputTasksJsonString == "") {
 		SetMessage("Output Json invalid.");
 		return false;
 	}
@@ -153,11 +153,11 @@ void UExperimentSetupWidget::GetLastExperimentResult() {
 	if (Result.ResultFinal.ResultEnum == EnumResultFinal::NotProcessed) {
 		FinalResult->SetText(FText::FromString("No Result yet. "));
 	} else if (Result.ResultFinal.ResultEnum == EnumResultFinal::ValidationCallFailed) {
-		FinalResult->SetText(FText::FromString("<Green> All Task Finished </>. <Red> But Failed to Call Validation to check if all conditions are valid. </>"));
+		FinalResult->SetText(FText::FromString("<Green> All Task Finished </>. <Red> But Failed to Call Verification to check if all conditions are satisfied. </>"));
 	} else if (Result.ResultFinal.ResultEnum == EnumResultFinal::ValidationResult) {
-		FinalResult->SetText(FText::FromString("<Green> All Task Finished </>. Validation Result: " + Result.ResultFinal.Description));
+		FinalResult->SetText(FText::FromString("<Green> All Task Finished </>. Verification: " + Result.ResultFinal.Description));
 	} else if (Result.ResultFinal.ResultEnum == EnumResultFinal::CausalAnalysisCallFailed) {
-		FinalResult->SetText(FText::FromString("<Red> Task  Failed:    " + Result.ResultFinal.Description + " </> Can't Call Causal Analysis to check the origin </>"));
+		FinalResult->SetText(FText::FromString("<Red> Task  Failed: " + Result.ResultFinal.Description + " </> Can't Call Causal Analysis to check the origin </>"));
 	} else if (Result.ResultFinal.ResultEnum == EnumResultFinal::CausalAnalysisResult) {
 		FinalResult->SetText(FText::FromString("<Red> Task  Failed </>. Causal Analysis Result: " + Result.ResultFinal.Description));
 	} else {
@@ -204,7 +204,7 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 
 void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
 	OutputPath->SetText(FText::FromString(NewPath)); 	// TODO: Validade file
-	Experiment.OutputJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+	Experiment.OutputTasksJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetWorldPath(FString NewPath) {

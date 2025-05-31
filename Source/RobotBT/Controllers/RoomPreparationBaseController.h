@@ -27,11 +27,11 @@ public:
 
 	// Load tasks from file
 	UFUNCTION()
-	virtual void LoadTasksFromFile();
+	bool LoadTasksFromFile(FString NewTasksJsonString);
 
 	// Load the world from file
 	UFUNCTION()
-	bool LoadWorldFromFile();
+	bool LoadWorldFromFile(FString WorldJsonString);
 
 	UFUNCTION()
 	void CurrentTaskFinished(FTaskResult TaskResult);

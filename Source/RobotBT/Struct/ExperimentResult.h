@@ -112,12 +112,12 @@ struct FExperimentResult {
 
 	// output json file path, provided by MutRose
 	UPROPERTY(Transient)
-	FString OutputJsonString = "";
+	FString OutputTasksJsonString = "";
 
 	// world knowledge json file path
 	UPROPERTY(Transient)
 	FString WorldJsonString = "";
-
+	
 	// robots configuration file path
 	UPROPERTY(Transient)
 	FString RobotsConfigJsonString = "";

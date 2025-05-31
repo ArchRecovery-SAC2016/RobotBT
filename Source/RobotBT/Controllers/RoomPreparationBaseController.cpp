@@ -68,13 +68,16 @@ void ARoomPreparationBaseController::BeginPlay() {
 
 	if (OrganizersTeam.Num() == 0) {
 		UE_LOG(LogTemp, Error, TEXT("Failed do instantiate Organizer Team. Please add at least one. No task will be executed!"));
-		return;
 	}
 }
 
 void ARoomPreparationBaseController::ExecuteExperiment(FExperimentResult& NewExperiment) {
 	// Prepare World to match the world knowledge
 	PrepareWorld(NewExperiment.WorldJsonString);
+
+	// Load tasks from file
+	LoadTasksFromFile(NewExperiment.OutputTasksJsonString);
+
 	CurrentExperiment = NewExperiment;
 	ExperimentStartTime = GetWorld()->GetTimeSeconds();
 
@@ -84,9 +87,6 @@ void ARoomPreparationBaseController::ExecuteExperiment(FExperimentResult& NewExp
 	if (GetWorld()) {
 		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperimentSpeed);
 	}
-
-	// Load tasks from file
-	LoadTasksFromFile();
 
 	// TODO: REMOVE THE ROBOTS PROPERTIES FROM HERE AND GET FROM FILES 
 	CurrentExperiment.Robots = RobotsProperties;
@@ -264,14 +264,19 @@ void ARoomPreparationBaseController::TimeIsOver() {
 	}
 }
 
-void ARoomPreparationBaseController::LoadTasksFromFile() {
-	Tasks = UMyJsonReader::ReadTaskFromFile(CurrentExperiment.ExperimentName, CurrentExperiment.ScenarioId);
+bool ARoomPreparationBaseController::LoadTasksFromFile(FString NewTasksJsonString) {
+	Tasks = UMyJsonReader::LoadTaskData(NewTasksJsonString);
+	if (Tasks.IsEmpty()) {
+		UUtilMethods::ShowLogMessage(TEXT("Failed to load tasks json data"), EMessageColorEnum::ERROR);
+		return false;
+	}
+
+	return true;
 }
 
-
-bool ARoomPreparationBaseController::LoadWorldFromFile() {
-	WorldRoomsStruct = UMyJsonReader::LoadWorldData(CurrentExperiment.WorldJsonString);
-	if (WorldRoomsStruct.Num() <= 0) {
+bool ARoomPreparationBaseController::LoadWorldFromFile(FString WorldJsonString) {
+	WorldRoomsStruct = UMyJsonReader::LoadWorldData(WorldJsonString);
+	if (WorldRoomsStruct.IsEmpty()) {
 		UUtilMethods::ShowLogMessage(TEXT("Failed to load world data"), EMessageColorEnum::ERROR);
 		return false;
 	}

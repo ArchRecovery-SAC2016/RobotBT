@@ -6,23 +6,14 @@
 #include "RobotBT/Struct/WorldRoomDataStruct.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
-#include "Misc/FileHelper.h"
-#include "Misc/Paths.h"
 
-TMap<FString, FTask> UMyJsonReader::ReadTaskFromFile(FString Experiment, int32 ScenarioId) {
+
+TMap<FString, FTask> UMyJsonReader::LoadTaskData(FString TasksJsonString) {
     TMap<FString, FTask> Tasks;
 
-    FString Path = "Data/" + Experiment;
-
-    if (ScenarioId != -1) {
-        Path += "/Scenario_" + FString::FromInt(ScenarioId) + "/task_output.json";
-    }
-
-    FString FilePath = FPaths::ProjectContentDir() + Path;
-    FString JsonString = ReadStringFromFile(FilePath);
 
     TSharedPtr<FJsonObject> JsonObject;
-    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
+    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(TasksJsonString);
 
     if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid()) {
         const TSharedPtr<FJsonObject>* TasksObject;
