@@ -19,7 +19,7 @@ bool ARobotCleaner::TaskExecution() {
 
 	if (TempoSceneCaptureComponent2D != nullptr && CapturingImage == false) {
 		CapturingImage = true;
-		TempoSceneCaptureComponent2D->RestartCaptureTimer();
+		TempoSceneCaptureComponent2D->StartCapture();
 	}
 
 	// sanitize and cleaning, just need to move along path

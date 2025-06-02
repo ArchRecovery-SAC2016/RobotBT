@@ -70,6 +70,16 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     TArray<FColor> Bitmap;
     RenderTarget->ReadPixels(Bitmap);
 
+    for (FColor& Color : Bitmap) {
+        FVector LinearColor = FVector(Color.R / 255.0f, Color.G / 255.0f, Color.B / 255.0f);
+        LinearColor.X = FMath::Pow(LinearColor.X, 1.0f / 2.2f);
+        LinearColor.Y = FMath::Pow(LinearColor.Y, 1.0f / 2.2f);
+        LinearColor.Z = FMath::Pow(LinearColor.Z, 1.0f / 2.2f);
+        Color.R = FMath::Clamp(int32(LinearColor.X * 255.0f), 0, 255);
+        Color.G = FMath::Clamp(int32(LinearColor.Y * 255.0f), 0, 255);
+        Color.B = FMath::Clamp(int32(LinearColor.Z * 255.0f), 0, 255);
+    }
+
     // Salvar imagem
     FString FileName = FString::Printf(TEXT("Captured_%04d.png"), ImageCounter++);
     FString FullPath = SaveDirectory / FileName;
