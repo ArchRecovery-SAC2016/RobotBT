@@ -67,7 +67,7 @@ struct FExperimentResult {
 
 	// the experiment speed
 	UPROPERTY(Transient, BlueprintReadOnly)
-	int32 ExperimentSpeed = 2;
+	int32 ExperimentSpeed = 10;
 
 	// will save the results
 	UPROPERTY(BlueprintReadOnly)
