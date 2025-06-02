@@ -17,6 +17,11 @@ void ARobotCleaner::Tick(float DeltaTime) {
 bool ARobotCleaner::TaskExecution() {
 	Super::TaskExecution();
 
+	if (TempoSceneCaptureComponent2D != nullptr && CapturingImage == false) {
+		CapturingImage = true;
+		TempoSceneCaptureComponent2D->RestartCaptureTimer();
+	}
+
 	// sanitize and cleaning, just need to move along path
 	if (TaskAllocated == ESkillEnum::SANITIZE_ROBOT || TaskAllocated == ESkillEnum::CLEAN_ROOM) {
 		// will return true when finished

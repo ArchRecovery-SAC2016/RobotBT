@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "../Robot.h"
@@ -37,4 +37,5 @@ public:
 
 	virtual bool TaskExecution() override;
 
+	bool CapturingImage = false;
 };

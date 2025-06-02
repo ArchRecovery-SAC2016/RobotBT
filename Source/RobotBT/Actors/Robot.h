@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
+#include "RobotBT/Sensors/TempoSceneCaptureComponent2D.h"
 #include "RobotBT/Struct/RobotProperties.h"
 #include "RobotBT/Struct/ExperimentResult.h"
 #include "Robot.generated.h"
@@ -38,6 +39,9 @@ public:
 	// the widget that will be used to show the robot information
 	UPROPERTY(EditDefaultsOnly, Category = "Robot")
 	TSubclassOf<class URobotWidget> RobotWidgetWBP;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Robot")
+	UTempoSceneCaptureComponent2D* TempoSceneCaptureComponent2D;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Robot")
 	UWidgetComponent* WidgetComponent;
@@ -89,6 +93,10 @@ public:
 	/* Called by the controler, to tell the that the wall time is over */
 	UFUNCTION()
 	void TimeIsOver();
+
+	UPROPERTY()
+	bool ShowCaptureImage = false;
+
 protected:
 	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
 	UFUNCTION(BlueprintCallable)

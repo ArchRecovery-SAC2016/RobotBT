@@ -9,6 +9,6 @@ public class RobotBT : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] { "EditorStyle", "Json", "CADKernel" });
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "Json", "JsonUtilities", "Slate", "SlateCore", "DesktopPlatform", "HTTP" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "Json", "JsonUtilities", "Slate", "SlateCore", "DesktopPlatform", "HTTP", "RenderCore", "RHI", "DeveloperSettings", "ImageWrapper" });
     }
 }
