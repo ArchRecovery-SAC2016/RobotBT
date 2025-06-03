@@ -75,6 +75,8 @@ void UTempoSceneCaptureComponent2D::StopCapture() {
 void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     if (!TextureTarget) return;
 
+    ApplyDepthEnabled();
+
     // Força atualização do conteúdo e captura real
     UpdateContent();
     CaptureScene();
@@ -95,8 +97,6 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     FIntPoint DestSize(TextureTarget->SizeX, TextureTarget->SizeY);
 
 
-    
-
     SaveAsJpeg(FullPath, Bitmap, TextureTarget->SizeX, TextureTarget->SizeY);
 	// FFileHelper::CreateBitmap(*FullPath, DestSize.X, DestSize.Y, Bitmap.GetData());
 }
@@ -105,38 +105,29 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
 void UTempoSceneCaptureComponent2D::ApplyDepthEnabled() {
     if (bDepthEnabled) {
         this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
-        // PixelFormatOverride = EPixelFormat::PF_A16B16G16R16;
 
-		if (BasePostProcessMaterial_WithDepth != nullptr) {
-			CameraPostProcess = UMaterialInstanceDynamic::Create(BasePostProcessMaterial_WithDepth, this);
-		}
+        if (BasePostProcessMaterial_WithDepth != nullptr) {
+            CameraPostProcess = UMaterialInstanceDynamic::Create(BasePostProcessMaterial_WithDepth, this);
+        }
 
         if (CameraPostProcess != nullptr) {
             MinDepth = GEngine->NearClipPlane;
             CameraPostProcess->SetScalarParameterValue(TEXT("MinDepth"), MinDepth);
             CameraPostProcess->SetScalarParameterValue(TEXT("MaxDepth"), MaxDepth);
             CameraPostProcess->SetScalarParameterValue(TEXT("MaxDiscreteDepth"), kMaxDiscreteDepth);
+
+            // ✅ Aplica o material ao sistema de pós-processamento da cena capturada
+            PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraPostProcess));
         }
         else {
             UE_LOG(LogTemp, Error, TEXT("PostProcessMaterialWithDepth is not set"));
         }
     }
     else {
-        this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA8; // Corresponds to PF_B8G8R8A8
-        // this->TextureTarget->PixelFormatOverride = EPixelFormat::PF_Unknown;
+        this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA8;
     }
-
-    /*
-    if (CameraPostProcess_WithDepth) {
-        PostProcessSettings.WeightedBlendables.Array.Empty();
-        PostProcessSettings.WeightedBlendables.Array.Init(FWeightedBlendable(1.0, CameraPostProcess_WithDepth), 1);
-        CameraPostProcess_WithDepth->EnsureIsComplete();
-    }
-    else {
-        UE_LOG(LogTemp, Error, TEXT("CameraPostProcess_WithDepth is not set."));
-    }
-    */
 }
+
 
 bool UTempoSceneCaptureComponent2D::SaveAsJpeg(const FString& Filename, const TArray<FColor>& Bitmap, int32 Width, int32 Height) {
     IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));

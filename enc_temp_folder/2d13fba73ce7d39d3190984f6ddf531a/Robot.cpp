@@ -24,7 +24,9 @@ ARobot::ARobot() {
 
 	TempoSceneCaptureComponent2D = CreateDefaultSubobject<UTempoSceneCaptureComponent2D>(TEXT("TempoSceneCaptureComponent2D"));
 	TempoSceneCaptureComponent2D->SetupAttachment(RobotCamera);
+
 }
+
 
 void ARobot::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
@@ -39,6 +41,7 @@ void ARobot::BeginPlay() {
 
 	GetCharacterMovement()->MaxWalkSpeed = RobotProperties.Speed;
 	UpdateRobotWidget();
+
 }
 
 void ARobot::PostInitializeComponents() {

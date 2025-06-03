@@ -4,8 +4,6 @@
 
 #include "IImageWrapper.h"
 #include "IImageWrapperModule.h"
-#include "ImageUtils.h"
-#include "TempoSensorsSettings.h"
 #include "Engine/TextureRenderTarget2D.h"
 
 UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
@@ -40,9 +38,6 @@ UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
     ShowFlags.SetMotionBlur(false);
 }
 
-
-
-
 void UTempoSceneCaptureComponent2D::BeginPlay() {
 	Super::BeginPlay();
 
@@ -51,9 +46,6 @@ void UTempoSceneCaptureComponent2D::BeginPlay() {
 		RestartCaptureTimer();
 	}
 	*/
-
-
-
 	
 	IFileManager::Get().MakeDirectory(*SaveDirectory, true);
 }
@@ -74,8 +66,6 @@ void UTempoSceneCaptureComponent2D::StopCapture() {
 
 void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     if (!TextureTarget) return;
-
-    ApplyDepthEnabled();
 
     // Força atualização do conteúdo e captura real
     UpdateContent();
@@ -105,6 +95,9 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
 void UTempoSceneCaptureComponent2D::ApplyDepthEnabled() {
     if (bDepthEnabled) {
         this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
+        bCaptureEveryFrame = false;
+        bCaptureOnMovement = false;
+        CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
 
         if (BasePostProcessMaterial_WithDepth != nullptr) {
             CameraPostProcess = UMaterialInstanceDynamic::Create(BasePostProcessMaterial_WithDepth, this);
@@ -116,8 +109,9 @@ void UTempoSceneCaptureComponent2D::ApplyDepthEnabled() {
             CameraPostProcess->SetScalarParameterValue(TEXT("MaxDepth"), MaxDepth);
             CameraPostProcess->SetScalarParameterValue(TEXT("MaxDiscreteDepth"), kMaxDiscreteDepth);
 
-            // ✅ Aplica o material ao sistema de pós-processamento da cena capturada
+            //  Aplica o material ao sistema de pós-processamento da cena capturada
             PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraPostProcess));
+            bAlwaysPersistRenderingState = true; // sem isso aki nao funciona
         }
         else {
             UE_LOG(LogTemp, Error, TEXT("PostProcessMaterialWithDepth is not set"));
