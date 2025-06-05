@@ -14,7 +14,10 @@ UMainExperimentInstance::UMainExperimentInstance() {
 void UMainExperimentInstance::Init() {
 	Super::Init();
 
-	
+	if (CurrentController == nullptr) {
+		CurrentController = GetWorld()->SpawnActor<ARoomPreparationBaseController>();
+		CurrentController->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
+	}
 }
 
 void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
@@ -181,6 +184,10 @@ FExperimentResult UMainExperimentInstance::GetExperimentById(int32 Id) const {
 		}
 	}
 	return FExperimentResult(); // Retorna um objeto vazio se não encontrar
+}
+
+ARoomPreparationBaseController* UMainExperimentInstance::GetController() {
+	return CurrentController;
 }
 
 void UMainExperimentInstance::IncrementSeconds() {

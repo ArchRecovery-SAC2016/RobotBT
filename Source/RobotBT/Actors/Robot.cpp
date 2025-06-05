@@ -107,6 +107,24 @@ void ARobot::GoIdle() {
 	UpdateRobotWidget();
 }
 
+void ARobot::StartCapture(ECaptureType NewCaptureType) {
+	if (TempoSceneCaptureComponent2D == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("TempoSceneCaptureComponent2D is null. Cannot start capture."));
+		return;
+	}
+
+	TempoSceneCaptureComponent2D->StartCapture(NewCaptureType);
+}
+
+void ARobot::StopCapture() {
+	if(TempoSceneCaptureComponent2D == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("TempoSceneCaptureComponent2D is null. Cannot start capture."));
+		return;
+	}
+
+	TempoSceneCaptureComponent2D->StopCapture();
+}
+
 void ARobot::TimeIsOver() {
 	if (TaskAllocated != ESkillEnum::NONE) TaskFailed(EFailureReasonEnum::Timeout);
 }
@@ -214,7 +232,6 @@ void ARobot::TaskFinished() {
 }
 
 bool ARobot::TaskExecution() {
-	// the child implement this task
 	return true;
 }
 

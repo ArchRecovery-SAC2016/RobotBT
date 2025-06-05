@@ -14,6 +14,7 @@ class ARobotController;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskFinished, FTaskResult, TaskResult);
 
+
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
 	GENERATED_BODY()
@@ -97,6 +98,10 @@ public:
 	UPROPERTY()
 	bool ShowCaptureImage = false;
 
+	void StartCapture(ECaptureType NewCaptureType);
+
+	void StopCapture();
+
 protected:
 	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
 	UFUNCTION(BlueprintCallable)
@@ -127,7 +132,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void GoIdle();
-
 
 private:
 	// indicate if the robot move all path

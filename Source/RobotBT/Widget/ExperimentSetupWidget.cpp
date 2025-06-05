@@ -7,6 +7,7 @@
 #include "DesktopPlatformModule.h"
 #include "IDesktopPlatform.h"
 #include "RobotBT/Actors/Robot.h"
+#include "RobotBT/Controllers/RoomPreparationBaseController.h"
 
 void UExperimentSetupWidget::NativeConstruct() {
 	Super::NativeConstruct();
@@ -93,34 +94,52 @@ bool UExperimentSetupWidget::ValidateInputs() {
 	return true;
 }
 
-void UExperimentSetupWidget::RobotCameraSelected(FString RobotSelected) {
-	TArray<AActor*> RobotsOnMap;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobot::StaticClass(), RobotsOnMap);
-
-	if (RobotSelected == "Default") {
-		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-		
-		if (PlayerController) {
-			APawn* PlayerPawn = PlayerController->GetPawn();
-			if (PlayerPawn) {
-				PlayerController->SetViewTargetWithBlend(PlayerPawn, 0.5f);
-				HideRoof(true); // Certifique-se de que HideRoof(false) faz o que você espera
-				return;
-			}
-		}
+void UExperimentSetupWidget::RobotCameraComboSelected(FString NewRobotSelected) {
+	if (ExperimentInstance == nullptr) return;
+	if (NewRobotSelected == "Default") {
+		RobotSelected = "Default";
+		HideRoof(true); // Hide the roof when no robot is selected
 		return;
 	}
 
-	for (AActor* Actor : RobotsOnMap) {
-		ARobot* Robot = Cast<ARobot>(Actor);
-		if (Robot != nullptr && Robot->RobotProperties.Name == RobotSelected) {
-			Robot->ActivateRobotCamera();
-			HideRoof(false);
-			return;
-		}
+	ARobot* Robot = ExperimentInstance->GetController()->GetRobotByName(NewRobotSelected);
+	if (Robot == nullptr) {
+		RobotSelected = "Default"; // Reset to default if no robot found
+		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::RobotCameraComboSelected] No Robot whit name %s found"), *NewRobotSelected);
+		return;
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::RobotCameraSelected] No Robot whit name %s found"), *RobotSelected);
+	RobotSelected = NewRobotSelected;
+	Robot->ActivateRobotCamera();
+	HideRoof(false);
+}
+
+void UExperimentSetupWidget::CaptureComboSelected(FString CaptureType) {
+	if (RobotSelected == "Default") {
+		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::CaptureComboSelected]  Select a robot to start the capture"));
+		// TODO: disable all robos camera
+		return;
+	}
+
+
+
+	ARobot* Robot = ExperimentInstance->GetController()->GetRobotByName(RobotSelected);
+	if (Robot == nullptr) {
+		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::CaptureComboSelected] Failed to get robot whit name %s found"), *RobotSelected);
+		return;
+	}
+	
+	if (CaptureType == "None") {
+		Robot->StopCapture();
+	} else if (CaptureType == "Color") {
+		Robot->StartCapture(ECaptureType::COLOR);
+	} else if (CaptureType == "Deph") {
+		Robot->StartCapture(ECaptureType::DEPTH);
+	} else if (CaptureType == "Label") {
+		Robot->StartCapture(ECaptureType::LABEL);
+	} else {
+		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::CaptureComboSelected] Invalid Capture Type: %s"), *CaptureType);
+	}
 }
 
 void UExperimentSetupWidget::HideRoof(bool NewValue) {

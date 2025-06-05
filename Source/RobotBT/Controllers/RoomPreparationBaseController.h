@@ -59,6 +59,11 @@ public:
 	UFUNCTION()
 	FValidationStruct GetValidationStruct();
 
+	UFUNCTION()
+	ARobot* GetRobotByName(FString RobotName);
+
+	TArray<ARobot*> GetAllRobots();
+
 
 private:
 	/* Saves all doors in the map	*/

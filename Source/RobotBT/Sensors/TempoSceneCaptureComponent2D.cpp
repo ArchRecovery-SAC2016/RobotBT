@@ -9,7 +9,6 @@
 UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
 	PrimaryComponentTick.bCanEverTick = false;
 
-	bIsCapturing = false;
 	SaveDirectory = FPaths::ProjectSavedDir() / TEXT("CapturedImages/");
 
     PrimaryComponentTick.bCanEverTick = false;
@@ -33,6 +32,9 @@ UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
     PostProcessSettings.AutoExposureLowPercent = 75.0;
     PostProcessSettings.AutoExposureHighPercent = 85.0;
     PostProcessSettings.MotionBlurAmount = 0.0;
+    bCaptureEveryFrame = false;
+    bCaptureOnMovement = false;
+    bAlwaysPersistRenderingState = true; // sem isso aki nao funciona
     ShowFlags.SetAntiAliasing(true);
     ShowFlags.SetTemporalAA(true);
     ShowFlags.SetMotionBlur(false);
@@ -41,31 +43,74 @@ UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
 void UTempoSceneCaptureComponent2D::BeginPlay() {
 	Super::BeginPlay();
 
-	/*
-	if (ShouldCapture) {
-		RestartCaptureTimer();
-	}
-	*/
 	
 	IFileManager::Get().MakeDirectory(*SaveDirectory, true);
 }
 
-void UTempoSceneCaptureComponent2D::StartCapture() {
-    if (bIsCapturing) return;
+void UTempoSceneCaptureComponent2D::StartCapture(ECaptureType NewCaptureType) {
+    StopCapture();
 
-    bIsCapturing = true;
-    bDepthEnabled = true;
-    ApplyDepthEnabled();
+	if (NewCaptureType == ECaptureType::NONE) {
+        return;
+	}
+
+	if (NewCaptureType == ECaptureType::DEPTH) {
+        ApplyDepthFilter();
+    }
+
+	if (NewCaptureType == ECaptureType::COLOR) {
+        ApplyColorFilter();
+    }
+
+    if (NewCaptureType == ECaptureType::LABEL) {
+        ApplyColorFilter();
+    }
+
     GetWorld()->GetTimerManager().SetTimer(CaptureTimerHandle, this, &UTempoSceneCaptureComponent2D::CaptureAndSave, 0.5f, true); // captura a cada 0.5s
 }
 
 void UTempoSceneCaptureComponent2D::StopCapture() {
-    bIsCapturing = false;
     GetWorld()->GetTimerManager().ClearTimer(CaptureTimerHandle);
+}
+
+void UTempoSceneCaptureComponent2D::ApplyDepthFilter() {
+    this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
+    bCaptureEveryFrame = false;
+    bCaptureOnMovement = false;
+    CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+
+    if (BasePostProcessMaterial_WithDepth != nullptr) {
+        CameraPostProcess = UMaterialInstanceDynamic::Create(BasePostProcessMaterial_WithDepth, this);
+    }
+
+    if (CameraPostProcess != nullptr) {
+        MinDepth = GEngine->NearClipPlane;
+        CameraPostProcess->SetScalarParameterValue(TEXT("MinDepth"), MinDepth);
+        CameraPostProcess->SetScalarParameterValue(TEXT("MaxDepth"), MaxDepth);
+        CameraPostProcess->SetScalarParameterValue(TEXT("MaxDiscreteDepth"), kMaxDiscreteDepth);
+
+        //  Aplica o material ao sistema de pós-processamento da cena capturada
+        PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraPostProcess));
+    } else {
+        UE_LOG(LogTemp, Error, TEXT("PostProcessMaterialWithDepth is not set"));
+    }
+}
+
+void UTempoSceneCaptureComponent2D::ApplyColorFilter() {
+    this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
+    CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+    CameraPostProcess = nullptr;
+}
+
+void UTempoSceneCaptureComponent2D::ApplyLabelFilter() {
+    this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
+    CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+    CameraPostProcess = nullptr;
 }
 
 void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     if (!TextureTarget) return;
+    if (!CanCaptureNow) return;
 
     // Força atualização do conteúdo e captura real
     UpdateContent();
@@ -86,40 +131,8 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
 
     FIntPoint DestSize(TextureTarget->SizeX, TextureTarget->SizeY);
 
-
     SaveAsJpeg(FullPath, Bitmap, TextureTarget->SizeX, TextureTarget->SizeY);
-	// FFileHelper::CreateBitmap(*FullPath, DestSize.X, DestSize.Y, Bitmap.GetData());
-}
-
-
-void UTempoSceneCaptureComponent2D::ApplyDepthEnabled() {
-    if (bDepthEnabled) {
-        this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA16f;
-        bCaptureEveryFrame = false;
-        bCaptureOnMovement = false;
-        CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
-
-        if (BasePostProcessMaterial_WithDepth != nullptr) {
-            CameraPostProcess = UMaterialInstanceDynamic::Create(BasePostProcessMaterial_WithDepth, this);
-        }
-
-        if (CameraPostProcess != nullptr) {
-            MinDepth = GEngine->NearClipPlane;
-            CameraPostProcess->SetScalarParameterValue(TEXT("MinDepth"), MinDepth);
-            CameraPostProcess->SetScalarParameterValue(TEXT("MaxDepth"), MaxDepth);
-            CameraPostProcess->SetScalarParameterValue(TEXT("MaxDiscreteDepth"), kMaxDiscreteDepth);
-
-            //  Aplica o material ao sistema de pós-processamento da cena capturada
-            PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.0f, CameraPostProcess));
-            bAlwaysPersistRenderingState = true; // sem isso aki nao funciona
-        }
-        else {
-            UE_LOG(LogTemp, Error, TEXT("PostProcessMaterialWithDepth is not set"));
-        }
-    }
-    else {
-        this->TextureTarget->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA8;
-    }
+    // FFileHelper::CreateBitmap(*FullPath, DestSize.X, DestSize.Y, Bitmap.GetData());
 }
 
 

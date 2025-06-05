@@ -180,6 +180,32 @@ void ARoomPreparationBaseController::ExecuteCurrentDecomposition() {
 	}
 }
 
+ARobot* ARoomPreparationBaseController::GetRobotByName(FString RobotName) {
+	TArray<ARobot*> RobotsOnMap = GetAllRobots();
+
+	for (ARobot* Actor : RobotsOnMap) {
+		if (Actor->RobotProperties.Name == RobotName) {
+			return Actor;
+		}
+	}
+
+	return nullptr;
+}
+
+TArray<ARobot*> ARoomPreparationBaseController::GetAllRobots() {
+	TArray<AActor*> RobotsOnMap;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARobot::StaticClass(), RobotsOnMap);
+
+	TArray<ARobot*> Robots;
+	for (AActor* Actor : RobotsOnMap) {
+		ARobot* Robot = Cast<ARobot>(Actor);
+		if (Robot == nullptr) continue;
+		Robots.Add(Robot);
+	}
+
+	return Robots;
+}
+
 void ARoomPreparationBaseController::CurrentTaskFinished(FTaskResult TaskResult) {
 	CurrentExperiment.WallClockInSeconds = WallClockInSeconds;
 	CurrentExperiment.TaskResults.Add(TaskResult);
@@ -426,3 +452,4 @@ FValidationStruct ARoomPreparationBaseController::GetValidationStruct() {
 
 	return Result;
 }
+

@@ -17,9 +17,9 @@ void ARobotCleaner::Tick(float DeltaTime) {
 bool ARobotCleaner::TaskExecution() {
 	Super::TaskExecution();
 
-	if (TempoSceneCaptureComponent2D != nullptr && CapturingImage == false) {
-		CapturingImage = true;
-		TempoSceneCaptureComponent2D->StartCapture();
+	if (TempoSceneCaptureComponent2D != nullptr) {
+		// TODO: Ativa isso aki depois, pra capturar soh enquanto faz a atividade
+		// TempoSceneCaptureComponent2D->CanCaptureNow!;
 	}
 
 	// sanitize and cleaning, just need to move along path

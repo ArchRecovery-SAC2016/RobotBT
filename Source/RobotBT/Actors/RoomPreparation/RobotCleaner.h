@@ -36,6 +36,4 @@ public:
 	bool IsSanitized() { return CleanerProperties.IsSanitized; }
 
 	virtual bool TaskExecution() override;
-
-	bool CapturingImage = false;
 };

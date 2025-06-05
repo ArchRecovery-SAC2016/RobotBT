@@ -67,6 +67,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Experiment")
 	FExperimentResult GetExperimentById(int32 Id) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Experiment")
+	class ARoomPreparationBaseController* GetController();
 private:
 	/** Handle do Timer */
 	FTimerHandle TimerHandle_CountSeconds;

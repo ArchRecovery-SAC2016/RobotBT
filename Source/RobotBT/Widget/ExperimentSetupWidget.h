@@ -105,7 +105,10 @@ public:
 	UMainExperimentInstance* ExperimentInstance = nullptr;
 
 	UFUNCTION(BlueprintCallable)
-	void RobotCameraSelected(FString RobotSelected);
+	void RobotCameraComboSelected(FString RobotSelected);
+
+	UFUNCTION(BlueprintCallable)
+	void CaptureComboSelected(FString RobotSelected);
 
 	UFUNCTION(BlueprintCallable)
 	void HideRoof(bool NewValue);
@@ -116,5 +119,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void GetLastExperimentResult();
 
-
+	// salva o robo selecionado
+	UPROPERTY(BlueprintReadOnly)
+	FString RobotSelected = "Default";
 };
