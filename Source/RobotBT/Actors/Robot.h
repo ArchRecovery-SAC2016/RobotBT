@@ -13,12 +13,10 @@
 class ARobotController;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskFinished, FTaskResult, TaskResult);
-
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTaskStarted, FTaskResult, TaskStarted);
 UCLASS()
 class ROBOTBT_API ARobot : public ACharacter {
 	GENERATED_BODY()
-
 
 protected:
 	virtual void BeginPlay() override;
@@ -57,8 +55,13 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool IsMoving = false;
 
+	// indicate that a task finished
 	UPROPERTY()
 	FOnTaskFinished OnTaskFinished;
+
+	// indicate that a task started
+	UPROPERTY()
+	FOnTaskStarted OnTaskStarted;
 
 	UFUNCTION(BlueprintCallable)
 	virtual ARoom* GetRoom();
@@ -132,6 +135,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void GoIdle();
+
+	bool GetIsMoving() { return  IsMoving; }
 
 private:
 	// indicate if the robot move all path

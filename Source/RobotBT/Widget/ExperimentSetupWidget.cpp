@@ -121,19 +121,21 @@ void UExperimentSetupWidget::CaptureComboSelected(FString CaptureType) {
 		return;
 	}
 
+	// stop any capture 
+	for (auto RobotOnScene: ExperimentInstance->GetController()->GetAllRobots()) {
+		RobotOnScene->StopCapture();
+	}
 
-
+	// find the robot
 	ARobot* Robot = ExperimentInstance->GetController()->GetRobotByName(RobotSelected);
 	if (Robot == nullptr) {
 		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::CaptureComboSelected] Failed to get robot whit name %s found"), *RobotSelected);
 		return;
 	}
 	
-	if (CaptureType == "None") {
-		Robot->StopCapture();
-	} else if (CaptureType == "Color") {
+	 if (CaptureType == "Color") {
 		Robot->StartCapture(ECaptureType::COLOR);
-	} else if (CaptureType == "Deph") {
+	} else if (CaptureType == "Depth") {
 		Robot->StartCapture(ECaptureType::DEPTH);
 	} else if (CaptureType == "Label") {
 		Robot->StartCapture(ECaptureType::LABEL);

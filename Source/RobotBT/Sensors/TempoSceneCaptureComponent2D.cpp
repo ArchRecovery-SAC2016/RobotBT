@@ -5,6 +5,7 @@
 #include "IImageWrapper.h"
 #include "IImageWrapperModule.h"
 #include "Engine/TextureRenderTarget2D.h"
+#include "RobotBT/Actors/Robot.h"
 
 UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -42,9 +43,10 @@ UTempoSceneCaptureComponent2D::UTempoSceneCaptureComponent2D() {
 
 void UTempoSceneCaptureComponent2D::BeginPlay() {
 	Super::BeginPlay();
-
 	
 	IFileManager::Get().MakeDirectory(*SaveDirectory, true);
+
+    RobotOwnerInstance = Cast<ARobot>(GetOwner());
 }
 
 void UTempoSceneCaptureComponent2D::StartCapture(ECaptureType NewCaptureType) {
@@ -109,8 +111,10 @@ void UTempoSceneCaptureComponent2D::ApplyLabelFilter() {
 }
 
 void UTempoSceneCaptureComponent2D::CaptureAndSave() {
-    if (!TextureTarget) return;
-    if (!CanCaptureNow) return;
+    if (!TextureTarget || !RobotOwnerInstance) return;
+    
+
+    if (RobotOwnerInstance->IsMoving == false) return; // just capture if is moving
 
     // Força atualização do conteúdo e captura real
     UpdateContent();
@@ -134,7 +138,6 @@ void UTempoSceneCaptureComponent2D::CaptureAndSave() {
     SaveAsJpeg(FullPath, Bitmap, TextureTarget->SizeX, TextureTarget->SizeY);
     // FFileHelper::CreateBitmap(*FullPath, DestSize.X, DestSize.Y, Bitmap.GetData());
 }
-
 
 bool UTempoSceneCaptureComponent2D::SaveAsJpeg(const FString& Filename, const TArray<FColor>& Bitmap, int32 Width, int32 Height) {
     IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));

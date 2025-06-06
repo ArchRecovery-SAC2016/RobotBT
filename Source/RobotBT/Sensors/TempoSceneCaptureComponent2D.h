@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SceneCaptureComponent2D.h"
+#include "RobotBT/Struct/ExperimentResult.h"
 #include "TempoSceneCaptureComponent2D.generated.h"
 
 
@@ -29,9 +30,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Capture")
 	void StopCapture();
 
-	// The controller change this variable. We need this because we want to capture just when is executing a task
-	UPROPERTY()
-	bool CanCaptureNow = false;
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -47,6 +46,10 @@ private:
 	FTimerHandle CaptureTimerHandle;
 
 	bool SaveAsJpeg(const FString& Filename, const TArray<FColor>& Bitmap, int32 Width, int32 Height);
+
+	// saves an instance of the owner of this component
+	UPROPERTY()
+	class ARobot* RobotOwnerInstance = nullptr;
 
 	// The minimum depth this camera can measure (if depth is enabled). Will be set to the global near clip plane.
 	UPROPERTY(EditAnywhere, Category = "Depth")

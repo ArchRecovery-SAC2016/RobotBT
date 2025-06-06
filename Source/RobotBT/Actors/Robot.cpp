@@ -99,6 +99,7 @@ void ARobot::StartNewTask(ESkillEnum SkillEnum, ARoom* Room) {
 	IsAtRoomLocation = false;
 	TaskAllocated = SkillEnum;
 	UpdateRobotWidget();
+	OnTaskStarted.Broadcast(NewTaskResult);
 }
 
 void ARobot::GoIdle() {
