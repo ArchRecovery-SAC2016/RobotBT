@@ -98,21 +98,13 @@ void UExperimentSetupWidget::RobotCameraComboSelected(FString NewRobotSelected) 
 	if (ExperimentInstance == nullptr) return;
 	if (NewRobotSelected == "Default") {
 		RobotSelected = "Default";
-		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-
-		if (PlayerController) {
-			APawn* PlayerPawn = PlayerController->GetPawn();
-			if (PlayerPawn) {
-				PlayerController->SetViewTargetWithBlend(PlayerPawn, 0.5f);
-				HideRoof(true); // Certifique-se de que HideRoof(false) faz o que você espera
-				return;
-			}
-		}
+		HideRoof(true); // Hide the roof when no robot is selected
 		return;
 	}
 
 	ARobot* Robot = ExperimentInstance->GetController()->GetRobotByName(NewRobotSelected);
 	if (Robot == nullptr) {
+		RobotSelected = "Default"; // Reset to default if no robot found
 		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::RobotCameraComboSelected] No Robot whit name %s found"), *NewRobotSelected);
 		return;
 	}
