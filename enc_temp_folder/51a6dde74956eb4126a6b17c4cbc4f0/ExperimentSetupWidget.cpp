@@ -15,11 +15,13 @@ void UExperimentSetupWidget::NativeConstruct() {
 	// set the default values for output path
 	FString Path = "Data/RoomPreparation/Scenario_1/";
 	FString OutputPathFile = FPaths::ProjectContentDir() + Path + "task_output.json";
-	SetOutputPath(OutputPathFile);
+	OutputPath->SetText(FText::FromString(OutputPathFile));
+	OutputsSelected.Add(ReadOutputPath(OutputPathFile));
 
 	// set the default values for output path
 	FString WorldPathFile = FPaths::ProjectContentDir() + Path + "world_db.json" ;
-	SetWorldPath(WorldPathFile);
+	WorldPath->SetText(FText::FromString(WorldPathFile));
+	WorldsSelected.Add(ReadWorldPath(WorldPathFile));
 
 	// set the default values. It is the default values for the FExperimentResult
 	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
@@ -35,6 +37,20 @@ void UExperimentSetupWidget::NativeConstruct() {
 	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 	if (ExperimentInstance != nullptr) {
 		if (ExperimentInstance->MustContinueExperiment) { // essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
+			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+			ExperimentInstance->CurrentOutputIndex++;
+			if (OutputsSelected.IsValidIndex(ExperimentInstance->CurrentOutputIndex)) {
+				ExperimentInstance->CurrentOutputIndex = 0;
+			}
+
+			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+			ExperimentInstance->CurrentWorldIndex++;
+			if (WorldsSelected.IsValidIndex(ExperimentInstance->CurrentWorldIndex)) {
+				ExperimentInstance->CurrentWorldIndex = 0;
+			}
+
+			Experiment.OutputTasksJsonString = OutputsSelected[ExperimentInstance->CurrentOutputIndex];
+			Experiment.WorldJsonString = WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 			ExperimentInstance->NextExperiment();
 		}
 	}
@@ -55,6 +71,10 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	else Experiment.GenerateRandomProperties = false;
 
 	ExperimentIsValid = ValidateInputs();
+
+	// Esse valor eh atualizado no NativeConstruct
+	Experiment.OutputTasksJsonString = OutputsSelected[ExperimentInstance->CurrentOutputIndex];
+	Experiment.WorldJsonString = WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 
 	if (!ExperimentIsValid) return;
 
@@ -98,13 +118,21 @@ void UExperimentSetupWidget::RobotCameraComboSelected(FString NewRobotSelected) 
 	if (ExperimentInstance == nullptr) return;
 	if (NewRobotSelected == "Default") {
 		RobotSelected = "Default";
-		HideRoof(true); // Hide the roof when no robot is selected
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+		if (PlayerController) {
+			APawn* PlayerPawn = PlayerController->GetPawn();
+			if (PlayerPawn) {
+				PlayerController->SetViewTargetWithBlend(PlayerPawn, 0.5f);
+				HideRoof(true); // Certifique-se de que HideRoof(false) faz o que você espera
+				return;
+			}
+		}
 		return;
 	}
 
 	ARobot* Robot = ExperimentInstance->GetController()->GetRobotByName(NewRobotSelected);
 	if (Robot == nullptr) {
-		RobotSelected = "Default"; // Reset to default if no robot found
 		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::RobotCameraComboSelected] No Robot whit name %s found"), *NewRobotSelected);
 		return;
 	}
@@ -202,35 +230,50 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 		// Filtra os tipos de arquivo desejados
 		bool bFileSelected = DesktopPlatform->OpenFileDialog(
 			ParentWindowHandle,
-			TEXT("Select a File"),
+			TEXT("Select one or more Files"),
 			FPaths::ProjectContentDir(),
 			TEXT(""),
 			TEXT("Arquivos JSON (*.json)|*.json|Todos os Arquivos (*.*)|*.*"),
-			EFileDialogFlags::None,
+			EFileDialogFlags::Multiple,
 			OutFileNames
 		);
 
-		if (bFileSelected && OutFileNames.Num() > 0) {
-			// Pega o primeiro arquivo selecionado
-			FString SelectedFilePath = OutFileNames[0];
-			UE_LOG(LogTemp, Log, TEXT("Arquivo selecionado: %s"), *SelectedFilePath);
+		// limpa as listas de selecao
+		if (Type == "Output") {
+			OutputsSelected.Empty();
+		} else if (Type == "World") {
+			WorldsSelected.Empty();
+		}
 
-			if (Type == "Output") SetOutputPath(SelectedFilePath);
-			else if (Type == "World") SetWorldPath(SelectedFilePath);
-			else if (Type == "Robots") SetRobotsPath(SelectedFilePath);
-			else UE_LOG(LogTemp, Log, TEXT("Invalid Type. Type must be Output, World, Robots"));
+		if (bFileSelected && OutFileNames.Num() > 0) {
+			for (auto File: OutFileNames) {
+				FString SelectedFilePath = File;
+
+				if (Type == "Output") {
+					OutputsSelected.Add(ReadOutputPath(SelectedFilePath));
+					// Experiment.OutputTasksJsonString = OutputPathSelected[0];
+				} else if (Type == "World") {
+					WorldsSelected.Add(ReadWorldPath(SelectedFilePath));
+					 //Experiment.WorldJsonString =
+				} else if (Type == "Robots") {
+					SetRobotsPath(SelectedFilePath);
+				} else {
+					UE_LOG(LogTemp, Log, TEXT("Invalid Type. Type must be Output, World, Robots"));
+				}
+
+			}
 		}
 	}
 }
 
-void UExperimentSetupWidget::SetOutputPath(FString NewPath) {
-	OutputPath->SetText(FText::FromString(NewPath)); 	// TODO: Validade file
-	Experiment.OutputTasksJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+FString UExperimentSetupWidget::ReadOutputPath(FString NewPath) {
+	// TODO: Fazer a validacao 
+	return UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
-void UExperimentSetupWidget::SetWorldPath(FString NewPath) {
- 	WorldPath->SetText(FText::FromString(NewPath));
-	Experiment.WorldJsonString = UMyJsonReader::ReadStringFromFile(NewPath);
+FString UExperimentSetupWidget::ReadWorldPath(FString NewPath) {
+ 	// TODO: Fazer a validacao  WorldPath->SetText(FText::FromString(NewPath));
+	return UMyJsonReader::ReadStringFromFile(NewPath);
 }
 
 void UExperimentSetupWidget::SetRobotsPath(FString NewPath) {

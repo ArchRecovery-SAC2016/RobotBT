@@ -70,6 +70,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Experiment")
 	class ARoomPreparationBaseController* GetController();
+
+	// save what output index is executing
+	UPROPERTY()
+	int32 CurrentOutputIndex = 0;
+
+	// save what world index is executing
+	UPROPERTY()
+	int32 CurrentWorldIndex = 0;
 private:
 	/** Handle do Timer */
 	FTimerHandle TimerHandle_CountSeconds;

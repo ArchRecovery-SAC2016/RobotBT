@@ -41,13 +41,22 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* MaxWallClockInSeconds;
 
-	// output json file path, provided by MutRose
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	UEditableText* OutputPath;
+	// salva todas os outputs selecionados jah convertidos pelo botao Select
+	UPROPERTY()
+	TArray<FString> OutputsSelected;
+
+	// salva todas as worlds selecionadas jah convertidos pelo botao Select
+	UPROPERTY()
+	TArray<FString> WorldsSelected;
 
 	// world knowledge json file path
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* WorldPath;
+
+	// output json file path, provided by MutRose
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UEditableText* OutputPath;
+
 
 	// robots configuration file path
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
@@ -79,10 +88,10 @@ public:
 	void OpenFileClicked(FString Type);
 
 	UFUNCTION(BlueprintCallable)
-	void SetOutputPath(FString NewPath);
+	FString ReadOutputPath(FString NewPath);
 
 	UFUNCTION(BlueprintCallable)
-	void SetWorldPath(FString NewPath);
+	FString ReadWorldPath(FString NewPath);
 
 	UFUNCTION(BlueprintCallable)
 	void SetRobotsPath(FString NewPath);
