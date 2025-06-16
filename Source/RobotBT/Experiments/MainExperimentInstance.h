@@ -78,6 +78,14 @@ public:
 	// save what world index is executing
 	UPROPERTY()
 	int32 CurrentWorldIndex = 0;
+
+	// salva todas os outputs selecionados jah convertidos pelo Widget
+	UPROPERTY()
+	TArray<FString> OutputsSelected;
+
+	// salva todas as worlds selecionadas jah convertidos pelo Widget
+	UPROPERTY()
+	TArray<FString> WorldsSelected;
 private:
 	/** Handle do Timer */
 	FTimerHandle TimerHandle_CountSeconds;

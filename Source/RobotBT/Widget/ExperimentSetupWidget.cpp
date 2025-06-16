@@ -16,12 +16,12 @@ void UExperimentSetupWidget::NativeConstruct() {
 	FString Path = "Data/RoomPreparation/Scenario_1/";
 	FString OutputPathFile = FPaths::ProjectContentDir() + Path + "task_output.json";
 	OutputPath->SetText(FText::FromString(OutputPathFile));
-	OutputsSelected.Add(ReadOutputPath(OutputPathFile));
+	
 
 	// set the default values for output path
 	FString WorldPathFile = FPaths::ProjectContentDir() + Path + "world_db.json" ;
 	WorldPath->SetText(FText::FromString(WorldPathFile));
-	WorldsSelected.Add(ReadWorldPath(WorldPathFile));
+	
 
 	// set the default values. It is the default values for the FExperimentResult
 	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
@@ -36,21 +36,32 @@ void UExperimentSetupWidget::NativeConstruct() {
 
 	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 	if (ExperimentInstance != nullptr) {
-		if (ExperimentInstance->MustContinueExperiment) { // essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
+		// se nao tiver outputs selecionados, adiciona o padrao
+		if (ExperimentInstance->OutputsSelected.IsEmpty()) {
+			ExperimentInstance->OutputsSelected.Add(ReadOutputPath(OutputPathFile));
+		}
+
+		// se nao tiver world selecionados, adiciona o padrao
+		if (ExperimentInstance->WorldsSelected.IsEmpty()) {
+			ExperimentInstance->WorldsSelected.Add(ReadWorldPath(WorldPathFile));
+		}
+
+		// essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
+		if (ExperimentInstance->MustContinueExperiment) { 
 			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
 			ExperimentInstance->CurrentOutputIndex++;
-			if (OutputsSelected.IsValidIndex(ExperimentInstance->CurrentOutputIndex)) {
+			if (!ExperimentInstance->OutputsSelected.IsValidIndex(ExperimentInstance->CurrentOutputIndex)) {
 				ExperimentInstance->CurrentOutputIndex = 0;
 			}
 
 			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
 			ExperimentInstance->CurrentWorldIndex++;
-			if (WorldsSelected.IsValidIndex(ExperimentInstance->CurrentWorldIndex)) {
+			if (!ExperimentInstance->WorldsSelected.IsValidIndex(ExperimentInstance->CurrentWorldIndex)) {
 				ExperimentInstance->CurrentWorldIndex = 0;
 			}
 
-			Experiment.OutputTasksJsonString = OutputsSelected[ExperimentInstance->CurrentOutputIndex];
-			Experiment.WorldJsonString = WorldsSelected[ExperimentInstance->CurrentWorldIndex];
+			Experiment.OutputTasksJsonString = ExperimentInstance->OutputsSelected[ExperimentInstance->CurrentOutputIndex];
+			Experiment.WorldJsonString = ExperimentInstance->WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 			ExperimentInstance->NextExperiment();
 		}
 	}
@@ -60,6 +71,8 @@ void UExperimentSetupWidget::NativeConstruct() {
 }
 
 void UExperimentSetupWidget::InitiateExperiment() {
+	if (ExperimentInstance == nullptr) return;
+
 	Experiment.ExperimentSpeed = FCString::Atof(*ExperimentSpeed->GetText().ToString());
 	Experiment.RepeatExperimentFor = FCString::Atoi(*RepeatExperimentFor->GetText().ToString());
 	Experiment.MaxWallClockInSeconds = FCString::Atoi(*MaxWallClockInSeconds->GetText().ToString());
@@ -71,9 +84,8 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	else Experiment.GenerateRandomProperties = false;
 
 	// Esse valor eh atualizado no NativeConstruct
-	Experiment.OutputTasksJsonString = OutputsSelected[ExperimentInstance->CurrentOutputIndex];
-	Experiment.WorldJsonString = WorldsSelected[ExperimentInstance->CurrentWorldIndex];
-
+	Experiment.OutputTasksJsonString = ExperimentInstance->OutputsSelected[ExperimentInstance->CurrentOutputIndex];
+	Experiment.WorldJsonString = ExperimentInstance->WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 
 	if (!ValidateInputs()) return;
 
@@ -237,9 +249,9 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 
 		// limpa as listas de selecao
 		if (Type == "Output") {
-			OutputsSelected.Empty();
+			ExperimentInstance->OutputsSelected.Empty();
 		} else if (Type == "World") {
-			WorldsSelected.Empty();
+			ExperimentInstance->WorldsSelected.Empty();
 		}
 
 		if (bFileSelected && OutFileNames.Num() > 0) {
@@ -247,10 +259,10 @@ void UExperimentSetupWidget::OpenFileClicked(FString Type) {
 				FString SelectedFilePath = File;
 
 				if (Type == "Output") {
-					OutputsSelected.Add(ReadOutputPath(SelectedFilePath));
+					ExperimentInstance->OutputsSelected.Add(ReadOutputPath(SelectedFilePath));
 					// Experiment.OutputTasksJsonString = OutputPathSelected[0];
 				} else if (Type == "World") {
-					WorldsSelected.Add(ReadWorldPath(SelectedFilePath));
+					ExperimentInstance->WorldsSelected.Add(ReadWorldPath(SelectedFilePath));
 					 //Experiment.WorldJsonString =
 				} else if (Type == "Robots") {
 					SetRobotsPath(SelectedFilePath);

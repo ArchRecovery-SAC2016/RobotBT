@@ -41,13 +41,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* MaxWallClockInSeconds;
 
-	// salva todas os outputs selecionados jah convertidos pelo botao Select
-	UPROPERTY()
-	TArray<FString> OutputsSelected;
-
-	// salva todas as worlds selecionadas jah convertidos pelo botao Select
-	UPROPERTY()
-	TArray<FString> WorldsSelected;
+	
 
 	// world knowledge json file path
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
