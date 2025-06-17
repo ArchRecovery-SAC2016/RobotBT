@@ -87,6 +87,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		// o Validation Struct eh o pai, e tem FValidationRoomPreparationStruct filho desse validation struct
 		FValidationStruct Validation = CurrentController->GetValidationStruct();
 		ValidateExperiment(Validation);
+		return;
 	} else {
 		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
 		CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
@@ -99,7 +100,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		FinishAllExperiment();
 		return;
 	}
-	
+	ResetLevel();
 	MustContinueExperiment = true;
 }
 
@@ -175,6 +176,14 @@ void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, b
 	CurrentExperiment.ResultFinal.Description = ResponseContent;
 	
 	Experiments.Add(CurrentExperiment);
+
+	// verifica se terminou completamente
+	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
+		MustContinueExperiment = false;
+		FinishAllExperiment();
+		return;
+	}
+
 	IsLoading = false;
 	ResetLevel();
 }

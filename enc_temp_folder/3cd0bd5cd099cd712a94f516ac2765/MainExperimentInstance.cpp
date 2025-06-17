@@ -48,11 +48,25 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 void UMainExperimentInstance::NextExperiment() {
 	CurrentExperiment.ExperimentId++;
 	CurrentExperiment.WallClockInSeconds = 0;
+	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+	CurrentOutputIndex++;
+	if (!OutputsSelected.IsValidIndex(CurrentOutputIndex)) {
+		CurrentOutputIndex = 0;
+	}
+
+	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+	CurrentWorldIndex++;
+	if (!WorldsSelected.IsValidIndex(CurrentWorldIndex)) {
+		CurrentWorldIndex = 0;
+	}
 	
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
 	}
-		
+
+	CurrentExperiment.OutputTasksJsonString  = OutputsSelected[CurrentOutputIndex];
+	CurrentExperiment.WorldJsonString = WorldsSelected[CurrentWorldIndex];
+
 	ExecuteExperiment(CurrentExperiment);
 }
 
@@ -73,6 +87,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		// o Validation Struct eh o pai, e tem FValidationRoomPreparationStruct filho desse validation struct
 		FValidationStruct Validation = CurrentController->GetValidationStruct();
 		ValidateExperiment(Validation);
+		return;
 	} else {
 		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
 		CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
@@ -85,7 +100,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		FinishAllExperiment();
 		return;
 	}
-	
+	ResetLevel();
 	MustContinueExperiment = true;
 }
 
@@ -161,6 +176,14 @@ void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, b
 	CurrentExperiment.ResultFinal.Description = ResponseContent;
 	
 	Experiments.Add(CurrentExperiment);
+
+	// verifica se terminou completamente
+	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
+		MustContinueExperiment = false;
+		FinishAllExperiment();
+		return;
+	}
+
 	IsLoading = false;
 	ResetLevel();
 }
