@@ -284,8 +284,10 @@ void ARoomPreparationBaseController::PrepareWorld(FString WorldJsonString) {
 }
 
 void ARoomPreparationBaseController::TimeIsOver() {
-	// take any robot and send a message. It will 
 	CleanerRobot->TimeIsOver();
+	for (auto* Organizer : OrganizersTeam) {
+		Organizer->TimeIsOver();
+	}
 }
 
 bool ARoomPreparationBaseController::LoadTasksFromFile(FString NewTasksJsonString) {

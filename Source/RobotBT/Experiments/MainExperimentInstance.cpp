@@ -100,6 +100,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		FinishAllExperiment();
 		return;
 	}
+
 	ResetLevel();
 	MustContinueExperiment = true;
 }
