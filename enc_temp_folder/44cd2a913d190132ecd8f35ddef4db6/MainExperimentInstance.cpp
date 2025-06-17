@@ -48,25 +48,11 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 void UMainExperimentInstance::NextExperiment() {
 	CurrentExperiment.ExperimentId++;
 	CurrentExperiment.WallClockInSeconds = 0;
-	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
-	CurrentOutputIndex++;
-	if (!OutputsSelected.IsValidIndex(CurrentOutputIndex)) {
-		CurrentOutputIndex = 0;
-	}
-
-	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
-	CurrentWorldIndex++;
-	if (!WorldsSelected.IsValidIndex(CurrentWorldIndex)) {
-		CurrentWorldIndex = 0;
-	}
 	
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
 	}
-
-	CurrentExperiment.OutputTasksJsonString  = OutputsSelected[CurrentOutputIndex];
-	CurrentExperiment.WorldJsonString = WorldsSelected[CurrentWorldIndex];
-
+		
 	ExecuteExperiment(CurrentExperiment);
 }
 

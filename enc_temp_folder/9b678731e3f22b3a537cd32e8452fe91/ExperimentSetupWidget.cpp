@@ -46,6 +46,20 @@ void UExperimentSetupWidget::NativeConstruct() {
 
 		// essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
 		if (ExperimentInstance->MustContinueExperiment) { 
+			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+			ExperimentInstance->CurrentOutputIndex++;
+			if (!ExperimentInstance->OutputsSelected.IsValidIndex(ExperimentInstance->CurrentOutputIndex)) {
+				ExperimentInstance->CurrentOutputIndex = 0;
+			}
+
+			// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
+			ExperimentInstance->CurrentWorldIndex++;
+			if (!ExperimentInstance->WorldsSelected.IsValidIndex(ExperimentInstance->CurrentWorldIndex)) {
+				ExperimentInstance->CurrentWorldIndex = 0;
+			}
+
+			Experiment.OutputTasksJsonString = Experiment.OutputTasksJsonString = ExperimentInstance->OutputsSelected[ExperimentInstance->CurrentOutputIndex];
+			Experiment.WorldJsonString = ExperimentInstance->WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 			ExperimentInstance->NextExperiment();
 		}
 	}
