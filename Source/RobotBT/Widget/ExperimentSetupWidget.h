@@ -41,8 +41,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* MaxWallClockInSeconds;
 
-	
-
 	// world knowledge json file path
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* WorldPath;
@@ -50,7 +48,6 @@ public:
 	// output json file path, provided by MutRose
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UEditableText* OutputPath;
-
 
 	// robots configuration file path
 	UPROPERTY(EditAnywhere, meta = (BindWidget))

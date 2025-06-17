@@ -127,7 +127,7 @@ void ARobot::StopCapture() {
 }
 
 void ARobot::TimeIsOver() {
-	if (TaskAllocated != ESkillEnum::NONE) TaskFailed(EFailureReasonEnum::Timeout);
+	TaskFailed(EFailureReasonEnum::Timeout);
 }
 
 void ARobot::ConsumeBattery(float DischargeAmount) {

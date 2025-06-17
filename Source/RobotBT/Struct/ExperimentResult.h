@@ -71,7 +71,7 @@ struct FExperimentResult {
 
 	// will save the results
 	UPROPERTY(BlueprintReadOnly)
-	float MaxWallClockInSeconds = 200.0f;
+	float MaxWallClockInSeconds = 400.0f;
 
 	// Default value for the repeat experiment of
 	UPROPERTY(Transient, BlueprintReadOnly)

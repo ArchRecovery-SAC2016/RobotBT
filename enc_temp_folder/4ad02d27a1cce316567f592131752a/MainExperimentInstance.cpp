@@ -33,6 +33,13 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load World."));
 	}
 
+	NextExperiment();
+}
+
+void UMainExperimentInstance::NextExperiment() {
+	CurrentExperiment.ExperimentId++;
+	CurrentExperiment.WallClockInSeconds = 0;
+
 	// Inicia o timer de segundos
 	GetWorld()->GetTimerManager().SetTimer(
 		TimerHandle_CountSeconds,                   // Handle
@@ -42,12 +49,6 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		true                                          // Repetir
 	);
 
-	NextExperiment();
-}
-
-void UMainExperimentInstance::NextExperiment() {
-	CurrentExperiment.ExperimentId++;
-	CurrentExperiment.WallClockInSeconds = 0;
 	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
 	CurrentOutputIndex++;
 	if (!OutputsSelected.IsValidIndex(CurrentOutputIndex)) {
@@ -82,6 +83,10 @@ void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	FTaskResult LastResult = NewExperiment.TaskResults.Last();
 
+	if (GetWorld()->GetTimerManager().IsTimerActive(TimerHandle_CountSeconds)) {
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle_CountSeconds);
+	}
+
 	if (LastResult.SuccessResult) {
 		HandleExperimentSucess(NewExperiment);
 	} else {
@@ -98,19 +103,16 @@ void UMainExperimentInstance::AfterHandleExperimentResult() {
 		FinishAllExperiment();
 		return;
 	}
-	
+	MustContinueExperiment= true; // essa eh uma flag que o Widget Usa pra saber que tem que continuar com o experimento 
 	IsLoading = false;
 	ResetLevel();
-	NextExperiment();
 }
 
 void UMainExperimentInstance::HandleExperimentFailed(FExperimentResult NewExperiment) {
 	FTaskResult LastResult = NewExperiment.TaskResults.Last();
 	CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
 	CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
-	Experiments.Add(CurrentExperiment);
-	ResetLevel();
-	MustContinueExperiment = true;
+	AfterHandleExperimentResult();
 }
 
 void UMainExperimentInstance::HandleExperimentSucess(FExperimentResult NewExperiment) {

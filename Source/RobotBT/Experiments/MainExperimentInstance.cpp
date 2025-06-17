@@ -49,15 +49,16 @@ void UMainExperimentInstance::NextExperiment() {
 		true                                          // Repetir
 	);
 
-
-	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
-	CurrentOutputIndex++;
+	// tentra incrementar o CurrentOutputInde e o CurrentWorldIndex. Soh nao faz isso na primeira execusao. Senao vai comecar do 1. 
+	if (CurrentExperiment.ExperimentId != 1) {
+		CurrentWorldIndex++;
+		CurrentOutputIndex++;
+	}
+	
 	if (!OutputsSelected.IsValidIndex(CurrentOutputIndex)) {
 		CurrentOutputIndex = 0;
 	}
-
-	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
-	CurrentWorldIndex++;
+	
 	if (!WorldsSelected.IsValidIndex(CurrentWorldIndex)) {
 		CurrentWorldIndex = 0;
 	}
