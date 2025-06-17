@@ -21,17 +21,6 @@ void UExperimentSetupWidget::NativeConstruct() {
 	FString WorldPathFile = FPaths::ProjectContentDir() + Path + "world_db.json" ;
 	WorldPath->SetText(FText::FromString(WorldPathFile));
 
-	// set the default values. It is the default values for the FExperimentResult
-	ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
-	RepeatExperimentFor->SetText(FText::AsNumber(Experiment.RepeatExperimentFor));
-	MaxWallClockInSeconds->SetText(FText::AsNumber(Experiment.MaxWallClockInSeconds));
-
-	if (Experiment.SaveResults) {
-		SaveResults->SetCheckedState(ECheckBoxState::Checked);
-	} else {
-		SaveResults->SetCheckedState(ECheckBoxState::Unchecked);
-	}
-
 	ExperimentInstance = Cast<UMainExperimentInstance>(GetWorld()->GetGameInstance());
 	if (ExperimentInstance != nullptr) {
 		// se nao tiver outputs selecionados, adiciona o padrao
@@ -47,11 +36,28 @@ void UExperimentSetupWidget::NativeConstruct() {
 		// essa eh uma flag que indica se o experimento jah foi startado e precisa continuar
 		if (ExperimentInstance->MustContinueExperiment) { 
 			ExperimentInstance->NextExperiment();
+			// faco isso pra atualizar esse widget
+			Experiment = ExperimentInstance->CurrentExperiment;
 		}
-	}
 
-	// will update the FinalResult description with the last experiment result
-	GetLastExperimentResult();
+		// set the default values. It is the default values for the FExperimentResult
+		ExperimentSpeed->SetText(FText::AsNumber(Experiment.ExperimentSpeed));
+		RepeatExperimentFor->SetText(FText::AsNumber(Experiment.RepeatExperimentFor));
+		MaxWallClockInSeconds->SetText(FText::AsNumber(Experiment.MaxWallClockInSeconds));
+
+		if (Experiment.SaveResults) {
+			SaveResults->SetCheckedState(ECheckBoxState::Checked);
+		}
+		else {
+			SaveResults->SetCheckedState(ECheckBoxState::Unchecked);
+		}
+
+
+		// will update the FinalResult description with the last experiment result
+		GetLastExperimentResult();
+	} else {
+		UE_LOG(LogTemp, Log, TEXT("[UExperimentSetupWidget::NativeConstruct] Failed to load ExperimentInstance"));
+	}
 }
 
 void UExperimentSetupWidget::InitiateExperiment() {
@@ -204,6 +210,26 @@ void UExperimentSetupWidget::GetLastExperimentResult() {
 		FinalResult->SetText(FText::FromString("<Red> Task  Failed </>. Causal Analysis Result: " + Result.ResultFinal.Description));
 	} else {
 		FinalResult->SetText(FText::FromString("No Result Found"));
+	}
+}
+
+void UExperimentSetupWidget::SpeedWidgetChanged(FText NewValue) {
+
+	FString StringValue = NewValue.ToString();
+	float NewSpeed = FCString::Atof(*StringValue); // Converte string para float
+
+	// Verifica se é um valor válido (opcional)
+	if (NewSpeed <= 0.f) {
+		UE_LOG(LogTemp, Warning, TEXT("Invalid speed value: %f"), NewSpeed);
+		return;
+	}
+
+	// Atualiza o speed no seu objeto (se desejar)
+	ExperimentInstance->CurrentExperiment.ExperimentSpeed = NewSpeed;
+
+	// change the speed of the world
+	if (GetWorld()) {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(ExperimentInstance->CurrentExperiment.ExperimentSpeed);
 	}
 }
 

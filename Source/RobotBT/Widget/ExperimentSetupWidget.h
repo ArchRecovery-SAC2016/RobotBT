@@ -122,4 +122,7 @@ public:
 	// salva o robo selecionado
 	UPROPERTY(BlueprintReadOnly)
 	FString RobotSelected = "Default";
+
+	UFUNCTION(BlueprintCallable)
+	void SpeedWidgetChanged(FText NewValue);
 };
