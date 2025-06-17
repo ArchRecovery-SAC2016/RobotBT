@@ -111,11 +111,11 @@ struct FExperimentResult {
 	TArray<FRobotProperties> Robots;
 
 	// output json file path, provided by MutRose
-	UPROPERTY(Transient)
+	UPROPERTY()
 	FString OutputTasksJsonString = "";
 
 	// world knowledge json file path
-	UPROPERTY(Transient)
+	UPROPERTY()
 	FString WorldJsonString = "";
 	
 	// robots configuration file path
@@ -123,6 +123,6 @@ struct FExperimentResult {
 	FString RobotsConfigJsonString = "";
 
 	// the final result. Contains information about the experiment, like success or failure
-	UPROPERTY(Transient, BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly)
 	FResultFinal ResultFinal = FResultFinal();
 };

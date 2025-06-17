@@ -1,0 +1,14 @@
+{
+	"result": [
+		{
+			"experimentId": 1,
+			"maxWallClockInSeconds": 200,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 248.20286560058594,
+			"taskResults": [],
+			"robots": []
+		}
+	]
+}

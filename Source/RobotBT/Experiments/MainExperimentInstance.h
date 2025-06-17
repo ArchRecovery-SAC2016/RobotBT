@@ -31,15 +31,23 @@ public:
 	UFUNCTION()
 	void ExperimentFinished(FExperimentResult NewExperiment);
 
+	
 	// Reset the level. Used when 
 	UFUNCTION()
 	void ResetLevel();
 
 	UFUNCTION()
-	void ValidateExperiment(FValidationStruct ValidationStruct);
+	void HandleExperimentSucess(FExperimentResult NewExperiment);
+
+	UFUNCTION()
+	void HandleExperimentFailed(FExperimentResult NewExperiment);
 
 	UFUNCTION()
 	void HandleValidation(const FString& ResponseContent, bool Success);
+
+	// called by HandleExperimentSucess and HandleExperimentFailed when all verification is done
+	UFUNCTION()
+	void AfterHandleExperimentResult();
 
 	UFUNCTION()
 	void NextExperiment();

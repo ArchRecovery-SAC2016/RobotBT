@@ -33,6 +33,13 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load World."));
 	}
 
+	NextExperiment();
+}
+
+void UMainExperimentInstance::NextExperiment() {
+	CurrentExperiment.ExperimentId++;
+	CurrentExperiment.WallClockInSeconds = 0;
+
 	// Inicia o timer de segundos
 	GetWorld()->GetTimerManager().SetTimer(
 		TimerHandle_CountSeconds,                   // Handle
@@ -42,12 +49,7 @@ void UMainExperimentInstance::StartNewExperiment(FExperimentResult Experiment) {
 		true                                          // Repetir
 	);
 
-	NextExperiment();
-}
 
-void UMainExperimentInstance::NextExperiment() {
-	CurrentExperiment.ExperimentId++;
-	CurrentExperiment.WallClockInSeconds = 0;
 	// tentra incrementar o CurrentOutputIndex, se nao tiver mais outputs, volta para o primeiro
 	CurrentOutputIndex++;
 	if (!OutputsSelected.IsValidIndex(CurrentOutputIndex)) {
@@ -82,38 +84,40 @@ void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
 	FTaskResult LastResult = NewExperiment.TaskResults.Last();
 
-	if (LastResult.SuccessResult) {
-		// TODO: Individualizar isso aki. tah muito voltado pro RoomPreparation. Talvez a validacao deve estar lah mesmo. ou entao, lah deve retornar tudo que eh necessario como o RequestBody e a url e aki soh chamar
-		// o Validation Struct eh o pai, e tem FValidationRoomPreparationStruct filho desse validation struct
-		FValidationStruct Validation = CurrentController->GetValidationStruct();
-		ValidateExperiment(Validation);
-		return;
-	} else {
-		CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
-		CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
-		Experiments.Add(CurrentExperiment);
+	if (GetWorld()->GetTimerManager().IsTimerActive(TimerHandle_CountSeconds)) {
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle_CountSeconds);
 	}
 
-	// adiciona na lista
+	if (LastResult.SuccessResult) {
+		HandleExperimentSucess(NewExperiment);
+	} else {
+		HandleExperimentFailed(NewExperiment);
+	}
+}
+
+void UMainExperimentInstance::AfterHandleExperimentResult() {
+	Experiments.Add(CurrentExperiment);
+
+	// verifica se terminou completamente
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
 		MustContinueExperiment = false;
 		FinishAllExperiment();
 		return;
 	}
-
+	MustContinueExperiment= true; // essa eh uma flag que o Widget Usa pra saber que tem que continuar com o experimento 
+	IsLoading = false;
 	ResetLevel();
-	MustContinueExperiment = true;
 }
 
-void UMainExperimentInstance::ResetLevel() {
-	UWorld* World = GetWorld();
-	if (World) {
-		FName CurrentLevelName = FName(*World->GetName());
-		UGameplayStatics::OpenLevel(World, CurrentLevelName, false);
-	}
+void UMainExperimentInstance::HandleExperimentFailed(FExperimentResult NewExperiment) {
+	FTaskResult LastResult = NewExperiment.TaskResults.Last();
+	CurrentExperiment.ResultFinal.ResultEnum = EnumResultFinal::CausalAnalysisCallFailed;
+	CurrentExperiment.ResultFinal.Description = EFailureReasonEnumHelper::GetDisplayName(LastResult.FailureReasonEnum);
+	AfterHandleExperimentResult();
 }
 
-void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStruct) {
+void UMainExperimentInstance::HandleExperimentSucess(FExperimentResult NewExperiment) {
+	FValidationStruct ValidationStruct = CurrentController->GetValidationStruct();
 	IsLoading = true;
 	FString RequestBody;
 
@@ -122,7 +126,7 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 		return;
 	}
 
-	// 🔍 Loga o JSON antes de enviar
+	// Loga o JSON antes de enviar
 	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
 
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
@@ -150,11 +154,11 @@ void UMainExperimentInstance::ValidateExperiment(FValidationStruct ValidationStr
 					this->HandleValidation(Mensagem, true);
 				}
 				else {
-					UE_LOG(LogTemp, Error, TEXT("Falha ao parsear o JSON: %s"), *ResponseContent);
+					UE_LOG(LogTemp, Error, TEXT("Failed to parser JSON: %s"), *ResponseContent);
 					this->HandleValidation(TEXT("Resposta inválida do servidor."), false);
 				}
 			} else {
-				UE_LOG(LogTemp, Error, TEXT("Erro na requisição HTTP"));
+				UE_LOG(LogTemp, Error, TEXT("Failed to validate because of HTTP request"));
 				FString ResponseContent = "Unknow error.";
 				if (Response.IsValid()) {
 					ResponseContent = Response->GetResponseCode() + TEXT(" - ") + Response->GetContentAsString();
@@ -175,18 +179,8 @@ void UMainExperimentInstance::HandleValidation(const FString& ResponseContent, b
 	}
 
 	CurrentExperiment.ResultFinal.Description = ResponseContent;
-	
-	Experiments.Add(CurrentExperiment);
 
-	// verifica se terminou completamente
-	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
-		MustContinueExperiment = false;
-		FinishAllExperiment();
-		return;
-	}
-
-	IsLoading = false;
-	ResetLevel();
+	AfterHandleExperimentResult();
 }
 
 void UMainExperimentInstance::FinishAllExperiment() {
@@ -199,6 +193,14 @@ void UMainExperimentInstance::FinishAllExperiment() {
 
 float UMainExperimentInstance::GetTimer() {
 	return CurrentExperiment.WallClockInSeconds;
+}
+
+void UMainExperimentInstance::ResetLevel() {
+	UWorld* World = GetWorld();
+	if (World) {
+		FName CurrentLevelName = FName(*World->GetName());
+		UGameplayStatics::OpenLevel(World, CurrentLevelName, false);
+	}
 }
 
 FExperimentResult UMainExperimentInstance::GetExperimentById(int32 Id) const {
