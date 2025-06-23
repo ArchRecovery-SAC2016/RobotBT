@@ -127,6 +127,8 @@ void UMainExperimentInstance::HandleExperimentSucess(FExperimentResult NewExperi
 		return;
 	}
 
+	CurrentExperiment.ValidationStruct = ValidationStruct;
+
 	// Loga o JSON antes de enviar
 	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);
 

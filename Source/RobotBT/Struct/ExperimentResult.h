@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "RobotProperties.h"
+#include "ValidationStruct.h"
 #include "RobotBT/Enum/FailureReasonEnum.h"
 #include "ExperimentResult.generated.h"
 
@@ -125,4 +126,9 @@ struct FExperimentResult {
 	// the final result. Contains information about the experiment, like success or failure
 	UPROPERTY(BlueprintReadOnly)
 	FResultFinal ResultFinal = FResultFinal();
+
+
+	// Whitch data was sent by the validation
+	UPROPERTY(BlueprintReadOnly, Category = "Experiment")
+	FValidationStruct ValidationStruct;
 };
