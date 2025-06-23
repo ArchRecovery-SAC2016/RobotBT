@@ -127,7 +127,6 @@ struct FExperimentResult {
 	UPROPERTY(BlueprintReadOnly)
 	FResultFinal ResultFinal = FResultFinal();
 
-
 	// Whitch data was sent by the validation
 	UPROPERTY(BlueprintReadOnly, Category = "Experiment")
 	FValidationStruct ValidationStruct;

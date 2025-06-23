@@ -27,29 +27,29 @@
             },
             "arguments_values": {
                 "?r": "",
-                "?rm": "RoomA"
+                "?rm": "RoomB"
             },
-            "locations": "RoomA",
+            "locations": "RoomB",
             "robots_num": {
                 "fixed": "True",
                 "num": "1"
             },
             "preconditions": [
                 {
-                    "predicate": "RoomA.door_open",
-                    "vars": "RoomA",
+                    "predicate": "RoomB.door_open",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
-                    "predicate": "not RoomA.is_clean",
-                    "vars": "RoomA",
+                    "predicate": "not RoomB.is_clean",
+                    "vars": "RoomB",
                     "var_types": "room"
                 }
             ],
             "effects": [
                 {
-                    "predicate": "RoomA.is_clean",
-                    "vars": "RoomA",
+                    "predicate": "RoomB.is_clean",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
@@ -80,39 +80,39 @@
             },
             "arguments_values": {
                 "?r": "",
-                "?rm": "RoomA"
+                "?rm": "RoomB"
             },
-            "locations": "RoomA",
+            "locations": "RoomB",
             "robots_num": {
                 "fixed": "True",
                 "num": "1"
             },
             "preconditions": [
                 {
-                    "predicate": "not RoomA.door_open",
-                    "vars": "RoomA",
+                    "predicate": "not RoomB.door_open",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
-                    "predicate": "not RoomA.door_open",
-                    "vars": "RoomA",
+                    "predicate": "not RoomB.door_open",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
-                    "predicate": "not RoomA.is_clean",
-                    "vars": "RoomA",
+                    "predicate": "not RoomB.is_clean",
+                    "vars": "RoomB",
                     "var_types": "room"
                 }
             ],
             "effects": [
                 {
-                    "predicate": "RoomA.door_open",
-                    "vars": "RoomA",
+                    "predicate": "RoomB.door_open",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
-                    "predicate": "RoomA.is_clean",
-                    "vars": "RoomA",
+                    "predicate": "RoomB.is_clean",
+                    "vars": "RoomB",
                     "var_types": "room"
                 },
                 {
@@ -190,9 +190,9 @@
             },
             "arguments_values": {
                 "?rt": "",
-                "?rm": "RoomA"
+                "?rm": "RoomB"
             },
-            "locations": "RoomA",
+            "locations": "RoomB",
             "robots_num": {
                 "fixed": "False",
                 "min": "2",
@@ -201,8 +201,8 @@
             "preconditions": "",
             "effects": [
                 {
-                    "predicate": "RoomA.is_prepared",
-                    "vars": "RoomA",
+                    "predicate": "RoomB.is_prepared",
+                    "vars": "RoomB",
                     "var_types": "room"
                 }
             ],
