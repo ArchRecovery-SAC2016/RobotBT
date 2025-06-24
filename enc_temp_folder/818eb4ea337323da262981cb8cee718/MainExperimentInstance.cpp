@@ -89,8 +89,6 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 		GetWorld()->GetTimerManager().ClearTimer(TimerHandle_CountSeconds);
 	}
 
-	CurrentExperiment.ValidationStruct = CurrentController->GetValidationStruct();;
-
 	if (LastResult.SuccessResult) {
 		HandleExperimentSucess(NewExperiment);
 	} else {
@@ -120,7 +118,7 @@ void UMainExperimentInstance::HandleExperimentFailed(FExperimentResult NewExperi
 }
 
 void UMainExperimentInstance::HandleExperimentSucess(FExperimentResult NewExperiment) {
-	FValidationStruct ValidationStruct = NewExperiment.ValidationStruct;
+	FValidationStruct ValidationStruct = CurrentController->GetValidationStruct();
 	IsLoading = true;
 	FString RequestBody;
 
@@ -128,6 +126,8 @@ void UMainExperimentInstance::HandleExperimentSucess(FExperimentResult NewExperi
 		UE_LOG(LogTemp, Error, TEXT("Erro ao converter ValidationStruct para JSON"));
 		return;
 	}
+
+	CurrentExperiment.ValidationStruct = ValidationStruct;
 
 	// Loga o JSON antes de enviar
 	UE_LOG(LogTemp, Warning, TEXT("RequestBody JSON:\n%s"), *RequestBody);

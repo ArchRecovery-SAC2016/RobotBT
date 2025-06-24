@@ -1,0 +1,907 @@
+{
+	"result": [
+		{
+			"experimentId": 1,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 315.11624145507812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t8\": {\n            \"id\": \"AT1_3|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t9\": {\n            \"id\": \"AT1_3|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t10\": {\n            \"id\": \"AT2_3|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t11\": {\n            \"id\": \"AT3_3|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_prepared\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t5\",\n            \"t6\",\n            \"t7\",\n            \"t9\",\n            \"t10\",\n            \"t11\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "ValidationResult",
+				"description": "All rules were satisfied"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					},
+					"RoomC":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB",
+							"RoomC"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 2,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 389.78909301757812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t8\": {\n            \"id\": \"AT1_3|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t9\": {\n            \"id\": \"AT1_3|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t10\": {\n            \"id\": \"AT2_3|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t11\": {\n            \"id\": \"AT3_3|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_prepared\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t5\",\n            \"t6\",\n            \"t7\",\n            \"t8\",\n            \"t10\",\n            \"t11\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 3,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.76614379882812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t5\",\n            \"t6\",\n            \"t7\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": false
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 4,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.76614379882812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t5\",\n            \"t6\",\n            \"t7\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": false
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 5,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.72610473632812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t8\": {\n            \"id\": \"AT1_3|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t9\": {\n            \"id\": \"AT1_3|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t10\": {\n            \"id\": \"AT2_3|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t11\": {\n            \"id\": \"AT3_3|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_prepared\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t11\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t8\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t9\",\n                \"t1\": \"t10\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t4\",\n            \"t6\",\n            \"t7\",\n            \"t9\",\n            \"t10\",\n            \"t11\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 6,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.77615356445312,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_prepared\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t4\",\n            \"t6\",\n            \"t7\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 7,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.76614379882812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.door_open\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomA.is_clean\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomA\"\n            },\n            \"locations\": \"RoomA\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomA.is_prepared\",\n                    \"vars\": \"RoomA\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t4\": {\n            \"id\": \"AT1_2|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t5\": {\n            \"id\": \"AT1_2|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t6\": {\n            \"id\": \"AT2_2|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t7\": {\n            \"id\": \"AT3_2|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t7\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t4\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t5\",\n                \"t1\": \"t6\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\",\n            \"t4\",\n            \"t6\",\n            \"t7\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 8,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.76614379882812,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.door_open\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomB.is_clean\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomB\"\n            },\n            \"locations\": \"RoomB\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomB.is_prepared\",\n                    \"vars\": \"RoomB\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t0\",\n            \"t2\",\n            \"t3\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 9,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 386.75613403320312,
+			"taskResults": [],
+			"robots": [],
+			"outputTasksJsonString": "{\n    \"actions\": [\n        {\n            \"name\": \"clean-room\",\n            \"capabilities\": \"cleaning\"\n        },\n        {\n            \"name\": \"move-furniture\",\n            \"capabilities\": \"moveobject\"\n        },\n        {\n            \"name\": \"open-door\",\n            \"capabilities\": \"door-opening\"\n        },\n        {\n            \"name\": \"sanitize-robot\",\n            \"capabilities\": \"sanitize\"\n        }\n    ],\n    \"tasks\": {\n        \"t0\": {\n            \"id\": \"AT1_1|1\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t1\": {\n            \"id\": \"AT1_1|2\",\n            \"name\": \"RoomCleaning\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.door_open\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"RoomC.is_clean\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                },\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"open-door\",\n                    \"arguments\": \"?r ?rm\"\n                },\n                \"a1\": {\n                    \"name\": \"clean-room\",\n                    \"arguments\": \"?r ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t2\": {\n            \"id\": \"AT2_1|1\",\n            \"name\": \"RobotSanitization\",\n            \"arguments\": {\n                \"?r\": \"CleanerRobot\",\n                \"?srm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?r\": \"\",\n                \"?srm\": \"SanitizationRoom\"\n            },\n            \"locations\": \"SanitizationRoom\",\n            \"robots_num\": {\n                \"fixed\": \"True\",\n                \"num\": \"1\"\n            },\n            \"preconditions\": [\n                {\n                    \"predicate\": \"not ?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"effects\": [\n                {\n                    \"predicate\": \"?r.is_sanitized\",\n                    \"vars\": \"?r\",\n                    \"var_types\": \"robot\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\",\n                \"E1\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"sanitize-robot\",\n                    \"arguments\": \"?r ?srm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        },\n        \"t3\": {\n            \"id\": \"AT3_1|1\",\n            \"name\": \"FurnitureMoving\",\n            \"arguments\": {\n                \"?rt\": \"robotteam\",\n                \"?rm\": \"room\"\n            },\n            \"arguments_values\": {\n                \"?rt\": \"\",\n                \"?rm\": \"RoomC\"\n            },\n            \"locations\": \"RoomC\",\n            \"robots_num\": {\n                \"fixed\": \"False\",\n                \"min\": \"2\",\n                \"max\": \"4\"\n            },\n            \"preconditions\": \"\",\n            \"effects\": [\n                {\n                    \"predicate\": \"RoomC.is_prepared\",\n                    \"vars\": \"RoomC\",\n                    \"var_types\": \"room\"\n                }\n            ],\n            \"triggering_events\": [\n                \"E2\"\n            ],\n            \"decomposition\": {\n                \"a0\": {\n                    \"name\": \"move-furniture\",\n                    \"arguments\": \"?rt ?rm\"\n                }\n            },\n            \"group\": \"True\",\n            \"divisible\": \"True\"\n        }\n    },\n    \"constraints\": [\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t3\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"SEQ\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            }\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t0\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        },\n        {\n            \"type\": \"EC\",\n            \"task_instances\": {\n                \"t0\": \"t1\",\n                \"t1\": \"t2\"\n            },\n            \"group\": \"False\",\n            \"divisible\": \"True\"\n        }\n    ],\n    \"mission_decompositions\": [\n        [\n            \"t1\",\n            \"t2\",\n            \"t3\"\n        ]\n    ]\n}\n",
+			"worldJsonString": "{\r\n    \"world_db\": {\r\n        \"rooms\": [\r\n            {\r\n                \"name\": \"RoomA\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomB\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"RoomC\",\r\n                \"is_clean\": \"false\",\r\n                \"is_prepared\": \"false\",\r\n                \"door_open\": \"false\"\r\n            },\r\n            {\r\n                \"name\": \"SanitizationRoom\",\r\n                \"is_clean\": \"true\",\r\n                \"is_prepared\": \"true\",\r\n                \"door_open\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+			"resultFinal":
+			{
+				"resultEnum": "CausalAnalysisCallFailed",
+				"description": "Timeout"
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": false,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": false,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": false
+				},
+				"cleaning_assignments":
+				{
+					"RoomC":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomC"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		}
+	]
+}

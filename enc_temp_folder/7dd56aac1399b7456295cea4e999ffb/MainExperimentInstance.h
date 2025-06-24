@@ -30,6 +30,7 @@ public:
 	// Current Experiment finished. Called by the Experiment
 	UFUNCTION()
 	void ExperimentFinished(FExperimentResult NewExperiment);
+
 	
 	// Reset the level. Used when 
 	UFUNCTION()
