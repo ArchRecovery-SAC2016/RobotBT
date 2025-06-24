@@ -90,6 +90,7 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 	}
 
 	CurrentExperiment.ValidationStruct = CurrentController->GetValidationStruct();;
+	CurrentExperiment.TaskResults = NewExperiment.TaskResults;
 
 	if (LastResult.SuccessResult) {
 		HandleExperimentSucess(NewExperiment);

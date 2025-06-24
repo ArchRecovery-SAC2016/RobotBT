@@ -1,0 +1,1242 @@
+{
+	"result": [
+		{
+			"experimentId": 1,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 360.49050903320312,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 15.792975425720215,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.875598907470703,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.164840698242188,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 37.57574462890625,
+					"batterySpentOnTask": -0.021999716758728027
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 53.626083374023438,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.435276031494141,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.048015594482422,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.761631011962891,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 55.526813507080078,
+					"batterySpentOnTask": -0.025999665260314941
+				}
+			],
+			"robots": [],
+			"resultFinal":
+			{
+				"resultEnum": "ValidationCallFailed",
+				"description": "Unknow error."
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 2,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 355.56570434570312,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 15.792975425720215,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.875598907470703,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.164840698242188,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 37.57574462890625,
+					"batterySpentOnTask": -0.021999716758728027
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 53.626083374023438,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.435276031494141,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.048015594482422,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.761631011962891,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 55.526813507080078,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.67568302154541,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 52.833080291748047,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 45.899505615234375,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 47.359344482421875,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.019031524658203,
+					"batterySpentOnTask": -0.03399956226348877
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 75.036933898925781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 58.143924713134766,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.619640350341797,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.307388305664062,
+					"batterySpentOnTask": -0.025999665260314941
+				}
+			],
+			"robots": [],
+			"resultFinal":
+			{
+				"resultEnum": "ValidationCallFailed",
+				"description": "Unknow error."
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 3,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 371.28103637695312,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 15.792975425720215,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.875598907470703,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.164840698242188,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 37.57574462890625,
+					"batterySpentOnTask": -0.021999716758728027
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 53.626083374023438,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.435276031494141,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.048015594482422,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.761631011962891,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 55.526813507080078,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.67568302154541,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 52.833080291748047,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 45.899505615234375,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 47.359344482421875,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.019031524658203,
+					"batterySpentOnTask": -0.03399956226348877
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 75.036933898925781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 58.143924713134766,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.619640350341797,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.307388305664062,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.126823425292969,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.777412414550781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 57.825405120849609,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 49.367465972900391,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.789447784423828,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 74.749336242675781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 57.476333618164062,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.010017395019531,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 60.309257507324219,
+					"batterySpentOnTask": -0.025999665260314941
+				}
+			],
+			"robots": [],
+			"resultFinal":
+			{
+				"resultEnum": "ValidationCallFailed",
+				"description": "Unknow error."
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner",
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner",
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		},
+		{
+			"experimentId": 4,
+			"maxWallClockInSeconds": 400,
+			"approach": "Baseline",
+			"generateRandomProperties": false,
+			"saveResults": true,
+			"wallClockInSeconds": 368.03787231445312,
+			"taskResults": [
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 15.792975425720215,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.875598907470703,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.164840698242188,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 37.57574462890625,
+					"batterySpentOnTask": -0.021999716758728027
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 53.626083374023438,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.435276031494141,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 62.048015594482422,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.761631011962891,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 55.526813507080078,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.67568302154541,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 52.833080291748047,
+					"batterySpentOnTask": -0.0034005641937255859
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 45.899505615234375,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 47.359344482421875,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.019031524658203,
+					"batterySpentOnTask": -0.03399956226348877
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 75.036933898925781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 58.143924713134766,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 54.619640350341797,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.307388305664062,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 13.126823425292969,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.777412414550781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 57.825405120849609,
+					"batterySpentOnTask": -0.0030004978179931641
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 49.367465972900391,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.789447784423828,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 74.749336242675781,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 57.476333618164062,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.010017395019531,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 60.309257507324219,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "OPEN_DOOR",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 18.998500823974609,
+					"batterySpentOnTask": -0.00030004978179931641
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 59.542774200439453,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 49.478885650634766,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 45.213832855224609,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomA",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 50.012935638427734,
+					"batterySpentOnTask": -0.029999613761901855
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "CLEAN_ROOM",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 75.106216430664062,
+					"batterySpentOnTask": -0.0038006305694580078
+				},
+				{
+					"robotName": "Cleaner",
+					"taskName": "SANITIZE_ROBOT",
+					"location": "SanitizationRoom",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 57.930164337158203,
+					"batterySpentOnTask": -0.0026004314422607422
+				},
+				{
+					"robotName": "Organizer2",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 60.5772705078125,
+					"batterySpentOnTask": -0.025999665260314941
+				},
+				{
+					"robotName": "Organizer1",
+					"taskName": "MOVE_FURNITURE",
+					"location": "RoomB",
+					"successResult": true,
+					"failureReasonEnum": "None",
+					"timeSpentOnTask": 60.5772705078125,
+					"batterySpentOnTask": -0.029999613761901855
+				}
+			],
+			"robots": [],
+			"resultFinal":
+			{
+				"resultEnum": "ValidationCallFailed",
+				"description": "Unknow error."
+			},
+			"validationStruct":
+			{
+				"experimentId": 0,
+				"rooms": [
+					"RoomA",
+					"RoomB",
+					"RoomC",
+					"SanitizationRoom"
+				],
+				"robots": [
+					"Cleaner"
+				],
+				"robots_organizer": [
+					"Organizer2",
+					"Organizer1"
+				],
+				"room_clean_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_clean_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": false,
+					"RoomB": true
+				},
+				"room_organize_initial_state":
+				{
+					"RoomA": false,
+					"RoomB": false,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"room_organize_final_state":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"door_open_inicial":
+				{
+					"RoomA": false,
+					"RoomB": true,
+					"RoomC": true,
+					"SanitizationRoom": true
+				},
+				"door_open_final":
+				{
+					"RoomC": true,
+					"SanitizationRoom": true,
+					"RoomA": true,
+					"RoomB": true
+				},
+				"cleaning_assignments":
+				{
+					"RoomA":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner",
+							"Cleaner",
+							"Cleaner"
+						]
+					},
+					"RoomB":
+					{
+						"assigned": [
+							"Cleaner",
+							"Cleaner",
+							"Cleaner",
+							"Cleaner"
+						]
+					}
+				},
+				"sanitization_tasks":
+				{
+					"Cleaner":
+					{
+						"assigned": [
+							"RoomA",
+							"RoomB"
+						]
+					}
+				},
+				"min_organizers": 2,
+				"max_organizers": 4,
+				"min_cleaners": 0,
+				"max_cleaners": 0
+			}
+		}
+	]
+}
