@@ -88,8 +88,8 @@ void ARoomPreparationBaseController::ExecuteExperiment(FExperimentResult& NewExp
 		GetWorld()->GetWorldSettings()->SetTimeDilation(CurrentExperiment.ExperimentSpeed);
 	}
 
-	// TODO: REMOVE THE ROBOTS PROPERTIES FROM HERE AND GET FROM FILES 
-	CurrentExperiment.Robots = RobotsProperties;
+	// TODO: LOAD ROBOTS PROPERTIES FROM FILE  HERE AND GET FROM FILES 
+	//	CurrentExperiment.Robots = RobotsProperties;
 	CurrentTaskIndex = -1;
 
 	FString Message = FString::Printf(TEXT("Executing RoomPreparationBaseController With Id: %d"), CurrentExperiment.ExperimentId);

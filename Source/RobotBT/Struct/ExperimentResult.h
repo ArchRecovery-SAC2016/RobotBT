@@ -109,9 +109,6 @@ struct FExperimentResult {
 	TArray<FTaskResult> TaskResults;
 
 	UPROPERTY()
-	TArray<FRobotProperties> Robots;
-
-	UPROPERTY()
 	TArray<FRobotProperties> RobotsInitialProperties;
 
 	UPROPERTY()
