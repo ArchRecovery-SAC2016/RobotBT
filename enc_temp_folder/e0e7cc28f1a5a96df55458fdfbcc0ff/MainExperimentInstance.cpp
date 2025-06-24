@@ -63,12 +63,15 @@ void UMainExperimentInstance::NextExperiment() {
 		CurrentWorldIndex = 0;
 	}
 	
-	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
+	if (CurrentExperiment.ExperimentId > CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
 	}
 
 	CurrentExperiment.OutputTasksJsonString  = OutputsSelected[CurrentOutputIndex];
 	CurrentExperiment.WorldJsonString = WorldsSelected[CurrentWorldIndex];
+
+	CurrentExperiment.RobotsInitialProperties.Empty();
+	
 
 	ExecuteExperiment(CurrentExperiment);
 }
@@ -79,7 +82,11 @@ void UMainExperimentInstance::ExecuteExperiment(FExperimentResult& NewExperiment
 		CurrentController->FOnPreparationFinish.AddDynamic(this, &UMainExperimentInstance::ExperimentFinished);
 	}
 
+	// get all inicial properties
 	CurrentController->ExecuteExperiment(NewExperiment);
+	for (auto Robot : GetController()->GetAllRobots()) {
+		CurrentExperiment.RobotsInitialProperties.Add(Robot->RobotProperties);
+	}
 }
 
 void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment) {
@@ -101,6 +108,11 @@ void UMainExperimentInstance::ExperimentFinished(FExperimentResult NewExperiment
 
 void UMainExperimentInstance::AfterHandleExperimentResult() {
 	Experiments.Add(CurrentExperiment);
+
+	// preenche o final do experimento
+	for (auto Robot : GetController()->GetAllRobots()) {
+		CurrentExperiment.RobotsFinalProperties.Add(Robot->RobotProperties);
+	}
 
 	// verifica se terminou completamente
 	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {

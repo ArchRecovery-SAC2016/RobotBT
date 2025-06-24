@@ -111,6 +111,12 @@ struct FExperimentResult {
 	UPROPERTY()
 	TArray<FRobotProperties> Robots;
 
+	UPROPERTY()
+	TArray<FRobotProperties> RobotsInitialProperties;
+
+	UPROPERTY()
+	TArray<FRobotProperties> RobotsFinalProperties;
+
 	// output json file path, provided by MutRose
 	UPROPERTY(Transient)
 	FString OutputTasksJsonString = "";
