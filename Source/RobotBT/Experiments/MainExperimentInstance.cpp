@@ -63,7 +63,7 @@ void UMainExperimentInstance::NextExperiment() {
 		CurrentWorldIndex = 0;
 	}
 	
-	if (CurrentExperiment.ExperimentId >= CurrentExperiment.RepeatExperimentFor) {
+	if (CurrentExperiment.ExperimentId > CurrentExperiment.RepeatExperimentFor) {
 		FinishAllExperiment();
 	}
 

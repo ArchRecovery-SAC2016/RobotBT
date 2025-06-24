@@ -52,7 +52,6 @@ void UExperimentSetupWidget::NativeConstruct() {
 			SaveResults->SetCheckedState(ECheckBoxState::Unchecked);
 		}
 
-
 		// will update the FinalResult description with the last experiment result
 		GetLastExperimentResult();
 	} else {
