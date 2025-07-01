@@ -76,6 +76,10 @@ private:
 	/* Get a ramndom clenaer */
 	ARobotCleaner* GetRandomCleanerRobot(ESkillEnum SkillRequired);
 
+	ARobotOrganizer* GetOrganizerRobot();
+
+	ARobotCleaner* GetRandomOrganizerRobot(ESkillEnum SkillRequired);
+
 	/* Get the best cleaner */
 	ARobotCleaner* GetBestCleanerRobot(ESkillEnum SkillRequired);
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "RoomPreparation.h"
@@ -32,5 +32,11 @@ public:
 
 	virtual bool TaskExecution() override;
 
+	virtual void TaskFinished() override;
+
+	TArray<FVector> FurnitureToMoveLocation;
+
+private:
+	bool AllMoveFinished = true;
 };
 

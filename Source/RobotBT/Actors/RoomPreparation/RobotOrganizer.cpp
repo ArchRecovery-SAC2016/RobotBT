@@ -1,4 +1,4 @@
-#include "RobotOrganizer.h"
+﻿#include "RobotOrganizer.h"
 #include "RobotBT/Util/UtilMethods.h"
 
 ARobotOrganizer::ARobotOrganizer() {
@@ -20,8 +20,13 @@ bool ARobotOrganizer::TaskExecution() {
 	if (TaskAllocated == ESkillEnum::MOVE_FURNITURE) {
 		return MoveAlongPath();
 	}
-
 	return false;
+}
+
+void ARobotOrganizer::TaskFinished() {
+	Super::TaskFinished();
+
+	FurnitureToMoveLocation.Empty(); // clear the furniture to move location, so we can start a new task
 }
 
 // here we need to get a different path from the cleaner

@@ -244,6 +244,13 @@ ARobotCleaner* ARoomPreparationBaseController::GetRandomCleanerRobot(ESkillEnum 
 }
 
 
+
+ARobotOrganizer* ARoomPreparationBaseController::GetOrganizerRobot() {
+	// TODO: Implementar lógica para escolher o melhor robô organizador
+	int32 Index = UKismetMathLibrary::RandomInteger(OrganizersTeam.Num());
+	return OrganizersTeam[Index];
+}
+
 ARobotCleaner* ARoomPreparationBaseController::GetBestCleanerRobot(ESkillEnum SkillRequired) {
 	ARobotCleaner* BestRobot = nullptr;
 	float HighestBattery = -1.0f;
@@ -475,11 +482,23 @@ bool ARoomPreparationBaseController::EvaluatePreCondition(const FPredicate& Pred
 
 
 void ARoomPreparationBaseController::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
-	NumberOfTask = 2;
+	// aki eu tenho que ver quantos 
+
+	NumberOfTask = 0;
+	for (auto Furniture: Room->Furnitures) {
+		if (!Furniture->InPlace) {
+			GetOrganizerRobot()->FurnitureToMoveLocation.Add(Furniture->GetActorLocation());
+			NumberOfTask++;
+		}
+	}
+
+	// manda todos. Se nao tiver nenhum movel alocado, entao nao faz nada
 	for (ARobotOrganizer* Organizer : OrganizersTeam) {
 		Organizer->StartNewTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }
+
+
 
 FValidationStruct ARoomPreparationBaseController::GetValidationStruct() {
 	FValidationStruct Result;
