@@ -105,6 +105,10 @@ public:
 
 	void StopCapture();
 
+
+	UPROPERTY(BlueprintReadOnly)
+	ESkillEnum TaskAllocated = ESkillEnum::NONE;
+
 protected:
 	// Callend when need to room entrance. Used by BTTAsk_MoveToRoomLocation. Return true when finished
 	UFUNCTION(BlueprintCallable)
@@ -130,8 +134,6 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	virtual bool TaskExecution();
 
-	UPROPERTY(BlueprintReadOnly)
-	ESkillEnum TaskAllocated = ESkillEnum::NONE;
 
 	UFUNCTION(BlueprintCallable)
 	void GoIdle();

@@ -51,7 +51,7 @@ public:
 
 	// saves the robot cleaner
 	UPROPERTY()
-	ARobotCleaner* CleanerRobot;
+	TArray <ARobotCleaner*> CleanersRobot;
 
 	UFUNCTION()
 	TArray<ARoomPreparation*>GetRooms() { return Rooms; }
@@ -64,7 +64,6 @@ public:
 
 	TArray<ARobot*> GetAllRobots();
 
-
 private:
 	/* Saves all doors in the map	*/
 	UPROPERTY()
@@ -73,6 +72,16 @@ private:
 	/* Monitors the current room */
 	UPROPERTY()
 	ARoomPreparation* CurrentRoom;
+
+	/* Get a ramndom clenaer */
+	ARobotCleaner* GetRandomCleanerRobot(ESkillEnum SkillRequired);
+
+	/* Get the best cleaner */
+	ARobotCleaner* GetBestCleanerRobot(ESkillEnum SkillRequired);
+
+	// the cleaner that was selected
+	UPROPERTY()
+	ARobotCleaner* CleanerRobotInst;
 
 protected:
 	// The world knowledge loaded from file
@@ -139,13 +148,13 @@ protected:
 
 	ARoomPreparation* GetRoomByName(FString DoorName);
 
-	void ExecuteClean(FString RobotName, ARoomPreparation* RoomLocation);
+	void ExecuteClean(ARobotCleaner* CleanerRobot, ARoomPreparation* RoomLocation);
 
 	void ExecuteMoveFurniture(FString RobotName, ARoomPreparation* RoomLocation);
 
-	void ExecuteOpenDoor(FString RobotName, ARoomPreparation* RoomLocation);
+	void ExecuteOpenDoor(ARobotCleaner* CleanerRobot, ARoomPreparation* RoomLocation);
 
-	void ExecuteSanitizeRobot(FString RobotName, ARoomPreparation* RoomLocation);
+	void ExecuteSanitizeRobot(ARobotCleaner* CleanerRobot, ARoomPreparation* RoomLocation);
 
 	bool EvaluatePreCondition(const FPredicate& Predicate);
 };

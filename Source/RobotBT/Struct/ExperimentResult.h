@@ -13,6 +13,8 @@ struct FTaskResult {
 	UPROPERTY()
 	FString RobotName = "";
 
+	class ARobot* RobotInstance = nullptr;
+
 	UPROPERTY()
 	ESkillEnum TaskName;
 
@@ -44,6 +46,13 @@ enum class EnumResultFinal : uint8 {
 	CausalAnalysisResult			UMETA(DisplayName = "Causal Analysis Result"),  // Chamou o causal analysis e deu esse resultado
 	CausalAnalysisCallFailed       UMETA(DisplayName = "Causal Analysis Call Failed") // Tentou chamar mas deu erro
 };
+
+UENUM(BlueprintType)
+enum class EControllerApproach : uint8 {
+	Baseline			UMETA(DisplayName = "Baseline"),
+	Smart				UMETA(DisplayName = "Smart") 
+};
+
 
 USTRUCT(BlueprintType)
 struct FResultFinal {
@@ -92,6 +101,8 @@ struct FExperimentResult {
 	// the approach, ca ben: Baseline, ..
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MyExperiment")
 	FString Approach = "Baseline";
+
+	EControllerApproach ControllerApproach = EControllerApproach::Baseline;
 
 	// will repeat the experiment using this number
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MyExperiment")

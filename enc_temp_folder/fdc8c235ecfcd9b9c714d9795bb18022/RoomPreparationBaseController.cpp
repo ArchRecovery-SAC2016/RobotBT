@@ -228,7 +228,7 @@ ARobotCleaner* ARoomPreparationBaseController::GetRandomCleanerRobot(ESkillEnum 
 
 	// Filtra os robôs disponíveis
 	for (ARobotCleaner* CleanerRobot : CleanersRobot) {
-		if (CleanerRobot && CleanerRobot->TaskAllocated == ESkillEnum::NONE) {
+		if (CleanerRobot && CleanerRobot->TaskAllocated != ESkillEnum::NONE) {
 			AvailableCleaners.Add(CleanerRobot);
 		}
 	}
@@ -249,7 +249,7 @@ ARobotCleaner* ARoomPreparationBaseController::GetBestCleanerRobot(ESkillEnum Sk
 	float HighestBattery = -1.0f;
 
 	for (ARobotCleaner* CleanerRobot : CleanersRobot) {
-		if (!CleanerRobot || CleanerRobot->TaskAllocated == ESkillEnum::NONE) { // if already doing a task, skip it
+		if (!CleanerRobot || CleanerRobot->TaskAllocated != ESkillEnum::NONE) { // if already doing a task, skip it
 			continue;
 		}
 
