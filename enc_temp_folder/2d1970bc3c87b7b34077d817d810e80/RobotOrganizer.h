@@ -38,7 +38,7 @@ public:
 	bool PlayMoveFurnitureAnimation();
 
 	UFUNCTION(BlueprintCallable)
-	bool CheckAllFurnitureMoved();
+	bool GetNextFurnitureToMove();
 
 	virtual bool TaskExecution() override;
 
