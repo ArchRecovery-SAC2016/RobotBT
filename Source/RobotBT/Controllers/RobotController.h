@@ -35,6 +35,8 @@ public:
 	UPROPERTY()
 	ARobot* ControlledPawn;
 
+
+
 private:
 	bool ActionFinished = false;
 
@@ -48,6 +50,8 @@ private:
 	float CurrentDistanceAlongSpline = 0.0f; // Armazena a distância atual ao longo da spline
 
 	bool bIsMovingToSplinePoint = false;
+
+	virtual void OnPossess(APawn* InPawn) override;
 };
 
 

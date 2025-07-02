@@ -72,16 +72,16 @@ bool ARobotOrganizer::PlayMoveFurnitureAnimation() {
 	return false;
 }
 
-bool ARobotOrganizer::GetNextFurnitureToMove() {
+bool ARobotOrganizer::CheckAllFurnitureMoved() {
 	FurnitureToMoveLocationIndex++;
 
 	if (!FurnitureToMoveLocation.IsValidIndex(FurnitureToMoveLocationIndex)) {
-		TaskFinished();
-		return false;
+		// nao tem mais nenhum movel pra mover, entao 
+		return true;
 	}
 
-	return true;
-
+	// ao retornar true, vai voltar pro primeiro item da sequencia
+	return false;
 }
 
 // here we need to get a different path from the cleaner

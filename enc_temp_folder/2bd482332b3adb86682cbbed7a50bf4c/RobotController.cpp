@@ -35,6 +35,8 @@ void ARobotController::OnPossess(APawn* InPawn) {
     }
 }
 
+
+
 bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 	if (ControlledPawn == nullptr) return false;
 
@@ -55,7 +57,7 @@ bool ARobotController::MoveToNewLocation(FVector NewLocation) {
     // Configurar um resultado para o movimento
     FAIMoveRequest MoveRequest;
     MoveRequest.SetGoalLocation(NewLocation);
-    MoveRequest.SetAcceptanceRadius(10.0f); // Tolerância para considerar que chegou
+    MoveRequest.SetAcceptanceRadius(5.0f); // Tolerância para considerar que chegou
 
     FNavPathSharedPtr NavPath;
     EPathFollowingRequestResult::Type MoveResult = MoveTo(MoveRequest, &NavPath);

@@ -41,7 +41,6 @@ bool ARobotOrganizer::MoveToFurniture() {
 
 	bool IsAtLocation = GetRobotController()->MoveToNewLocation(CurrentFurnitureLocation);
 	if (!IsAtLocation) {
-		FurnitureToMoveLocationIndex++;
 		IsMoving = false;
 	}
 

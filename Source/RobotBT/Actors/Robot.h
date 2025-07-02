@@ -48,6 +48,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	FRobotProperties RobotProperties;
 
+	// the behaviour tree that will command this robot
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	class UBehaviorTree* BehaviorTreeAsset;
+
 	UPROPERTY(EditAnywhere, Category = "Robot")
 	bool ShowWidget = true;
 

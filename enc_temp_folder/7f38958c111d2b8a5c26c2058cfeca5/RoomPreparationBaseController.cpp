@@ -487,15 +487,13 @@ void ARoomPreparationBaseController::ExecuteMoveFurniture(FString RobotName, ARo
 	NumberOfTask = 0;
 	for (auto Furniture: Room->Furnitures) {
 		if (!Furniture->InPlace) {
-			GetOrganizerRobot()->FurnitureToMoveLocation.Add(Furniture->BaseLocation->GetComponentLocation());
+			GetOrganizerRobot()->FurnitureToMoveLocation.Add(Furniture->GetActorLocation());
 			NumberOfTask++;
 		}
 	}
 
 	// manda todos. Se nao tiver nenhum movel alocado, entao nao faz nada
 	for (ARobotOrganizer* Organizer : OrganizersTeam) {
-		if (Organizer->FurnitureToMoveLocation.Num() == 0 ) continue; // if nothing is allocatted, just continue
-
 		Organizer->StartNewTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }
