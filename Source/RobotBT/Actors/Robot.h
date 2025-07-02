@@ -118,6 +118,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	bool MoveToRoomEntrance();
 
+	UFUNCTION(BlueprintCallable)
+	bool MoveBackToRoomEntrance();
+
 	// Called when need to move along a path. 
 	UFUNCTION(BlueprintCallable)
 	virtual bool MoveAlongPath();
@@ -144,14 +147,18 @@ protected:
 
 	bool GetIsMoving() { return  IsMoving; }
 
+	// indicate if the robot finished the action of move to a specific door
+	UPROPERTY()
+	bool IsAtRoomLocation = false;
+
+	// indicate if the robot finished the action of move to a specific door
+	UPROPERTY()
+	bool IsBackAtRoomLocation = false;
+
 private:
 	// indicate if the robot move all path
 	UPROPERTY()
 	bool IsFinishedMovingAlongPath = false;
-
-	// indicate if the robot finished the action of move to a specific door
-	UPROPERTY()
-	bool IsAtRoomLocation = false;
 
 	// saves a instance of the current spline path
 	UPROPERTY()

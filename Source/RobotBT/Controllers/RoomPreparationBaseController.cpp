@@ -483,23 +483,21 @@ bool ARoomPreparationBaseController::EvaluatePreCondition(const FPredicate& Pred
 
 void ARoomPreparationBaseController::ExecuteMoveFurniture(FString RobotName, ARoomPreparation* Room) {
 	// aki eu tenho que ver quantos 
-
-	NumberOfTask = 0;
 	for (auto Furniture: Room->Furnitures) {
 		if (!Furniture->InPlace) {
 			GetOrganizerRobot()->FurnitureToMoveLocation.Add(Furniture->BaseLocation->GetComponentLocation());
-			NumberOfTask++;
+			
 		}
 	}
 
+	NumberOfTask = 0;
 	// manda todos. Se nao tiver nenhum movel alocado, entao nao faz nada
 	for (ARobotOrganizer* Organizer : OrganizersTeam) {
 		if (Organizer->FurnitureToMoveLocation.Num() == 0 ) continue; // if nothing is allocatted, just continue
-
+		NumberOfTask++;
 		Organizer->StartNewTask(ESkillEnum::MOVE_FURNITURE, Room);
 	};
 }
-
 
 
 FValidationStruct ARoomPreparationBaseController::GetValidationStruct() {

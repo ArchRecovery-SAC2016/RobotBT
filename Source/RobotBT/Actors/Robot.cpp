@@ -149,11 +149,24 @@ bool ARobot::MoveToRoomEntrance() {
 	if (IsAtRoomLocation) return true;
 
 	IsMoving = true;
+	IsBackAtRoomLocation = false;
 
 	IsAtRoomLocation = GetRobotController()->MoveToNewLocation(GetRoom()->GetDoorEntrance());
 	if (!IsAtRoomLocation) IsMoving = false;
 
 	return  IsAtRoomLocation;
+}
+
+bool ARobot::MoveBackToRoomEntrance() {
+	if (GetRoom() == nullptr) return false;
+	if (IsBackAtRoomLocation) return true;
+
+	IsMoving = true;
+
+	IsBackAtRoomLocation = GetRobotController()->MoveToNewLocation(GetRoom()->GetDoorEntrance());
+	if (!IsAtRoomLocation) IsMoving = false;
+
+	return  IsBackAtRoomLocation;
 }
 
 bool ARobot::MoveAlongPath() {
@@ -225,6 +238,7 @@ void ARobot::TaskFinished() {
 	// calcula o tempo gasto. Pega o tempo atual e subtrai pelo tempo que foi salvo ao iniciar a task
 	TaskResult.TimeSpentOnTask = GetWorld()->GetTimeSeconds() - TaskResult.TimeSpentOnTask;
 	IsAtRoomLocation = false;
+	IsBackAtRoomLocation = false;
 	IsFinishedMovingAlongPath = false;
 	TaskAllocated = ESkillEnum::NONE;
 	TaskResult.SuccessResult = true;

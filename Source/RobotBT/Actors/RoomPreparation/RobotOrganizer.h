@@ -46,6 +46,8 @@ public:
 
 	TArray<FVector> FurnitureToMoveLocation;
 
+
+
 private:
 
 	int32 FurnitureToMoveLocationIndex = 0;

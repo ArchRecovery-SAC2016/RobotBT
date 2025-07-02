@@ -40,11 +40,11 @@ bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 
 	float Distance = (ControlledPawn->GetActorLocation() - MoveToLocation->GetActorLocation()).Size();
 
-	if (Distance < 10) {
+	if (Distance < 50) {
 		return true;
 	}
 
-	MoveToActor(MoveToLocation, 10, true, true, false, DefaultNavigationFilterClass, true);
+	MoveToActor(MoveToLocation, 50, true, true, false, DefaultNavigationFilterClass, true);
 
 	return false;
 }

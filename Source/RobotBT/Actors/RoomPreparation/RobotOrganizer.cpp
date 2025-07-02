@@ -29,12 +29,20 @@ bool ARobotOrganizer::TaskExecution() {
 void ARobotOrganizer::TaskFinished() {
 	Super::TaskFinished();
 
+	// reseta todas as variaveis
 	FurnitureToMoveLocation.Empty(); // clear the furniture to move location, so we can start a new task
+	FurnitureToMoveLocationIndex = 0;
+	FurnitureFound = false;
+	RobotAtFurnitureLocation = false;
+	PlayMoveFurnitureAnimationFinished = false;
+	AllFurnitureAtLocation = false;
+	PlayMoveFurnitureAnimationIsRunning = false;
+
 }
 
 bool ARobotOrganizer::MoveToFurniture() {
 	if (GetRoom() == nullptr) return false;
-	if (!FurnitureToMoveLocation.IsValidIndex(FurnitureToMoveLocationIndex)) return false;
+	if (AllFurnitureAtLocation) return true;
 
 	FVector CurrentFurnitureLocation = FurnitureToMoveLocation[FurnitureToMoveLocationIndex];
 	IsMoving = true;
@@ -48,7 +56,8 @@ bool ARobotOrganizer::MoveToFurniture() {
 }
 
 bool ARobotOrganizer::PlayMoveFurnitureAnimation() {
-	// esperar um pouco e depois chamar 
+	// esperar um pouco e depois chamar
+	if (AllFurnitureAtLocation) return true;
 	if (PlayMoveFurnitureAnimationFinished) return true;
 	if (PlayMoveFurnitureAnimationIsRunning) return false; // ja esta rodando a animacao, nao precisa chamar de novo
 
@@ -66,7 +75,6 @@ bool ARobotOrganizer::PlayMoveFurnitureAnimation() {
 		AnimationDuration, // Duração da animação
 		false // Não looping
 	);
-	
 
 	return false;
 }
@@ -75,7 +83,9 @@ bool ARobotOrganizer::CheckAllFurnitureMoved() {
 	FurnitureToMoveLocationIndex++;
 
 	if (!FurnitureToMoveLocation.IsValidIndex(FurnitureToMoveLocationIndex)) {
-		// nao tem mais nenhum movel pra mover, entao 
+		// nao tem mais nenhum movel pra mover, entao
+		IsAtRoomLocation = false;
+		AllFurnitureAtLocation = true;
 		return true;
 	}
 
