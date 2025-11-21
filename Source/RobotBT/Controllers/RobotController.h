@@ -35,6 +35,9 @@ public:
 	UPROPERTY()
 	ARobot* ControlledPawn;
 
+	// Tolerance to reach the final location
+	UPROPERTY(EditAnywhere)
+	float MoveTolerance = 50.0f;
 
 
 private:

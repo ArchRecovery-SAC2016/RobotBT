@@ -25,7 +25,7 @@ void ARobotController::BeginPlay() {
     CurrentDistanceAlongSpline = 0.0f;
 }
 
-void ARobotController::OnPossess(APawn* InPawn) {
+void ARobotController::OnPossess(APawn* InPawn) { 
     Super::OnPossess(InPawn);
 
 	// set the behaviour tree for the robot
@@ -40,11 +40,12 @@ bool ARobotController::MoveToActorLocation(AActor* MoveToLocation) {
 
 	float Distance = (ControlledPawn->GetActorLocation() - MoveToLocation->GetActorLocation()).Size();
 
-	if (Distance < 50) {
+	if (Distance < MoveTolerance) {
 		return true;
 	}
 
-	MoveToActor(MoveToLocation, 50, true, true, false, DefaultNavigationFilterClass, true);
+
+	MoveToActor(MoveToLocation, 10, true, true, false, DefaultNavigationFilterClass, true);
 
 	return false;
 }
@@ -55,7 +56,7 @@ bool ARobotController::MoveToNewLocation(FVector NewLocation) {
     // Configurar um resultado para o movimento
     FAIMoveRequest MoveRequest;
     MoveRequest.SetGoalLocation(NewLocation);
-    MoveRequest.SetAcceptanceRadius(10.0f); // Tolerância para considerar que chegou
+    MoveRequest.SetAcceptanceRadius(MoveTolerance); // Tolerância para considerar que chegou
 
     FNavPathSharedPtr NavPath;
     EPathFollowingRequestResult::Type MoveResult = MoveTo(MoveRequest, &NavPath);
