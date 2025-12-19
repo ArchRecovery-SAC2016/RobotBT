@@ -73,6 +73,16 @@ void UExperimentSetupWidget::InitiateExperiment() {
 	else Experiment.GenerateRandomProperties = false;
 
 	// Esse valor eh atualizado no NativeConstruct
+	if (ExperimentInstance->OutputsSelected.IsEmpty()) {
+		SetMessage("No Output selected.");
+		return;
+	}
+
+	if (!ExperimentInstance->OutputsSelected.IsValidIndex(ExperimentInstance->CurrentOutputIndex)) {
+		SetMessage("Failed to Select ExperimentInstance->CurrentOutputIndex");
+		return;
+	}
+
 	Experiment.OutputTasksJsonString = ExperimentInstance->OutputsSelected[ExperimentInstance->CurrentOutputIndex];
 	Experiment.WorldJsonString = ExperimentInstance->WorldsSelected[ExperimentInstance->CurrentWorldIndex];
 
